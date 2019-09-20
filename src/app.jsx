@@ -12,25 +12,74 @@ const store = configStore
 
 class App extends Component {
 
+  componentDidMount() {
+    const updateManager = Taro.getUpdateManager()
+    updateManager.onCheckForUpdate(function (res) {
+      //请求完新版本信息的回调
+
+    })
+    //下载新版本
+    updateManager.onUpdateReady(function () {
+      Taro.showModal({
+        title: '更新提示',
+        content: '新版本已经准备好,是否重启应用?',
+        success(res) {
+          updateManager.applyUpdate()
+        }
+      })
+    })
+    //新版本下载失败
+    updateManager.onUpdateFailed(function (res) {
+      console.log(res)
+    })
+  }
+
   config = {
     pages: [
-      'pages/index/index'
+      'pages/index/index',
+      'pages/offer/index',
+      'pages/order/index',
+      'pages/mine/index',
     ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
+      navigationBarTitleText: '跑车物流',
       navigationBarTextStyle: 'black'
-    }
+    },
+    tabBar: {
+      color: "#999999",
+      selectedColor: "#2D7BAF",
+      borderStyle: "black",
+      backgroundColor: "#F7F7F7",
+      list: [
+        {
+          pagePath: "pages/index/index",
+          iconPath: "assets/img/tab_bar/home.png",
+          selectedIconPath: "assets/img/tab_bar/home_active.png",
+          text: "首页"
+        },
+        {
+          pagePath: "pages/offer/index",
+          iconPath: "assets/img/tab_bar/offer.png",
+          selectedIconPath: "assets/img/tab_bar/offer_active.png",
+          text: "询价单"
+        },
+        {
+          pagePath: "pages/order/index",
+          iconPath: "assets/img/tab_bar/order.png",
+          selectedIconPath: "assets/img/tab_bar/order_active.png",
+          text: "订单"
+        },
+        {
+          pagePath: "pages/mine/index",
+          iconPath: "assets/img/tab_bar/mine.png",
+          selectedIconPath: "assets/img/tab_bar/mine_active.png",
+          text: "我的"
+        }
+      ]
+    },
   }
-
-  componentDidMount () {}
-
-  componentDidShow () {}
-
-  componentDidHide () {}
-
-  componentDidCatchError () {}
 
   // 在 App 类中的 render() 函数没有实际作用
   // 请勿修改此函数

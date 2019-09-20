@@ -1,9 +1,9 @@
 /*
  * @Author: liuYang
  * @description: 请填写描述信息
- * @Date: 2019-09-17 11:53:57
+ * @Date: 2019-09-20 13:24:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-20 13:25:34
+ * @LastEditTime: 2019-09-20 13:27:11
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,7 +13,7 @@ import { connect } from '@tarojs/redux'
 
 import './index.styl'
 
-class Index extends Component {
+class Offer extends Component {
 
   componentWillReceiveProps (nextProps) {
     console.log(this.props, nextProps)
@@ -29,7 +29,7 @@ class Index extends Component {
   }
   render () {
     return (
-      <View className='index'>
+      <View className='询价单'>
         
       </View>
     )
@@ -41,4 +41,4 @@ const mapStateToProps = (state) => {
     userInfo: state.user_msg.userInfo
   }
 }
-export default connect(mapStateToProps)(Index)
+export default connect(mapStateToProps)(Offer)
