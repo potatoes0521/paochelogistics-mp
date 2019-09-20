@@ -1,9 +1,9 @@
 /*
  * @Author: liuYang
- * @description: 请填写描述信息
+ * @description: 无标题卡片样式组件
  * @Date: 2019-09-20 15:19:28
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-20 16:23:44
+ * @LastEditTime: 2019-09-20 17:33:36
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
