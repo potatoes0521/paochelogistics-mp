@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 订单详情
  * @Date: 2019-09-20 09:58:08
- * @LastEditors: liuYang
- * @LastEditTime: 2019-09-20 15:26:02
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-09-20 15:52:53
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,6 +13,8 @@ import { View } from '@tarojs/components'
 import './index.styl'
 import OrderComponent from '../order_card/index.js'
 import NoTitleCard from '../no_title_card/index.js'
+import ServiceDetailsComponent from '../service_details/index.js'
+import PriceDetailsComponent from '../price_details/index.js'
 
 export default class OrderDetailsComponent extends Component {
   constructor(props) {
@@ -31,6 +33,10 @@ export default class OrderDetailsComponent extends Component {
           <OrderComponent></OrderComponent>
           <View className='dividing-line'></View>
           <OrderComponent></OrderComponent>
+          <View className='dividing-line'></View>
+          <ServiceDetailsComponent></ServiceDetailsComponent>
+          <View className='dividing-line'></View>
+          <PriceDetailsComponent></PriceDetailsComponent>
         </NoTitleCard>
       </View>
     )
