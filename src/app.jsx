@@ -1,10 +1,10 @@
-import '@tarojs/async-await'
 import Taro, { Component } from '@tarojs/taro'
+import '@tarojs/async-await'
+import 'taro-ui/dist/style/index.scss'
 import { Provider } from '@tarojs/redux'
+import configStore from './store/index.js'
 
 import Index from './pages/index'
-
-import configStore from './store'
 
 import './app.styl'
 
@@ -14,7 +14,7 @@ import './app.styl'
 //   require('nerv-devtools')
 // }
 
-const store = configStore()
+const store = configStore
 
 class App extends Component {
 
