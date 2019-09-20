@@ -3,7 +3,7 @@
  * @description: 单选框
  * @Date: 2019-09-02 18:03:41
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-20 15:21:06
+ * @LastEditTime: 2019-09-20 17:30:28
  * @mustParam: 必传参数
  *  options 单选项
  *    id : 传给后端的值
@@ -74,8 +74,15 @@ export default class PCRadio extends Component {
     const {
       radioList
     } = this.state
+    const {
+      type
+    } = this.props
+    const wrapperClassName = classNames({
+      'horizontal-radio-wrapper': type === 'horizontal',
+      'vertical-radio-wrapper': type === 'vertical'
+    })
     return (
-      <View className='radio-wrapper'>
+      <View className={wrapperClassName}>
         {
           radioList.map(option => {
             return (
@@ -110,11 +117,13 @@ export default class PCRadio extends Component {
 
 PCRadio.defaultProps = {
   activeIndex: 0,
+  type: 'horizontal',
   options: [],
   onClick: () => {},
 }
 
 PCRadio.propTypes = {
+  type: PropTypes.string,
   activeIndex: PropTypes.number,
   options: PropTypes.array.isRequired,
   onClick: PropTypes.func.isRequired,

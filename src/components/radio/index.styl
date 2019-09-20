@@ -1,15 +1,28 @@
 @import '../../assets/css/theme.styl'
 
-.radio-wrapper
+.horizontal-radio-wrapper
   width 100%
   display flex
   align-items center
   justify-content space-between
 
+.vertical-radio-wrapper
+  width 100%
+
+.vertical-radio-wrapper .radio-box
+  margin-right 9px
+
+.vertical-radio-wrapper .radio-option
+  margin-bottom 16px
+
+.vertical-radio-wrapper .radio-option:last-child
+  margin-bottom 0
+
 .radio-option
   display flex
   align-items center
   color $font-color
+  font-size 28px
 
 .radio-box
   width 28px

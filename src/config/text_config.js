@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-09-12 11:17:44
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-20 14:53:09
+ * @LastEditTime: 2019-09-20 17:04:05
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -27,5 +27,20 @@ export const serviceList = [
   {
     id: 4,
     label: '门到门'
+  }
+]
+
+export const carNatureList = [
+  {
+    id: 1,
+    label: '小客车（车辆长度低于5500mm）'
+  },
+  {
+    id: 2,
+    label: '中型汽车（车辆长度低于5500mm～6600mm）'
+  },
+  {
+    id: 3,
+    label: '大型汽车（车辆长度高于6600mm）'
   }
 ]
