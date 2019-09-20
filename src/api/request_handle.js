@@ -1,11 +1,9 @@
 /*
  * @Author: liuYang
- * @description: 请填写描述信息
- * @Date: 2019-09-12 18:00:14
+ * @description: 请求方法的公共方法封装
+ * @Date: 2019-08-12 17:39:29
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-17 11:59:34
- * @mustParam: 必传参数
- * @optionalParam: 选传参数
+ * @LastEditTime: 2019-09-20 18:07:20
  */
 
 // 默认请求连接
@@ -20,26 +18,27 @@
 import Taro from '@tarojs/taro'
 // eslint-disable-next-line import/first
 import refreshToken from '@utils/refreshToken.js'
-import { backReload } from '@utils/common.js'
+// import { backReload } from '@utils/common.js'
 import {
   HTTP_STATUS
 } from '../config/request_config.js'
 import createSignData from './secret.js'
 
-// let defaultURL = 'http://192.168.3.109:8082/' // 李斌
-let defaultURL = 'http://192.168.3.191:8082/'   // 测试环境
-// let defaultURL = 'https://api.bang.paoche56.com/'
+// let defaultURL = 'http://192.168.3.133:8082/' // 李斌
+// let defaultURL = 'http://192.168.3.191:8082/'   // 测试环境
+let defaultURL = 'https://api.bang.paoche56.com/'
 const sign_id = 'wxb633da0aa161b42c'
 const contentType = 'application/json;charset=UTF-8'
-export const appVersion = '0.8.6' 
+export const appVersion = '0.8.7'
 export default {
   baseOptions(url, data, that, method = 'GET') {
     const sign = createSignData(data, sign_id)[1]
 
     console.log(JSON.stringify(data), "sign=" + sign, url)
 
-    const { userInfo } = that.props || {};
-    refreshToken.handleToken(that)
+    const {
+      userInfo
+    } = that.props || {};
     const headerUserLogin = JSON.stringify({
       'token': userInfo.token || '',
       'mobile': userInfo.mobile || '',
@@ -94,15 +93,20 @@ export default {
             if (res.data) {
               let resData = res.data
               // "200002" 是未注册
-              if (!+resData.code || +resData.code === 200002 || resData.code == 200) {
+              if (!+resData.code || +resData.code === 200002 || +resData.code == 200) {
                 resolve(resData.data)
               } else {
-                Taro.showToast({
-                  title: resData.message,
-                  icon: "none",
-                  duration: 2000
-                })
-                backReload(1800)
+                if (+resData.code === 200003) {
+                  console.log(that)
+                  refreshToken.refreshToken(that, url, data, method)
+                } else {
+                  Taro.showToast({
+                    title: resData.message,
+                    icon: "none",
+                    duration: 2000
+                  })
+                  // backReload(1800)
+                }
               }
             } else {
               Taro.hideLoading()
@@ -110,12 +114,17 @@ export default {
                 title: res.message,
                 duration: 2000
               })
-              backReload(1800)
+              // backReload(1800)
             }
           }
         },
-        error(e) {
+        fail(e) {
           Taro.hideLoading()
+          Taro.showToast({
+            title: '网络连接超时',
+            icon: 'none'
+          })
+          console.log('请求接口出现问题')
           reject('api', '请求接口出现问题', e)
         }
       })

@@ -1,12 +1,11 @@
 /*
  * @Author: liuYang
  * @description: 系统方法的封装
- * @Date: 2019-08-14 10:19:58
+ * @Date: 2019-08-13 12:43:48
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-17 12:08:53
- * @mustParam: 必传参数
- * @optionalParam: 选传参数
+ * @LastEditTime: 2019-08-13 12:48:44
  */
+
 export const indexOf = (haystack, needle) => {
   for (var i = 0; i < haystack.length; ++i) {
     if (haystack[i] === needle) return i;

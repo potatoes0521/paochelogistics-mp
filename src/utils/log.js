@@ -1,13 +1,10 @@
 /*
  * @Author: liuYang
- * @description: 请填写描述信息
- * @Date: 2019-08-14 10:19:58
+ * @description: log日志上报
+ * @Date: 2019-08-13 12:25:51
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-17 12:08:13
- * @mustParam: 必传参数
- * @optionalParam: 选传参数
+ * @LastEditTime: 2019-08-13 12:49:53
  */
-
 // log输出级别分为五种：debug,info,warn,error,fatal。
 import Taro from '@tarojs/taro'
 import { formatTime } from './common'

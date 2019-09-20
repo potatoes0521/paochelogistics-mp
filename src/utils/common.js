@@ -1,11 +1,9 @@
 /*
  * @Author: liuYang
- * @description: 请填写描述信息
- * @Date: 2019-09-12 18:00:14
+ * @description: 针对微信方法等公共系统方法的封装
+ * @Date: 2019-08-13 12:26:51
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-20 14:44:29
- * @mustParam: 必传参数
- * @optionalParam: 选传参数
+ * @LastEditTime: 2019-09-19 17:55:20
  */
 
 import Taro from '@tarojs/taro'
@@ -140,30 +138,6 @@ export const Authorize = (scope) => {
   })
 }
 
- /**
-  * 同步存储到本地
-  * @param {String} key 存储在本地的字段名
-  * @param {Object | String} value 要存储的数据
-  * @return void
-  */
-export const setStorage = (key, value) => {
-  Taro.setStorageSync('pao_che_bang_' + key, JSON.stringify(value))
-}
- /**
-  * 获取存储信息
-  * @param {Type} key 参数描述
-  * @return void
-  */
-export const getStorage = (key) => {
-  return new Promise(async (resolve) => {
-    const data = await Taro.getStorageSync('pao_che_bang_' + key)
-    if (data) {
-      resolve(JSON.parse(data))
-    } else {
-      resolve('')
-    }
-  })
-}
 /**
 * 返回并重载上个页面
 * @param {Type} sleepTime 参数描述
@@ -173,9 +147,9 @@ export const backReload = (sleepTime) => {
   setTimeout(() => {
     Taro.navigateBack({
       success: () => {
-        const pageArray = Taro.getCurrentPages()
-        console.log(pageArray,'页面栈xxxxxxxxxxxxxx',pageArray.length)
-        pageArray[pageArray.length -2].onReady()
+        // const pageArray = Taro.getCurrentPages()
+        // console.log(pageArray,'页面栈xxxxxxxxxxxxxx',pageArray.length)
+        // pageArray[pageArray.length -2].onReady()
       }
     })
   }, sleepTime)
