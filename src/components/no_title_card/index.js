@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-09-20 15:19:28
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-20 15:26:50
+ * @LastEditTime: 2019-09-20 16:23:44
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,11 +13,14 @@ import { View } from '@tarojs/components'
 import './index.styl'
 
 export default class Card extends Component {
+  static options = {
+    addGlobalClass: true    // 允许外部样式修改组件样式
+  }
   constructor(props) {
     super(props)
     this.state = {}
   }
-  render() { 
+  render() {
     return (
       <View className='card-wrapper'>
         {this.props.children}
