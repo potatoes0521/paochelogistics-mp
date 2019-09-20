@@ -3,13 +3,16 @@
  * @description: 请填写描述信息
  * @Date: 2019-09-12 18:00:14
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-17 12:08:01
+ * @LastEditTime: 2019-09-20 14:44:29
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 
 import Taro from '@tarojs/taro'
-import { showModalText } from '@config/text_config'
+import {
+  showModalText,
+  showModalTextContent
+} from '@config/text_config'
 /**
  * 检查一个字符串有没有中文
  * @param {String} str 要检查的文字字符串
@@ -186,6 +189,7 @@ export const showModalAndRegister = (params = '') => {
   let url = '/pages/register/index' + params
   Taro.showModal({
     title: showModalText,
+    content: showModalTextContent,
     success: (res) => {
       if (res.confirm) {
         Taro.navigateTo({
