@@ -1,3 +1,15 @@
+/*
+ * @Author: liuYang
+ * @description: 请填写描述信息
+ * @Date: 2019-09-17 11:53:57
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-09-17 11:53:57
+ * @mustParam: 必传参数
+ * @optionalParam: 选传参数
+ */
+
+const path = require('path')
+
 const config = {
   projectName: 'paochelogistics-mp',
   date: '2019-9-17',
@@ -31,6 +43,17 @@ const config = {
     ],
     options: {
     }
+  },
+  alias: {
+    '@': path.resolve(__dirname, '..', 'src'),
+    '@c': path.resolve(__dirname, '..', 'src/components'),
+    '@img': path.resolve(__dirname, '..', 'src/assets/img'),
+    '@js': path.resolve(__dirname, '..', 'src/assets/js_sdk'),
+    '@store': path.resolve(__dirname, '..', 'src/store'),
+    '@css': path.resolve(__dirname, '..', 'src/assets/css'),
+    '@api': path.resolve(__dirname, '..', 'src/api'),
+    '@utils': path.resolve(__dirname, '..', 'src/utils'),
+    '@config': path.resolve(__dirname, '..', 'src/config')
   },
   weapp: {
     module: {
