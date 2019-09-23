@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 首页
  * @Date: 2019-09-17 11:53:57
- * @LastEditors: liuYang
- * @LastEditTime: 2019-09-20 17:33:55
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-09-23 11:26:22
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,7 +13,7 @@ import {
   Input
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
-import NoTitleCard from '@c/no_title_card/index.js'
+import NoTitleCard from '@c/all_order_pages/no_title_card/index.js'
 import RadioGroups from '@c/radio/index.js'
 import InputNumber from '@c/input_number/index.js'
 import { serviceList, carNatureList } from '@config/text_config.js'

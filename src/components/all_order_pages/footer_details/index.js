@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 订单详情--底部详情
  * @Date: 2019-09-20 09:58:08
- * @LastEditors: liuYang
- * @LastEditTime: 2019-09-23 10:59:37
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-09-23 11:09:51
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
