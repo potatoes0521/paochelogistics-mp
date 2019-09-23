@@ -11,11 +11,11 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import './index.styl'
-import OrderComponent from '../order_card/index.js.js.js'
+import OrderComponent from '../order_card/index.js'
 // eslint-disable-next-line import/first
 import NoTitleCard from '@c/no_title_card/index.js'
-import ServiceDetailsComponent from '../service_details/index.js.js.js'
-import PriceDetailsComponent from '../price_details/index.js.js.js'
+import ServiceDetailsComponent from '../service_details/index.js'
+import PriceDetailsComponent from '../price_details/index.js'
 
 export default class OrderDetailsComponent extends Component {
   constructor(props) {
