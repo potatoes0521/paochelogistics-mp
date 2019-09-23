@@ -1,9 +1,9 @@
 /*
  * @Author: liuYang
- * @description: 请填写描述信息
+ * @description: 固定顶部的tab栏
  * @Date: 2019-09-20 17:28:05
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-20 17:30:55
+ * @LastEditTime: 2019-09-23 10:56:51
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -11,9 +11,7 @@ import Taro, {
   Component
 } from '@tarojs/taro'
 import PropTypes from 'prop-types'
-import {
-  View
-} from '@tarojs/components'
+import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import './index.styl'
 
@@ -21,15 +19,51 @@ export default class Tabs extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {
-      tabList: []
-    }
+    this.state = {}
+  }
+
+  /**
+   * 点击了tab栏
+   * @return void
+   */
+  handleClick() {
+    this.props.onClick(...arguments)
   }
 
   render() { 
+    const {
+      options,
+      activeIndex
+    } = this.props
+    
+    const tabList = options.map((item,  index) => {
+      const tabItemActiveClass = classNames(
+        'tab-item', {
+          'tab-item-active': activeIndex === index
+        }
+      )
+      return (
+        <View
+          className={tabItemActiveClass}
+          data-item={item}
+          key={item.id}
+          onClick={this.handleClick.bind(this, item.id)}
+        >{item.label}</View>
+      )
+    })
+    
     return (
       <View className='tabs-wrapper'>
-        
+        <View className='tabs-list'>
+          {
+            tabList
+          }
+        </View>
+        <View className='tabs-plane'>
+          {
+            this.props.children
+          }
+        </View>
       </View>
     )
   }
