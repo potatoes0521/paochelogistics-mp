@@ -3,14 +3,14 @@
  * @description: 询价单详情组件
  * @Date: 2019-09-23 14:39:59
  * @LastEditors: guorui
- * @LastEditTime: 2019-09-23 16:33:06
+ * @LastEditTime: 2019-09-23 16:51:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
-import NoTitleCard from '../all_order_pages/no_title_card/index.js'
+import NoTitleCard from '@c/no_title_card/index.js'
 import EnquiryInfoComponent from '../enquiry_info/index.js'
 import './index.styl'
 

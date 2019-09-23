@@ -3,14 +3,14 @@
  * @description: 询价单内容
  * @Date: 2019-09-23 14:51:02
  * @LastEditors: guorui
- * @LastEditTime: 2019-09-23 16:08:03
+ * @LastEditTime: 2019-09-23 16:58:30
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
-import '../all_order_pages/order_card/index.styl'
+import '@c/all_order_pages/order_card/index.styl'
 import './index.styl'
 
 export default class EnquiryInfoComponent extends Component {
