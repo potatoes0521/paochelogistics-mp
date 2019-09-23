@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-09-12 11:17:44
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-23 11:13:03
+ * @LastEditTime: 2019-09-23 15:02:51
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -45,7 +45,8 @@ export const carNatureList = [
   }
 ]
 
-export const offerTabs = [{
+export const offerTabs = [
+  {
     label: '全部',
     id: 0
   },
@@ -55,6 +56,21 @@ export const offerTabs = [{
   },
   {
     label: '未报价',
+    id: 2
+  }
+]
+
+export const orderTabs = [
+  {
+    label: '待支付',
+    id: 0
+  },
+  {
+    label: '待交车',
+    id: 1
+  },
+  {
+    label: '全部',
     id: 2
   }
 ]

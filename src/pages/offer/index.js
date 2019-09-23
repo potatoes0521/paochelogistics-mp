@@ -3,7 +3,7 @@
  * @description: 询价单页面
  * @Date: 2019-09-20 13:24:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-23 14:26:49
+ * @LastEditTime: 2019-09-23 14:58:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,7 +13,7 @@ import { connect } from '@tarojs/redux'
 import Tabs from '@c/tabs/index.js'
 import OfferItem from './components/offer_item/index.js'
 // eslint-disable-next-line import/first
-import {offerTabs} from '@config/text_config.js'
+import { offerTabs } from '@config/text_config.js'
 import './index.styl'
 
 class Offer extends Component {
@@ -26,11 +26,21 @@ class Offer extends Component {
       ]
     }
   }
+  /**
+   * 处理tabs点击事件
+   * @param {Number} value 参数描述
+   * @return void
+   */
   handleClick(value) {
     this.setState({
       current: value
     })
   }
+  /**
+   * swiper onChange事件
+   * @param {Object} e 参数描述
+   * @return void
+   */
   changeSwiper(e) { 
     this.setState({
       current: e.detail.current
@@ -64,36 +74,34 @@ class Offer extends Component {
     })
     return (
       <View className='offer-wrapper'>
-        <View className='tabs-flex-wrapper'>
-          <Tabs
-            activeIndex={current}
-            options={offerTabs}
-            onClick={this.handleClick.bind(this)}
+        <Tabs
+          activeIndex={current}
+          options={offerTabs}
+          onClick={this.handleClick.bind(this)}
+        >
+          <Swiper
+            duration={300}
+            current={current}
+            className='swiper-wrapper'
+            onChange={this.changeSwiper}
           >
-            <Swiper
-              duration={300}
-              current={current}
-              className='swiper-wrapper'
-              onChange={this.changeSwiper}
-            >
-              <SwiperItem>
-                {
-                  AllOfferItemList
-                }
-              </SwiperItem>
-              <SwiperItem>
-                {
-                  hasOfferItemList
-                }
-              </SwiperItem>
-              <SwiperItem>
-                {
-                  onOfferItemList
-                }
-              </SwiperItem>
-            </Swiper>
-          </Tabs>
-        </View>
+            <SwiperItem>
+              {
+                AllOfferItemList
+              }
+            </SwiperItem>
+            <SwiperItem>
+              {
+                hasOfferItemList
+              }
+            </SwiperItem>
+            <SwiperItem>
+              {
+                onOfferItemList
+              }
+            </SwiperItem>
+          </Swiper>
+        </Tabs>
       </View>
     )
   }

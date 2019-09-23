@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 订单底部组件
  * @Date: 2019-09-23 10:00:22
- * @LastEditors: guorui
- * @LastEditTime: 2019-09-23 10:17:42
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-09-23 16:01:28
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */ 
@@ -26,10 +26,11 @@ export default class FooterStatusComponent extends Component {
     return (
       <View className='status-wrapper'>
         <View className='upper-button'>
-            <View className='pay-button buttons'>立即支付
-              <Text className='reduce-price'>(立减50元)</Text>
-            </View>
-            <View className='share-button buttons'>分享砍价</View>
+          <View className='pay-button buttons'>
+            立即支付
+            <Text className='reduce-price'>(立减50元)</Text>
+          </View>
+          <View className='share-button buttons'>分享砍价</View>
           </View>
           <View className='lower-button'>
             <View className='cancel-button buttons'>取消订单</View>
