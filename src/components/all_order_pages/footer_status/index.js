@@ -3,7 +3,7 @@
  * @description: 订单底部组件
  * @Date: 2019-09-23 10:00:22
  * @LastEditors: guorui
- * @LastEditTime: 2019-09-23 14:29:37
+ * @LastEditTime: 2019-09-23 16:43:23
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */ 

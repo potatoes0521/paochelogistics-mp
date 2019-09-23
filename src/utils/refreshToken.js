@@ -3,12 +3,12 @@
  * @description: 刷新token的操作
  * @Date: 2019-09-03 10:24:49
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-19 15:46:49
+ * @LastEditTime: 2019-09-23 14:33:24
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import api from '@api/index.js'
-import Storage from './storage.js.js'
+import Storage from './storage.js'
 // eslint-disable-next-line import/first
 import Actions from '@store/actions/index.js'
 // eslint-disable-next-line import/first

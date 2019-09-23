@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-09-12 11:17:44
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-20 17:04:05
+ * @LastEditTime: 2019-09-23 15:02:51
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -42,5 +42,35 @@ export const carNatureList = [
   {
     id: 3,
     label: '大型汽车（车辆长度高于6600mm）'
+  }
+]
+
+export const offerTabs = [
+  {
+    label: '全部',
+    id: 0
+  },
+  {
+    label: '已报价',
+    id: 1
+  },
+  {
+    label: '未报价',
+    id: 2
+  }
+]
+
+export const orderTabs = [
+  {
+    label: '待支付',
+    id: 0
+  },
+  {
+    label: '待交车',
+    id: 1
+  },
+  {
+    label: '全部',
+    id: 2
   }
 ]
