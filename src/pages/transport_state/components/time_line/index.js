@@ -3,7 +3,7 @@
  * @description: 运输状态时间轴
  * @Date: 2019-09-24 14:59:07
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-24 16:04:18
+ * @LastEditTime: 2019-09-24 16:08:52
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -34,6 +34,12 @@ export default class TimeLine extends Component {
         'icon-text icon-text-over': index === 0,
         'icon-text iconfont iconyunshuzhong icon-style': index === 1
       })
+      const addressClassName = classNames(
+        'path-address',
+        {
+          'theme-text': index === 1
+        }
+      )
       return (
         <View
           className='path-item'
@@ -47,8 +53,10 @@ export default class TimeLine extends Component {
             <View className={iconClassName}></View>
             <View className={lineClassName}></View>
           </View>
-          <View className='path-address'>
-            {/* <View className=''></View> */}
+          <View className={addressClassName}>
+            {
+              index === 1 ? <View>运输中</View> : null
+            }
             {
               index === 0 ? '[到达地址]' : ''
             }
