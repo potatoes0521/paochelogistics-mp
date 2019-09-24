@@ -31,19 +31,42 @@
 		"miniprogram": {
 			"current": 1,
 			"list": [
+        {
+          "id": -1,
+          "name": "首页",
+          "pathName": "pages/index/index",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "询价单",
+          "pathName": "pages/offer/index",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "订单",
+          "pathName": "pages/order/index",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "我的",
+          "pathName": "pages/mine/index",
+          "scene": null
+        },
 				{
 					"id": -1,
-					"name": "pages/order_details/order_details",
-					"pathName": "pages/order_details/order_details",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/order_details/order_details",
+					"name": "订单详情",
 					"pathName": "pages/order_details/index",
 					"scene": null
-				}
+        },
+        {
+          "id": -1,
+          "name": "运输状态",
+          "pathName": "pages/transport_state/index",
+          "scene": null
+        }
 			]
 		}
 	}
