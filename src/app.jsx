@@ -40,7 +40,8 @@ class App extends Component {
       'pages/offer/index',
       'pages/order/index',
       'pages/mine/index',
-      'pages/order_details/index'
+      'pages/order_details/index',
+      'pages/transport_state/index'
     ],
     window: {
       backgroundTextStyle: 'light',

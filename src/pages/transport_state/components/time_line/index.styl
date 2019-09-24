@@ -1,0 +1,86 @@
+
+@import '../../../../assets/css/theme.styl'
+
+.path-wrapper
+  width 100%
+  
+.path-title
+  width 100%
+  line-height 42px
+  font-size 30px
+  font-weight 600
+  margin 32px 8px
+
+.path-item
+  width 100%
+  display flex
+  align-items stretch
+
+.path-time
+  width 132px
+  box-sizing border-box
+  padding-right 24px
+  text-align right
+
+.date
+  font-size 30px
+  color $font-color
+  line-height 36px
+
+.time
+  font-size 26px
+  color $font-disabled-color
+
+.path-icon
+  width 50px
+  display flex
+  flex-direction column
+  align-items center
+  margin-right 16px
+
+.icon-text
+  width 48px !important
+  height 48px !important
+  background-color $font-disabled-color
+  color #ffffff
+  font-size 28px
+  display flex
+  align-items center
+  justify-content center
+  border-radius 50%
+  margin 0 0 !important
+  
+.icon-text-over::after
+  content '达'
+
+.icon-text-start::after
+  content '始'
+
+.icon-spot
+  width 12px
+  height 12px
+  border-radius 50%
+  background-color $font-disabled-color
+  margin 14px  0
+
+.icon-style
+  background-color $theme-color
+  color #ffffff
+  font-size 36px
+
+.solid
+  width 2px
+  background-color #e0e0e0
+  flex 1
+
+.dashed
+  width 2px
+  box-sizing border-box
+  flex 1
+  border-right 2px dashed #e0e0e0
+
+.path-address
+  flex 1
+  padding-bottom 32px
+  font-size 28px
+  line-height 40px
