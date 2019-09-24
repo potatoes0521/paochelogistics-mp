@@ -42,7 +42,8 @@ class App extends Component {
       'pages/mine/index',
       'pages/order_details/index',
       'pages/transport_state/index',
-      'pages/enquiry_details/index'
+      'pages/enquiry_details/index',
+      'pages/about/index',
     ],
     window: {
       backgroundTextStyle: 'light',
