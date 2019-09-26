@@ -3,7 +3,7 @@
  * @description: 首页
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-23 14:28:51
+ * @LastEditTime: 2019-09-26 11:37:05
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -17,6 +17,7 @@ import NoTitleCard from '@c/no_title_card/index.js'
 import RadioGroups from '@c/radio/index.js'
 import InputNumber from '@c/input_number/index.js'
 import { serviceList, carNatureList } from '@config/text_config.js'
+import api from '@api/index.js'
 import './index.styl'
 
 class Index extends Component {
@@ -30,9 +31,17 @@ class Index extends Component {
       open: false
     }
   }
-  componentDidShow () { }
+  componentDidShow() { 
+    this.login()
+  }
 
   componentDidHide() { }
+  login() { 
+    console.log(api)
+    api.user.loginUseOpenID({}, this).then(res => {
+      console.log('aaa')
+    })
+  }
   /**
    * 单选
    * @param {Object} e event对象
