@@ -3,7 +3,7 @@
  * @description: 订单底部组件
  * @Date: 2019-09-23 10:00:22
  * @LastEditors: guorui
- * @LastEditTime: 2019-09-23 16:43:23
+ * @LastEditTime: 2019-09-26 16:34:26
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */ 
@@ -41,10 +41,10 @@ export default class FooterStatusComponent extends Component {
                 </View>
                 <View className='share-button buttons'>分享砍价</View>
               </View>
-              <View className='lower-button'>
+              {/* <View className='lower-button'>
                 <View className='cancel-button buttons'>取消订单</View>
                 <View className='collect-button buttons'>车到付款</View>
-              </View>
+              </View> */}
             </View>
             :
             <View className='collect_payment'>
