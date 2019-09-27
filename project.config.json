@@ -96,6 +96,30 @@
           "name": "编辑/添加客户信息",
           "pathName": "pages/customer_edit/index",
           "scene": null
+        },
+        {
+          "id": -1,
+          "name": "下单",
+          "pathName": "pages/place_order/index",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "关于",
+          "pathName": "pages/about/index",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "城市选择",
+          "pathName": "pages/choose_city/index",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "询价单详情",
+          "pathName": "pages/offer_details/index",
+          "scene": null
         }
 			]
 		}
