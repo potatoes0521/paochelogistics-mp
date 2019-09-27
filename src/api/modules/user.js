@@ -1,9 +1,9 @@
 /*
  * @Author: liuYang
- * @description: 请填写描述信息
+ * @description: 用户中心
  * @Date: 2019-09-26 11:23:16
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-26 11:23:16
+ * @LastEditTime: 2019-09-26 13:37:34
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
