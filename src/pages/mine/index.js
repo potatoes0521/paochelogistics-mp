@@ -3,7 +3,7 @@
  * @description: 我的
  * @Date: 2019-09-20 13:24:52
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-24 16:59:31
+ * @LastEditTime: 2019-09-27 17:08:53
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -33,20 +33,14 @@ class Mine extends Component {
    */
   navigatorPage(pageName = 'about') {
     if (!pageName) return
-    if (pageName === 'about') {
-      Taro.navigateTo({
-        url: `/pages/${pageName}/index`
-      })
-    } else {
-      let { userInfo } = this.props
-      if (!userInfo.userId) {
-        showModalAndRegister()
-        return
-      }
-      Taro.navigateTo({
-        url: `/pages/mine_publish/index?pageType=${pageName}`
-      })
+    let { userInfo } = this.props
+    if (!userInfo.userId) {
+      showModalAndRegister()
+      return
     }
+    Taro.navigateTo({
+      url: `/pages/${pageName}/index`
+    })
   }
   /**
    * 进入注册界面
@@ -84,7 +78,7 @@ class Mine extends Component {
           }
         </View>
         <View className='user-list'>
-          <View className='list-item' onClick={()=>this.navigatorPage('selling')}>
+          <View className='list-item' onClick={()=>this.navigatorPage('customer_info')}>
             <View className='list-left'>
               <View className='icon-img'>
                 <image src={userImage}></image>
@@ -93,7 +87,7 @@ class Mine extends Component {
             </View>
             <View className='list-right iconfont iconxiangyouxuanzejiantoux'></View>
           </View>
-          <View className='list-item' onClick={()=>this.navigatorPage('vacancy')}>
+          <View className='list-item' onClick={()=>this.navigatorPage('mine_info')}>
             <View className='list-left'>
               <View className='icon-img'>
                 <image src={idCardImage}></image>
