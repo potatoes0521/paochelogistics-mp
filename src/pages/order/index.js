@@ -3,7 +3,7 @@
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-24 09:54:01
+ * @LastEditTime: 2019-09-27 14:15:13
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -52,6 +52,8 @@ class Order extends Component {
   render() {
     let { current, allOfferList } = this.state
     const AllOfferItemList = allOfferList.map(item => {
+      // const timeArray = item.createTime.split('T')
+      // item.NewCreateTime = timeArray[0] + " " + timeArray[1].split('.')[0]
       return (
         <OrderItem
           key={item}
@@ -85,17 +87,17 @@ class Order extends Component {
             className='swiper-wrapper'
             onChange={this.changeSwiper}
           >
-            <SwiperItem>
+            <SwiperItem className='swiper-item'>
               {
                 AllOfferItemList
               }
             </SwiperItem>
-            <SwiperItem>
+            <SwiperItem className='swiper-item'>
               {
                 hasOfferItemList
               }
             </SwiperItem>
-            <SwiperItem>
+            <SwiperItem className='swiper-item'>
               {
                 onOfferItemList
               }

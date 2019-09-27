@@ -3,7 +3,7 @@
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-20 18:07:20
+ * @LastEditTime: 2019-09-27 14:05:33
  */
 
 // 默认请求连接
@@ -25,9 +25,10 @@ import {
 import createSignData from './secret.js'
 
 // let defaultURL = 'http://192.168.3.133:8082/' // 李斌
-// let defaultURL = 'http://192.168.3.191:8082/'   // 测试环境
-let defaultURL = 'https://api.bang.paoche56.com/'
-const sign_id = 'wxb633da0aa161b42c'
+// let defaultURL = 'http://192.168.3.191:8085/' // 测试环境  
+let defaultURL = 'http://yapi.demo.qunar.com/mock/97800/' // 测试环境
+// let defaultURL = 'https://api.bang.paoche56.com/'
+const sign_id = 'wx90c791e28c3c7d4d'
 const contentType = 'application/json;charset=UTF-8'
 export const appVersion = '0.8.7'
 export default {

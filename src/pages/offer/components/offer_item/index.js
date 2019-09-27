@@ -3,7 +3,7 @@
  * @description: 询价单公共组件页面
  * @Date: 2019-09-23 10:49:11
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-23 14:25:43
+ * @LastEditTime: 2019-09-27 14:20:36
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -28,7 +28,7 @@ export default class OfferItem extends Component {
   }
 
   render() {
-    let {item}  = this.props
+    let { item } = this.props
     const allWrapperClassName = classNames(
       'offer-item',
       {
@@ -41,16 +41,16 @@ export default class OfferItem extends Component {
         onClick={this.navigatorToOfferDetails}
       >
         <View className='item-title-wrapper'>
-          <View className='title-time'>2019-09-11 10:30:56</View>
+          <View className='title-time'>{item.NewCreateTime}</View>
           <View className='offer-state'>已报价</View>
         </View>
         <View className='item-main'>
           <View className='item-city'>
-            <Text>北京</Text>
+            <Text>{item.sendCityName}</Text>
             <Text className='iconfont iconjiantou_qiehuanyou icon-style'></Text>
-            <Text>北京</Text>
+            <Text>{item.receiveCityName}</Text>
           </View>
-          <View className='list-item'>发车时间：2019-09-20</View>
+          <View className='list-item'>发车时间：{item.sendTime && item.sendTime.split('T')[0]}</View>
           <View className='list-item'>服务：点到门</View>
         </View>
       </View>

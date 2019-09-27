@@ -3,7 +3,7 @@
  * @description: 首页
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-27 10:49:59
+ * @LastEditTime: 2019-09-27 14:07:25
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,10 +14,11 @@ import {
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import NoTitleCard from '@c/no_title_card/index.js'
-import RadioGroups from '@c/radio/index.js'
+import RadioGroups from '@c/radio_group/index.js'
+import CheckBoxGroup from '@c/checkbox_group/index.js'
 import InputNumber from '@c/input_number/index.js'
 import { serviceList, carNatureList } from '@config/text_config.js'
-import api from '@api/index.js'
+// import api from '@api/index.js'
 import './index.styl'
 
 class Index extends Component {
@@ -132,8 +133,9 @@ class Index extends Component {
               <View className='from-right'></View>
             </View>
             <View className='label-hide'>
-              <View className='checked-box'>上门提车</View>
-              <View className='checked-box'>上门送车</View>
+              <CheckBoxGroup
+                options={serviceList}
+              ></CheckBoxGroup>
             </View>
           </View>
           <View className='from-item'>
