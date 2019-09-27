@@ -46,10 +46,10 @@ class App extends Component {
       'pages/place_order/index',
       'pages/about/index',
       'pages/mine_info/index',
-      'pages/edit_mine/index',
+      'pages/mine_edit/index',
       'pages/customer_info/index',
       'pages/customer_details/index',
-      'pages/edit_customer/index',
+      'pages/customer_edit/index',
       'pages/choose_city/index',
     ],
     window: {
