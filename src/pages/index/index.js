@@ -3,7 +3,7 @@
  * @description: 首页
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-27 14:07:25
+ * @LastEditTime: 2019-09-27 14:39:33
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -140,8 +140,15 @@ class Index extends Component {
           </View>
           <View className='from-item'>
             <View className='label-wrapper'>
-              <View className='from-label'>输入车辆信息</View>
-              <View className='from-right'>xxxx</View>
+              <View className='from-label'>车辆信息</View>
+              <View className='from-right'>
+                <Input
+                  className='input car-info'
+                  placeholder='请输入车辆信息,如大众迈腾'
+                  placeholderClass='input-placeholder'
+                  maxLength='20'
+                ></Input>
+              </View>
             </View>
           </View>
           <View className='from-item'>

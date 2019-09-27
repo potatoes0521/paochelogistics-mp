@@ -3,7 +3,7 @@
  * @description: 单选框
  * @Date: 2019-09-02 18:03:41
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-27 11:10:58
+ * @LastEditTime: 2019-09-27 14:41:46
  * @mustParam: 必传参数
  *  options 单选项
  *    id : 传给后端的值
@@ -23,7 +23,9 @@ import classNames from 'classnames'
 import './index.styl'
 
 export default class PCRadio extends Component { 
-
+  static options = {
+    addGlobalClass: true // 允许外部样式修改组件样式
+  }
   constructor(props) {
     super(props)
     this.state = {

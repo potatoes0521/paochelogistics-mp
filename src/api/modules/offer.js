@@ -10,7 +10,7 @@
 import requestHandle from '../request_handle.js';
 
 export default {
-  // code换openID
+  // 获取询价单列表
   getOfferList(data, that) {
     return requestHandle.get(`inquiryorder/list`, data, that);
   },

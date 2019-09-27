@@ -3,7 +3,7 @@
  * @description: 询价单页面
  * @Date: 2019-09-20 13:24:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-27 14:18:20
+ * @LastEditTime: 2019-09-27 15:30:23
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -42,7 +42,7 @@ class Offer extends Component {
   }
 
   /**
-   * 获取订单列表
+   * 获取询价单列表
    * @param {Number} status='' 询价单状态 10 未报价 20 已报价 30 已失效 40 已取消
    * @param {Number} pageNum=1 页数
    * @param {Boolean} showLoading=true 是否显示loading
@@ -194,7 +194,7 @@ class Offer extends Component {
       item.NewCreateTime = timeArray[0] + " " + timeArray[1].split('.')[0]
       return (
         <OfferItem
-          key={item}
+          key={item.inquiryId}
           item={item}
         ></OfferItem>
       )
@@ -204,7 +204,7 @@ class Offer extends Component {
       item.NewCreateTime = timeArray[0] + " " + timeArray[1].split('.')[0]
       return (
         <OfferItem
-          key={item}
+          key={item.inquiryId}
           item={item}
         ></OfferItem>
       )
@@ -214,7 +214,7 @@ class Offer extends Component {
       item.NewCreateTime = timeArray[0] + " " + timeArray[1].split('.')[0]
       return (
         <OfferItem
-          key={item}
+          key={item.inquiryId}
           item={item}
         ></OfferItem>
       )

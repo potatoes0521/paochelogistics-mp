@@ -3,7 +3,7 @@
  * @description: 数字输入框
  * @Date: 2019-08-30 10:23:19
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-17 11:23:46
+ * @LastEditTime: 2019-09-27 15:07:35
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  * 
@@ -177,7 +177,7 @@ InputNumber.defaultProps = {
   disabled: false,
   value: 1,
   min: 1,
-  max: 100,
+  max: 999,
   step: 1,
   onChange: () => { },
   onBlur: () => { },
