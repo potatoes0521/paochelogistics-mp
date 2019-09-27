@@ -13,7 +13,7 @@ import { View } from '@tarojs/components'
 import '@c/all_order_pages/order_card/index.styl'
 import './index.styl'
 
-export default class EnquiryInfoComponent extends Component {
+export default class OfferInfoComponent extends Component {
   constructor(props) {
     super(props)
     this.state = {
