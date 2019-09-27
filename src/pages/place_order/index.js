@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: guorui
- * @LastEditTime: 2019-09-27 15:08:42
+ * @LastEditTime: 2019-09-27 15:33:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -129,10 +129,11 @@ export default class PlaceOrder extends Component {
                 <View className='details-form-content details-from-input'>
                   <InputNumber
                     min={1}
+                    max={999}
                     value={vehicles}
                     onChange={this.valueChange.bind(this)}
                   ></InputNumber>
-                  <Text>台</Text>
+                  <Text>辆</Text>
                 </View>
               </View>
               <View className='details-form-item'>
