@@ -24,7 +24,9 @@ export default class OrderItem extends Component {
 
   navigatorToOfferDetails() { 
     let { item } = this.props
-    console.log(item)
+    Taro.navigateTo({
+      url: `/pages/offer_details/index?offer_id=${item.inquiryId}`
+    })
   }
   
   render() {
@@ -65,7 +67,7 @@ export default class OrderItem extends Component {
           <View className='btn cancel-order'>运输状态</View>
           <View className='btn pay-btn'>
             立即支付
-            <Text>(立减50元)</Text>
+            <Text className='small-text'>(立减50元)</Text>
           </View>
         </View>
       </View>

@@ -3,7 +3,7 @@
  * @description: 询价单公共组件页面
  * @Date: 2019-09-23 10:49:11
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-27 14:20:36
+ * @LastEditTime: 2019-09-27 15:27:24
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -24,7 +24,9 @@ export default class OfferItem extends Component {
 
   navigatorToOfferDetails() { 
     let { item } = this.props
-    console.log(item)
+    Taro.navigateTo({
+      url: `/pages/offer_details/index?offer_id=${item.orderId}`
+    })
   }
 
   render() {

@@ -3,7 +3,7 @@
  * @description: 运输状态
  * @Date: 2019-09-24 10:51:52
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-24 16:06:59
+ * @LastEditTime: 2019-09-27 14:55:11
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -43,12 +43,12 @@ class TransportState extends Component {
         address: '北京提车'
       }
     ]
-    const list = ['提车司机', '在途司机', '送车司机']
-    const driverList = list.map((name, index) => (
+    const list = ['司机']
+    const driverList = list.map((name) => (
       <DriverItem
         item={item}
         title={name}
-        key={index}
+        key={name}
       ></DriverItem>
     ))
     return (
