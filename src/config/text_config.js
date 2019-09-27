@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-09-12 11:17:44
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-23 15:02:51
+ * @LastEditTime: 2019-09-27 11:02:06
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,34 +14,22 @@ export const showModalTextContent = '登录后即可发布信息,查看信息详
 export const serviceList = [
   {
     id: 1,
-    label: '点对点'
+    label: '上门提车'
   },
   {
     id: 2,
-    label: '点对门'
-  },
-  {
-    id: 3,
-    label: '门到点'
-  },
-  {
-    id: 4,
-    label: '门到门'
+    label: '上门送车'
   }
 ]
 
 export const carNatureList = [
   {
     id: 1,
-    label: '小客车（车辆长度低于5500mm）'
+    label: '新车'
   },
   {
     id: 2,
-    label: '中型汽车（车辆长度低于5500mm～6600mm）'
-  },
-  {
-    id: 3,
-    label: '大型汽车（车辆长度高于6600mm）'
+    label: '二手车'
   }
 ]
 

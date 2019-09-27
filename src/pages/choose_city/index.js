@@ -1,0 +1,288 @@
+/*
+ * @Author: liuYang
+ * @description: 城市选择
+ * 
+ * 主要是修改redux的chooseCity里面的属性来进行页面交互
+ * 
+ * @Date: 2019-08-30 15:53:51
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-09-20 10:48:55
+ * @mustParam: 必传参数
+ * @optionalParam: 选传参数
+ */
+import Taro, {
+  Component
+} from '@tarojs/taro'
+import {
+  View,
+  Input,
+  Text
+} from '@tarojs/components'
+import { connect } from '@tarojs/redux'
+import classNames from 'classnames'
+import _lodash from 'lodash'
+import api from '@api/index.js'
+import Storage from '@utils/storage.js'
+import Actions from '@store/actions/index.js'
+import './index.styl'
+
+// eslint-disable-next-line import/first
+import Indexes from '@c/indexes/index.js'
+
+class ChooseCity extends Component { 
+  constructor(props) {
+    super(props);
+    this.state = {
+      allCity: [],
+      hotCity: [],
+      filterCityList: []
+    };
+    this.type = ''
+    this.allCityList = []
+    this.timer = null
+    this.throughCityNameList = []
+    this.throughCityIdList = []
+  }
+  
+  componentDidMount() {
+    this.type = this.$router.params && this.$router.params.type
+    this.handleLocationMsg()
+  }
+
+  handleLocationMsg() { 
+    Storage.getStorage('city_list').then(res => {
+      if (res) {
+        let hotCity = res.hotCities || []
+        let allCity = res.all || []
+        this.allCityList = allCity.map(item => {
+          return item.list
+        })
+        this.allCityList = _lodash.flattenDeep(this.allCityList)
+        this.setState({
+          hotCity,
+          allCity
+        })
+      } else {
+        this.getLocationMsg()
+      }
+    })
+  }
+  /**
+   * 获取位置信息
+   * @return void
+   */
+  getLocationMsg() {
+    Taro.showLoading({
+      title: '加载中...',
+      mask: true
+    })
+    api.getLocationMsg({}, this)
+      .then(res => {
+        let hotCity = res.hotCities || []
+        let allCity = res.all || []
+        Storage.setStorage('city_list', res)
+        this.allCityList = allCity.map(item => {
+          return item.list
+        })
+        this.allCityList = _lodash.flattenDeep(this.allCityList)
+        this.setState({
+          hotCity,
+          allCity
+        })
+        Taro.hideLoading()
+      })
+  }
+  /**
+   * 选中处理
+   * @param {Object} item 处理选中  多选时为城市名字
+   * @param {Object} item2 多选时返回值多一个   多选时未城市ID
+   * @return void
+   */
+  onClick(item,item2) {
+    if (this.type === 'start') { 
+      Actions.chooseCity({
+        startingCity: item,
+        targetCity: null
+      })
+      setTimeout(() => {
+        Taro.navigateBack()
+      }, 100)
+    } else if (this.type === 'target') {
+      Actions.chooseCity({
+        targetCity: item,
+        startingCity: null
+      })
+      setTimeout(() => {
+        Taro.navigateBack()
+      }, 100)
+    } else {
+      this.throughCityNameList = item
+      this.throughCityIdList = item2
+    }
+  }
+  
+  /**
+   * 选择了搜索里的城市  事件委托
+   * @param {Object} e event对象
+   * @return void
+   */
+  chooseSearchCity(e) {
+    let { city } = e.target.dataset
+    this.onClick(city)
+  }
+  /**
+   * 搜索城市
+   * @param {Object} e event对象
+   * @return void
+   */
+  searchCity(e) { 
+    let { value } = e.target
+    if (value.length < 1) { 
+      return;
+    }
+    clearTimeout(this.timer)
+    this.timer = setTimeout(() => {
+      let filterCityList = this.allCityList.filter(item => {
+        return ((item && item.cityName) && item.cityName.indexOf(value) !== -1) || ((item && item.spell) && item.spell.indexOf(value) !== -1)
+      })
+      this.setState({
+        filterCityList
+      })
+    },1000)
+  }
+  /**
+   * 取消或者提交摆设按钮   后续可能需要改动  点击提交的时候再修改redux  点击了取消就不动
+   * @return void
+   */
+  cancelChecked(type = 'cancel') {
+    let {editMsg} = this.props
+    if (type === 'submit' && this.throughCityNameList.length) {
+      if (JSON.stringify(editMsg) !== `{}`) {
+        Actions.changeEditData({
+          throughCitys: {
+            cityName: this.throughCityNameList.toString() || '',
+            cityId: this.throughCityIdList.toString() || ''
+          }
+        })
+      }
+      Actions.chooseCity({
+        targetCity: null,
+        startingCity: null,
+        throughCityNameList: this.throughCityNameList,
+        throughCityIdList: this.throughCityIdList
+      })
+      setTimeout(() => {
+        Taro.navigateBack()
+      }, 100)
+    } else if (type === 'submit' && this.throughCityNameList.length <= 0) {
+      Taro.showToast({
+        title: '至少选择一个途经城市',
+        icon: 'none'
+      })
+    } else {
+      Taro.navigateBack()      
+    }
+  }
+
+  config = {
+    navigationBarTitleText: '城市选择'
+  }
+
+  render() {
+    let {
+      hotCity,
+      allCity,
+      filterCityList
+    } = this.state
+    
+    const hotCityList = hotCity.map(city => (
+      <View className='hot-item' dataCity={city} key={city.cityId}>
+        <View className='hot-item-btn' dataCity={city}>{city.cityName}</View>
+      </View>
+    ))
+    
+    const filterList = filterCityList.map(city => (
+      <View className='search-item' dataCity={city} key={city.cityId}>
+        <View className='search-item-name'>{city.cityName}</View>
+        <Text className='iconfont iconxiangyouxuanzejiantoux icon-style-right'></Text>
+      </View>
+    ))
+    
+    const allWrapperClassName = classNames({
+      'choose-city-wrapper': true,
+      'search-padding-top': this.type === 'start' || this.type === 'target',
+    })
+
+    const indexesWrapperClassName = classNames({
+      'indexes-wrapper': true,
+      'search-indexes-wrapper': this.type === 'start' || this.type === 'target',
+      'checked-indexes-wrapper': this.type === 'through'
+    })
+
+    return (
+      <View className={allWrapperClassName}>
+        {
+          (this.type === 'start' || this.type === 'target') ?
+          <View className='choose-city-search-wrapper'>
+            <View className='search-from-wrapper'>
+              <View className='iconfont iconsousuo icon-style'></View>
+              <View className='input-wrapper'>
+                {/* <View className='input-like' > 请输入城市名称进行搜索 </View> */}
+                <Input
+                  className='input'
+                  placeholder='请输入城市名称进行搜索'
+                  onInput={this.searchCity}
+                ></Input>
+              </View>
+            </View>
+          </View>
+          : null
+        }
+        <View className={indexesWrapperClassName}>
+          {
+            filterCityList.length ?
+              <View className='search-wrapper' onClick={this.chooseSearchCity}>
+                {filterList}
+              </View>
+              :
+              <Indexes
+                list={allCity}
+                animation
+                topKey='热门'
+                isVibrate={false}
+                checkBox={this.type === 'through'}
+                onClick={this.onClick.bind(this)}
+              >
+                {
+                  hotCity.length ?
+                    <View className='hot-city-wrapper'>
+                      <View className='hot-title'>热门城市</View>
+                      <View className='hot-city-list' onClick={this.chooseSearchCity}>
+                        {hotCityList}
+                      </View>
+                    </View>
+                    : null
+                }
+              </Indexes>
+          }
+        </View>
+        {
+          this.type === 'through' ?
+            <View className='check-bottom-wrapper'>
+              <View className='btn-public check-cancel' onClick={this.cancelChecked}>取消</View>
+              <View className='btn-public check-submit' onClick={()=>this.cancelChecked('submit')}>确认</View>
+            </View>
+            : null
+        }
+      </View>
+    )
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    userInfo: state.user_msg.userInfo,
+    editMsg: state.publish_msg.editMsg    
+  }
+}
+export default connect(mapStateToProps)(ChooseCity)

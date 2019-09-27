@@ -3,7 +3,7 @@
  * @description: 首页
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-26 11:37:05
+ * @LastEditTime: 2019-09-27 14:07:25
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,10 +14,11 @@ import {
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import NoTitleCard from '@c/no_title_card/index.js'
-import RadioGroups from '@c/radio/index.js'
+import RadioGroups from '@c/radio_group/index.js'
+import CheckBoxGroup from '@c/checkbox_group/index.js'
 import InputNumber from '@c/input_number/index.js'
 import { serviceList, carNatureList } from '@config/text_config.js'
-import api from '@api/index.js'
+// import api from '@api/index.js'
 import './index.styl'
 
 class Index extends Component {
@@ -27,8 +28,7 @@ class Index extends Component {
     this.state = {
       serviceId: 1,
       vehicles: 1,
-      carInfo: 1,
-      open: false
+      carNature: 1
     }
   }
   componentDidShow() { 
@@ -36,11 +36,9 @@ class Index extends Component {
   }
 
   componentDidHide() { }
+  
   login() { 
-    console.log(api)
-    api.user.loginUseOpenID({}, this).then(res => {
-      console.log('aaa')
-    })
+    
   }
   /**
    * 单选
@@ -61,7 +59,7 @@ class Index extends Component {
   chooseCarNature(e) {
     this.setState({
       // eslint-disable-next-line react/no-unused-state
-      carInfo: e.id
+      carNature: e.id
     })
   }
   /**
@@ -90,8 +88,7 @@ class Index extends Component {
     let {
       serviceId,
       vehicles,
-      carInfo,
-      open
+      carNature
     } = this.state
     
     
@@ -119,7 +116,7 @@ class Index extends Component {
           </View>
           <View className='from-item'>
             <View className='label-wrapper'>
-              <View className='from-label'>发车时间</View>
+              <View className='from-label'>收车地点</View>
               <View className='from-right'>xxxx</View>
             </View>
             <View className='label-hide'>
@@ -136,39 +133,41 @@ class Index extends Component {
               <View className='from-right'></View>
             </View>
             <View className='label-hide'>
-              <RadioGroups
+              <CheckBoxGroup
                 options={serviceList}
-                activeIndex={serviceId}
-                onClick={this.chooseRadio.bind(this)}
-              ></RadioGroups>
+              ></CheckBoxGroup>
             </View>
           </View>
-          <View
-            className='close'
-            onClick={this.changeOpen}
-          >补充车辆信息</View>
-          {
-            open ? 
-              <View className='hide-supplement-wrapper'>
-                <View className='supplement-item'>
-                  <View className='text margin-text'>台数:</View>
-                  <InputNumber
-                    min={1}
-                    value={vehicles}
-                    onChange={this.valueChange.bind(this)}
-                  ></InputNumber>
-                </View>
+          <View className='from-item'>
+            <View className='label-wrapper'>
+              <View className='from-label'>输入车辆信息</View>
+              <View className='from-right'>xxxx</View>
+            </View>
+          </View>
+          <View className='from-item'>
+            <View className='label-wrapper'>
+              <View className='from-label'>台数:</View>
+              <View className='from-right'>
+                <InputNumber
+                  min={1}
+                  value={vehicles}
+                  onChange={this.valueChange.bind(this)}
+                ></InputNumber>
+              </View>
+            </View>
+          </View>
+          <View className='from-item'>
+            <View className='label-wrapper'>
+              <View className='from-label'>车辆性质</View>
+              <View className='from-right from-radio'>
                 <RadioGroups
                   options={carNatureList}
-                  type='vertical'
-                  activeIndex={carInfo}
-                  onClick={this.chooseCarNature.bind(this)}
+                  activeIndex={carNature}
+                  onClick={this.chooseRadio.bind(this)}
                 ></RadioGroups>
               </View>
-              :
-              null
-          }
-          
+            </View>
+          </View>
         </NoTitleCard>
         <View className='submit-btn'>立即询价</View>
       </View>
