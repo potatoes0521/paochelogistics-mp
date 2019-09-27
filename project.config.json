@@ -2,7 +2,7 @@
 	"miniprogramRoot": "dist/",
 	"projectname": "paochelogistics-mp",
 	"description": " paochelogistics-mp 跑车物流小程序  taro框架",
-	"appid": "wxb633da0aa161b42c",
+	"appid": "wx90c791e28c3c7d4d",
 	"setting": {
 		"urlCheck": true,
 		"es6": false,
