@@ -1,8 +1,8 @@
 Arguments: 
-  D:\node.exe C:\Users\Administrator\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add components/enquiry_details/index --silent --no-progress
+  D:\node.exe C:\Users\Administrator\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @assets/icon_font/icon.scss --silent --no-progress
 
 PATH: 
-  C:\Users\ADMINI~1\AppData\Local\Temp\yarn--1569228684078-0.7257951857208045;D:\code\paochelogistics-mp\node_modules\.bin;C:\Users\Administrator\AppData\Local\Yarn\Data\link\node_modules\.bin;C:\Users\Administrator\AppData\Local\Yarn\bin;D:\libexec\lib\node_modules\npm\bin\node-gyp-bin;D:\lib\node_modules\npm\bin\node-gyp-bin;D:\node_modules\npm\bin\node-gyp-bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;D:\Git\cmd;D:\;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;;D:\Microsoft VS Code\Microsoft VS Code\bin;C:\Users\Administrator\AppData\Roaming\npm
+  C:\Users\ADMINI~1\AppData\Local\Temp\yarn--1569719902859-0.7179403581460755;D:\code\paochelogistics-mp\node_modules\.bin;C:\Users\Administrator\AppData\Local\Yarn\Data\link\node_modules\.bin;C:\Users\Administrator\AppData\Local\Yarn\bin;D:\libexec\lib\node_modules\npm\bin\node-gyp-bin;D:\lib\node_modules\npm\bin\node-gyp-bin;D:\node_modules\npm\bin\node-gyp-bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;D:\Git\cmd;D:\;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;;D:\Microsoft VS Code\Microsoft VS Code\bin;C:\Users\Administrator\AppData\Roaming\npm
 
 Yarn version: 
   1.17.3
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.npm.taobao.org/components%2fenquiry_details/index: Request "https://registry.npm.taobao.org/components%2fenquiry_details/index" returned a 405
+  Error: https://registry.npm.taobao.org/@assets%2ficon_font/icon.scss: Request "https://registry.npm.taobao.org/@assets%2ficon_font/icon.scss" returned a 405
       at Request.params.callback [as _callback] (C:\Users\Administrator\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66839:18)
       at Request.self.callback (C:\Users\Administrator\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140464:22)
       at Request.emit (events.js:209:13)
