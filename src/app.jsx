@@ -51,6 +51,7 @@ class App extends Component {
       'pages/customer_details/index',
       'pages/customer_edit/index',
       'pages/choose_city/index',
+      'pages/register/index',
     ],
     window: {
       backgroundTextStyle: 'light',
