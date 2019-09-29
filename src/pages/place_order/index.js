@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: guorui
- * @LastEditTime: 2019-09-27 16:54:40
+ * @LastEditTime: 2019-09-29 09:18:15
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -59,6 +59,19 @@ export default class PlaceOrder extends Component {
     })
   }
 
+  /**
+   * @description: 车架号验证
+   * @param {number string} e 输入的车架号
+   * @return: 
+   */  
+  onCarNumberInput(e) {
+    let carCode = e.target.value
+    carCode = carCode.test(/^(?!^\d+$)(?!^[a-zA-Z]+$)[0-9a-zA-Z]{17}$/) //车架号只能是数字和字符
+    this.setState({
+      carNumber: carCode
+    })
+  }
+
   render() {
     let {
       startingCity, // 发车城市
@@ -83,6 +96,13 @@ export default class PlaceOrder extends Component {
       <View className='place-order-wrapper'>
         <View className='place-order-top'>
           <NoTitleCard>
+            <View className='choose-customer'>
+              <View className='customer-info'>
+                <View className='iconfont iconkehu customer-img'></View>
+                <View className='customer-name'>选择代下单客户</View>
+              </View>
+              <View className='iconfont iconxiangyouxuanzejiantoux choose-arrow'></View>
+            </View>
             <View className='start-city'>
               <View className='details-form-item'>
                 <View className='details-form-label'>发车城市:</View>
@@ -90,7 +110,13 @@ export default class PlaceOrder extends Component {
               </View>
               <View className='details-form-item'>
                 <View className='details-form-label'>详细信息:</View>
-                <View className='details-form-content'>{startingCityAddress}</View>
+              </View>
+              <View className='details-form-item'>
+                <Input
+                  className='details-address-input'
+                  placeholder='请填写详细地址'
+                  value={startingCityAddress}
+                ></Input>
               </View>
               <View className='details-form-item'>
                 <View className='details-form-label'>联系人:</View>
@@ -112,6 +138,7 @@ export default class PlaceOrder extends Component {
                     placeholder='请填写联系人电话'
                     maxLength='20'
                     value={startingCityPhone}
+                    auto
                   ></Input>
                 </View>
               </View>
@@ -134,14 +161,13 @@ export default class PlaceOrder extends Component {
               </View>
               <View className='details-form-item'>
                 <View className='details-form-label'>详细信息:</View>
-                <View className='details-form-content'>
-                  <Input
-                    className='details-from-input'
-                    placeholder='请填写详细地址'
-                    maxLength='50'
-                    value={targetCityAddress}
-                  ></Input>
-                </View>
+              </View>
+              <View className='details-form-item'>
+                <Input
+                  className='details-address-input'
+                  placeholder='请填写详细地址'
+                  value={targetCityAddress}
+                ></Input>
               </View>
               <View className='details-form-item'>
                 <View className='details-form-label'>联系人:</View>
@@ -204,20 +230,20 @@ export default class PlaceOrder extends Component {
                     value={vehicles}
                     onChange={this.valueChange.bind(this)}
                   ></InputNumber>
-                  <Text>辆</Text>
+                  <View className='details-from-number'>辆</View>
                 </View>
               </View>
               <View className='details-form-item'>
                 <View className='details-form-label'>车架号:</View>
-                <View className='details-form-content'>
-                  <Input
-                    className='details-from-input'
-                    placeholder='请输入车架号'
-                    maxLength='20'
-                    value={carNumber}
-                  ></Input>
-                </View>
               </View>
+              <View className='details-form-item'>
+                <Input
+                  className='details-address-input'
+                  placeholder='请输入车架号'
+                  value={carNumber}
+                ></Input>
+              </View>
+              <View className='dividing-line'></View>
               <View className='details-form-item'>
                 <View className='details-form-label'>报价:</View>
                 <View className='details-form-content'>
