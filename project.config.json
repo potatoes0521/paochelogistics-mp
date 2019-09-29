@@ -120,6 +120,12 @@
           "name": "询价单详情",
           "pathName": "pages/offer_details/index",
           "scene": null
+        },
+        {
+          "id": -1,
+          "name": "注册",
+          "pathName": "pages/register/index",
+          "scene": null
         }
 			]
 		}
