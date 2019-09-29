@@ -3,7 +3,7 @@
  * @description: 订单底部组件
  * @Date: 2019-09-23 10:00:22
  * @LastEditors: guorui
- * @LastEditTime: 2019-09-26 16:34:26
+ * @LastEditTime: 2019-09-29 15:00:12
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */ 
@@ -35,26 +35,29 @@ export default class FooterStatusComponent extends Component {
         {
           (visible === true) ?
             <View className='immediate_payment'>
-              <View className='upper-button'>
-                <View className='pay-button buttons'>立即支付
-                  <Text className='reduce-price'>(立减50元)</Text>
-                </View>
-                <View className='share-button buttons'>分享砍价</View>
-              </View>
-              {/* <View className='lower-button'>
-                <View className='cancel-button buttons'>取消订单</View>
-                <View className='collect-button buttons'>车到付款</View>
-              </View> */}
+              {
+                (isShow === true) ?
+                  <View className='lower-button'>
+                    <View className='collect-button buttons'>分享给客户</View>
+                  </View>
+                  :
+                  <View className='upper-button'>
+                    <View className='pay-button buttons'>立即支付
+                      <Text className='reduce-price'>(立减50元)</Text>
+                    </View>
+                    <View className='share-button buttons'>分享砍价</View>
+                  </View>
+              }
             </View>
             :
             <View className='collect_payment'>
               <View className='lower-button'>
                 <View className='collect-button buttons'>查看运输状态</View>
-                {
+                {/* {
                   (isShow === true) ?
                     <View className='immediate-pay buttons'>立即支付</View>
                     : null
-                }
+                } */}
               </View>
             </View>
         }

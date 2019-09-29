@@ -3,14 +3,14 @@
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
  * @LastEditors: guorui
- * @LastEditTime: 2019-09-27 15:17:21
+ * @LastEditTime: 2019-09-29 15:33:44
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
-import OfferDetailsComponent from './components/offer_details/index.js'
+import OfferInfoComponent from './components/offer_info/index.js'
 import './index.styl'
 
 export default class OfferDetails extends Component {
@@ -26,7 +26,7 @@ export default class OfferDetails extends Component {
   render() {
     return (
       <View className='page-wrapper'>
-        <OfferDetailsComponent></OfferDetailsComponent>
+        <OfferInfoComponent></OfferInfoComponent>
       </View>
     )
   }
