@@ -3,7 +3,7 @@
  * @description: 询价单页面
  * @Date: 2019-09-20 13:24:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-27 15:30:23
+ * @LastEditTime: 2019-09-29 15:10:56
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,6 +12,8 @@ import { View, Swiper ,SwiperItem } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import Tabs from '@c/tabs/index.js'
 import OfferItem from './components/offer_item/index.js'
+// eslint-disable-next-line import/first
+import NoData from '@c/no_data/index.js'
 // eslint-disable-next-line import/first
 import { offerTabs } from '@config/text_config.js'
 // eslint-disable-next-line import/first
@@ -234,17 +236,26 @@ class Offer extends Component {
           >
             <SwiperItem className='swiper-item'>
               {
-                AllOfferItemList
+                allOfferList.length > 0 ?
+                  <NoData></NoData>
+                  :
+                  AllOfferItemList
               }
             </SwiperItem>
             <SwiperItem className='swiper-item'>
               {
-                hasOfferItemList
+                hasOfferList.length > 0 ?
+                  <NoData></NoData>
+                  :
+                  hasOfferItemList
               }
             </SwiperItem>
             <SwiperItem className='swiper-item'>
-              {
-                onOfferItemList
+              { 
+                noOfferList.length > 0 ?
+                  <NoData></NoData>
+                  :
+                  onOfferItemList
               }
             </SwiperItem>
           </Swiper>
