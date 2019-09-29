@@ -5,7 +5,7 @@ import { Provider } from '@tarojs/redux'
 import configStore from './store/index.js'
 
 import Index from './pages/index'
-
+import './assets/icon_font/icon.scss'
 import './app.styl'
 
 const store = configStore

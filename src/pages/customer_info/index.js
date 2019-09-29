@@ -1,14 +1,14 @@
 /*
  * @Author: liuYang
- * @description: 请填写描述信息
+ * @description: 客户信息列表
  * @Date: 2019-09-27 15:38:07
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-27 15:42:08
+ * @LastEditTime: 2019-09-29 13:47:30
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import Taro, { Component } from '@tarojs/taro'
-import { View } from '@tarojs/components'
+import { View, Input } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 
 import './index.styl'
@@ -20,7 +20,14 @@ class MineInfo extends Component {
   render() { 
     return (
       <View className='page-wrapper'>
-        客户信息列表
+        <View className='search-wrapper'>
+          <View className='search-main'>
+            <View className='iconfont iconyunshuzhong icon-search-style'></View>
+            <View className='input'>
+              <Input></Input>
+            </View>
+          </View>
+        </View>
       </View>
     )
   }
