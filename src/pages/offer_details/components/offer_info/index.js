@@ -3,7 +3,7 @@
  * @description: 询价单内容
  * @Date: 2019-09-23 14:51:02
  * @LastEditors: guorui
- * @LastEditTime: 2019-09-29 15:19:17
+ * @LastEditTime: 2019-09-29 17:30:01
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -36,14 +36,14 @@ export default class OfferInfoComponent extends Component {
           <View className='details-form-item'>
             <View className='details-form-label'>报价状态:</View>
             {
-              (visible === true) ?
+              ( visible ) ?
                 <View className='details-form-content font-color'>￥2189.00</View>
                 :
                 <View className='details-form-content no-offer'>未报价</View>
             }
           </View>
           {
-            (visible === true) ?
+            ( visible ) ?
               <View className='details-form-item'>
                 <View className='details-form-label'>报价有效期至:</View>
                 <View className='details-form-content font-color'>2019-09-20</View>
@@ -75,7 +75,7 @@ export default class OfferInfoComponent extends Component {
             <View className='details-form-content'>1辆</View>
           </View>
           {
-            (visible === true) ?
+            ( visible ) ?
               <View className='details-form-item'>
                 <View className='details-form-label'>报价时间:</View>
                 <View className='details-form-content'>2019-09-17 15:30:54</View>
@@ -89,7 +89,7 @@ export default class OfferInfoComponent extends Component {
         </NoTitleCard>
         <View>
           {
-            (visible === true) ?
+            ( visible ) ?
               <View className='place-order'>立即下单</View>
               :
               <View className='offer-button'>

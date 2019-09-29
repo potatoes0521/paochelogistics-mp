@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: guorui
- * @LastEditTime: 2019-09-29 14:14:21
+ * @LastEditTime: 2019-09-29 17:30:49
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -145,7 +145,7 @@ export default class PlaceOrder extends Component {
       <View className='place-order-wrapper'>
         <View className='place-order-top'>
           {
-            (isChoose === true) ?
+            ( isChoose ) ?
               <View className='choose-customer'>
                 <View className='customer-info'>
                   <View className='iconfont iconkehu customer-img'></View>
