@@ -3,7 +3,7 @@
  * @description: 订单底部组件
  * @Date: 2019-09-23 10:00:22
  * @LastEditors: guorui
- * @LastEditTime: 2019-09-29 16:24:57
+ * @LastEditTime: 2019-09-29 17:28:45
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */ 
@@ -33,10 +33,10 @@ export default class FooterStatusComponent extends Component {
     return (
       <View className='status-wrapper'>
         {
-          (visible === true) ?
+          ( visible ) ?
             <View className='immediate_payment'>
               {
-                (isShow === true) ?
+                ( isShow ) ?
                   <View className='lower-button'>
                     <View className='collect-button buttons'>分享给客户</View>
                   </View>

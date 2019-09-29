@@ -3,7 +3,7 @@
  * @description: 订单详情中发车城市、收车城市的组件
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: guorui
- * @LastEditTime: 2019-09-23 14:30:05
+ * @LastEditTime: 2019-09-29 17:30:28
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -40,7 +40,7 @@ export default class PriceDetailsComponent extends Component {
           <View className='details-form-price'>-￥38.21</View>
         </View>
         {
-          (visible === true) ?
+          (visible ) ?
             <View className='details-form-item'>
               <View className='details-form-label'>立即支付立减:</View>
               <View className='details-form-price'>-￥50</View>
