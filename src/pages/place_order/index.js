@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: guorui
- * @LastEditTime: 2019-09-29 09:18:15
+ * @LastEditTime: 2019-09-29 13:47:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -17,6 +17,7 @@ import {
 import NoTitleCard from '@c/no_title_card/index.js'
 import '@c/all_order_pages/order_card/index.styl'
 import InputNumber from '@c/input_number/index.js'
+// import '@assets/icon_font/icon.scss'
 import './index.styl'
 
 export default class PlaceOrder extends Component {
@@ -95,14 +96,14 @@ export default class PlaceOrder extends Component {
     return (
       <View className='place-order-wrapper'>
         <View className='place-order-top'>
-          <NoTitleCard>
-            <View className='choose-customer'>
-              <View className='customer-info'>
-                <View className='iconfont iconkehu customer-img'></View>
-                <View className='customer-name'>选择代下单客户</View>
-              </View>
-              <View className='iconfont iconxiangyouxuanzejiantoux choose-arrow'></View>
+          <View className='choose-customer'>
+            <View className='customer-info'>
+              <View className='iconfont iconkehu customer-img'></View>
+              <View className='customer-name'>选择代下单客户</View>
             </View>
+            <View className='iconfont iconxiangyouxuanzejiantoux choose-arrow'></View>
+          </View>
+          <NoTitleCard>
             <View className='start-city'>
               <View className='details-form-item'>
                 <View className='details-form-label'>发车城市:</View>
