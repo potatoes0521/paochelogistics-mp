@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: guorui
- * @LastEditTime: 2019-09-29 13:47:16
+ * @LastEditTime: 2019-09-29 14:14:21
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -40,7 +40,8 @@ export default class PlaceOrder extends Component {
       carNature: '二手车', // 车辆类型
       vehicles: 1,        // 台数
       carNumber: '',       // 车架号
-      price: 2134 // 报价
+      price: 2134, // 报价
+      isChoose: true  //判断是否是驿站人员
     }
   }
 
@@ -73,6 +74,52 @@ export default class PlaceOrder extends Component {
     })
   }
 
+  /**
+   * @description: 选择代下单客户
+   * @param {type} 
+   * @return: 
+   */
+  chooseCustomer() {
+    Taro.navigateTo({
+      url: '/pages/customer_info/index?pageType=choose'
+    })
+  }
+
+  /**
+   * @description: 提交订单
+   * @param {type} 
+   * @return: 
+   */
+  submit() {
+    let {
+      startingCity, // 发车城市
+      startingCityAddress, //发车城市详细地址
+      startingCityPerson, //发车城市联系人
+      startingCityPhone, //发车城市联系人电话
+      startingCityNumber, //发车城市联系人身份证号
+      targetCity, // 收车城市
+      targetCityAddress, //收车城市详细地址
+      targetCityPerson, //收车城市联系人
+      targetCityPhone, //收车城市联系人电话
+      targetCityNumber, //收车城市联系人身份证号
+      serviceType, //服务类型，0 上门提车，1 上门送车
+      startingTime, // 发车时间
+      carInformation, // 车辆信息
+      carNature, // 车辆类型
+      vehicles, // 台数
+      carNumber, // 车架号
+      price // 报价
+    } = this.state
+    if (!startingCity || !startingCityAddress || !startingCityPerson || !startingCityPhone || !startingCityNumber || !targetCity || !targetCityAddress || !targetCityPerson || !targetCityPhone || 
+      !targetCityNumber || !serviceType || !startingTime || !carInformation || !carNature || !vehicles || !carNumber || !price) {
+        Taro.showToast({
+          title: '请填写完整信息',
+          icon: 'none'
+        })
+        return
+      }
+  }
+  
   render() {
     let {
       startingCity, // 发车城市
@@ -91,18 +138,23 @@ export default class PlaceOrder extends Component {
       carNature, // 车辆类型
       vehicles, // 台数
       carNumber, // 车架号
-      price// 报价
+      price,  // 报价
+      isChoose  //判断是否是驿站人员
     } = this.state
     return (
       <View className='place-order-wrapper'>
         <View className='place-order-top'>
-          <View className='choose-customer'>
-            <View className='customer-info'>
-              <View className='iconfont iconkehu customer-img'></View>
-              <View className='customer-name'>选择代下单客户</View>
-            </View>
-            <View className='iconfont iconxiangyouxuanzejiantoux choose-arrow'></View>
-          </View>
+          {
+            (isChoose === true) ?
+              <View className='choose-customer'>
+                <View className='customer-info'>
+                  <View className='iconfont iconkehu customer-img'></View>
+                  <View className='customer-name'>选择代下单客户</View>
+                </View>
+                <View className='iconfont iconxiangyouxuanzejiantoux choose-arrow' onClick={this.chooseCustomer}></View>
+              </View>
+              : null
+          }
           <NoTitleCard>
             <View className='start-city'>
               <View className='details-form-item'>
@@ -224,6 +276,7 @@ export default class PlaceOrder extends Component {
               </View>
               <View className='details-form-item'>
                 <View className='details-form-label'>台数:</View>
+                {/* <View className='details-form-content'>{vehicles}辆</View> */}
                 <View className='details-form-content details-from-input'>
                   <InputNumber
                     min={1}
@@ -255,7 +308,7 @@ export default class PlaceOrder extends Component {
             </View>
           </NoTitleCard>
         </View>
-        <View className='place-order-button'>立即下单</View>
+        <View className='place-order-button' onClick={this.submit}>立即下单</View>
       </View>
     )
   }
