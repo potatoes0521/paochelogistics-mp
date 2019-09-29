@@ -3,7 +3,7 @@
  * @description: 询价单页面
  * @Date: 2019-09-20 13:24:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-29 15:10:56
+ * @LastEditTime: 2019-09-29 16:10:03
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -237,25 +237,25 @@ class Offer extends Component {
             <SwiperItem className='swiper-item'>
               {
                 allOfferList.length > 0 ?
-                  <NoData></NoData>
-                  :
                   AllOfferItemList
+                  :
+                  <NoData></NoData>
               }
             </SwiperItem>
             <SwiperItem className='swiper-item'>
               {
                 hasOfferList.length > 0 ?
-                  <NoData></NoData>
-                  :
                   hasOfferItemList
+                  :
+                  <NoData></NoData>
               }
             </SwiperItem>
             <SwiperItem className='swiper-item'>
               { 
                 noOfferList.length > 0 ?
-                  <NoData></NoData>
-                  :
                   onOfferItemList
+                  :
+                  <NoData></NoData>
               }
             </SwiperItem>
           </Swiper>

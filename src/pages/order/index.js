@@ -3,7 +3,7 @@
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-27 15:28:40
+ * @LastEditTime: 2019-09-29 16:10:42
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,6 +12,8 @@ import { View, Swiper ,SwiperItem } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import Tabs from '@c/tabs/index.js'
 import OrderItem from './components/order_item/index.js'
+// eslint-disable-next-line import/first
+import NoData from '@c/no_data/index.js'
 // eslint-disable-next-line import/first
 import { orderTabs } from '@config/text_config.js'
 // eslint-disable-next-line import/first
@@ -231,17 +233,26 @@ class Order extends Component {
           >
             <SwiperItem className='swiper-item'>
               {
-                waitPayItemList
+                waitPayList.length > 0 ?
+                  waitPayItemList
+                  :
+                  <NoData></NoData>
               }
             </SwiperItem>
             <SwiperItem className='swiper-item'>
               {
-                payOverItemList
+                payOverList.length > 0 ?
+                  payOverItemList
+                  :
+                  <NoData></NoData>
               }
             </SwiperItem>
             <SwiperItem className='swiper-item'>
               {
+                allOrderList.length > 0 ?
                 allOrderItemList
+                :
+                <NoData></NoData>
               }
             </SwiperItem>
           </Swiper>
