@@ -1,9 +1,10 @@
 /*
  * @Author: liuYang
  * @description: 首页
+ * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-08 15:47:17
+ * @LastEditTime: 2019-10-08 17:27:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -26,7 +27,9 @@ import {
   showModalAndRegister
 } from '@utils/common.js'
 import {
-  getTimeData
+  getTimeDate,
+  timestampOfDay,
+  getDateTime
 } from '@utils/timer_handle.js'
 import NoTitleCard from '@c/no_title_card/index.js'
 import RadioGroups from '@c/radio_group/index.js'
@@ -45,7 +48,7 @@ class Index extends Component {
       carAmount: 1,   // 台数
       carNature: 1,   // 车辆性质
       carInfo: '',    // 车辆信息
-      sendTime: (new Date().toLocaleDateString()).replace(/\//g, '-'),    // 发车时间
+      sendTime: '',    // 发车时间
       receiveCityId: 0, // 收车城市ID
       receiveCityName: '',
       receiveAddress: '', // 收车详细地址
@@ -54,7 +57,7 @@ class Index extends Component {
       sendAddress: '', // 发车详细地址
       storePickup: 0,  // 上门提车
       homeDelivery: 0, // 上门送车
-      sendTimerInit: (new Date().toLocaleDateString()).replace(/\//g, '-')
+      sendTimerInit: ''
     }
     this.pageParams = {}
   }
@@ -63,22 +66,26 @@ class Index extends Component {
   componentDidMount() { 
     console.log('onReady Didmount')
     this.pageParams = this.$router.params
-  }
-  
-  componentWillUnmount() {
-    console.log('unload')
-    Actions.clearCity({})
+    this.initData()
+    this.handleLocation()
+    this.getCode()
   }
 
   componentDidShow() { 
-    this.handleLocation()
-    this.getCode()
+    
   }
 
   componentDidHide() { 
     console.log('hide')
   }
-  
+  initData() { 
+    let pickerDate = getDateTime(timestampOfDay())
+    console.log(pickerDate)
+    this.setState({
+      sendTime: pickerDate.split(' ')[0],
+      sendTimerInit: pickerDate
+    })
+  }
   /**
    * 获取code  然后去换openid
    * @return void
@@ -185,8 +192,8 @@ class Index extends Component {
    */
   onStartingTimeDateChange(e) {
     let chooseTime = e.detail.value
-    let nowTimer = getTimeData(new Date().toLocaleDateString())
-    let chooseTimer = getTimeData(chooseTime)
+    let nowTimer = getTimeDate(timestampOfDay())
+    let chooseTimer = getTimeDate(chooseTime)
     if (nowTimer > chooseTimer) {
       this.toast('请选择正确的发车时间')
       return
@@ -223,6 +230,10 @@ class Index extends Component {
   handleConvertingGPS(latitude, longitude) {
     convertingGPS(latitude, longitude, 'ad_info').then(res => {
       console.log(res)
+      this.setState({
+        sendCityName: res.city
+      })
+      // 然后去处理一下id
     })
   }
   /**
@@ -470,7 +481,7 @@ class Index extends Component {
               <View className='from-right'>
                 <Text
                   className={classNames({
-                    'from-disabled-text': !receiveCityName
+                    'from-disabled-text': !receiveCityName.length
                   })}
                 >
                   {

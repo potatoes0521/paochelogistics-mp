@@ -3,7 +3,7 @@
  * @description: 注册页面
  * @Date: 2019-08-22 11:58:25
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-08 15:50:29
+ * @LastEditTime: 2019-10-08 16:02:17
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -48,7 +48,7 @@ class usePhoneNumberRegister extends Component {
       verificationCode,
       openId: this.props.userInfo.openId
     }
-    api.register(sendData, this).then(res => {
+    api.user.register(sendData, this).then(res => {
       let resData = Object.assign({}, res.userInfo, res.userInfoExt)
       Actions.changeUserInfo(resData)
       this.login(this.props.userInfo.openId)
@@ -64,7 +64,7 @@ class usePhoneNumberRegister extends Component {
       token: this.props.userInfo.token,
       openId
     }
-    api.loginUseOpenID(sendData, this).then(res => {
+    api.user.loginUseOpenID(sendData, this).then(res => {
       if (res) {
         let resData = Object.assign({}, res)
         if (!sendData.token || sendData.token !== resData.token) {
@@ -140,7 +140,7 @@ class usePhoneNumberRegister extends Component {
     this.setState({
       timerFlag: true
     })
-    api.getVerificationCode(sendData, this)
+    api.user.getVerificationCode(sendData, this)
       .then(() => {
         Taro.showToast({
           title: '验证码已发送'
