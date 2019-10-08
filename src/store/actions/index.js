@@ -13,8 +13,6 @@ import store from '../index.js'
 
 import { changeUserInfo } from './user_msg.js'  // 用户信息
 import {
-  chooseCity,
-  clearCity,
   editRemark,
   changeEditData,
   clearEditData
@@ -32,8 +30,6 @@ export default bindActionCreators({
   createAction,
   changeUserInfo,
   // 发布信息
-  chooseCity,
-  clearCity,
   editRemark,
   changeEditData,
   clearEditData

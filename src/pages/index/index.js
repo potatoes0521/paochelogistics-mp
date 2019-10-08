@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-08 17:27:02
+ * @LastEditTime: 2019-10-08 17:50:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -80,7 +80,6 @@ class Index extends Component {
   }
   initData() { 
     let pickerDate = getDateTime(timestampOfDay())
-    console.log(pickerDate)
     this.setState({
       sendTime: pickerDate.split(' ')[0],
       sendTimerInit: pickerDate

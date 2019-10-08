@@ -6,7 +6,7 @@
  * 
  * @Date: 2019-08-30 15:53:51
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-08 17:33:26
+ * @LastEditTime: 2019-10-08 17:55:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -23,7 +23,6 @@ import classNames from 'classnames'
 import _lodash from 'lodash'
 import api from '@api/index.js'
 import Storage from '@utils/storage.js'
-import Actions from '@store/actions/index.js'
 import './index.styl'
 
 // eslint-disable-next-line import/first

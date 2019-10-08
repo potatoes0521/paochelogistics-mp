@@ -10,8 +10,6 @@
 
 export const CHANGEUSERINFO = 'CHANGEUSERINFO'   // 修改用户信息
 export const REFRESHTOKEN = 'REFRESHTOKEN'  // 重新登录 获取token
-export const CHOOSECITY = 'CHOOSECITY' // 选择城市
-export const CLEARCITY = 'CLEARCITY' // 清除城市
 export const EDITREMARK = 'EDITREMARK' // 备注
 export const CHANGEEDITDATA = 'CHANGEEDITDATA' // 改变要编辑的信息
 export const CLEAREDITMSG = 'CLEAREDITMSG' // 清除编辑信息
