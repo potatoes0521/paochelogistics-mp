@@ -6,7 +6,7 @@
  * 
  * @Date: 2019-08-30 15:53:51
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-20 10:48:55
+ * @LastEditTime: 2019-10-08 15:55:13
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -76,7 +76,7 @@ class ChooseCity extends Component {
       title: '加载中...',
       mask: true
     })
-    api.user.getLocationMsg({}, this)
+    api.city.getLocationMsg({}, this)
       .then(res => {
         let hotCity = res.hotCities || []
         let allCity = res.all || []
