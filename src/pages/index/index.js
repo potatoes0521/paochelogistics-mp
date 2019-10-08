@@ -3,7 +3,7 @@
  * @description: 首页
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-08 15:05:52
+ * @LastEditTime: 2019-10-08 15:17:54
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -32,7 +32,7 @@ import CheckBoxGroup from '@c/checkbox_group/index.js'
 import InputNumber from '@c/input_number/index.js'
 import { serviceList, carNatureList } from '@config/text_config.js'
 // eslint-disable-next-line import/first
-// import api from '@api/index.js'
+import api from '@api/index.js'
 import './index.styl'
 
 class Index extends Component {
@@ -47,9 +47,9 @@ class Index extends Component {
       receiveCityId: 0, // 收车城市ID
       receiveCityName: '',
       receiveAddress: '', // 收车详细地址
-      sendCityId: 0,      // 送车地址ID
+      sendCityId: 0,      // 发车地址ID
       sendCityName: '',
-      sendAddress: '',    // 收车详细地址
+      sendAddress: '', // 发车详细地址
       storePickup: 0,  // 上门提车
       homeDelivery: 0, // 上门送车
       sendTimerInit: (new Date().toLocaleDateString()).replace(/\//g, '-')
@@ -222,7 +222,7 @@ class Index extends Component {
       receiveAddress, // 收车详细地址
       sendCityName,
       sendCityId,
-      sendAddress, // 收车详细地址
+      sendAddress, // 发车详细地址
       storePickup, // 上门提车
       homeDelivery, // 上门送车
     } = this.state
@@ -238,7 +238,23 @@ class Index extends Component {
       this.toast('请选择收车城市')
       return
     }
-    let sendDate = {
+    if (storePickup && !sendAddress) {
+      this.toast('请输入详细发车地址')
+      return
+    }
+    if (homeDelivery && !receiveAddress) {
+      this.toast('请输入详细收车地址')
+      return
+    }
+    if (!carInfo) {
+      this.toast('请输入车辆信息')
+      return
+    }
+    Taro.showLoading({
+      title: '提交中...',
+      mask: true
+    })
+    let sendData = {
       carAmount, // 台数
       carNature, // 车辆性质
       carInfo, // 车辆信息
@@ -252,6 +268,13 @@ class Index extends Component {
       storePickup, // 上门提车
       homeDelivery, // 上门送车
     }
+    api.offer.submitOffer(sendData, this).then(() => {
+      Taro.hideLoading()
+      Taro.showToast({
+        title: '询价单已提交',
+        icon: 'success'
+      })
+    })
   }
   toast(errMsg) {
     Taro.showToast({
@@ -303,7 +326,7 @@ class Index extends Component {
       receiveCityName,
       receiveAddress, // 收车详细地址
       sendCityName,
-      sendAddress, // 收车详细地址
+      sendAddress, // 发车详细地址
       storePickup, // 上门提车
       homeDelivery, // 上门送车
       sendTimerInit
