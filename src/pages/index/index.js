@@ -3,7 +3,7 @@
  * @description: 首页
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-08 15:17:54
+ * @LastEditTime: 2019-10-08 15:47:17
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -18,10 +18,12 @@ import {
 import { connect } from '@tarojs/redux'
 import classNames from 'classnames'
 import Actions from '@store/actions/index.js'
+import refreshToken from '@utils/refreshToken.js'
 import { convertingGPS } from '@utils/location.js'
 import {
   getUserLocation,
-  getSetting
+  getSetting,
+  showModalAndRegister
 } from '@utils/common.js'
 import {
   getTimeData
@@ -54,22 +56,86 @@ class Index extends Component {
       homeDelivery: 0, // 上门送车
       sendTimerInit: (new Date().toLocaleDateString()).replace(/\//g, '-')
     }
+    this.pageParams = {}
+  }
+  
+  
+  componentDidMount() { 
+    console.log('onReady Didmount')
+    this.pageParams = this.$router.params
   }
   
   componentWillUnmount() {
+    console.log('unload')
     Actions.clearCity({})
   }
 
   componentDidShow() { 
     this.handleLocation()
-    // this.sendTimerInit = (new Date().toLocaleDateString()).replace(/\//g, '-')
-    this.login()
+    this.getCode()
   }
 
-  componentDidHide() { }
+  componentDidHide() { 
+    console.log('hide')
+  }
   
-  login() { 
-    
+  /**
+   * 获取code  然后去换openid
+   * @return void
+   */
+  getCode() {
+    Taro.getSystemInfo()
+      .then(res => {
+        const phoneMsg = res.model + '-' + res.system + '-' + res.SDKVersion
+        console.log(phoneMsg, res)
+        Actions.changeUserInfo({
+          userAgent: phoneMsg
+        })
+      })
+    Taro.login().then(res => {
+      this.codeExchangeOpenID(res.code)
+    }).catch(err => {
+      console.log(err, 'code 获取失败')
+    })
+  }
+  /**
+   * code换openid
+   * @param {String} code wx.login获取的code
+   * @return void
+   */
+  codeExchangeOpenID(code) {
+    let sendData = {
+      code
+    }
+    api.user.codeExchangeOpenID(sendData, this).then(async (res) => {
+      let openId = res.openid;
+      Actions.changeUserInfo({
+        openId: openId
+      })
+      this.login(openId);
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+  /**
+   * 使用openID登录
+   * @param {String} openid
+   * @return void
+   */
+  login(openId = this.props.userInfo.openId) {
+    let sendData = {
+      token: this.props.userInfo.token,
+      openId
+    }
+    api.user.loginUseOpenID(sendData, this).then(res => {
+      if (res) {
+        let resData = Object.assign({}, res)
+        if (!sendData.token || sendData.token !== resData.token) {
+          refreshToken.setNewToken(resData.token)
+        }
+        Actions.changeUserInfo(resData)
+      }
+    })
   }
   /**
    * 单选
@@ -248,6 +314,11 @@ class Index extends Component {
     }
     if (!carInfo) {
       this.toast('请输入车辆信息')
+      return
+    }
+    let userId = this.props.userInfo.userId
+    if (!userId) {
+      showModalAndRegister()
       return
     }
     Taro.showLoading({
