@@ -3,14 +3,15 @@
  * @description: 首页
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-27 14:39:33
+ * @LastEditTime: 2019-09-29 16:16:49
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import Taro, { Component } from '@tarojs/taro'
 import {
   View,
-  Input
+  Input,
+  Text
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import NoTitleCard from '@c/no_title_card/index.js'
@@ -98,7 +99,10 @@ class Index extends Component {
           <View className='from-item'>
             <View className='label-wrapper'>
               <View className='from-label'>发车时间</View>
-              <View className='from-right'>xxxx</View>
+              <View className='from-right'>
+                <Text>时间</Text>
+                <Text className='iconfont iconxiangyouxuanzejiantoux icon-right-style'></Text>
+              </View>
             </View>
           </View>
           <View className='from-item'>
