@@ -3,7 +3,7 @@
  * @description: 首页
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-08 12:22:56
+ * @LastEditTime: 2019-10-08 15:05:52
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,7 +12,8 @@ import {
   View,
   Input,
   Text,
-  Picker
+  Picker,
+  Textarea
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import classNames from 'classnames'
@@ -22,6 +23,9 @@ import {
   getUserLocation,
   getSetting
 } from '@utils/common.js'
+import {
+  getTimeData
+} from '@utils/timer_handle.js'
 import NoTitleCard from '@c/no_title_card/index.js'
 import RadioGroups from '@c/radio_group/index.js'
 import CheckBoxGroup from '@c/checkbox_group/index.js'
@@ -39,7 +43,7 @@ class Index extends Component {
       carAmount: 1,   // 台数
       carNature: 1,   // 车辆性质
       carInfo: '',    // 车辆信息
-      sendTime:'',    // 发车时间
+      sendTime: (new Date().toLocaleDateString()).replace(/\//g, '-'),    // 发车时间
       receiveCityId: 0, // 收车城市ID
       receiveCityName: '',
       receiveAddress: '', // 收车详细地址
@@ -48,7 +52,7 @@ class Index extends Component {
       sendAddress: '',    // 收车详细地址
       storePickup: 0,  // 上门提车
       homeDelivery: 0, // 上门送车
-
+      sendTimerInit: (new Date().toLocaleDateString()).replace(/\//g, '-')
     }
   }
   
@@ -58,6 +62,7 @@ class Index extends Component {
 
   componentDidShow() { 
     this.handleLocation()
+    // this.sendTimerInit = (new Date().toLocaleDateString()).replace(/\//g, '-')
     this.login()
   }
 
@@ -113,8 +118,15 @@ class Index extends Component {
    * @return void
    */
   onStartingTimeDateChange(e) {
+    let chooseTime = e.detail.value
+    let nowTimer = getTimeData(new Date().toLocaleDateString())
+    let chooseTimer = getTimeData(chooseTime)
+    if (nowTimer > chooseTimer) {
+      this.toast('请选择正确的发车时间')
+      return
+    }
     this.setState({
-      sendTime: e.detail.value
+      sendTime: chooseTime
     })
   }
   /**
@@ -170,6 +182,84 @@ class Index extends Component {
     })
   }
   /**
+   * 输入发车详细地址
+   * @param {Object} e event参数
+   * @return void
+   */
+  inputSendAddress(e) {
+    this.setState({
+      sendAddress: e.target.value
+    })
+  }
+  /**
+   * 输入收车详细地址
+   * @param {Object} e event参数
+   * @return void
+   */
+  inputReceiveAddress(e) {
+    this.setState({
+      receiveAddress: e.target.value
+    })
+  }
+  /**
+   * 输入车辆信息
+   * @param {Object} e event参数
+   * @return void
+   */
+  inputCarInfo(e) {
+    this.setState({
+      carInfo: e.target.value
+    })
+  }
+  submitOffer() { 
+    let {
+      carAmount, // 台数
+      carNature, // 车辆性质
+      carInfo, // 车辆信息
+      sendTime, // 发车时间
+      receiveCityId,
+      receiveCityName,
+      receiveAddress, // 收车详细地址
+      sendCityName,
+      sendCityId,
+      sendAddress, // 收车详细地址
+      storePickup, // 上门提车
+      homeDelivery, // 上门送车
+    } = this.state
+    if (!sendTime) {
+      this.toast('请选择发车时间')
+      return
+    }
+    if (!sendCityName) {
+      this.toast('请选择发车城市')
+      return
+    }
+    if (!receiveCityName) {
+      this.toast('请选择收车城市')
+      return
+    }
+    let sendDate = {
+      carAmount, // 台数
+      carNature, // 车辆性质
+      carInfo, // 车辆信息
+      sendTime, // 发车时间
+      receiveCityId,
+      receiveCityName,
+      receiveAddress, // 收车详细地址
+      sendCityName,
+      sendCityId,
+      sendAddress, // 收车详细地址
+      storePickup, // 上门提车
+      homeDelivery, // 上门送车
+    }
+  }
+  toast(errMsg) {
+    Taro.showToast({
+      title: errMsg,
+      icon: 'none'
+    })
+  }
+  /**
    * 跳转页面
    * @param {String} pageName='choose_start_city' 跳转到那个页面
    * @return void
@@ -195,11 +285,10 @@ class Index extends Component {
    * @param {Array} props 多选组合的值
    * @return void
    */
-  handleChooseServiceType(props) { 
-    console.log(props)
+  handleChooseServiceType(props) {
     this.setState({
-      storePickup,
-      homeDelivery
+      storePickup: props[0].checked ? 1 : 0,
+      homeDelivery: props[1].checked ? 1 : 0
     })
   }
   config = {
@@ -211,14 +300,13 @@ class Index extends Component {
       carNature, // 车辆性质
       carInfo, // 车辆信息
       sendTime, // 发车时间
-      receiveCityId, // 收车城市ID
       receiveCityName,
       receiveAddress, // 收车详细地址
-      sendCityId, // 送车地址ID
       sendCityName,
       sendAddress, // 收车详细地址
       storePickup, // 上门提车
       homeDelivery, // 上门送车
+      sendTimerInit
     } = this.state
     
     return (
@@ -228,7 +316,12 @@ class Index extends Component {
             <View className='label-wrapper'>
               <View className='from-label'>发车时间</View>
               <View className='from-right'>
-                <Picker className='time-picker' mode='date' onChange={this.onStartingTimeDateChange}>
+                <Picker
+                  className='time-picker'
+                  mode='date'
+                  onChange={this.onStartingTimeDateChange}
+                  start={sendTimerInit}
+                >
                     <Text
                       className={classNames({
                         'from-disabled-text': !sendTime
@@ -261,13 +354,21 @@ class Index extends Component {
                 <Text className='iconfont iconxiangyouxuanzejiantoux icon-right-style'></Text>
               </View>
             </View>
-            <View className='label-hide'>
-              <Input
-                className='input'
-                placeholder='请输入详细收车地址'
-                placeholderClass='input-placeholder'
-              ></Input>
-            </View>
+            {
+              storePickup ?
+                <View className='label-hide'>
+                  <Textarea
+                    className='input'
+                    placeholder='请输入详细发车地址'
+                    placeholderClass='input-placeholder'
+                    maxlength='50'
+                    auto-height
+                    value={sendAddress}
+                    onInput={this.inputSendAddress}
+                  ></Textarea>
+                </View>
+                : null
+            }
           </View>
           <View className='from-item'>
             <View className='label-wrapper' onClick={()=>this.chooseCity('choose_target_city')}>
@@ -285,13 +386,21 @@ class Index extends Component {
                 <Text className='iconfont iconxiangyouxuanzejiantoux icon-right-style'></Text>
               </View>
             </View>
-            <View className='label-hide'>
-              <Input
-                className='input'
-                placeholder='请输入详细收车地址'
-                placeholderClass='input-placeholder'
-              ></Input>
-            </View>
+            {
+              homeDelivery ?
+                <View className='label-hide'>
+                  <Textarea
+                    className='input'
+                    placeholder='请输入详细收车地址'
+                    placeholderClass='input-placeholder'
+                    maxlength='50'
+                    auto-height
+                    value={receiveAddress}
+                    onInput={this.inputReceiveAddress}
+                  ></Textarea>
+                </View>
+                : null
+            }
           </View>
           <View className='from-item'>
             <View className='label-wrapper'>
@@ -315,6 +424,8 @@ class Index extends Component {
                 placeholder='请输入车辆信息,如大众迈腾'
                 placeholderClass='input-placeholder'
                 maxLength='20'
+                value={carInfo}
+                onInput={this.inputCarInfo}
               ></Input>
             </View>
           </View>
@@ -343,7 +454,10 @@ class Index extends Component {
             </View>
           </View>
         </NoTitleCard>
-        <View className='submit-btn'>立即询价</View>
+        <View
+          className='submit-btn'
+          onClick={this.submitOffer}
+        >立即询价</View>
       </View>
     )
   }

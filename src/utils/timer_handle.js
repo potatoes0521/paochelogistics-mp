@@ -1,0 +1,130 @@
+/*
+ * @Author: liuYang
+ * @description: 各种时间处理方法
+ * @Date: 2019-10-08 14:45:15
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-10-08 14:59:21
+ * @mustParam: 必传参数
+ * @optionalParam: 选传参数
+ */
+
+/**
+ * 时间操作 有参数时，时间转换成时间戳 | 无参数就是，获取现在的时间戳
+ */
+export const getTimeData = times => {
+  if (times) {
+    return new Date(times).getTime();
+  } else {
+    return new Date().getTime();
+  }
+};
+// 时间戳转换成时间
+export const getDataTime = times => {
+  let getBYT = num => {
+    if (num == 0) {
+      return "00";
+    } else if (num < 10) {
+      return "0" + num;
+    } else {
+      return num;
+    }
+  };
+  let date = new Date(times); // 13位时间戳
+  let Y = date.getFullYear() + "-";
+  let M =
+    (date.getMonth() + 1 < 10 ?
+      "0" + (date.getMonth() + 1) :
+      date.getMonth() + 1) + "-";
+  let D = getBYT(date.getDate()) + " ";
+  let h = getBYT(date.getHours()) + ":";
+  let m = getBYT(date.getMinutes()) + ":";
+  let s = getBYT(date.getSeconds());
+  return Y + M + D + h + m + s;
+};
+
+// 判断两个时间戳之间，相差天数
+export const VerificationTime = (opt1, opt2, num) => {
+  let timever = (opt2 - opt1) / (1000 * 60 * 60 * 24);
+
+  // 判断是否小于标准值
+  if (num >= timever) {
+    return true;
+  } else {
+    return false;
+  }
+};
+//秒转换成分钟和小时格式
+export const getVideoLength = time => {
+  time = Math.round(time);
+  let t;
+  if (time > -1) {
+    let hour = Math.floor(time / 3600);
+    let min = Math.floor(time / 60) % 60;
+    let sec = time % 60;
+    if (hour == 0) {
+      t = "";
+    } else {
+      if (hour < 10) {
+        t = "0" + hour + ":";
+      } else {
+        t = hour + ":";
+      }
+    }
+    if (min < 10) {
+      t += "0";
+    }
+    t += min + ":";
+    if (sec < 10) {
+      t += "0";
+    }
+    t += sec;
+  }
+  return t;
+};
+
+// 计算两个时间戳之间相差几天 d1 不能大于d2
+export const dataTimeInterval = (d1, d2) => {
+  if (!d1 || !d2) {
+    console.log("Error:传入参数不正确");
+    return;
+  }
+
+  if (d2 < d1) {
+    console.log("Error:第二个时间不能小于第一个时间");
+    return;
+  }
+
+  //如果时间格式是正确的，那下面这一步转化时间格式就可以不用了
+  let dateBegin = new Date(d1); //将-转化为/，使用new Date
+  let dateEnd = d2; //获取当前时间
+  let dateDiff = dateEnd - dateBegin.getTime(); //时间差的毫秒数
+  // let dayDiff = Math.floor(dateDiff / (24 * 3600 * 1000)); //计算出相差天数
+  let leave1 = dateDiff % (24 * 3600 * 1000); //计算天数后剩余的毫秒数
+  let hours = Math.floor(leave1 / (3600 * 1000)); //计算出小时数
+  //计算相差分钟数
+  let leave2 = leave1 % (3600 * 1000); //计算小时数后剩余的毫秒数
+  let minutes = Math.floor(leave2 / (60 * 1000)); //计算相差分钟数
+  //计算相差秒数
+  let leave3 = leave2 % (60 * 1000); //计算分钟数后剩余的毫秒数
+  let seconds = Math.round(leave3 / 1000);
+  let str = "";
+  if (hours < 10) {
+    str += "0" + hours + ":";
+  } else {
+    str += hours + ":";
+  }
+
+  if (minutes < 10) {
+    str += "0" + minutes + ":";
+  } else {
+    str += minutes + ":";
+  }
+
+  if (seconds < 10) {
+    str += "0" + seconds;
+  } else {
+    str += seconds;
+  }
+
+  return str;
+};
