@@ -4,7 +4,7 @@
  * 官网地址 https: //lbs.qq.com/qqmap_wx_jssdk/method-reverseGeocoder.html
  * @Date: 2019-08-14 15:12:20
  * @LastEditors: liuYang
- * @LastEditTime: 2019-08-21 15:57:18
+ * @LastEditTime: 2019-10-08 10:46:19
  */
 
 import Taro from '@tarojs/taro'
@@ -20,11 +20,13 @@ QQMapSDK = new QQMapWX({
   * 使用腾讯地图SDK把坐标转换成地址
   * @param {Number} latitude 纬度
   * @param {Number} longitude 经度
-  * @param {Object | String} allData 
-  *     true是返回Object类型的全部数据  false是详细地址  具体的参考文档
+  * @param {Object | String} resultType 
+  *     formatted_addresses   // 详细地址
+  *     ad_info // 行政区划信息
+  *     // 可自我拓展  不传默认返回全部信息
   * @return void
   */
-export const convertingGPS = (latitude, longitude, allData = false) => {
+export const convertingGPS = (latitude, longitude, resultType = 'formatted_addresses') => {
   return new Promise((resolve,reject) => {
     QQMapSDK.reverseGeocoder({
       location: {
@@ -34,10 +36,16 @@ export const convertingGPS = (latitude, longitude, allData = false) => {
       success: (res) => {
         if (res.status === 0) { 
           const data = res.result
-          if (allData) { 
-            resolve(data)
-          } else {
-            resolve(data.formatted_addresses && data.formatted_addresses.recommend)
+          switch (resultType) {
+            case 'formatted_addresses':
+              resolve(data.formatted_addresses && data.formatted_addresses.recommend)              
+              break;
+            case 'ad_info':
+              resolve(data.ad_info && data.ad_info)
+              break;
+            default:
+              resolve(data)
+              return;
           }
         } else {
           Taro.showToast(res.message)
@@ -48,7 +56,7 @@ export const convertingGPS = (latitude, longitude, allData = false) => {
         reject(err)
       },
       complete: () => {
-        Taro.hideLoading();
+        Taro.hideLoading()
       }
     })
   })

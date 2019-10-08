@@ -76,7 +76,7 @@ class ChooseCity extends Component {
       title: '加载中...',
       mask: true
     })
-    api.getLocationMsg({}, this)
+    api.user.getLocationMsg({}, this)
       .then(res => {
         let hotCity = res.hotCities || []
         let allCity = res.all || []

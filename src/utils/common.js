@@ -3,7 +3,7 @@
  * @description: 针对微信方法等公共系统方法的封装
  * @Date: 2019-08-13 12:26:51
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-19 17:55:20
+ * @LastEditTime: 2019-10-08 10:36:47
  */
 
 import Taro from '@tarojs/taro'
