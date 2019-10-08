@@ -13,7 +13,6 @@ import store from '../index.js'
 
 import { changeUserInfo } from './user_msg.js'  // 用户信息
 import {
-  editRemark,
   changeEditData,
   clearEditData
 } from './publish_msg.js' // 城市信息
@@ -29,8 +28,6 @@ const createAction = (actionType) => {
 export default bindActionCreators({
   createAction,
   changeUserInfo,
-  // 发布信息
-  editRemark,
   changeEditData,
   clearEditData
 }, store.dispatch)
