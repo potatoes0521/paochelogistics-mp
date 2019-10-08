@@ -126,6 +126,12 @@
           "name": "注册",
           "pathName": "pages/register/index",
           "scene": null
+        },
+        {
+          "id": -1,
+          "name": "支付详情",
+          "pathName": "pages/pay_details/index",
+          "scene": null
         }
 			]
 		}

@@ -3,7 +3,7 @@
  * @description: 订单详情中发车城市、收车城市的组件
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: guorui
- * @LastEditTime: 2019-09-29 17:30:28
+ * @LastEditTime: 2019-10-08 09:50:17
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -17,7 +17,7 @@ export default class PriceDetailsComponent extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      visible: false //判断立即支付立减字段是否显示
+      visible: true //判断立即支付立减字段是否显示
     }
   }
 
@@ -49,7 +49,7 @@ export default class PriceDetailsComponent extends Component {
         }
         <View className='details-form-item'>
           <View className='details-form-label'>应付金额:</View>
-          <View className='details-form-price'>￥2150.79</View>
+          <View className='details-form-price'>￥2100.79</View>
         </View>
       </View>
     )
