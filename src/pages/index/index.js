@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-09 10:05:09
+ * @LastEditTime: 2019-10-09 11:27:18
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -59,7 +59,9 @@ class Index extends Component {
       homeDelivery: 0, // 上门送车
       sendTimerInit: ''
     }
+    this.initCity = {}
     this.pageParams = {}
+    this.serviceList = serviceList
   }
   
   
@@ -71,18 +73,29 @@ class Index extends Component {
     this.getCode()
   }
 
-  componentDidShow() { 
-    
-  }
-
-  componentDidHide() { 
-    console.log('hide')
-  }
+  /**
+   * 初始化数据
+   * @return void
+   */
   initData() { 
     let pickerDate = getDateTime(timestampOfDay())
     this.setState({
       sendTime: pickerDate.split(' ')[0],
-      sendTimerInit: pickerDate
+      sendTimerInit: pickerDate,
+      carAmount: 1, // 台数
+      usedType: 1, // 车辆性质
+      carInfo: '', // 车辆信息
+      receiveCityId: 0, // 收车城市ID
+      receiveCityName: '',
+      receiveAddress: '', // 收车详细地址
+      sendCityId: 0, // 发车地址ID
+      sendCityName: this.initCity.cityName || '',
+      sendAddress: '', // 发车详细地址
+      storePickup: 0, // 上门提车
+      homeDelivery: 0, // 上门送车
+    })
+    this.serviceList.forEach(item => {
+      item.checked = false
     })
   }
   /**
@@ -144,22 +157,11 @@ class Index extends Component {
     })
   }
   /**
-   * 单选
+   * 单选 选择车辆性质
    * @param {Object} e event对象
    * @return void
    */
   chooseRadio(e) {
-    this.setState({
-      // eslint-disable-next-line react/no-unused-state
-      serviceId: e.id
-    })
-  }
-  /**
-   * 单选
-   * @param {Object} e event对象
-   * @return void
-   */
-  chooseCarNature(e) {
     this.setState({
       // eslint-disable-next-line react/no-unused-state
       usedType: e.id
@@ -173,15 +175,6 @@ class Index extends Component {
   valueChange(e) {
     this.setState({
       carAmount: e
-    })
-  }
-  /**
-   * 点击补充车辆信息
-   * @return void
-   */
-  changeOpen() { 
-    this.setState({
-      open: !this.state.open
     })
   }
   /**
@@ -229,6 +222,7 @@ class Index extends Component {
   handleConvertingGPS(latitude, longitude) {
     convertingGPS(latitude, longitude, 'ad_info').then(res => {
       console.log(res)
+      this.initCity.cityName = res.city
       this.setState({
         sendCityName: res.city
       })
@@ -350,6 +344,7 @@ class Index extends Component {
       homeDelivery, // 上门送车
     }
     api.offer.submitOffer(sendData, this).then(() => {
+      this.initData()
       Taro.hideLoading()
       Taro.showToast({
         title: '询价单已提交',
@@ -390,6 +385,7 @@ class Index extends Component {
    * @return void
    */
   handleChooseServiceType(props) {
+    this.serviceList = props
     this.setState({
       storePickup: props[0].checked ? 1 : 0,
       homeDelivery: props[1].checked ? 1 : 0
@@ -511,7 +507,7 @@ class Index extends Component {
               <View className='from-label'>服务</View>
               <View className='from-right'>
                 <CheckBoxGroup
-                  options={serviceList}
+                  options={this.serviceList}
                   onClick={this.handleChooseServiceType.bind(this)}
                 ></CheckBoxGroup>
               </View>
