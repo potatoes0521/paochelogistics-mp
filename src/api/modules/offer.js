@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 询价单接口
  * @Date: 2019-09-26 11:23:26
- * @LastEditors: liuYang
- * @LastEditTime: 2019-10-09 10:03:24
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-10-09 15:08:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,7 +16,7 @@ export default {
   },
   // 询价单取消询价
   cancelOffer(data, that) {
-    return requestHandle.post(`inquiryorder/cancel`, data, that);
+    return requestHandle.post(`inquiryorder/cancel/${data.inquiryId}`, data, that);
   },
   // 询价单详情
   getOfferDetails(data, that) {
@@ -28,10 +28,10 @@ export default {
   },
   // 询价单失效，再次询价
   getReinquiryOrder(data, that) {
-    return requestHandle.post(`inquiryorder/reinquiry`, data, that);
+    return requestHandle.post(`inquiryorder/reinquiry/${data.inquiryId}`, data, that);
   },
   // 询价单催报价
   getPromptOffer(data, that) {
-    return requestHandle.post(`inquiryorder/urge`, data, that);
+    return requestHandle.post(`inquiryorder/urge/${data.inquiryId}`, data, that);
   },
 }
