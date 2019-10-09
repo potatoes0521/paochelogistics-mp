@@ -3,7 +3,7 @@
  * @description: 订单item
  * @Date: 2019-09-23 14:42:25
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-23 16:32:45
+ * @LastEditTime: 2019-10-09 10:10:24
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -25,7 +25,7 @@ export default class OrderItem extends Component {
   navigatorToOfferDetails() { 
     let { item } = this.props
     Taro.navigateTo({
-      url: `/pages/offer_details/index?offer_id=${item.inquiryId}`
+      url: `/pages/offer_details/index?order_id=${item.orderId}`
     })
   }
   

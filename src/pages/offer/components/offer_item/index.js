@@ -3,7 +3,7 @@
  * @description: 询价单公共组件页面
  * @Date: 2019-09-23 10:49:11
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-09 10:01:31
+ * @LastEditTime: 2019-10-09 10:09:21
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -25,7 +25,7 @@ export default class OfferItem extends Component {
   navigatorToOfferDetails() { 
     let { item } = this.props
     Taro.navigateTo({
-      url: `/pages/offer_details/index?offer_id=${item.orderId}`
+      url: `/pages/offer_details/index?offer_id=${item.inquiryId}`
     })
   }
 
@@ -61,7 +61,7 @@ export default class OfferItem extends Component {
           </View>
           <View className='list-item'>发车时间：{item.sendTime && item.sendTime.split('T')[0]}</View>
           {
-            (!item.storePickup && !item.storePickup) ? 
+            (!item.storePickup && !item.homeDelivery) ?
               null :
               <View className='list-item'>
                 服务：
@@ -69,10 +69,10 @@ export default class OfferItem extends Component {
                   item.storePickup ? '上门提车' : ''
                 }
                 {
-                  item.storePickup && item.storePickup ? ',' : ''
+                  item.storePickup && item.homeDelivery ? ',' : ''
                 }
                 {
-                  item.storePickup ? '上门送车' : ''
+                  item.homeDelivery ? '上门送车' : ''
                 }
               </View>
           }
