@@ -3,7 +3,7 @@
  * @description: 询价单内容
  * @Date: 2019-09-23 14:51:02
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-09 10:16:13
+ * @LastEditTime: 2019-10-09 10:17:38
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -93,7 +93,7 @@ export default class OfferInfoComponent extends Component {
     let sendData = {
       id: this.state.inquiryId
     }
-    api.addOfferOrder(sendData, this)
+    api.submitOffer(sendData, this)
       .then(() => {
         Taro.navigateTo({
           url: 'pages/offer/index'
