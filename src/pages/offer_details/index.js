@@ -3,7 +3,7 @@
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-09 12:08:03
+ * @LastEditTime: 2019-10-09 16:06:12
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -103,7 +103,7 @@ class OfferDetails extends Component {
    */
   submitOfferOrder() {
     let sendData = {
-      id: this.state.inquiryId
+      inquiryId: this.state.inquiryId
     }
     api.offer.submitOffer(sendData, this)
       .then(() => {
@@ -127,7 +127,7 @@ class OfferDetails extends Component {
       mask: true
     })
     let sendData = {
-      id: this.state.inquiryId
+      inquiryId: this.state.inquiryId
     }
     api.offer.cancelOffer(sendData, this)
       .then(() => {
@@ -152,7 +152,7 @@ class OfferDetails extends Component {
       mask: true
     })
     let sendData = {
-      id: this.state.inquiryId
+      inquiryId: this.state.inquiryId
     }
     api.offer.getPromptOffer(sendData, this)
       .then(() => {
@@ -177,7 +177,7 @@ class OfferDetails extends Component {
       mask: true
     })
     let sendData = {
-      id: this.state.inquiryId
+      inquiryId: this.state.inquiryId
     }
     api.offer.getReinquiryOrder(sendData, this)
       .then(() => {
@@ -190,7 +190,6 @@ class OfferDetails extends Component {
 
   render() {
     let {
-      isActive,
       price,
       dueTime,
       sendTime,
@@ -208,8 +207,7 @@ class OfferDetails extends Component {
       statusDesc
     } = this.state
     const cancelOfferClassName = classNames({
-      'offer-details-wrapper': true,
-      'disabled-text': isActive !== 1
+      'disabled-text': status === 30 || status === 40
     })
     return (
       <View className='page-wrapper'>
@@ -253,7 +251,7 @@ class OfferDetails extends Component {
                       storePickup !== 0 ? '上门提车' : ''
                     }
                     {
-                      storePickup !== 0 && homeDelivery !== 0 ? ',' : ''
+                      storePickup !== 0 && homeDelivery !== 0 ? '，' : ''
                     }
                     {
                       homeDelivery !== 0 ? '上门送车' : ''
