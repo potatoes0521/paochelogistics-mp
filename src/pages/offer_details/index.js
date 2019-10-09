@@ -3,7 +3,7 @@
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-09 11:31:10
+ * @LastEditTime: 2019-10-09 11:34:33
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -55,7 +55,7 @@ export default class OfferDetails extends Component {
    * @return: 
    */
   getOfferDetails() {
-    if (!this.pageParams.offerId) {
+    if (!this.pageParams.offer_id) {
       Taro.navigateBack()
       return;
     }
