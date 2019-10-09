@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-09 14:04:26
+ * @LastEditTime: 2019-10-09 15:41:46
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -103,6 +103,10 @@ class Index extends Component {
    * @return void
    */
   getCode() {
+    Taro.showLoading({
+      title: '加载中...',
+      mask: true
+    })
     Taro.getSystemInfo()
       .then(res => {
         const phoneMsg = res.model + '-' + res.system + '-' + res.SDKVersion
@@ -147,6 +151,7 @@ class Index extends Component {
       openId
     }
     api.user.loginUseOpenID(sendData, this).then(res => {
+      Taro.hideLoading()
       if (res) {
         let resData = Object.assign({}, res)
         if (!sendData.token || sendData.token !== resData.token) {
@@ -402,7 +407,7 @@ class Index extends Component {
     })
   }
   config = {
-    navigationBarTitleText: '首页'
+    navigationBarTitleText: '跑车物流'
   }
   render() {
     let {

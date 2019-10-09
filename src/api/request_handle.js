@@ -3,7 +3,7 @@
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-09 11:43:29
+ * @LastEditTime: 2019-10-09 16:39:09
  */
 
 // 默认请求连接
@@ -44,11 +44,13 @@ export default {
       'openId': userInfo.openId || '',
       'userId': userInfo.userId || '', // 常用请求全部放在请求头上
       'unionId': userInfo.unionId || '',
-      'terminalType': userInfo.terminalType || 1,
-      'userType': userInfo.userType || 1,
-      'sourceId': userInfo.sourceId || 1,
-      'userAgent': userInfo.userAgent || '',
-      'appVersion': appVersion
+      'terminalType': userInfo.terminalType || 1, // 终端类型  1 小程序   2 H5  3 APP
+      'userType': userInfo.userType || 1, //  0 驿站人员  1 自主注册   2 驿站人员添加客户
+      'sourceId': userInfo.sourceId || 3, // 1 跑车帮小程序 2 跑车帮app 3 跑车物流小程序
+      'userAgent': userInfo.userAgent || '',  // 系统信息
+      'appVersion': appVersion, // 版本号
+      'appType': 1, // 1 微信小程序 2 支付宝小程序
+      'systemId': 2 // 1 跑车帮   2 跑车物流
     })
 
     return new Promise((resolve, reject) => {
@@ -101,7 +103,8 @@ export default {
                   token: "e56eeabf15316920137dbf850cf0e48e",
                   unionId: "fjlfjsalfjsalkfjjfdsafjfkdsj",
                   terminalType: "1",
-                  userAgent: ""
+                  userAgent: "",
+                  userType: 0
                 }
               }
               if (!+resData.code || +resData.code === 200002 || +resData.code == 200) {
