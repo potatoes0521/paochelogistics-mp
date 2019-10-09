@@ -3,13 +3,14 @@
  * @description: 运输状态
  * @Date: 2019-09-24 10:51:52
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-27 14:55:11
+ * @LastEditTime: 2019-10-09 16:15:09
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
+import api from '@api/index.js'
 import DriverItem from './components/driver_item/index.js'
 import TimeLine from './components/time_line/index.js'
 import './index.styl'
@@ -17,32 +18,37 @@ import './index.styl'
 class TransportState extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      wayCityList: []
+    }
+    this.pageParams = {}
   }
+
+  componentWillMount() { 
+    this.pageParams = this.$router.params
+    this.getOrderTransportList()
+  }
+
+  getOrderTransportList() { 
+    let sendData = {
+      orderId: this.pageParams.order_id
+    }
+    api.order.getOrderTransportList(sendData, this).then(res => {
+      if (res) { 
+        this.setState({
+          wayCityList: res
+        })
+      }
+    })
+  }
+
   render() { 
     const item = {
       name: '张海涛',
       phone: '186****7658',
       idCard: '176345783267459876'
     }
-    const timeArray = [
-      {
-        time: '08-04 14:00',
-        address: '黄浦江区静安庄路产业园2栋黄浦江区静安庄路产业园2栋黄浦江区静安庄路产业园2栋黄浦江区静安庄路产业园2栋'
-      },
-      {
-        time: '08-04 14:00',
-        address: '黄浦江区静安庄路'
-      },
-      {
-        time: '08-04 14:00',
-        address: '黄浦江区静安庄路产业园2栋黄浦江区静'
-      },
-      {
-        time: '08-04 14:00',
-        address: '北京提车'
-      }
-    ]
+    let {wayCityList} = this.state
     const list = ['司机']
     const driverList = list.map((name) => (
       <DriverItem
@@ -57,7 +63,7 @@ class TransportState extends Component {
           driverList
         }
         <TimeLine
-          timeArray={timeArray}
+          timeArray={wayCityList}
         ></TimeLine>
       </View>
     )

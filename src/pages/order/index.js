@@ -3,7 +3,7 @@
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-29 16:10:42
+ * @LastEditTime: 2019-10-09 15:39:43
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -182,7 +182,8 @@ class Order extends Component {
     }
   }
   config = {
-    navigationBarTitleText: '订单'
+    navigationBarTitleText: '我的订单',
+    enablePullDownRefresh: true
   }
 
   render() {

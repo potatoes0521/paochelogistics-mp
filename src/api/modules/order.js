@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-09-26 11:23:34
- * @LastEditors: guorui
- * @LastEditTime: 2019-10-08 17:23:02
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-10-09 15:37:37
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -26,4 +26,7 @@ export default {
   placeOrder(data, that) {
     return requestHandle.post(`order/place`, data, that);
   },
+  getOrderTransportList(data, that) { 
+    return requestHandle.get(`position/list/${data.orderId}`, data, that);
+  }
 }

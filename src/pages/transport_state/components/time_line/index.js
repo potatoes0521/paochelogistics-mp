@@ -3,7 +3,7 @@
  * @description: 运输状态时间轴
  * @Date: 2019-09-24 14:59:07
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-24 16:30:22
+ * @LastEditTime: 2019-10-09 16:14:48
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -49,8 +49,8 @@ export default class TimeLine extends Component {
           key={index}
         >
           <View className='path-time'>
-            <View className='date'>08-04</View>
-            <View className='time'>14:00</View>
+            <View className='date'>{item.createTime.slice(5,10)}</View>
+            <View className='time'>{item.createTime.slice(12,16)}</View>
           </View>
           <View className='path-icon'>
             <View className={iconClassName}></View>
@@ -66,7 +66,9 @@ export default class TimeLine extends Component {
             {
               index === timeArray.length - 1 ? '[始发地址]' : ''
             }
-            { item.address }
+            {
+              item.location
+            }
           </View>
         </View>
       )
@@ -93,8 +95,8 @@ export default class TimeLine extends Component {
           key={index}
         >
           <View className='path-time'>
-            <View className='date'>08-04</View>
-            <View className='time'>14:00</View>
+            <View className='date'>{item.createTime.slice(5,10)}</View>
+            <View className='time'>{item.createTime.slice(12,16)}</View>
           </View>
           <View className='path-icon'>
             <View className={iconClassName}></View>
@@ -107,7 +109,9 @@ export default class TimeLine extends Component {
             {
               index === 0 ? '[到达地址]' : ''
             }
-            { item.address }
+            {
+              item.location
+            }
           </View>
         </View>
       )
@@ -119,7 +123,7 @@ export default class TimeLine extends Component {
         <View className='path-title'>{title}:</View>
         <View className='path-list'>
           {
-            open ? pathList : copyPathList
+            pathList
           }
           <View className='under-btn'></View>
         </View>

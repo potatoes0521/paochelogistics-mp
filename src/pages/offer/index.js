@@ -3,7 +3,7 @@
  * @description: 询价单页面
  * @Date: 2019-09-20 13:24:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-09 10:18:13
+ * @LastEditTime: 2019-10-09 15:39:13
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -182,7 +182,8 @@ class Offer extends Component {
     }
   }
   config = {
-    navigationBarTitleText: '询价单'
+    navigationBarTitleText: '我的询价单',
+    enablePullDownRefresh: true
   }
   render() {
     let {
