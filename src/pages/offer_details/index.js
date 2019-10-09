@@ -2,21 +2,22 @@
  * @Author: guorui
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
- * @LastEditors: guorui
- * @LastEditTime: 2019-10-09 11:34:33
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-10-09 11:44:49
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
+import { connect } from '@tarojs/redux'
 import NoTitleCard from '@c/no_title_card/index.js'
 import classNames from 'classnames'
 import '@c/all_order_pages/order_card/index.styl'
-import api from '@api/modules/offer.js'
+import api from '@api/index.js'
 import './index.styl'
 
-export default class OfferDetails extends Component {
+class OfferDetails extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -64,9 +65,9 @@ export default class OfferDetails extends Component {
       mask: true
     })
     let sendData = {
-      id: this.pageParams.offer_id
+      inquiryId: this.pageParams.offer_id
     }
-    api.getOfferDetails(sendData, this)
+    api.offer.getOfferDetails(sendData, this)
       .then(res => {
         this.setState({
           inquiryId: res.inquiryId,
@@ -98,7 +99,7 @@ export default class OfferDetails extends Component {
     let sendData = {
       id: this.state.inquiryId
     }
-    api.submitOffer(sendData, this)
+    api.offer.submitOffer(sendData, this)
       .then(() => {
         Taro.navigateTo({
           url: 'pages/offer/index'
@@ -122,7 +123,7 @@ export default class OfferDetails extends Component {
     let sendData = {
       id: this.state.inquiryId
     }
-    api.cancelOffer(sendData, this)
+    api.offer.cancelOffer(sendData, this)
       .then(() => {
         Taro.showToast({
           title: '取消询价成功',
@@ -147,7 +148,7 @@ export default class OfferDetails extends Component {
     let sendData = {
       id: this.state.inquiryId
     }
-    api.getPromptOffer(sendData, this)
+    api.offer.getPromptOffer(sendData, this)
       .then(() => {
         Taro.showToast({
           title: '催报价成功',
@@ -172,7 +173,7 @@ export default class OfferDetails extends Component {
     let sendData = {
       id: this.state.inquiryId
     }
-    api.getReinquiryOrder(sendData, this)
+    api.offer.getReinquiryOrder(sendData, this)
       .then(() => {
         Taro.showToast({
           title: '再次询价成功',
@@ -302,3 +303,9 @@ export default class OfferDetails extends Component {
     )
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    userInfo: state.user_msg.userInfo
+  }
+}
+export default connect(mapStateToProps)(OfferDetails)

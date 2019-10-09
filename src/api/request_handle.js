@@ -3,7 +3,7 @@
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-09 09:46:59
+ * @LastEditTime: 2019-10-09 11:43:29
  */
 
 // 默认请求连接
@@ -37,10 +37,7 @@ export default {
     const sign = createSignData(data, sign_id)[1]
 
     console.log(JSON.stringify(data), "sign=" + sign, url)
-
-    const {
-      userInfo
-    } = that.props || {};
+    const { userInfo } = that.props || {};
     const headerUserLogin = JSON.stringify({
       'token': userInfo.token || '',
       'mobile': userInfo.mobile || '',
