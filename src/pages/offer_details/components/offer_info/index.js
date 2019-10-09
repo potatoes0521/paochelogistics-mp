@@ -3,7 +3,7 @@
  * @description: 询价单内容
  * @Date: 2019-09-23 14:51:02
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-09 09:56:23
+ * @LastEditTime: 2019-10-09 10:04:01
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -204,10 +204,14 @@ export default class OfferInfoComponent extends Component {
               <View className='details-form-label'>收车城市:</View>
               <View className='details-form-content'>{receive_city_id}</View>
             </View>
-            <View className='details-form-item'>
-              <View className='details-form-label'>服务:</View>
-              <View className='details-form-content'>{home_delivery && store_pickup}</View>
-            </View>
+            {
+              (home_delivery !== 0 || store_pickup !== 0) ?
+                <View className='details-form-item'>
+                  <View className='details-form-label'>服务:</View>
+                  <View className='details-form-content'>{home_delivery && store_pickup}</View>
+                </View>
+                : null
+            }
             <View className='details-form-item'>
               <View className='details-form-label'>车辆信息:</View>
               <View className='details-form-content'>{car_info}</View>
