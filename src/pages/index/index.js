@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-09 11:27:18
+ * @LastEditTime: 2019-10-09 14:04:26
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -88,7 +88,7 @@ class Index extends Component {
       receiveCityId: 0, // 收车城市ID
       receiveCityName: '',
       receiveAddress: '', // 收车详细地址
-      sendCityId: 0, // 发车地址ID
+      sendCityId: this.initCity.cityId || '', // 发车地址ID
       sendCityName: this.initCity.cityName || '',
       sendAddress: '', // 发车详细地址
       storePickup: 0, // 上门提车
@@ -222,11 +222,21 @@ class Index extends Component {
   handleConvertingGPS(latitude, longitude) {
     convertingGPS(latitude, longitude, 'ad_info').then(res => {
       console.log(res)
-      this.initCity.cityName = res.city
-      this.setState({
-        sendCityName: res.city
-      })
+      this.cityNameChangeCityID(res.city)
       // 然后去处理一下id
+    })
+  }
+  cityNameChangeCityID(cityName) { 
+    let sendData = {
+      locationName: cityName
+    }
+    api.city.cityNameChangeCityID(sendData, this).then(res => {
+      this.initCity.cityName = cityName
+      this.initCity.cityId = res.cityId
+      this.setState({
+        sendCityName: cityName,
+        sendCityId: res.cityId
+      })
     })
   }
   /**

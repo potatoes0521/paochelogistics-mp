@@ -3,7 +3,7 @@
  * @description: 询价单公共组件页面
  * @Date: 2019-09-23 10:49:11
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-09 10:19:51
+ * @LastEditTime: 2019-10-09 15:22:30
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -34,7 +34,7 @@ export default class OfferItem extends Component {
     const allWrapperClassName = classNames(
       'offer-item',
       {
-        'disabled-text': item.status === 30
+        'disabled-text': item.status === 30 || item.status === 40
       }
     )
     const offerStatusClassName = classNames(
