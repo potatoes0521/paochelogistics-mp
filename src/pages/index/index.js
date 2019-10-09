@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-08 17:50:40
+ * @LastEditTime: 2019-10-09 09:55:17
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -35,7 +35,7 @@ import NoTitleCard from '@c/no_title_card/index.js'
 import RadioGroups from '@c/radio_group/index.js'
 import CheckBoxGroup from '@c/checkbox_group/index.js'
 import InputNumber from '@c/input_number/index.js'
-import { serviceList, carNatureList } from '@config/text_config.js'
+import { serviceList, usedTypeList } from '@config/text_config.js'
 // eslint-disable-next-line import/first
 import api from '@api/index.js'
 import './index.styl'
@@ -46,7 +46,7 @@ class Index extends Component {
     super(props)
     this.state = {
       carAmount: 1,   // 台数
-      carNature: 1,   // 车辆性质
+      usedType: 1,   // 车辆性质
       carInfo: '',    // 车辆信息
       sendTime: '',    // 发车时间
       receiveCityId: 0, // 收车城市ID
@@ -162,7 +162,7 @@ class Index extends Component {
   chooseCarNature(e) {
     this.setState({
       // eslint-disable-next-line react/no-unused-state
-      carNature: e.id
+      usedType: e.id
     })
   }
   /**
@@ -290,7 +290,7 @@ class Index extends Component {
   submitOffer() { 
     let {
       carAmount, // 台数
-      carNature, // 车辆性质
+      usedType, // 车辆性质
       carInfo, // 车辆信息
       sendTime, // 发车时间
       receiveCityId,
@@ -337,7 +337,7 @@ class Index extends Component {
     })
     let sendData = {
       carAmount, // 台数
-      carNature, // 车辆性质
+      usedType, // 车辆性质
       carInfo, // 车辆信息
       sendTime, // 发车时间
       receiveCityId,
@@ -401,7 +401,7 @@ class Index extends Component {
   render() {
     let {
       carAmount, // 台数
-      carNature, // 车辆性质
+      usedType, // 车辆性质
       carInfo, // 车辆信息
       sendTime, // 发车时间
       receiveCityName,
@@ -550,8 +550,8 @@ class Index extends Component {
               <View className='from-label'>车辆性质</View>
               <View className='from-right from-radio'>
                 <RadioGroups
-                  options={carNatureList}
-                  activeIndex={carNature}
+                  options={usedTypeList}
+                  activeIndex={usedType}
                   onClick={this.chooseRadio.bind(this)}
                 ></RadioGroups>
               </View>
