@@ -3,7 +3,7 @@
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-09 15:39:43
+ * @LastEditTime: 2019-10-09 16:35:12
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -193,6 +193,7 @@ class Order extends Component {
       payOverList,
       allOrderList
     } = this.state
+    let { userInfo } =  this.props
     const waitPayItemList = waitPayList.map(item => {
       // const timeArray = item.createTime.split('T')
       // item.NewCreateTime = timeArray[0] + " " + timeArray[1].split('.')[0]
@@ -200,6 +201,7 @@ class Order extends Component {
         <OrderItem
           key={item.orderId}
           item={item}
+          userInfo={userInfo}
         ></OrderItem>
       )
     })
@@ -208,6 +210,7 @@ class Order extends Component {
         <OrderItem
           key={item.orderId}
           item={item}
+          userInfo={userInfo}
         ></OrderItem>
       )
     })
@@ -216,6 +219,7 @@ class Order extends Component {
         <OrderItem
           key={item.orderId}
           item={item}
+          userInfo={userInfo}
         ></OrderItem>
       )
     })

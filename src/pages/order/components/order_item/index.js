@@ -3,7 +3,7 @@
  * @description: 订单item
  * @Date: 2019-09-23 14:42:25
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-09 15:35:39
+ * @LastEditTime: 2019-10-09 16:39:29
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -30,7 +30,10 @@ export default class OrderItem extends Component {
   }
   
   render() {
-    let { item } = this.props
+    let {
+      item,
+      userInfo
+    } = this.props
     const offerMsg = item && item.inquiryOrderVO
     const allWrapperClassName = classNames(
       'order-item',
@@ -53,7 +56,7 @@ export default class OrderItem extends Component {
                   offerMsg.receiveCityName
                 }
               </Text>
-              <Text className='service-type'>
+              {/* <Text className='service-type'>
                 {
                   offerMsg.storePickup ? '上门提车' : ''
                 }
@@ -63,7 +66,7 @@ export default class OrderItem extends Component {
                 {
                   offerMsg.homeDelivery ? '上门送车' : ''
                 }
-              </Text>
+              </Text> */}
             </View>
             <View className='price-wrapper price-state'>{ item.statusDesc }</View>
           </View>
@@ -86,10 +89,14 @@ export default class OrderItem extends Component {
             className='btn cancel-order'
             onClick={() =>{this.navigatorTo('transport_state')}}
           >运输状态</View>
-          <View className='btn pay-btn'>
-            立即支付
-            <Text className='small-text'>(立减50元)</Text>
-          </View>
+          {
+            userInfo.userType === 0 ? 
+              null :             
+              <View className='btn pay-btn'>
+                立即支付
+                <Text className='small-text'>(立减50元)</Text>
+              </View>
+          }
         </View>
       </View>
     )
@@ -97,9 +104,11 @@ export default class OrderItem extends Component {
 }
 
 OrderItem.defaultProps = {
-  item: {}
+  item: {},
+  userInfo: {}
 }
 
 OrderItem.propTypes = {
-  item: PropTypes.object
+  item: PropTypes.object,
+  userInfo: PropTypes.object
 }
