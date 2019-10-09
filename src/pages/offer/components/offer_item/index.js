@@ -3,7 +3,7 @@
  * @description: 询价单公共组件页面
  * @Date: 2019-09-23 10:49:11
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-09 10:09:21
+ * @LastEditTime: 2019-10-09 10:19:51
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -69,7 +69,7 @@ export default class OfferItem extends Component {
                   item.storePickup ? '上门提车' : ''
                 }
                 {
-                  item.storePickup && item.homeDelivery ? ',' : ''
+                  item.storePickup && item.homeDelivery ? '，' : ''
                 }
                 {
                   item.homeDelivery ? '上门送车' : ''

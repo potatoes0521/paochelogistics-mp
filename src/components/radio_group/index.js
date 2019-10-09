@@ -3,7 +3,7 @@
  * @description: 单选框
  * @Date: 2019-09-02 18:03:41
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-27 14:41:46
+ * @LastEditTime: 2019-10-09 10:59:36
  * @mustParam: 必传参数
  *  options 单选项
  *    id : 传给后端的值
@@ -35,20 +35,17 @@ export default class PCRadio extends Component {
   componentDidMount() {
     this.initData()
   }
-  
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.options.length !== this.props.options.length) {
+      this.initData()
+    }
+  }
   /**
    * 初始化数据
    * @return void
    */
   initData() { 
-    let { options, activeIndex } = this.props
-    options.forEach((item) => {
-      if (item.id === activeIndex) { 
-        item.checked = true        
-      } else {
-        item.checked = false        
-      }
-    });
+    let { options } = this.props
     this.setState({
       radioList: options
     })
@@ -60,13 +57,6 @@ export default class PCRadio extends Component {
    */
   handleClick(option) {
     if (option.disabled) return
-    let { radioList } = this.state
-    radioList.forEach(ele => {
-      ele.id === option.id ? ele.checked = true : ele.checked = false
-    })
-    this.setState({
-      radioList
-    })
     this.props.onClick(option, ...arguments)
   }
 
@@ -75,7 +65,8 @@ export default class PCRadio extends Component {
       radioList
     } = this.state
     const {
-      type
+      type,
+      activeIndex
     } = this.props
     const wrapperClassName = classNames({
       'horizontal-radio-wrapper': type === 'horizontal',
@@ -98,11 +89,11 @@ export default class PCRadio extends Component {
               >
                 <View className={classNames({
                     'radio-box': true,
-                    'radio-box-active': option.checked
+                    'radio-box-active': activeIndex === option.id
                   })}
                 >
                   {
-                    option.checked && <View className='radio-spot'></View>
+                    activeIndex === option.id && <View className='radio-spot'></View>
                   }
                 </View>
                 {option.label && <View className='radio-title'>{option.label}</View>}
@@ -116,15 +107,15 @@ export default class PCRadio extends Component {
 }
 
 PCRadio.defaultProps = {
-  activeIndex: 0,
+  activeIndex: 1,
   type: 'horizontal',
   options: [],
   onClick: () => {},
 }
 
 PCRadio.propTypes = {
-  type: PropTypes.string,
   activeIndex: PropTypes.number,
+  type: PropTypes.string,
   options: PropTypes.array.isRequired,
   onClick: PropTypes.func.isRequired,
 }

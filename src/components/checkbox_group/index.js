@@ -3,8 +3,10 @@
  * @description: 请填写描述信息
  * @Date: 2019-09-27 11:02:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-08 12:19:10
+ * @LastEditTime: 2019-10-09 11:26:27
  * @mustParam: 必传参数
+ *    options  选项组   数组形式  必须有id 和   label
+ *    在选中后会返回修改后的options数据  在父组件需要一个变量把修改后的options再传进来解决初始化的问题
  * @optionalParam: 选传参数
  */
 import Taro, { Component } from '@tarojs/taro'
@@ -61,11 +63,8 @@ export default class CheckBoxGroup extends Component {
     this.props.onClick(checkboxList, ...arguments)
   }
   render() {
-    const {
-      checkboxList
-    } = this.state
-
-    const checkboxGroupList = checkboxList.map(item => {
+    const {options} = this.props
+    const checkboxGroupList = options.map(item => {
       const checkboxClassName = classNames('checkbox', {
         'checked iconfont iconduigoux': item.checked
       })
