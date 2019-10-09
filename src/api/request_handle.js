@@ -3,7 +3,7 @@
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-09 16:12:54
+ * @LastEditTime: 2019-10-09 16:32:38
  */
 
 // 默认请求连接
@@ -103,7 +103,8 @@ export default {
                   token: "e56eeabf15316920137dbf850cf0e48e",
                   unionId: "fjlfjsalfjsalkfjjfdsafjfkdsj",
                   terminalType: "1",
-                  userAgent: ""
+                  userAgent: "",
+                  userType: 0
                 }
               }
               if (!+resData.code || +resData.code === 200002 || +resData.code == 200) {

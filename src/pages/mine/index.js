@@ -3,7 +3,7 @@
  * @description: 我的
  * @Date: 2019-09-20 13:24:52
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-08 15:48:36
+ * @LastEditTime: 2019-10-09 16:32:10
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -11,7 +11,8 @@
 import Taro, { Component } from '@tarojs/taro'
 import {
   View,
-  OpenData
+  OpenData,
+  Block
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import { showModalAndRegister } from '@utils/common.js'
@@ -77,24 +78,30 @@ class Mine extends Component {
           }
         </View>
         <View className='user-list'>
-          <View className='list-item' onClick={()=>this.navigatorPage('customer_info')}>
-            <View className='list-left'>
-              <View className='icon-img'>
-                <image src={userImage}></image>
-              </View>
-              <View className='item-name'>客户信息</View>
-            </View>
-            <View className='list-right iconfont iconxiangyouxuanzejiantoux'></View>
-          </View>
-          <View className='list-item' onClick={()=>this.navigatorPage('mine_info')}>
-            <View className='list-left'>
-              <View className='icon-img'>
-                <image src={idCardImage}></image>
-              </View>
-              <View className='item-name'>个人名片</View>
-            </View>
-            <View className='list-right iconfont iconxiangyouxuanzejiantoux'></View>
-          </View>
+          {
+            userInfo.userType === 0 ? 
+              <Block>
+                <View className='list-item' onClick={()=>this.navigatorPage('customer_info')}>
+                  <View className='list-left'>
+                    <View className='icon-img'>
+                      <image src={userImage}></image>
+                    </View>
+                    <View className='item-name'>客户信息</View>
+                  </View>
+                  <View className='list-right iconfont iconxiangyouxuanzejiantoux'></View>
+                </View>
+                <View className='list-item' onClick={()=>this.navigatorPage('mine_info')}>
+                  <View className='list-left'>
+                    <View className='icon-img'>
+                      <image src={idCardImage}></image>
+                    </View>
+                    <View className='item-name'>个人名片</View>
+                  </View>
+                  <View className='list-right iconfont iconxiangyouxuanzejiantoux'></View>
+                </View>
+              </Block>
+              : null 
+          }
           <View className='list-item' onClick={()=>this.navigatorPage('about')}>
             <View className='list-left'>
               <View className='icon-img'>
