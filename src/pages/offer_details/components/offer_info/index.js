@@ -3,7 +3,7 @@
  * @description: 询价单内容
  * @Date: 2019-09-23 14:51:02
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-09 10:35:06
+ * @LastEditTime: 2019-10-09 17:07:43
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -11,7 +11,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import classNames from 'classnames'
-import '@c/all_order_pages/order_card/index.styl'
+import '@c/all_order_pages/send_city/index.styl'
 import api from '@api/modules/offer.js'
 import NoTitleCard from '@c/no_title_card/index.js'
 import './index.styl'

@@ -1,9 +1,9 @@
 /*
  * @Author: guorui
- * @description: 订单详情中发车城市、收车城市的组件
+ * @description: 订单详情中发车城市的组件
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: guorui
- * @LastEditTime: 2019-09-20 14:38:01
+ * @LastEditTime: 2019-10-09 16:44:18
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,7 +12,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import './index.styl'
 
-export default class OrderComponent extends Component {
+export default class SendCityComponent extends Component {
   constructor(props) {
     super(props)
     this.state = {}
