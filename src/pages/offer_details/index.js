@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
- * @LastEditors: liuYang
- * @LastEditTime: 2019-10-09 11:44:49
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-10-09 12:08:03
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -24,15 +24,18 @@ class OfferDetails extends Component {
       inquiryId: 0, //询价单id
       // parentId: '', //父id 基于该询价单id做的再次询价
       status: 10, //询价单状态  10 未报价  20 已报价  30 已失效  40 已取消
+      statusDesc: '', //未报价
       price: 0, //价格
       dueTime: '', //有效期
       sendTime: '', //发车时间
       sendCityId: 0, //发车城市
+      sendCityName: '', //发车城市名称
       receiveCityId: 0, //收车城市
+      receiveCityName: '', //收车城市名称
       homeDelivery: 1, //送车上门 0否 1是
       storePickup: 1, //上门提车 0否 1是
       carInfo: '', //车辆信息
-      carAmount: 0, //车辆台数
+      carAmount: 1, //车辆台数
       createTime: '', //创建时间---询价时间
       quotedTime: '', //报价时间
       isActive: 1 //有效状态 0无效 1有效 2删除
@@ -72,12 +75,15 @@ class OfferDetails extends Component {
         this.setState({
           inquiryId: res.inquiryId,
           // parentId: res.parentId,
-          status: res.statusDesc,
+          statusDesc: res.statusDesc,
+          status: res.status,
           price: res.returnPrice,
           dueTime: res.dueTime,
           sendTime: res.sendTime,
           sendCityId: res.sendCityId,
+          sendCityName: res.sendCityName,
           receiveCityId: res.receiveCityId,
+          receiveCityName: res.receiveCityName,
           homeDelivery: res.homeDelivery,
           storePickup: res.storePickup,
           carInfo: res.carInfo,
@@ -189,14 +195,17 @@ class OfferDetails extends Component {
       dueTime,
       sendTime,
       sendCityId,
+      sendCityName,
       receiveCityId,
+      receiveCityName,
       homeDelivery,
       storePickup,
       carInfo,
       carAmount,
       createTime,
       quotedTime,
-      status
+      status,
+      statusDesc
     } = this.state
     const cancelOfferClassName = classNames({
       'offer-details-wrapper': true,
@@ -212,28 +221,28 @@ class OfferDetails extends Component {
                 (price !== 0) ?
                   <View className='details-form-content font-color'>￥{price}</View>
                   :
-                  <View className='details-form-content no-offer'>未报价</View>
+                  <View className='details-form-content no-offer'>{statusDesc}</View>
               }
             </View>
             {
               (dueTime) ?
                 <View className='details-form-item'>
                   <View className='details-form-label'>报价有效期至:</View>
-                  <View className='details-form-content font-color'>{dueTime}</View>
+                  <View className='details-form-content font-color'>{dueTime.split('T')[0]}</View>
                 </View>
                 : null
             }
             <View className='details-form-item'>
               <View className='details-form-label'>预计发车时间:</View>
-              <View className='details-form-content'>{sendTime}</View>
+              <View className='details-form-content'>{sendTime.split('T')[0]}</View>
             </View>
             <View className='details-form-item'>
               <View className='details-form-label'>发车城市:</View>
-              <View className='details-form-content'>{sendCityId}</View>
+              <View className='details-form-content'>{sendCityId !== 0 ? sendCityName : ''}</View>
             </View>
             <View className='details-form-item'>
               <View className='details-form-label'>收车城市:</View>
-              <View className='details-form-content'>{receiveCityId}</View>
+              <View className='details-form-content'>{receiveCityId !== 0 ? receiveCityName : ''}</View>
             </View>
             {
               (homeDelivery !== 0 || storePickup !== 0) ?
@@ -265,13 +274,13 @@ class OfferDetails extends Component {
               (quotedTime && status !== 30) ?
                 <View className='details-form-item'>
                   <View className='details-form-label'>报价时间:</View>
-                  <View className='details-form-content'>{quotedTime}</View>
+                  <View className='details-form-content'>{quotedTime.split('T')[0]}</View>
                 </View>
                 : null
             }
             <View className='details-form-item'>
               <View className='details-form-label'>询价时间:</View>
-              <View className='details-form-content'>{createTime}</View>
+              <View className='details-form-content'>{createTime.split('T')[0]}</View>
             </View>
           </View>
         </NoTitleCard>
