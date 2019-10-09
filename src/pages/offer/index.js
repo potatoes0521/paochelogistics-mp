@@ -3,7 +3,7 @@
  * @description: 询价单页面
  * @Date: 2019-09-20 13:24:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-29 16:10:03
+ * @LastEditTime: 2019-10-09 10:18:13
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -37,7 +37,7 @@ class Offer extends Component {
     this.noOfferFlag = false
   }
 
-  componentDidMount() { 
+  componentDidShow() { 
     this.getOfferList('', 1, true)
     this.getOfferList(10, 1, false)
     this.getOfferList(20, 1, false)
