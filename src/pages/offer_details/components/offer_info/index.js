@@ -3,7 +3,7 @@
  * @description: 询价单内容
  * @Date: 2019-09-23 14:51:02
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-09 10:04:01
+ * @LastEditTime: 2019-10-09 10:16:13
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -20,19 +20,19 @@ export default class OfferInfoComponent extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      inquiry_id: '',  //询价单id
-      // parent_id: '', //父id 基于该询价单id做的再次询价
+      inquiryId: '',  //询价单id
+      // parentId: '', //父id 基于该询价单id做的再次询价
       status: 10,  //询价单状态  10 未报价  20 已报价  30 已失效  40 已取消
       price: '', //价格
       dueTime: '', //有效期
-      send_time: '', //发车时间
-      send_city_id: '', //发车城市
-      receive_city_id: '', //收车城市
-      home_delivery: 0, //送车上门 0否 1是
-      store_pickup: 0, //上门提车 0否 1是
-      car_info: '', //车辆信息
-      car_amount: '', //车辆台数
-      create_time: '', //创建时间---询价时间
+      sendTime: '', //发车时间
+      sendCityId: '', //发车城市
+      receiveCityId: '', //收车城市
+      homeDelivery: 0, //送车上门 0否 1是
+      storePickup: 0, //上门提车 0否 1是
+      carInfo: '', //车辆信息
+      carAmount: '', //车辆台数
+      createTime: '', //创建时间---询价时间
       quotedTime: '', //报价时间
       isActive: 1 //有效状态 0无效 1有效 2删除
     }
@@ -64,19 +64,19 @@ export default class OfferInfoComponent extends Component {
     api.getOfferDetails(sendData, this)
       .then(res => {
         this.setState({
-          inquiry_id: res.inquiry_id,
-          // parent_id: res.parent_id,
+          inquiryId: res.inquiryId,
+          // parentId: res.parentId,
           status: res.statusDesc,
           price: res.returnPrice,
           dueTime: res.dueTime,
-          send_time: res.send_time,
-          send_city_id: res.send_city_id,
-          receive_city_id: res.receive_city_id,
-          home_delivery: res.home_delivery,
-          store_pickup: res.store_pickup,
-          car_info: res.car_info,
-          car_amount: res.car_amount,
-          create_time: res.create_time,
+          sendTime: res.sendTime,
+          sendCityId: res.sendCityId,
+          receiveCityId: res.receiveCityId,
+          homeDelivery: res.homeDelivery,
+          storePickup: res.storePickup,
+          carInfo: res.carInfo,
+          carAmount: res.carAmount,
+          createTime: res.createTime,
           quotedTime: res.quotedTime,
           isActive: res.isActive
         })
@@ -91,7 +91,7 @@ export default class OfferInfoComponent extends Component {
    */
   submitOfferOrder() {
     let sendData = {
-      id: this.state.inquiry_id
+      id: this.state.inquiryId
     }
     api.addOfferOrder(sendData, this)
       .then(() => {
@@ -115,7 +115,7 @@ export default class OfferInfoComponent extends Component {
       mask: true
     })
     let sendData = {
-      id: this.state.inquiry_id
+      id: this.state.inquiryId
     }
     api.cancelOffer(sendData, this)
       .then(() => {
@@ -140,7 +140,7 @@ export default class OfferInfoComponent extends Component {
       mask: true
     })
     let sendData = {
-      id: this.state.inquiry_id
+      id: this.state.inquiryId
     }
     api.getPromptOffer(sendData, this)
       .then(() => {
@@ -156,14 +156,14 @@ export default class OfferInfoComponent extends Component {
       isActive,
       price,
       dueTime,
-      send_time,
-      send_city_id,
-      receive_city_id,
-      home_delivery,
-      store_pickup,
-      car_info,
-      car_amount,
-      create_time,
+      sendTime,
+      sendCityId,
+      receiveCityId,
+      homeDelivery,
+      storePickup,
+      carInfo,
+      carAmount,
+      createTime,
       quotedTime,
       status
     } = this.state
@@ -194,37 +194,37 @@ export default class OfferInfoComponent extends Component {
             }
             <View className='details-form-item'>
               <View className='details-form-label'>预计发车时间:</View>
-              <View className='details-form-content'>{send_time}</View>
+              <View className='details-form-content'>{sendTime}</View>
             </View>
             <View className='details-form-item'>
               <View className='details-form-label'>发车城市:</View>
-              <View className='details-form-content'>{send_city_id}</View>
+              <View className='details-form-content'>{sendCityId}</View>
             </View>
             <View className='details-form-item'>
               <View className='details-form-label'>收车城市:</View>
-              <View className='details-form-content'>{receive_city_id}</View>
+              <View className='details-form-content'>{receiveCityId}</View>
             </View>
             {
-              (home_delivery !== 0 || store_pickup !== 0) ?
+              (homeDelivery !== 0 || storePickup !== 0) ?
                 <View className='details-form-item'>
                   <View className='details-form-label'>服务:</View>
-                  <View className='details-form-content'>{home_delivery && store_pickup}</View>
+                  <View className='details-form-content'>{homeDelivery && storePickup}</View>
                 </View>
                 : null
             }
             <View className='details-form-item'>
               <View className='details-form-label'>车辆信息:</View>
-              <View className='details-form-content'>{car_info}</View>
+              <View className='details-form-content'>{carInfo}</View>
             </View>
             <View className='details-form-item'>
               <View className='details-form-label'>台数:</View>
-              <View className='details-form-content'>{car_amount}辆</View>
+              <View className='details-form-content'>{carAmount}辆</View>
             </View>
             {
               (status !== 10) ?
                 <View className='details-form-item'>
                   <View className='details-form-label'>报价时间:</View>
-                  <View className='details-form-content'>{create_time}</View>
+                  <View className='details-form-content'>{createTime}</View>
                 </View>
                 : null
             }
