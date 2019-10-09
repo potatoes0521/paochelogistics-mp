@@ -3,7 +3,7 @@
  * @description: 询价单内容
  * @Date: 2019-09-23 14:51:02
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-09 10:17:38
+ * @LastEditTime: 2019-10-09 10:35:06
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -20,18 +20,18 @@ export default class OfferInfoComponent extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      inquiryId: '',  //询价单id
+      inquiryId: 0,  //询价单id
       // parentId: '', //父id 基于该询价单id做的再次询价
       status: 10,  //询价单状态  10 未报价  20 已报价  30 已失效  40 已取消
-      price: '', //价格
+      price: 0, //价格
       dueTime: '', //有效期
       sendTime: '', //发车时间
-      sendCityId: '', //发车城市
-      receiveCityId: '', //收车城市
-      homeDelivery: 0, //送车上门 0否 1是
-      storePickup: 0, //上门提车 0否 1是
+      sendCityId: 0, //发车城市
+      receiveCityId: 0, //收车城市
+      homeDelivery: 1, //送车上门 0否 1是
+      storePickup: 1, //上门提车 0否 1是
       carInfo: '', //车辆信息
-      carAmount: '', //车辆台数
+      carAmount: 0, //车辆台数
       createTime: '', //创建时间---询价时间
       quotedTime: '', //报价时间
       isActive: 1 //有效状态 0无效 1有效 2删除
@@ -59,7 +59,7 @@ export default class OfferInfoComponent extends Component {
       mask: true
     })
     let sendData = {
-      id: this.pageParams.offerId
+      id: this.pageParams.offer_id
     }
     api.getOfferDetails(sendData, this)
       .then(res => {
@@ -181,7 +181,7 @@ export default class OfferInfoComponent extends Component {
                 (status !== 10) ?
                   <View className='details-form-content font-color'>￥{price}</View>
                   :
-                  <View className='details-form-content no-offer'>{price}</View>
+                  <View className='details-form-content no-offer'>{price === 0 ? '未报价' : ''}</View>
               }
             </View>
             {
@@ -208,7 +208,17 @@ export default class OfferInfoComponent extends Component {
               (homeDelivery !== 0 || storePickup !== 0) ?
                 <View className='details-form-item'>
                   <View className='details-form-label'>服务:</View>
-                  <View className='details-form-content'>{homeDelivery && storePickup}</View>
+                  <View className='details-form-content'>
+                    {
+                      storePickup !== 0 ? '上门提车' : ''
+                    }
+                    {
+                      storePickup !== 0 && homeDelivery !== 0 ? ',' : ''
+                    }
+                    {
+                      homeDelivery !== 0 ? '上门送车' : ''
+                    }
+                  </View>
                 </View>
                 : null
             }
