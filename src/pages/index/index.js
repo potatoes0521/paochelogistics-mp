@@ -1,9 +1,10 @@
 /*
  * @Author: liuYang
  * @description: 首页
+ * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-08 15:05:52
+ * @LastEditTime: 2019-10-08 17:50:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -18,13 +19,17 @@ import {
 import { connect } from '@tarojs/redux'
 import classNames from 'classnames'
 import Actions from '@store/actions/index.js'
+import refreshToken from '@utils/refreshToken.js'
 import { convertingGPS } from '@utils/location.js'
 import {
   getUserLocation,
-  getSetting
+  getSetting,
+  showModalAndRegister
 } from '@utils/common.js'
 import {
-  getTimeData
+  getTimeDate,
+  timestampOfDay,
+  getDateTime
 } from '@utils/timer_handle.js'
 import NoTitleCard from '@c/no_title_card/index.js'
 import RadioGroups from '@c/radio_group/index.js'
@@ -32,7 +37,7 @@ import CheckBoxGroup from '@c/checkbox_group/index.js'
 import InputNumber from '@c/input_number/index.js'
 import { serviceList, carNatureList } from '@config/text_config.js'
 // eslint-disable-next-line import/first
-// import api from '@api/index.js'
+import api from '@api/index.js'
 import './index.styl'
 
 class Index extends Component {
@@ -43,33 +48,100 @@ class Index extends Component {
       carAmount: 1,   // 台数
       carNature: 1,   // 车辆性质
       carInfo: '',    // 车辆信息
-      sendTime: (new Date().toLocaleDateString()).replace(/\//g, '-'),    // 发车时间
+      sendTime: '',    // 发车时间
       receiveCityId: 0, // 收车城市ID
       receiveCityName: '',
       receiveAddress: '', // 收车详细地址
-      sendCityId: 0,      // 送车地址ID
+      sendCityId: 0,      // 发车地址ID
       sendCityName: '',
-      sendAddress: '',    // 收车详细地址
+      sendAddress: '', // 发车详细地址
       storePickup: 0,  // 上门提车
       homeDelivery: 0, // 上门送车
-      sendTimerInit: (new Date().toLocaleDateString()).replace(/\//g, '-')
+      sendTimerInit: ''
     }
+    this.pageParams = {}
   }
   
-  componentWillUnmount() {
-    Actions.clearCity({})
+  
+  componentDidMount() { 
+    console.log('onReady Didmount')
+    this.pageParams = this.$router.params
+    this.initData()
+    this.handleLocation()
+    this.getCode()
   }
 
   componentDidShow() { 
-    this.handleLocation()
-    // this.sendTimerInit = (new Date().toLocaleDateString()).replace(/\//g, '-')
-    this.login()
+    
   }
 
-  componentDidHide() { }
-  
-  login() { 
-    
+  componentDidHide() { 
+    console.log('hide')
+  }
+  initData() { 
+    let pickerDate = getDateTime(timestampOfDay())
+    this.setState({
+      sendTime: pickerDate.split(' ')[0],
+      sendTimerInit: pickerDate
+    })
+  }
+  /**
+   * 获取code  然后去换openid
+   * @return void
+   */
+  getCode() {
+    Taro.getSystemInfo()
+      .then(res => {
+        const phoneMsg = res.model + '-' + res.system + '-' + res.SDKVersion
+        console.log(phoneMsg, res)
+        Actions.changeUserInfo({
+          userAgent: phoneMsg
+        })
+      })
+    Taro.login().then(res => {
+      this.codeExchangeOpenID(res.code)
+    }).catch(err => {
+      console.log(err, 'code 获取失败')
+    })
+  }
+  /**
+   * code换openid
+   * @param {String} code wx.login获取的code
+   * @return void
+   */
+  codeExchangeOpenID(code) {
+    let sendData = {
+      code
+    }
+    api.user.codeExchangeOpenID(sendData, this).then(async (res) => {
+      let openId = res.openid;
+      Actions.changeUserInfo({
+        openId: openId
+      })
+      this.login(openId);
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+  /**
+   * 使用openID登录
+   * @param {String} openid
+   * @return void
+   */
+  login(openId = this.props.userInfo.openId) {
+    let sendData = {
+      token: this.props.userInfo.token,
+      openId
+    }
+    api.user.loginUseOpenID(sendData, this).then(res => {
+      if (res) {
+        let resData = Object.assign({}, res)
+        if (!sendData.token || sendData.token !== resData.token) {
+          refreshToken.setNewToken(resData.token)
+        }
+        Actions.changeUserInfo(resData)
+      }
+    })
   }
   /**
    * 单选
@@ -119,8 +191,8 @@ class Index extends Component {
    */
   onStartingTimeDateChange(e) {
     let chooseTime = e.detail.value
-    let nowTimer = getTimeData(new Date().toLocaleDateString())
-    let chooseTimer = getTimeData(chooseTime)
+    let nowTimer = getTimeDate(timestampOfDay())
+    let chooseTimer = getTimeDate(chooseTime)
     if (nowTimer > chooseTimer) {
       this.toast('请选择正确的发车时间')
       return
@@ -157,6 +229,10 @@ class Index extends Component {
   handleConvertingGPS(latitude, longitude) {
     convertingGPS(latitude, longitude, 'ad_info').then(res => {
       console.log(res)
+      this.setState({
+        sendCityName: res.city
+      })
+      // 然后去处理一下id
     })
   }
   /**
@@ -222,7 +298,7 @@ class Index extends Component {
       receiveAddress, // 收车详细地址
       sendCityName,
       sendCityId,
-      sendAddress, // 收车详细地址
+      sendAddress, // 发车详细地址
       storePickup, // 上门提车
       homeDelivery, // 上门送车
     } = this.state
@@ -238,7 +314,28 @@ class Index extends Component {
       this.toast('请选择收车城市')
       return
     }
-    let sendDate = {
+    if (storePickup && !sendAddress) {
+      this.toast('请输入详细发车地址')
+      return
+    }
+    if (homeDelivery && !receiveAddress) {
+      this.toast('请输入详细收车地址')
+      return
+    }
+    if (!carInfo) {
+      this.toast('请输入车辆信息')
+      return
+    }
+    let userId = this.props.userInfo.userId
+    if (!userId) {
+      showModalAndRegister()
+      return
+    }
+    Taro.showLoading({
+      title: '提交中...',
+      mask: true
+    })
+    let sendData = {
       carAmount, // 台数
       carNature, // 车辆性质
       carInfo, // 车辆信息
@@ -252,6 +349,13 @@ class Index extends Component {
       storePickup, // 上门提车
       homeDelivery, // 上门送车
     }
+    api.offer.submitOffer(sendData, this).then(() => {
+      Taro.hideLoading()
+      Taro.showToast({
+        title: '询价单已提交',
+        icon: 'success'
+      })
+    })
   }
   toast(errMsg) {
     Taro.showToast({
@@ -303,7 +407,7 @@ class Index extends Component {
       receiveCityName,
       receiveAddress, // 收车详细地址
       sendCityName,
-      sendAddress, // 收车详细地址
+      sendAddress, // 发车详细地址
       storePickup, // 上门提车
       homeDelivery, // 上门送车
       sendTimerInit
@@ -376,7 +480,7 @@ class Index extends Component {
               <View className='from-right'>
                 <Text
                   className={classNames({
-                    'from-disabled-text': !receiveCityName
+                    'from-disabled-text': !receiveCityName.length
                   })}
                 >
                   {

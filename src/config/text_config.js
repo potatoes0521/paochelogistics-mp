@@ -3,13 +3,13 @@
  * @description: 请填写描述信息
  * @Date: 2019-09-12 11:17:44
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-27 11:02:06
+ * @LastEditTime: 2019-10-08 15:49:23
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 
 export const showModalText = '是否登录'   // 登录弹窗文案
-export const showModalTextContent = '登录后即可发布信息,查看信息详情' // 登录弹窗文案  content
+export const showModalTextContent = '登录后即可发布询价信息,查看更多详情信息' // 登录弹窗文案  content
 
 export const serviceList = [
   {

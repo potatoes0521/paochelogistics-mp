@@ -3,7 +3,7 @@
  * @description: 各种时间处理方法
  * @Date: 2019-10-08 14:45:15
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-08 14:59:21
+ * @LastEditTime: 2019-10-08 17:14:47
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -11,7 +11,7 @@
 /**
  * 时间操作 有参数时，时间转换成时间戳 | 无参数就是，获取现在的时间戳
  */
-export const getTimeData = times => {
+export const getTimeDate = times => {
   if (times) {
     return new Date(times).getTime();
   } else {
@@ -19,7 +19,7 @@ export const getTimeData = times => {
   }
 };
 // 时间戳转换成时间
-export const getDataTime = times => {
+export const getDateTime = times => {
   let getBYT = num => {
     if (num == 0) {
       return "00";
@@ -83,7 +83,7 @@ export const getVideoLength = time => {
 };
 
 // 计算两个时间戳之间相差几天 d1 不能大于d2
-export const dataTimeInterval = (d1, d2) => {
+export const dateTimeInterval = (d1, d2) => {
   if (!d1 || !d2) {
     console.log("Error:传入参数不正确");
     return;
@@ -128,3 +128,19 @@ export const dataTimeInterval = (d1, d2) => {
 
   return str;
 };
+ /**
+  * 获取当天时分秒的时间戳
+  * @param {Number} hours 时
+  * @param {Number} minutes 分
+  * @param {Number} seconds 秒
+  * @param {Number} milliseconds 毫秒
+  * @return Number  时间戳 精确到毫秒
+  * 
+  * 
+  * new Date(new Date(new Date().toLocaleDateString()).getTime());
+    全世界的手机里面 就华为执行这个方法是 给个英文时间 别的全都是 2019 - 10 - 08
+  * 
+  */
+export const timestampOfDay = (hours=0, minutes=0, seconds=0, milliseconds=0) => {
+  return new Date(new Date().setHours(hours, minutes, seconds, milliseconds)).getTime()
+}

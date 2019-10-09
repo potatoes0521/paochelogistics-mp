@@ -1,15 +1,9 @@
 /*
  * @Author: liuYang
  * @description: 城市索引选择器
- * 主要是redux的 
- *    chooseCity对象的
- *      targetCity   // 目标城市
- *      startingCity  // 发车城市
- *      throughCityNameList   // 途经城市名字 
- *      throughCityIdList     // 途径城市的ID
  * @Date: 2019-09-01 14:57:42
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-20 10:44:10
+ * @LastEditTime: 2019-10-08 18:07:31
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  *  maxCheck: PropTypes.number  // 最多多选几个
@@ -18,6 +12,9 @@
  *  isShowToast: PropTypes.bool // 是不是选中时显示toast
  *  topKey: PropTypes.string,
  *  list: PropTypes.array,
+ *  throughCityList: PropTypes.object, // 途径城市的处理
+ *      nameList  城市名字的数组
+ *      idList    城市ID的数组
  *  onClick: PropTypes.func
  * 
  */
@@ -35,13 +32,11 @@ import { AtToast } from 'taro-ui'
 import _lodash from 'lodash'
 import utils from './utils.js'
 // eslint-disable-next-line import/first
-import { connect } from '@tarojs/redux'
-// eslint-disable-next-line import/first
 import imageDuiHao from '@img/indexes/duigou.png'
 
 import './index.styl'
 
-class Indexes extends Component {
+export default class Indexes extends Component {
   constructor () {
     super(...arguments)
     this.state = {
@@ -88,8 +83,7 @@ class Indexes extends Component {
       .then(rect => {
         let {
           list,
-          editMsg,
-          chooseCity,
+          throughCityList,
           checkBox
         } = this.props
         const len = list.length
@@ -99,26 +93,12 @@ class Indexes extends Component {
         this.setState({
           _list: list
         })
-        // 从redux中获取编辑的数据
-        if (editMsg && editMsg.throughCitys) {
-          console.log()
-          const throughCitys = {
-            cityName: editMsg.throughCitys.cityName.split(','),
-            cityId: editMsg.throughCitys.cityId.split(',')
-          }
-          this.checkedList = throughCitys.cityName.filter(item => !!item).map((item, index) => {
+        // 途经城市
+        if (throughCityList.idList && throughCityList.idList.length) {
+          this.checkedList = throughCityList.nameList.filter(item => !!item).map((item, index) => {
             return {
               cityName: item,
-              cityId: throughCitys.cityId[index]
-            }
-          })
-          this.checkNum = this.checkedList.length
-          this.diff(list, this.checkedList)
-        } else if (chooseCity && chooseCity.throughCityIdList) {
-          this.checkedList = chooseCity.throughCityNameList.map((item, index) => {
-            return {
-              cityName: item,
-              cityId: chooseCity.throughCityIdList[index]
+              cityId: throughCityList.idList[index]
             }
           })
           this.checkNum = this.checkedList.length
@@ -341,8 +321,6 @@ class Indexes extends Component {
       )
     })
 
-
-
     // 主要内容
     const indexesList = _list.map(dataList => (
       <View
@@ -440,6 +418,7 @@ Indexes.propTypes = {
   isShowToast: PropTypes.bool,
   topKey: PropTypes.string,
   list: PropTypes.array,
+  throughCityList: PropTypes.object,
   onClick: PropTypes.func
 }
 
@@ -450,13 +429,6 @@ Indexes.defaultProps = {
   topKey: 'Top',
   isShowToast: true,
   list: [],
+  throughCityList: {},
   onClick: () => { }
 }
-
-const mapStateToProps = (state) => {
-  return {
-    editMsg: state.publish_msg.editMsg,
-    chooseCity: state.publish_msg.chooseCity
-  }
-}
-export default connect(mapStateToProps)(Indexes)

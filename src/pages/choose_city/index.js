@@ -6,7 +6,7 @@
  * 
  * @Date: 2019-08-30 15:53:51
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-20 10:48:55
+ * @LastEditTime: 2019-10-08 17:55:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -23,7 +23,6 @@ import classNames from 'classnames'
 import _lodash from 'lodash'
 import api from '@api/index.js'
 import Storage from '@utils/storage.js'
-import Actions from '@store/actions/index.js'
 import './index.styl'
 
 // eslint-disable-next-line import/first
@@ -76,7 +75,7 @@ class ChooseCity extends Component {
       title: '加载中...',
       mask: true
     })
-    api.user.getLocationMsg({}, this)
+    api.city.getLocationMsg({}, this)
       .then(res => {
         let hotCity = res.hotCities || []
         let allCity = res.all || []
@@ -98,23 +97,23 @@ class ChooseCity extends Component {
    * @param {Object} item2 多选时返回值多一个   多选时未城市ID
    * @return void
    */
-  onClick(item,item2) {
-    if (this.type === 'start') { 
-      Actions.chooseCity({
-        startingCity: item,
-        targetCity: null
-      })
-      setTimeout(() => {
+  onClick(item, item2) {
+    var pages = Taro.getCurrentPages(); //  获取页面栈
+    var prevPage = pages[pages.length - 2]; // 上一个页面
+    if (this.type === 'start') {
+      prevPage.$component.setState({
+        sendCityName: item.cityName,
+        sendCityId: item.cityId
+      }, () => {
         Taro.navigateBack()
-      }, 100)
+      })
     } else if (this.type === 'target') {
-      Actions.chooseCity({
-        targetCity: item,
-        startingCity: null
-      })
-      setTimeout(() => {
+      prevPage.$component.setState({
+        receiveCityName: item.cityName,
+        receiveCityId: item.cityId
+      }, () => {
         Taro.navigateBack()
-      }, 100)
+      })
     } else {
       this.throughCityNameList = item
       this.throughCityIdList = item2
@@ -151,29 +150,30 @@ class ChooseCity extends Component {
     },1000)
   }
   /**
-   * 取消或者提交摆设按钮   后续可能需要改动  点击提交的时候再修改redux  点击了取消就不动
+   * 取消或者提交
    * @return void
    */
   cancelChecked(type = 'cancel') {
     let {editMsg} = this.props
     if (type === 'submit' && this.throughCityNameList.length) {
+      var pages = Taro.getCurrentPages(); //  获取页面栈
+      var prevPage = pages[pages.length - 2]; // 上一个页面
       if (JSON.stringify(editMsg) !== `{}`) {
-        Actions.changeEditData({
+        prevPage.$component.setState({
           throughCitys: {
             cityName: this.throughCityNameList.toString() || '',
             cityId: this.throughCityIdList.toString() || ''
           }
+        }, () => {
+          Taro.navigateBack()
         })
       }
-      Actions.chooseCity({
-        targetCity: null,
-        startingCity: null,
-        throughCityNameList: this.throughCityNameList,
-        throughCityIdList: this.throughCityIdList
+      prevPage.$component.setState({
+        throughCityNameList: this.throughCityNameList.toString() || '',
+        throughCityIdList: this.throughCityIdList.toString() || ''
+      }, () => {
+        Taro.navigateBack()          
       })
-      setTimeout(() => {
-        Taro.navigateBack()
-      }, 100)
     } else if (type === 'submit' && this.throughCityNameList.length <= 0) {
       Taro.showToast({
         title: '至少选择一个途经城市',

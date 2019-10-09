@@ -2,14 +2,20 @@
  * @Author: liuYang
  * @description: 询价单接口
  * @Date: 2019-09-26 11:23:26
+<<<<<<< HEAD
  * @LastEditors: guorui
  * @LastEditTime: 2019-10-08 17:11:10
+=======
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-10-08 15:14:39
+>>>>>>> 0bc1449873d083bb8e6f86045f54c0cac9ffbe96
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
-import requestHandle from '../request_handle.js';
+import requestHandle from '../request_handle.js'
 
 export default {
+<<<<<<< HEAD
   // 询价单新增
   addOfferOrder(data, that) {
     return requestHandle.post(`inquiryorder/add`, data, that);
@@ -21,10 +27,14 @@ export default {
   // 询价单详情
   getOfferDetails(data, that) {
     return requestHandle.get(`inquiryorder/detail`, data, that);
+=======
+  submitOffer(data, that) {
+    return requestHandle.get(`inquiryorder/add`, data, that)
+>>>>>>> 0bc1449873d083bb8e6f86045f54c0cac9ffbe96
   },
   // 获取询价单列表
   getOfferList(data, that) {
-    return requestHandle.get(`inquiryorder/list`, data, that);
+    return requestHandle.get(`inquiryorder/list`, data, that)
   },
   // 询价单失效，再次询价
   getReinquiryOrder(data, that) {

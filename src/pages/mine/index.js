@@ -3,7 +3,7 @@
  * @description: 我的
  * @Date: 2019-09-20 13:24:52
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-27 17:08:53
+ * @LastEditTime: 2019-10-08 15:48:36
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -62,7 +62,6 @@ class Mine extends Component {
       <View className='page-wrapper'>
         <View className='user-msg-wrapper'>
           <View className='user-icon'>
-            {/* <AtAvatar circle size='small' openData={{ type: 'userAvatarUrl' }}></AtAvatar> */}
             {
               userInfo.userId ? 
                 <OpenData className='user-icon-img' type='userAvatarUrl'></OpenData>
@@ -109,9 +108,8 @@ class Mine extends Component {
         {
           (this.props.userInfo.userId) ?
             null :
-            <View className='handleRegister' onClick={this.navigatorRegister}></View>
+            <View className='handle-register' onClick={this.navigatorRegister}></View>
         }
-        {/* <AtButton type='primary' onClick={() => this.handleChangeUserInfo('data')}>修改用户信息</AtButton> */}
       </View>
     )
   }

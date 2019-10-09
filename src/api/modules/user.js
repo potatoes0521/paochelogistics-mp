@@ -30,10 +30,6 @@ export default {
   refreshToken(data, that) {
     return requestHandle.post('user/refreshtoken', data, that);
   },
-  // 获取城市信息
-  getLocationMsg(data, that) {
-    return requestHandle.get('location/cities', data, that);
-  },
   // 获取手机验证码
   getVerificationCode(data, that) {
     return requestHandle.post('code/sendverificationcode', data, that);
