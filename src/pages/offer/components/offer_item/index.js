@@ -3,7 +3,7 @@
  * @description: 询价单公共组件页面
  * @Date: 2019-09-23 10:49:11
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-08 15:29:12
+ * @LastEditTime: 2019-10-09 10:01:31
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -34,7 +34,7 @@ export default class OfferItem extends Component {
     const allWrapperClassName = classNames(
       'offer-item',
       {
-        'disabled-text': item.status !== 30
+        'disabled-text': item.status === 30
       }
     )
     const offerStatusClassName = classNames(
@@ -60,15 +60,22 @@ export default class OfferItem extends Component {
             <Text>{item.receiveCityName}</Text>
           </View>
           <View className='list-item'>发车时间：{item.sendTime && item.sendTime.split('T')[0]}</View>
-          <View className='list-item'>
-            服务：
-            {
-              item.storePickup ? '上门提车 ' : ''
-            }
-            {
-              item.storePickup ? '上门送车' : ''
-            }
-          </View>
+          {
+            (!item.storePickup && !item.storePickup) ? 
+              null :
+              <View className='list-item'>
+                服务：
+                {
+                  item.storePickup ? '上门提车' : ''
+                }
+                {
+                  item.storePickup && item.storePickup ? ',' : ''
+                }
+                {
+                  item.storePickup ? '上门送车' : ''
+                }
+              </View>
+          }
         </View>
       </View>
     )

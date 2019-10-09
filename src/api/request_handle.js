@@ -3,7 +3,7 @@
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-08 15:24:48
+ * @LastEditTime: 2019-10-09 09:46:59
  */
 
 // 默认请求连接
@@ -28,6 +28,7 @@ import createSignData from './secret.js'
 let defaultURL = 'http://192.168.3.191:8085/' // 测试环境  
 // let defaultURL = 'http://yapi.demo.qunar.com/mock/97800/' // 测试环境
 // let defaultURL = 'https://api.bang.paoche56.com/'
+
 const sign_id = 'wx90c791e28c3c7d4d'
 const contentType = 'application/json;charset=UTF-8'
 export const appVersion = '0.8.7'
@@ -94,6 +95,18 @@ export default {
             if (res.data) {
               let resData = res.data
               // "200002" 是未注册
+              const env = process.env.NODE_ENV;
+              if (env === 'development' && +resData.code === 200002) {
+                resData.data = {
+                  mobile: "13370130024",
+                  openId: "oLgd75eZdM9Cp-dSE0YpU9gKxJoE",
+                  userId: "74",
+                  token: "e56eeabf15316920137dbf850cf0e48e",
+                  unionId: "fjlfjsalfjsalkfjjfdsafjfkdsj",
+                  terminalType: "1",
+                  userAgent: ""
+                }
+              }
               if (!+resData.code || +resData.code === 200002 || +resData.code == 200) {
                 resolve(resData.data)
               } else {
