@@ -3,7 +3,7 @@
  * @description: 订单item
  * @Date: 2019-09-23 14:42:25
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-09 15:33:48
+ * @LastEditTime: 2019-10-09 15:35:39
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -77,7 +77,7 @@ export default class OrderItem extends Component {
                 辆
               </Text>
             </View>
-            <View className='price-wrapper price-wrapper-lang'>¥{item.payPrice}</View>
+            <View className='price-wrapper price-wrapper-lang'>¥{ item.payPrice ? item.payPrice : '' }</View>
           </View>
         </View>
         <View className='btn-group'>
