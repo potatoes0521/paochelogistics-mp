@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
- * @LastEditors: liuYang
- * @LastEditTime: 2019-10-10 16:17:02
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-10-10 16:30:03
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -141,11 +141,6 @@ class PlaceOrder extends Component {
    * @param {type} 
    * @return: 
    */
-  // submitOrder() {
-  //   Taro.navigateTo({
-  //     url: '/pages/order_details/index'
-  //   })
-  // }
   submitOrder() {
     let {
       inquiryId,
