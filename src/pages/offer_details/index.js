@@ -3,7 +3,7 @@
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-10 10:44:05
+ * @LastEditTime: 2019-10-10 16:41:56
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -26,7 +26,7 @@ class OfferDetails extends Component {
       // parentId: '', //父id 基于该询价单id做的再次询价
       status: 10, //询价单状态  10 未报价  20 已报价  30 已失效  40 已取消
       statusDesc: '', //未报价
-      quotedPriceDesc: 0, //价格
+      quotedPriceDesc: 0, //报价价格
       dueTimeDesc: '', //有效期
       sendTimeDesc: '', //发车时间
       sendCityId: 0, //发车城市
