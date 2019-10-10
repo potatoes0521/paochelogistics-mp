@@ -3,7 +3,7 @@
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-09 17:06:58
+ * @LastEditTime: 2019-10-10 10:44:05
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,7 +14,7 @@ import { connect } from '@tarojs/redux'
 import NoTitleCard from '@c/no_title_card/index.js'
 import classNames from 'classnames'
 import '@c/all_order_pages/send_city/index.styl'
-import Storage from '@utils/storage.js'
+// import Storage from '@utils/storage.js'
 import api from '@api/index.js'
 import './index.styl'
 
@@ -26,9 +26,9 @@ class OfferDetails extends Component {
       // parentId: '', //父id 基于该询价单id做的再次询价
       status: 10, //询价单状态  10 未报价  20 已报价  30 已失效  40 已取消
       statusDesc: '', //未报价
-      price: 0, //价格
-      dueTime: '', //有效期
-      sendTime: '', //发车时间
+      quotedPriceDesc: 0, //价格
+      dueTimeDesc: '', //有效期
+      sendTimeDesc: '', //发车时间
       sendCityId: 0, //发车城市
       sendCityName: '', //发车城市名称
       receiveCityId: 0, //收车城市
@@ -37,8 +37,8 @@ class OfferDetails extends Component {
       storePickup: 1, //上门提车 0否 1是
       carInfo: '', //车辆信息
       carAmount: 1, //车辆台数
-      createTime: '', //创建时间---询价时间
-      quotedTime: '', //报价时间
+      inquiryTimeDesc: '', //询价时间
+      quotedTimeDesc: '', //报价时间
       isActive: 1 //有效状态 0无效 1有效 2删除
     }
     this.pageParams = {}
@@ -78,9 +78,9 @@ class OfferDetails extends Component {
           // parentId: res.parentId,
           statusDesc: res.statusDesc,
           status: res.status,
-          price: res.returnPrice,
-          dueTime: res.dueTime,
-          sendTime: res.sendTime,
+          quotedPriceDesc: res.quotedPriceDesc,
+          dueTimeDesc: res.dueTimeDesc,
+          sendTimeDesc: res.sendTimeDesc,
           sendCityId: res.sendCityId,
           sendCityName: res.sendCityName,
           receiveCityId: res.receiveCityId,
@@ -89,8 +89,8 @@ class OfferDetails extends Component {
           storePickup: res.storePickup,
           carInfo: res.carInfo,
           carAmount: res.carAmount,
-          createTime: res.createTime,
-          quotedTime: res.quotedTime,
+          inquiryTimeDesc: res.inquiryTimeDesc,
+          quotedTimeDesc: res.quotedTimeDesc,
           isActive: res.isActive
         })
         Taro.hideLoading()
@@ -104,12 +104,12 @@ class OfferDetails extends Component {
    */
   submitOfferOrder() {
     let sendData = {
-      inquiryId: this.state.inquiryId
+      inquiryId: this.state.inquiryId,
     }
     api.offer.submitOffer(sendData, this)
       .then(() => {
         Taro.navigateTo({
-          url: 'pages/place_order/index'
+          url: '/pages/place_order/index'
         })
       })
   }
@@ -191,9 +191,9 @@ class OfferDetails extends Component {
 
   render() {
     let {
-      price,
-      dueTime,
-      sendTime,
+      quotedPriceDesc,
+      dueTimeDesc,
+      sendTimeDesc,
       sendCityId,
       sendCityName,
       receiveCityId,
@@ -202,8 +202,8 @@ class OfferDetails extends Component {
       storePickup,
       carInfo,
       carAmount,
-      createTime,
-      quotedTime,
+      inquiryTimeDesc,
+      quotedTimeDesc,
       status,
       statusDesc
     } = this.state
@@ -217,23 +217,23 @@ class OfferDetails extends Component {
             <View className='details-form-item'>
               <View className='details-form-label'>报价状态:</View>
               {
-                (price !== 0) ?
-                  <View className='details-form-content font-color'>￥{price}</View>
+                (quotedPriceDesc !== 0) ?
+                  <View className='details-form-content font-color'>￥{quotedPriceDesc}</View>
                   :
                   <View className='details-form-content no-offer'>{statusDesc}</View>
               }
             </View>
             {
-              (dueTime) ?
+              (dueTimeDesc) ?
                 <View className='details-form-item'>
                   <View className='details-form-label'>报价有效期至:</View>
-                  <View className='details-form-content font-color'>{dueTime.split('T')[0]}</View>
+                  <View className='details-form-content font-color'>{dueTimeDesc}</View>
                 </View>
                 : null
             }
             <View className='details-form-item'>
               <View className='details-form-label'>预计发车时间:</View>
-              <View className='details-form-content'>{sendTime.split('T')[0]}</View>
+              <View className='details-form-content'>{sendTimeDesc}</View>
             </View>
             <View className='details-form-item'>
               <View className='details-form-label'>发车城市:</View>
@@ -270,16 +270,16 @@ class OfferDetails extends Component {
               <View className='details-form-content'>{carAmount}辆</View>
             </View>
             {
-              (quotedTime && status !== 30) ?
+              (quotedTimeDesc && status !== 30) ?
                 <View className='details-form-item'>
                   <View className='details-form-label'>报价时间:</View>
-                  <View className='details-form-content'>{quotedTime.split('T')[0]}</View>
+                  <View className='details-form-content'>{quotedTimeDesc}</View>
                 </View>
                 : null
             }
             <View className='details-form-item'>
               <View className='details-form-label'>询价时间:</View>
-              <View className='details-form-content'>{createTime.split('T')[0]}</View>
+              <View className='details-form-content'>{inquiryTimeDesc}</View>
             </View>
           </View>
         </NoTitleCard>
