@@ -3,7 +3,7 @@
  * @description: 运输状态时间轴
  * @Date: 2019-09-24 14:59:07
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-09 16:14:48
+ * @LastEditTime: 2019-10-10 17:45:54
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -24,7 +24,7 @@ export default class TimeLine extends Component {
   }
   render() { 
     const { title, timeArray } = this.props
-    const { open } = this.state
+    // const { open } = this.state
 
     const pathList = timeArray.map((item, index) => {
       const lineClassName = classNames({
@@ -46,7 +46,7 @@ export default class TimeLine extends Component {
       return (
         <View
           className='path-item'
-          key={index}
+          key={item}
         >
           <View className='path-time'>
             <View className='date'>{item.createTime.slice(5,10)}</View>
@@ -92,7 +92,7 @@ export default class TimeLine extends Component {
       return (
         <View
           className='path-item'
-          key={index}
+          key={item}
         >
           <View className='path-time'>
             <View className='date'>{item.createTime.slice(5,10)}</View>
