@@ -3,7 +3,7 @@
  * @description: 订单item
  * @Date: 2019-09-23 14:42:25
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-09 16:39:29
+ * @LastEditTime: 2019-10-10 09:29:59
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -44,7 +44,7 @@ export default class OrderItem extends Component {
     return (
       <View
         className={allWrapperClassName}
-        onClick={()=>{this.navigatorTo('offer_details')}}
+        onClick={()=>{this.navigatorTo('order_details')}}
       >
         <View className='msg-wrapper'>
           <View className='list-item'>

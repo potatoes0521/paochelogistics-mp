@@ -3,7 +3,7 @@
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-09 16:39:09
+ * @LastEditTime: 2019-10-09 16:52:25
  */
 
 // 默认请求连接
@@ -44,8 +44,8 @@ export default {
       'openId': userInfo.openId || '',
       'userId': userInfo.userId || '', // 常用请求全部放在请求头上
       'unionId': userInfo.unionId || '',
+      'userType': userInfo.userType || 1, // 0 驿站人员  1 自主注册   2 驿站人员添加客户
       'terminalType': userInfo.terminalType || 1, // 终端类型  1 小程序   2 H5  3 APP
-      'userType': userInfo.userType || 1, //  0 驿站人员  1 自主注册   2 驿站人员添加客户
       'sourceId': userInfo.sourceId || 3, // 1 跑车帮小程序 2 跑车帮app 3 跑车物流小程序
       'userAgent': userInfo.userAgent || '',  // 系统信息
       'appVersion': appVersion, // 版本号
@@ -63,7 +63,13 @@ export default {
         header: {
           'content-type': contentType,
           'user-login': headerUserLogin,
-          'sign': sign || ''
+          'sign': sign || '',
+          'terminal-type': userInfo.terminalType || 1, // 终端类型  1 小程序   2 H5  3 APP
+          'source-id': userInfo.sourceId || 3, // 1 跑车帮小程序 2 跑车帮app 3 跑车物流小程序
+          'system-info': userInfo.userAgent || '', // 系统信息
+          'app-version': appVersion, // 版本号
+          'app-type': 1, // 1 微信小程序 2 支付宝小程序
+          'system-id': 2 // 1 跑车帮   2 跑车物流
         },
         success(res) {
           if (res.statusCode === HTTP_STATUS.NOT_FOUND) {
