@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: guorui
- * @LastEditTime: 2019-09-29 17:30:49
+ * @LastEditTime: 2019-10-09 17:05:36
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -15,7 +15,7 @@ import {
   Text
 } from '@tarojs/components'
 import NoTitleCard from '@c/no_title_card/index.js'
-import '@c/all_order_pages/order_card/index.styl'
+import '@c/all_order_pages/send_city/index.styl'
 import InputNumber from '@c/input_number/index.js'
 // import '@assets/icon_font/icon.scss'
 import './index.styl'

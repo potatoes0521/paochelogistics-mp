@@ -3,14 +3,14 @@
  * @description: 订单详情中发车城市、收车城市的组件
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-08 09:50:17
+ * @LastEditTime: 2019-10-09 16:50:54
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
-import '../order_card/index.styl'
+import '../send_city/index.styl'
 import './index.styl'
 
 export default class PriceDetailsComponent extends Component {

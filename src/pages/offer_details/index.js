@@ -3,7 +3,7 @@
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-09 16:06:12
+ * @LastEditTime: 2019-10-09 17:06:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,7 +13,8 @@ import { View } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import NoTitleCard from '@c/no_title_card/index.js'
 import classNames from 'classnames'
-import '@c/all_order_pages/order_card/index.styl'
+import '@c/all_order_pages/send_city/index.styl'
+import Storage from '@utils/storage.js'
 import api from '@api/index.js'
 import './index.styl'
 
@@ -108,7 +109,7 @@ class OfferDetails extends Component {
     api.offer.submitOffer(sendData, this)
       .then(() => {
         Taro.navigateTo({
-          url: 'pages/offer/index'
+          url: 'pages/place_order/index'
         })
       })
   }
