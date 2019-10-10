@@ -55,6 +55,10 @@ class PlaceOrder extends Component {
     this.getStorageInfo()
   }
 
+  componentWillUnmount() {
+    Storage.removeStorage('offer_info')
+  }
+
   //页面内的配置
   config = {
   navigationBarTitleText: '下单'
