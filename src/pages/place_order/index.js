@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-10 16:30:03
+ * @LastEditTime: 2019-10-10 17:46:38
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -17,6 +17,7 @@ import {
 import { connect } from '@tarojs/redux'
 import NoTitleCard from '@c/no_title_card/index.js'
 import '@c/all_order_pages/send_city/index.styl'
+import Storage from '@utils/storage.js'
 import api from '@api/index.js'
 // import '@assets/icon_font/icon.scss'
 import './index.styl'
@@ -42,7 +43,7 @@ class PlaceOrder extends Component {
       storePickup: 1, //上门提车 0否 1是
       sendTimeDesc: '', //发车时间
       carInfo: '', //车辆信息
-      usedType: '', //车辆类型
+      usedType: 1, //车辆类型  1新车 2二手车
       carAmount: 1, //车辆台数
       vins: '', // 车架号
       quotedPriceDesc: 0, // 报价
@@ -51,6 +52,7 @@ class PlaceOrder extends Component {
   }
   
   componentDidMount() {
+    this.getStorageInfo()
   }
 
   //页面内的配置
@@ -58,6 +60,35 @@ class PlaceOrder extends Component {
   navigationBarTitleText: '下单'
   } 
 
+  /**
+   * @description: 
+   * @param {type} 
+   * @return: 
+   */
+  getStorageInfo() {
+    Storage.getStorage('offer_info').then(res => {
+      if (res) {
+        console.log(res,'询价单缓存信息')
+        this.setState({
+          inquiryId: res.inquiryId,
+          quotedPriceDesc: res.quotedPriceDesc,
+          sendTimeDesc: res.sendTimeDesc,
+          sendCityId: res.sendCityId,
+          sendCityName: res.sendCityName,
+          sendAddress: res.sendAddress,
+          receiveCityId: res.receiveCityId,
+          receiveCityName: res.receiveCityName,
+          receiveAddress: res.receiveAddress,
+          homeDelivery: res.homeDelivery,
+          storePickup: res.storePickup,
+          carInfo: res.carInfo,
+          carAmount: res.carAmount,
+          usedType: res.usedType
+        })
+      }
+    })
+  }
+  
   /**
    * @description: 名字验证
    * @param {type} 
@@ -409,7 +440,7 @@ class PlaceOrder extends Component {
               </View>
               <View className='details-form-item'>
                 <View className='details-form-label'>车辆类型:</View>
-                <View className='details-form-content'>{usedType}</View>
+                <View className='details-form-content'>{usedType === 1 ? '新车' : '二手车'}</View>
               </View>
               <View className='details-form-item'>
                 <View className='details-form-label'>台数:</View>

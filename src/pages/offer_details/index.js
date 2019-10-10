@@ -3,7 +3,7 @@
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-10 16:41:56
+ * @LastEditTime: 2019-10-10 17:43:08
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,7 +14,7 @@ import { connect } from '@tarojs/redux'
 import NoTitleCard from '@c/no_title_card/index.js'
 import classNames from 'classnames'
 import '@c/all_order_pages/send_city/index.styl'
-// import Storage from '@utils/storage.js'
+import Storage from '@utils/storage.js'
 import api from '@api/index.js'
 import './index.styl'
 
@@ -23,7 +23,7 @@ class OfferDetails extends Component {
     super(props)
     this.state = {
       inquiryId: 0, //询价单id
-      // parentId: '', //父id 基于该询价单id做的再次询价
+      parentId: '', //父id 基于该询价单id做的再次询价
       status: 10, //询价单状态  10 未报价  20 已报价  30 已失效  40 已取消
       statusDesc: '', //未报价
       quotedPriceDesc: 0, //报价价格
@@ -31,14 +31,17 @@ class OfferDetails extends Component {
       sendTimeDesc: '', //发车时间
       sendCityId: 0, //发车城市
       sendCityName: '', //发车城市名称
+      sendAddress: '', //发车城市详细地址
       receiveCityId: 0, //收车城市
       receiveCityName: '', //收车城市名称
+      receiveAddress: '', //收车城市详细地址
       homeDelivery: 1, //送车上门 0否 1是
       storePickup: 1, //上门提车 0否 1是
       carInfo: '', //车辆信息
       carAmount: 1, //车辆台数
       inquiryTimeDesc: '', //询价时间
       quotedTimeDesc: '', //报价时间
+      usedType: 1, //车辆类型  1新车  2二手车
       isActive: 1 //有效状态 0无效 1有效 2删除
     }
     this.pageParams = {}
@@ -75,7 +78,7 @@ class OfferDetails extends Component {
       .then(res => {
         this.setState({
           inquiryId: res.inquiryId,
-          // parentId: res.parentId,
+          parentId: res.parentId,
           statusDesc: res.statusDesc,
           status: res.status,
           quotedPriceDesc: res.quotedPriceDesc,
@@ -83,14 +86,17 @@ class OfferDetails extends Component {
           sendTimeDesc: res.sendTimeDesc,
           sendCityId: res.sendCityId,
           sendCityName: res.sendCityName,
+          sendAddress: res.sendAddress,
           receiveCityId: res.receiveCityId,
           receiveCityName: res.receiveCityName,
+          receiveAddress: res.receiveAddress,
           homeDelivery: res.homeDelivery,
           storePickup: res.storePickup,
           carInfo: res.carInfo,
           carAmount: res.carAmount,
           inquiryTimeDesc: res.inquiryTimeDesc,
           quotedTimeDesc: res.quotedTimeDesc,
+          usedType: res.usedType,
           isActive: res.isActive
         })
         Taro.hideLoading()
@@ -105,10 +111,30 @@ class OfferDetails extends Component {
   submitOfferOrder() {
     let sendData = {
       inquiryId: this.state.inquiryId,
+      parentId: this.state.parentId,
+      statusDesc: this.state.statusDesc,
+      status: this.state.status,
+      quotedPriceDesc: this.state.quotedPriceDesc,
+      dueTimeDesc: this.state.dueTimeDesc,
+      sendTimeDesc: this.state.sendTimeDesc,
+      sendCityId: this.state.sendCityId,
+      sendCityName: this.state.sendCityName,
+      sendAddress: this.state.sendAddress,
+      receiveCityId: this.state.receiveCityId,
+      receiveCityName: this.state.receiveCityName,
+      receiveAddress: this.state.receiveAddress,
+      homeDelivery: this.state.homeDelivery,
+      storePickup: this.state.storePickup,
+      carInfo: this.state.carInfo,
+      carAmount: this.state.carAmount,
+      inquiryTimeDesc: this.state.inquiryTimeDesc,
+      quotedTimeDesc: this.state.quotedTimeDesc,
+      usedType: this.state.usedType,
     }
-    api.offer.submitOffer(sendData, this)
+    Storage.setStorage('offer_info', sendData)
+    api.offer.submitOffer({}, this)
       .then(() => {
-        Taro.navigateTo({
+        Taro.reLaunch({
           url: '/pages/place_order/index'
         })
       })
