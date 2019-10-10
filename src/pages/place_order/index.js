@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-10 10:30:08
+ * @LastEditTime: 2019-10-10 16:10:33
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -17,7 +17,7 @@ import {
 import { connect } from '@tarojs/redux'
 import NoTitleCard from '@c/no_title_card/index.js'
 import '@c/all_order_pages/send_city/index.styl'
-import InputNumber from '@c/input_number/index.js'
+import api from '@api/index.js'
 // import '@assets/icon_font/icon.scss'
 import './index.styl'
 
@@ -25,6 +25,7 @@ class PlaceOrder extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      inquiryId: 0, //询价单id
       sendCityId: 0, //发车城市
       sendCityName: '', //发车城市名称
       sendAddress: '', //发车城市详细地址
@@ -37,7 +38,7 @@ class PlaceOrder extends Component {
       receivePerson: '', //收车城市联系人
       receiveMobile: '', //收车城市联系方式
       receiveCarNo: '', //收车城市联系人身份证号
-      homeDelivery: 1, //送车上门 0否 1是
+      homeDelivery: 0, //送车上门 0否 1是
       storePickup: 1, //上门提车 0否 1是
       sendTimeDesc: '', //发车时间
       carInfo: '', //车辆信息
@@ -50,7 +51,6 @@ class PlaceOrder extends Component {
   }
   
   componentDidMount() {
-    // console.log(Storage.getStorage('offer_details'),'询价单信息')
   }
 
   //页面内的配置
@@ -59,26 +59,69 @@ class PlaceOrder extends Component {
   } 
 
   /**
-   * InputNumber组件值改变
-   * @param {Number} e 输入框值
-   * @return void
+   * @description: 名字验证
+   * @param {type} 
+   * @return: 
    */
-  valueChange(e) {
+  verificationSendName(e) {
+    let { value } = e.detail
     this.setState({
-      carAmount: e
+      sendPerson: value
+    })
+  }
+  verificationReceiveName(e) {
+    let { value } = e.detail
+    this.setState({
+      receivePerson: value
+    })
+  }
+
+  /**
+   * @description: 手机号验证
+   * @param {type} 
+   * @return: 
+   */
+  verificationSendPhone(e) {
+    let { value } = e.detail
+    this.setState({
+      sendMobile: value
+    })
+  }
+  verificationReceivePhone(e) {
+    let { value } = e.detail
+    this.setState({
+      receiveMobile: value
+    })
+  }
+
+  /**
+   * @description: 身份证号验证
+   * @param {type} 
+   * @return: 
+   */
+  verificationSendCardNo(e) {
+    let { value } = e.detail
+    this.setState({
+      sendCardNo: value
+    })
+  }
+  verificationReceiveCardNo(e) {
+    let { value } = e.detail
+    this.setState({
+      receiveCarNo: value
     })
   }
 
   /**
    * @description: 车架号验证
-   * @param {number string} e 输入的车架号
+   * @param {number string} 
    * @return: 
    */  
-  onCarNumberInput(e) {
-    let carCode = e.target.value
-    carCode = carCode.test(/^(?!^\d+$)(?!^[a-zA-Z]+$)[0-9a-zA-Z]{17}$/) //车架号只能是数字和字符
+  verificationVins(e) {
+    //车架号只能是数字和字符
+    let { value } = e.detail
     this.setState({
-      vins: carCode
+      vins: value
     })
   }
 
@@ -98,37 +141,138 @@ class PlaceOrder extends Component {
    * @param {type} 
    * @return: 
    */
-  submit() {
+  // submitOrder() {
+  //   Taro.navigateTo({
+  //     url: '/pages/order_details/index'
+  //   })
+  // }
+  submitOrder() {
     let {
-      sendCityId, //发车城市
-      sendCityName, //发车城市名称
-      sendAddress, //发车城市详细地址
-      sendPerson, //发车城市联系人
-      sendMobile, //发车城市联系方式
-      sendCardNo, //发车城市联系人身份证号
-      receiveCityId, //收车城市
-      receiveCityName, //收车城市名称
-      receiveAddress, //收车城市详细地址
-      receivePerson, //收车城市联系人
-      receiveMobile, //收车城市联系方式
-      receiveCarNo, //收车城市联系人身份证号
-      homeDelivery, //送车上门 0否 1是
-      storePickup, //上门提车 0否 1是
-      sendTimeDesc, //发车时间
-      carInfo, //车辆信息
-      usedType, //车辆类型
-      carAmount, //车辆台数
-      vins, // 车架号
-      quotedPriceDesc // 报价
+      inquiryId,
+      sendCityId,
+      sendCityName,
+      sendAddress,
+      sendPerson,
+      sendMobile,
+      sendCardNo,
+      receiveCityId,
+      receiveCityName,
+      receiveAddress,
+      receivePerson,
+      receiveMobile,
+      receiveCarNo,
+      homeDelivery,
+      storePickup,
+      sendTimeDesc,
+      carInfo,
+      usedType,
+      carAmount,
+      vins,
+      quotedPriceDesc
     } = this.state
-    if (!sendCityId || !sendCityName || !sendAddress || !sendPerson || !sendMobile || !sendCardNo || !receiveCityId || !receiveCityName || !receiveAddress ||
-      !receivePerson || !receiveMobile || !receiveCarNo || !homeDelivery || !storePickup || !sendTimeDesc || !carInfo || !usedType || !carAmount || !vins || !quotedPriceDesc) {
+    if (!sendPerson && !receivePerson) {
+      this.toast('请填写联系人姓名')
+      return
+    }
+    if (!sendMobile && !receiveMobile) {
+      this.toast('请填写联系人电话')
+      return
+    }
+    if (!sendCardNo && !receiveCarNo) {
+      this.toast('请填写联系人证件号')
+      return
+    }
+    if (!vins) {
+      this.toast('请输入车架号')
+      return
+    }
+    if (!(/^[\u4e00-\u9fa5]{2,4}$/.test(sendPerson))) {
+      Taro.showToast({
+        title: '名字输入格式有误',
+        icon: 'none'
+      })
+      return
+    }
+    if (!(/^[\u4e00-\u9fa5]{2,4}$/.test(receivePerson))) {
+      Taro.showToast({
+        title: '名字输入格式有误',
+        icon: 'none'
+      })
+      return
+    }
+    if (!(/^1[3456789]\d{9}$/.test(sendMobile))) {
+      Taro.showToast({
+        title: '手机号输入格式有误',
+        icon: 'none'
+      })
+      return
+    }
+    if (!(/^1[3456789]\d{9}$/.test(receiveMobile))) {
+      Taro.showToast({
+        title: '手机号输入格式有误',
+        icon: 'none'
+      })
+      return
+    }
+    if (!(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(sendCardNo))) {
+      Taro.showToast({
+        title: '身份证号输入格式有误',
+        icon: 'none'
+      })
+      return
+    }
+    if (!(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(receiveCarNo))) {
+      Taro.showToast({
+        title: '身份证号输入格式有误',
+        icon: 'none'
+      })
+      return
+    }
+    if (!(/^(?!^\d+$)(?!^[a-zA-Z]+$)[0-9a-zA-Z]{17}$/.test(vins))) {
+      Taro.showToast({
+        title: '车架号输入格式有误',
+        icon: 'none'
+      })
+      return
+    }
+    Taro.showLoading({
+      title: '提交中...',
+      mask: true
+    })
+    let sendData = {
+      inquiryId,
+      sendCityId,
+      sendCityName,
+      sendAddress,
+      sendPerson,
+      sendMobile,
+      sendCardNo,
+      receiveCityId,
+      receiveCityName,
+      receiveAddress,
+      receivePerson,
+      receiveMobile,
+      receiveCarNo,
+      homeDelivery,
+      storePickup,
+      sendTimeDesc,
+      carInfo,
+      usedType,
+      carAmount,
+      vins,
+      quotedPriceDesc
+    }
+    api.order.placeOrder(sendData, this)
+      .then(() => {
+        Taro.hideLoading()
         Taro.showToast({
-          title: '请填写完整信息',
-          icon: 'none'
+          title: '下单成功',
+          icon: 'success'
         })
-        return
-      }
+        Taro.navigateTo({
+          url: '/pages/order_details/index'
+        })
+      })
   }
   
   render() {
@@ -175,21 +319,20 @@ class PlaceOrder extends Component {
                 <View className='details-form-label'>发车城市:</View>
                 <View className='details-form-content'>{sendCityId ? sendCityName : ''}</View>
               </View>
-              <View className='details-form-item'>
-                <View className='details-form-label'>详细信息:</View>
-              </View>
-              <View className='details-form-item'>
-                <Input
-                  className='details-address-input'
-                  placeholder='请填写详细地址'
-                  value={sendAddress}
-                ></Input>
-              </View>
+              {
+                (storePickup !== 0) ?
+                  <View className='details-form-item'>
+                    <View className='details-form-label'>详细信息:</View>
+                    <View className='details-form-content'>{sendAddress}</View>
+                  </View>
+                  : null
+              }
               <View className='details-form-item'>
                 <View className='details-form-label'>联系人:</View>
                 <View className='details-form-content'>
                   <Input
                     className='details-from-input'
+                    onInput={this.verificationSendName}
                     placeholder='请填写联系人姓名'
                     value={sendPerson}
                     maxLength='10'
@@ -203,6 +346,7 @@ class PlaceOrder extends Component {
                     type='number'
                     className='details-from-input'
                     placeholder='请填写联系人电话'
+                    onInput={this.verificationSendPhone}
                     maxLength='20'
                     value={sendMobile}
                     auto
@@ -215,6 +359,7 @@ class PlaceOrder extends Component {
                   <Input
                     className='details-from-input'
                     placeholder='请填写联系人证件号'
+                    onInput={this.verificationSendCardNo}
                     value={sendCardNo}
                   ></Input>
                 </View>
@@ -226,21 +371,20 @@ class PlaceOrder extends Component {
                 <View className='details-form-label'>收车城市:</View>
                 <View className='details-form-content'>{receiveCityId ? receiveCityName : ''}</View>
               </View>
-              <View className='details-form-item'>
-                <View className='details-form-label'>详细信息:</View>
-              </View>
-              <View className='details-form-item'>
-                <Input
-                  className='details-address-input'
-                  placeholder='请填写详细地址'
-                  value={receiveAddress}
-                ></Input>
-              </View>
+              {
+                (homeDelivery !== 0) ?
+                  <View className='details-form-item'>
+                    <View className='details-form-label'>详细信息:</View>
+                    <View className='details-form-content'>{receiveAddress}</View>
+                  </View>
+                  : null
+              }
               <View className='details-form-item'>
                 <View className='details-form-label'>联系人:</View>
                 <View className='details-form-content'>
                   <Input
                     className='details-from-input'
+                    onInput={this.verificationReceiveName}
                     placeholder='请填写联系人姓名'
                     maxLength='10'
                     value={receivePerson}
@@ -254,6 +398,7 @@ class PlaceOrder extends Component {
                     type='number'
                     className='details-from-input'
                     placeholder='请填写联系人电话'
+                    onInput={this.verificationReceivePhone}
                     maxLength='20'
                     value={receiveMobile}
                   ></Input>
@@ -264,6 +409,7 @@ class PlaceOrder extends Component {
                 <View className='details-form-content'>
                   <Input
                     className='details-from-input'
+                    onInput={this.verificationReceiveCardNo}
                     placeholder='请填写联系人证件号'
                     value={receiveCarNo}
                   ></Input>
@@ -272,20 +418,24 @@ class PlaceOrder extends Component {
             </View>
             <View className='dividing-line'></View>
             <View className='car-info'>
-              <View className='details-form-item'>
-                <View className='details-form-label'>服务:</View>
-                <View className='details-form-content'>
-                  {
-                    storePickup !== 0 ? '上门提车' : ''
-                  }
-                  {
-                    storePickup !== 0 && homeDelivery !== 0 ? '，' : ''
-                  }
-                  {
-                    homeDelivery !== 0 ? '上门送车' : ''
-                  }
-                </View>
-              </View>
+              {
+                (storePickup !== 0 || homeDelivery !== 0) ?
+                  <View className='details-form-item'>
+                    <View className='details-form-label'>服务:</View>
+                    <View className='details-form-content'>
+                      {
+                        storePickup !== 0 ? '上门提车' : ''
+                      }
+                      {
+                        storePickup !== 0 && homeDelivery !== 0 ? '，' : ''
+                      }
+                      {
+                        homeDelivery !== 0 ? '上门送车' : ''
+                      }
+                    </View>
+                  </View>
+                : null
+              }
               <View className='details-form-item'>
                 <View className='details-form-label'>发车时间:</View>
                 <View className='details-form-content'>{sendTimeDesc}</View>
@@ -300,16 +450,7 @@ class PlaceOrder extends Component {
               </View>
               <View className='details-form-item'>
                 <View className='details-form-label'>台数:</View>
-                {/* <View className='details-form-content'>{vehicles}辆</View> */}
-                <View className='details-form-content details-from-input'>
-                  <InputNumber
-                    min={1}
-                    max={999}
-                    value={carAmount}
-                    onChange={this.valueChange.bind(this)}
-                  ></InputNumber>
-                  <View className='details-from-number'>辆</View>
-                </View>
+                <View className='details-form-content'>{carAmount}辆</View>
               </View>
               <View className='details-form-item'>
                 <View className='details-form-label'>车架号:</View>
@@ -317,6 +458,7 @@ class PlaceOrder extends Component {
               <View className='details-form-item'>
                 <Input
                   className='details-address-input'
+                  onInput={this.verificationVins}
                   placeholder='请输入车架号'
                   value={vins}
                 ></Input>
@@ -332,7 +474,7 @@ class PlaceOrder extends Component {
             </View>
           </NoTitleCard>
         </View>
-        <View className='place-order-button' onClick={this.submit}>立即下单</View>
+        <View className='place-order-button' onClick={this.submitOrder}>立即下单</View>
       </View>
     )
   }
