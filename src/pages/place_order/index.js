@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-10 16:15:41
+ * @LastEditTime: 2019-10-10 16:17:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -170,22 +170,6 @@ class PlaceOrder extends Component {
       vins,
       quotedPriceDesc
     } = this.state
-    if (!sendPerson && !receivePerson) {
-      this.toast('请填写联系人姓名')
-      return
-    }
-    if (!sendMobile && !receiveMobile) {
-      this.toast('请填写联系人电话')
-      return
-    }
-    if (!sendCardNo && !receiveCarNo) {
-      this.toast('请填写联系人证件号')
-      return
-    }
-    if (!vins) {
-      this.toast('请输入车架号')
-      return
-    }
     if (!(/^[\u4e00-\u9fa5]{2,4}$/.test(sendPerson))) {
       this.toast('发车人名字输入格式有误')
       return
