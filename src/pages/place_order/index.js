@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-09 17:05:36
+ * @LastEditTime: 2019-10-10 10:30:08
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,35 +14,43 @@ import {
   Input,
   Text
 } from '@tarojs/components'
+import { connect } from '@tarojs/redux'
 import NoTitleCard from '@c/no_title_card/index.js'
 import '@c/all_order_pages/send_city/index.styl'
 import InputNumber from '@c/input_number/index.js'
 // import '@assets/icon_font/icon.scss'
 import './index.styl'
 
-export default class PlaceOrder extends Component {
+class PlaceOrder extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      startingCity: '北京',   // 发车城市
-      startingCityAddress: '海淀区中关村52号创业公社B区32号楼跑车物流',  //发车城市详细地址
-      startingCityPerson: '',  //发车城市联系人
-      startingCityPhone: '',  //发车城市联系人电话
-      startingCityNumber: '',  //发车城市联系人身份证号
-      targetCity: '上海',     // 收车城市
-      targetCityAddress: '',  //收车城市详细地址
-      targetCityPerson: '',  //收车城市联系人
-      targetCityPhone: '',  //收车城市联系人电话
-      targetCityNumber: '',  //收车城市联系人身份证号
-      serviceType: '上门提车', //服务类型，0 上门提车，1 上门送车
-      startingTime: '2019-09-20', // 发车时间
-      carInformation: '大众迈腾', // 车辆信息
-      carNature: '二手车', // 车辆类型
-      vehicles: 1,        // 台数
-      carNumber: '',       // 车架号
-      price: 2134, // 报价
+      sendCityId: 0, //发车城市
+      sendCityName: '', //发车城市名称
+      sendAddress: '', //发车城市详细地址
+      sendPerson: '', //发车城市联系人
+      sendMobile: '', //发车城市联系方式
+      sendCardNo: '', //发车城市联系人身份证号
+      receiveCityId: 0, //收车城市
+      receiveCityName: '', //收车城市名称
+      receiveAddress: '', //收车城市详细地址
+      receivePerson: '', //收车城市联系人
+      receiveMobile: '', //收车城市联系方式
+      receiveCarNo: '', //收车城市联系人身份证号
+      homeDelivery: 1, //送车上门 0否 1是
+      storePickup: 1, //上门提车 0否 1是
+      sendTimeDesc: '', //发车时间
+      carInfo: '', //车辆信息
+      usedType: '', //车辆类型
+      carAmount: 1, //车辆台数
+      vins: '', // 车架号
+      quotedPriceDesc: 0, // 报价
       isChoose: true  //判断是否是驿站人员
     }
+  }
+  
+  componentDidMount() {
+    // console.log(Storage.getStorage('offer_details'),'询价单信息')
   }
 
   //页面内的配置
@@ -57,7 +65,7 @@ export default class PlaceOrder extends Component {
    */
   valueChange(e) {
     this.setState({
-      vehicles: e
+      carAmount: e
     })
   }
 
@@ -70,7 +78,7 @@ export default class PlaceOrder extends Component {
     let carCode = e.target.value
     carCode = carCode.test(/^(?!^\d+$)(?!^[a-zA-Z]+$)[0-9a-zA-Z]{17}$/) //车架号只能是数字和字符
     this.setState({
-      carNumber: carCode
+      vins: carCode
     })
   }
 
@@ -92,26 +100,29 @@ export default class PlaceOrder extends Component {
    */
   submit() {
     let {
-      startingCity, // 发车城市
-      startingCityAddress, //发车城市详细地址
-      startingCityPerson, //发车城市联系人
-      startingCityPhone, //发车城市联系人电话
-      startingCityNumber, //发车城市联系人身份证号
-      targetCity, // 收车城市
-      targetCityAddress, //收车城市详细地址
-      targetCityPerson, //收车城市联系人
-      targetCityPhone, //收车城市联系人电话
-      targetCityNumber, //收车城市联系人身份证号
-      serviceType, //服务类型，0 上门提车，1 上门送车
-      startingTime, // 发车时间
-      carInformation, // 车辆信息
-      carNature, // 车辆类型
-      vehicles, // 台数
-      carNumber, // 车架号
-      price // 报价
+      sendCityId, //发车城市
+      sendCityName, //发车城市名称
+      sendAddress, //发车城市详细地址
+      sendPerson, //发车城市联系人
+      sendMobile, //发车城市联系方式
+      sendCardNo, //发车城市联系人身份证号
+      receiveCityId, //收车城市
+      receiveCityName, //收车城市名称
+      receiveAddress, //收车城市详细地址
+      receivePerson, //收车城市联系人
+      receiveMobile, //收车城市联系方式
+      receiveCarNo, //收车城市联系人身份证号
+      homeDelivery, //送车上门 0否 1是
+      storePickup, //上门提车 0否 1是
+      sendTimeDesc, //发车时间
+      carInfo, //车辆信息
+      usedType, //车辆类型
+      carAmount, //车辆台数
+      vins, // 车架号
+      quotedPriceDesc // 报价
     } = this.state
-    if (!startingCity || !startingCityAddress || !startingCityPerson || !startingCityPhone || !startingCityNumber || !targetCity || !targetCityAddress || !targetCityPerson || !targetCityPhone || 
-      !targetCityNumber || !serviceType || !startingTime || !carInformation || !carNature || !vehicles || !carNumber || !price) {
+    if (!sendCityId || !sendCityName || !sendAddress || !sendPerson || !sendMobile || !sendCardNo || !receiveCityId || !receiveCityName || !receiveAddress ||
+      !receivePerson || !receiveMobile || !receiveCarNo || !homeDelivery || !storePickup || !sendTimeDesc || !carInfo || !usedType || !carAmount || !vins || !quotedPriceDesc) {
         Taro.showToast({
           title: '请填写完整信息',
           icon: 'none'
@@ -122,23 +133,26 @@ export default class PlaceOrder extends Component {
   
   render() {
     let {
-      startingCity, // 发车城市
-      startingCityAddress, //发车城市详细地址
-      startingCityPerson, //发车城市联系人
-      startingCityPhone, //发车城市联系人电话
-      startingCityNumber, //发车城市联系人身份证号
-      targetCity, // 收车城市
-      targetCityAddress, //收车城市详细地址
-      targetCityPerson, //收车城市联系人
-      targetCityPhone, //收车城市联系人电话
-      targetCityNumber, //收车城市联系人身份证号
-      serviceType, //服务类型，0 上门提车，1 上门送车
-      startingTime, // 发车时间
-      carInformation, // 车辆信息
-      carNature, // 车辆类型
-      vehicles, // 台数
-      carNumber, // 车架号
-      price,  // 报价
+      sendCityId, //发车城市
+      sendCityName, //发车城市名称
+      sendAddress, //发车城市详细地址
+      sendPerson, //发车城市联系人
+      sendMobile, //发车城市联系方式
+      sendCardNo, //发车城市联系人身份证号
+      receiveCityId, //收车城市
+      receiveCityName, //收车城市名称
+      receiveAddress, //收车城市详细地址
+      receivePerson, //收车城市联系人
+      receiveMobile, //收车城市联系方式
+      receiveCarNo, //收车城市联系人身份证号
+      homeDelivery, //送车上门 0否 1是
+      storePickup, //上门提车 0否 1是
+      sendTimeDesc, //发车时间
+      carInfo, //车辆信息
+      usedType, //车辆类型
+      carAmount, //车辆台数
+      vins, // 车架号
+      quotedPriceDesc, // 报价
       isChoose  //判断是否是驿站人员
     } = this.state
     return (
@@ -159,7 +173,7 @@ export default class PlaceOrder extends Component {
             <View className='start-city'>
               <View className='details-form-item'>
                 <View className='details-form-label'>发车城市:</View>
-                <View className='details-form-content'>{startingCity}</View>
+                <View className='details-form-content'>{sendCityId ? sendCityName : ''}</View>
               </View>
               <View className='details-form-item'>
                 <View className='details-form-label'>详细信息:</View>
@@ -168,7 +182,7 @@ export default class PlaceOrder extends Component {
                 <Input
                   className='details-address-input'
                   placeholder='请填写详细地址'
-                  value={startingCityAddress}
+                  value={sendAddress}
                 ></Input>
               </View>
               <View className='details-form-item'>
@@ -177,7 +191,7 @@ export default class PlaceOrder extends Component {
                   <Input
                     className='details-from-input'
                     placeholder='请填写联系人姓名'
-                    value={startingCityPerson}
+                    value={sendPerson}
                     maxLength='10'
                   ></Input>
                 </View>
@@ -190,7 +204,7 @@ export default class PlaceOrder extends Component {
                     className='details-from-input'
                     placeholder='请填写联系人电话'
                     maxLength='20'
-                    value={startingCityPhone}
+                    value={sendMobile}
                     auto
                   ></Input>
                 </View>
@@ -201,7 +215,7 @@ export default class PlaceOrder extends Component {
                   <Input
                     className='details-from-input'
                     placeholder='请填写联系人证件号'
-                    value={startingCityNumber}
+                    value={sendCardNo}
                   ></Input>
                 </View>
               </View>
@@ -210,7 +224,7 @@ export default class PlaceOrder extends Component {
             <View className='end-city'>
               <View className='details-form-item'>
                 <View className='details-form-label'>收车城市:</View>
-                <View className='details-form-content'>{targetCity}</View>
+                <View className='details-form-content'>{receiveCityId ? receiveCityName : ''}</View>
               </View>
               <View className='details-form-item'>
                 <View className='details-form-label'>详细信息:</View>
@@ -219,7 +233,7 @@ export default class PlaceOrder extends Component {
                 <Input
                   className='details-address-input'
                   placeholder='请填写详细地址'
-                  value={targetCityAddress}
+                  value={receiveAddress}
                 ></Input>
               </View>
               <View className='details-form-item'>
@@ -229,7 +243,7 @@ export default class PlaceOrder extends Component {
                     className='details-from-input'
                     placeholder='请填写联系人姓名'
                     maxLength='10'
-                    value={targetCityPerson}
+                    value={receivePerson}
                   ></Input>
                 </View>
               </View>
@@ -241,7 +255,7 @@ export default class PlaceOrder extends Component {
                     className='details-from-input'
                     placeholder='请填写联系人电话'
                     maxLength='20'
-                    value={targetCityPhone}
+                    value={receiveMobile}
                   ></Input>
                 </View>
               </View>
@@ -251,7 +265,7 @@ export default class PlaceOrder extends Component {
                   <Input
                     className='details-from-input'
                     placeholder='请填写联系人证件号'
-                    value={targetCityNumber}
+                    value={receiveCarNo}
                   ></Input>
                 </View>
               </View>
@@ -260,19 +274,29 @@ export default class PlaceOrder extends Component {
             <View className='car-info'>
               <View className='details-form-item'>
                 <View className='details-form-label'>服务:</View>
-                <View className='details-form-content'>{serviceType}</View>
+                <View className='details-form-content'>
+                  {
+                    storePickup !== 0 ? '上门提车' : ''
+                  }
+                  {
+                    storePickup !== 0 && homeDelivery !== 0 ? '，' : ''
+                  }
+                  {
+                    homeDelivery !== 0 ? '上门送车' : ''
+                  }
+                </View>
               </View>
               <View className='details-form-item'>
                 <View className='details-form-label'>发车时间:</View>
-                <View className='details-form-content'>{startingTime}</View>
+                <View className='details-form-content'>{sendTimeDesc}</View>
               </View>
               <View className='details-form-item'>
                 <View className='details-form-label'>车辆信息:</View>
-                <View className='details-form-content'>{carInformation}</View>
+                <View className='details-form-content'>{carInfo}</View>
               </View>
               <View className='details-form-item'>
                 <View className='details-form-label'>车辆类型:</View>
-                <View className='details-form-content'>{carNature}</View>
+                <View className='details-form-content'>{usedType}</View>
               </View>
               <View className='details-form-item'>
                 <View className='details-form-label'>台数:</View>
@@ -281,7 +305,7 @@ export default class PlaceOrder extends Component {
                   <InputNumber
                     min={1}
                     max={999}
-                    value={vehicles}
+                    value={carAmount}
                     onChange={this.valueChange.bind(this)}
                   ></InputNumber>
                   <View className='details-from-number'>辆</View>
@@ -294,14 +318,14 @@ export default class PlaceOrder extends Component {
                 <Input
                   className='details-address-input'
                   placeholder='请输入车架号'
-                  value={carNumber}
+                  value={vins}
                 ></Input>
               </View>
               <View className='dividing-line'></View>
               <View className='details-form-item'>
                 <View className='details-form-label'>报价:</View>
                 <View className='details-form-content'>
-                  <Text className='single-price'>{price}</Text>
+                  <Text className='single-price'>{quotedPriceDesc}</Text>
                   <Text>元/台</Text>
                 </View>
               </View>
@@ -313,3 +337,10 @@ export default class PlaceOrder extends Component {
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    userInfo: state.user_msg.userInfo
+  }
+}
+export default connect(mapStateToProps)(PlaceOrder)
