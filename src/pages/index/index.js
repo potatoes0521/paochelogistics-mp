@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-10 09:40:11
+ * @LastEditTime: 2019-10-10 09:49:21
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -72,7 +72,7 @@ class Index extends Component {
     this.pageParams = this.$router.params
     this.initData()
     this.handleLocation()
-    login.getCode(this)
+    login.getCode(this) // 登录
   }
 
   /**
@@ -200,7 +200,7 @@ class Index extends Component {
     })
   }
 
-  closeModalCallBack(msg) {
+  closeModalCallBack() {
     this.setState({
       getLocationModel: true
     })
@@ -382,7 +382,7 @@ class Index extends Component {
                       })}
                     >
                       {
-                        sendTime ? sendTime.split('T')[0] : '请选择发车时间'
+                        sendTime ? sendTime : '请选择发车时间'
                       }
                     </Text>
                 </Picker>

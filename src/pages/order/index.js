@@ -3,7 +3,7 @@
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-09 16:35:12
+ * @LastEditTime: 2019-10-10 09:52:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -195,8 +195,6 @@ class Order extends Component {
     } = this.state
     let { userInfo } =  this.props
     const waitPayItemList = waitPayList.map(item => {
-      // const timeArray = item.createTime.split('T')
-      // item.NewCreateTime = timeArray[0] + " " + timeArray[1].split('.')[0]
       return (
         <OrderItem
           key={item.orderId}

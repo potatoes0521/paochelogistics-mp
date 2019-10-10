@@ -3,7 +3,7 @@
  * @description: 询价单页面
  * @Date: 2019-09-20 13:24:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-09 15:39:13
+ * @LastEditTime: 2019-10-10 09:58:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -193,8 +193,6 @@ class Offer extends Component {
       noOfferList
     } = this.state
     const AllOfferItemList = allOfferList.map(item => {
-      const timeArray = item.createTime.split('T')
-      item.NewCreateTime = timeArray[0] + " " + timeArray[1].split('.')[0]
       return (
         <OfferItem
           key={item.inquiryId}
@@ -203,8 +201,6 @@ class Offer extends Component {
       )
     })
     const hasOfferItemList = hasOfferList.map(item => {
-      const timeArray = item.createTime.split('T')
-      item.NewCreateTime = timeArray[0] + " " + timeArray[1].split('.')[0]
       return (
         <OfferItem
           key={item.inquiryId}
@@ -213,8 +209,6 @@ class Offer extends Component {
       )
     })
     const onOfferItemList = noOfferList.map(item => {
-      const timeArray = item.createTime.split('T')
-      item.NewCreateTime = timeArray[0] + " " + timeArray[1].split('.')[0]
       return (
         <OfferItem
           key={item.inquiryId}
