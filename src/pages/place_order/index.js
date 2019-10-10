@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
- * @LastEditors: guorui
- * @LastEditTime: 2019-10-10 16:10:33
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-10-10 16:15:41
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -187,52 +187,31 @@ class PlaceOrder extends Component {
       return
     }
     if (!(/^[\u4e00-\u9fa5]{2,4}$/.test(sendPerson))) {
-      Taro.showToast({
-        title: '名字输入格式有误',
-        icon: 'none'
-      })
+      this.toast('发车人名字输入格式有误')
       return
     }
     if (!(/^[\u4e00-\u9fa5]{2,4}$/.test(receivePerson))) {
-      Taro.showToast({
-        title: '名字输入格式有误',
-        icon: 'none'
-      })
+      this.toast('收车人名字输入格式有误')
       return
     }
     if (!(/^1[3456789]\d{9}$/.test(sendMobile))) {
-      Taro.showToast({
-        title: '手机号输入格式有误',
-        icon: 'none'
-      })
+      this.toast('发车人手机号输入格式有误')
       return
     }
     if (!(/^1[3456789]\d{9}$/.test(receiveMobile))) {
-      Taro.showToast({
-        title: '手机号输入格式有误',
-        icon: 'none'
-      })
+      this.toast('收车人手机号输入格式有误')      
       return
     }
     if (!(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(sendCardNo))) {
-      Taro.showToast({
-        title: '身份证号输入格式有误',
-        icon: 'none'
-      })
+      this.toast('发车人身份证号输入格式有误')
       return
     }
     if (!(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(receiveCarNo))) {
-      Taro.showToast({
-        title: '身份证号输入格式有误',
-        icon: 'none'
-      })
+      this.toast('收车人身份证号输入格式有误')
       return
     }
     if (!(/^(?!^\d+$)(?!^[a-zA-Z]+$)[0-9a-zA-Z]{17}$/.test(vins))) {
-      Taro.showToast({
-        title: '车架号输入格式有误',
-        icon: 'none'
-      })
+      this.toast('车架号输入格式有误')
       return
     }
     Taro.showLoading({
@@ -274,7 +253,12 @@ class PlaceOrder extends Component {
         })
       })
   }
-  
+  toast(msg) {
+    Taro.showToast({
+      title: msg,
+      icon: 'none'
+    })
+  }
   render() {
     let {
       sendCityId, //发车城市
