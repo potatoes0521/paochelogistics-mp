@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-09 15:41:46
+ * @LastEditTime: 2019-10-10 09:40:11
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -18,8 +18,6 @@ import {
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import classNames from 'classnames'
-import Actions from '@store/actions/index.js'
-import refreshToken from '@utils/refreshToken.js'
 import { convertingGPS } from '@utils/location.js'
 import {
   getUserLocation,
@@ -31,13 +29,17 @@ import {
   timestampOfDay,
   getDateTime
 } from '@utils/timer_handle.js'
+// eslint-disable-next-line import/first
+import api from '@api/index.js'
+import login from '@utils/login.js'
+
 import NoTitleCard from '@c/no_title_card/index.js'
 import RadioGroups from '@c/radio_group/index.js'
 import CheckBoxGroup from '@c/checkbox_group/index.js'
 import InputNumber from '@c/input_number/index.js'
 import { serviceList, carNatureList } from '@config/text_config.js'
-// eslint-disable-next-line import/first
-import api from '@api/index.js'
+
+
 import './index.styl'
 
 class Index extends Component {
@@ -70,7 +72,7 @@ class Index extends Component {
     this.pageParams = this.$router.params
     this.initData()
     this.handleLocation()
-    this.getCode()
+    login.getCode(this)
   }
 
   /**
@@ -96,69 +98,6 @@ class Index extends Component {
     })
     this.serviceList.forEach(item => {
       item.checked = false
-    })
-  }
-  /**
-   * 获取code  然后去换openid
-   * @return void
-   */
-  getCode() {
-    Taro.showLoading({
-      title: '加载中...',
-      mask: true
-    })
-    Taro.getSystemInfo()
-      .then(res => {
-        const phoneMsg = res.model + '-' + res.system + '-' + res.SDKVersion
-        console.log(phoneMsg, res)
-        Actions.changeUserInfo({
-          userAgent: phoneMsg
-        })
-      })
-    Taro.login().then(res => {
-      this.codeExchangeOpenID(res.code)
-    }).catch(err => {
-      console.log(err, 'code 获取失败')
-    })
-  }
-  /**
-   * code换openid
-   * @param {String} code wx.login获取的code
-   * @return void
-   */
-  codeExchangeOpenID(code) {
-    let sendData = {
-      code
-    }
-    api.user.codeExchangeOpenID(sendData, this).then(async (res) => {
-      let openId = res.openid;
-      Actions.changeUserInfo({
-        openId: openId
-      })
-      this.login(openId);
-    }).catch(err => {
-      console.log(err)
-    })
-  }
-  /**
-   * 使用openID登录
-   * @param {String} openid
-   * @return void
-   */
-  login(openId = this.props.userInfo.openId) {
-    let sendData = {
-      token: this.props.userInfo.token,
-      openId
-    }
-    api.user.loginUseOpenID(sendData, this).then(res => {
-      Taro.hideLoading()
-      if (res) {
-        let resData = Object.assign({}, res)
-        if (!sendData.token || sendData.token !== resData.token) {
-          refreshToken.setNewToken(resData.token)
-        }
-        Actions.changeUserInfo(resData)
-      }
     })
   }
   /**
