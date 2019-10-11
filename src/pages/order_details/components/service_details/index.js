@@ -3,14 +3,14 @@
  * @description: 订单详情中发车城市、收车城市的组件
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-09 17:04:00
+ * @LastEditTime: 2019-10-11 10:45:21
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
-import '../send_city/index.styl'
+import './index.styl'
 
 export default class ServiceDetailsComponent extends Component {
   constructor(props) {

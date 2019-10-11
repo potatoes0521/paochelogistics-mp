@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-10 17:46:38
+ * @LastEditTime: 2019-10-11 10:57:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,8 +16,10 @@ import {
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import NoTitleCard from '@c/no_title_card/index.js'
-import '@c/all_order_pages/send_city/index.styl'
+import '../order_details/components/send_city/index.styl'
+// eslint-disable-next-line import/first
 import Storage from '@utils/storage.js'
+// eslint-disable-next-line import/first
 import api from '@api/index.js'
 // import '@assets/icon_font/icon.scss'
 import './index.styl'

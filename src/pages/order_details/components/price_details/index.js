@@ -10,7 +10,6 @@
 
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
-import '../send_city/index.styl'
 import './index.styl'
 
 export default class PriceDetailsComponent extends Component {

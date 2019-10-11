@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 支付详情
  * @Date: 2019-10-08 09:30:22
- * @LastEditors: liuYang
- * @LastEditTime: 2019-10-10 09:36:34
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-10-11 10:59:36
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,7 +14,7 @@ import { connect } from '@tarojs/redux'
 import api from '@api/index.js'
 import login from '@utils/login.js'
 import NoTitleCard from '@c/no_title_card/index.js'
-import PriceDetailsComponent from '@c/all_order_pages/price_details/index.js'
+import PriceDetailsComponent from '../order_details/components/price_details/index.js'
 import './index.styl'
 
 class PayDetails extends Component {
