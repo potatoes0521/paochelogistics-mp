@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-09 16:43:59
+ * @LastEditTime: 2019-10-11 10:12:28
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -23,8 +23,6 @@ export default class OrderDetailsComponent extends Component {
     super(props)
     this.state = {}
   }
-
-  componentWillUnmount () {}
   
   componentDidShow() { }
   
