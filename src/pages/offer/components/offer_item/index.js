@@ -3,7 +3,7 @@
  * @description: 询价单公共组件页面
  * @Date: 2019-09-23 10:49:11
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-10 10:27:19
+ * @LastEditTime: 2019-10-11 09:23:03
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -50,16 +50,16 @@ export default class OfferItem extends Component {
         onClick={this.navigatorToOfferDetails}
       >
         <View className='item-title-wrapper'>
-          <View className='title-time'>{item.inquiryTimeDesc}</View>
-          <View className={offerStatusClassName}>{item.statusDesc}</View>
+          <View className='title-time'>{item.inquiryTimeDesc || ''}</View>
+          <View className={offerStatusClassName}>{item.statusDesc || ''}</View>
         </View>
         <View className='item-main'>
           <View className='item-city'>
-            <Text>{item.sendCityName}</Text>
+            <Text>{item.sendCityName || ''}</Text>
             <Text className='iconfont iconjiantou_qiehuanyou icon-style'></Text>
-            <Text>{item.receiveCityName}</Text>
+            <Text>{item.receiveCityName || ''}</Text>
           </View>
-          <View className='list-item'>发车时间：{item.sendTimeDesc}</View>
+          <View className='list-item'>发车时间：{item.sendTimeDesc || ''}</View>
           {
             (!item.storePickup && !item.homeDelivery) ?
               null :
