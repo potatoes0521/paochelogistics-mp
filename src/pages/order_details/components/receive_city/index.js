@@ -3,48 +3,63 @@
  * @description: 订单详情中收车城市的组件
  * @Date: 2019-10-09 16:41:49
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-09 17:03:10
+ * @LastEditTime: 2019-10-11 18:04:47
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
+import { connect } from '@tarojs/redux'
+import PropTypes from 'prop-types'
 import './index.styl'
 
-export default class ReceiveCityComponent extends Component {
+class ReceiveCityComponent extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = { }
   }
-
-  componentWillUnmount () {}
   
-  componentDidShow() { }
-  
-  render () {
+  render() {
+    let { item }  = this.props
     return (
       <View className='details-form-wrapper'>
         <View className='details-form-item'>
           <View className='details-form-label'>收车城市:</View>
-          <View className='details-form-content'>上海</View>
+          <View className='details-form-content'>{item.inquiryOrderVO.receiveCityId ? item.inquiryOrderVO.receiveCityName : ''}</View>
         </View>
         <View className='details-form-item'>
           <View className='details-form-label'>详细信息:</View>
-          <View className='details-form-content'>海淀区中关村52号创业公社B区32号楼跑车物流</View>
+          <View className='details-form-content'>{item.inquiryOrderVO.receiveAddress}</View>
         </View>
         <View className='details-form-item'>
           <View className='details-form-label'>联系人:</View>
-          <View className='details-form-content'>张玉超</View>
+          <View className='details-form-content'>{item.orderCarriagePersonVo.receivePerson}</View>
         </View>
         <View className='details-form-item'>
           <View className='details-form-label'>联系方式:</View>
-          <View className='details-form-content'>18611671676</View>
+          <View className='details-form-content'>{item.orderCarriagePersonVo.receiveMobile}</View>
         </View>
         <View className='details-form-item'>
           <View className='details-form-label'>身份证号:</View>
-          <View className='details-form-content'>132674199803234567</View>
+          <View className='details-form-content'>{item.orderCarriagePersonVo.receiveCarNo}</View>
         </View>
       </View>
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    userInfo: state.user_msg.userInfo
+  }
+}
+
+ReceiveCityComponent.defaultProps = {
+  item: {}
+}
+
+ReceiveCityComponent.propTypes = {
+  item: PropTypes.object
+}
+
+export default connect(mapStateToProps)(ReceiveCityComponent)
