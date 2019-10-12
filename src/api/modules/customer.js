@@ -3,7 +3,7 @@
  * @description: 客户管理
  * @Date: 2019-10-08 15:54:08
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-12 10:25:50
+ * @LastEditTime: 2019-10-12 14:09:04
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,6 +16,6 @@ export default {
   },
   // 编辑客户信息
   editCustomer(data, that) {
-    return requestHandle.get('user/edit', data, that);
+    return requestHandle.post('user/editCustomer', data, that);
   }
 }

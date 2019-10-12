@@ -3,24 +3,190 @@
  * @description: 修改添加客户信息
  * @Date: 2019-09-27 15:47:35
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-29 14:37:09
+ * @LastEditTime: 2019-10-12 14:56:20
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import Taro, { Component } from '@tarojs/taro'
 import {
   View,
-  Input
+  Input,
+  Text
 } from '@tarojs/components'
+import Storage from '@utils/storage.js'
 import { connect } from '@tarojs/redux'
-
+import api from '@api/index.js'
 import './index.styl'
 
-class MineInfo extends Component { 
+class CustomerEdit extends Component { 
+  constructor(props) { 
+    super(props)
+    this.state = {
+      remarkName: '',
+      mobile: '',
+      merchantId: '',
+      merchantName: '',
+      idCard: ''
+    }
+    this.pageParams = {}
+    this.customerInfo = {}
+  }
+  componentDidShow() { 
+    this.pageParams = this.$router.params
+    if (this.pageParams.pageType === 'edit') {
+      Taro.setNavigationBarTitle({
+        title: '编辑客户信息'
+      })
+      this.getCustomerDetails()
+    }
+  }
+  /**
+   * 获取客户信息详情
+   * @return void
+   */
+  getCustomerDetails() {
+    Storage.getStorage('customer_details').then(res => {
+      this.customerInfo = res
+      this.setState({
+        remarkName: res.remarkName,
+        mobile: res.mobile,
+        merchantId: res.merchantId,
+        merchantName: res.merchantName,
+        idCard: res.idCard
+      })
+    })
+  }
+  /**
+   * 身份证号
+   * @param {Object} e event对象
+   * @return void
+   */
+  remarkNameInput(e) { 
+    this.setState({
+      remarkName: e.target.value
+    })
+  }
+  /**
+   * 身份证号
+   * @param {Object} e event对象
+   * @return void
+   */
+  phoneInput(e) {
+    this.setState({
+      mobile: e.target.value
+    })
+  }
+  /**
+   * 身份证号
+   * @param {Object} e event对象
+   * @return void
+   */
+  idCardInput(e) {
+    this.setState({
+      idCard: e.target.value
+    })
+  }
+  /**
+   * 取消
+   * @return void
+   */
+  cancel() { 
+    Taro.navigateBack()
+  }
+  /**
+   * 提交客户信息
+   * @return void
+   */
+  submit() {
+    let {
+      mobile,
+      merchantId,
+      idCard,
+      remarkName
+    } = this.state
+    if (!(/^[\u4E00-\u9FA5]{2,8}$/).test(remarkName)) {
+      this.toast('请输入2-8位的中文姓名')
+      return
+    }
+    if (!(/^1[3456789]\d{9}$/.test(mobile))) {
+      this.toast('手机号格式有误')
+      return
+    }
+    if (!(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(idCard))) {
+      this.toast('客户身份证号格式有误')
+      return
+    }
+    let sendData = {
+      userId: this.customerInfo.userId,
+      mobile,
+      merchantId,
+      idCard,
+      remarkName
+    }
+    Taro.showLoading({
+      title: '提交中...',
+      mask: true
+    })
+    Taro.hideLoading()
+    api.customer.editCustomer(sendData, this)
+      .then(() => {
+        let title = '添加成功'
+        if (this.pageParams.pageType === 'edit') { 
+          title = '编辑成功'
+        }
+        Taro.showToast({ title })
+        setTimeout(() => {
+          Taro.navigateBack()
+        },1800)
+      })
+  }
+  toast(msg) {
+    Taro.showToast({
+      title: msg,
+      icon: 'none'
+    })
+  }
+  /**
+   * 选择经销商列表
+   * @return void
+   */
+  chooseMerchant() { 
+    if (this.pageParams.pageType === 'edit') return
+    let merchantList = [{
+        id: 1,
+        name: '车到付款（现金）'
+      },
+      {
+        id: 2,
+        name: '回单付款（现金）'
+      },
+      {
+        id: 3,
+        name: '预付油卡+回单现金'
+      }
+    ]
+    let stringMerchantList = merchantList.map(item => item.name)
+    Taro.showActionSheet({
+        itemList: stringMerchantList
+      })
+      .then(res => {
+        this.setState({
+          merchantId: merchantList[res.tapIndex].id,
+          merchantName: merchantList[res.tapIndex].name
+        })
+      })
+      .catch(err => console.log(err.errMsg))
+  }
   config = {
     navigationBarTitleText: '添加客户'
   }
   render() { 
+    let {
+      remarkName,
+      mobile,
+      merchantName,
+      idCard
+    } = this.state
     return (
       <View className='page-wrapper'>
         <View className='customer-info-wrapper'>
@@ -31,28 +197,42 @@ class MineInfo extends Component {
                 className='input-public'
                 placeholder='请输入姓名'
                 placeholderClass='placeholder-style'
-                maxLength='6'
+                value={remarkName}
+                onInput={this.remarkNameInput}
               ></Input>
             </View>
           </View>
           <View className='info-item'>
             <View className='item-label'>联系方式</View>
             <View className='item-text'>
-              <Input
-                className='input-public'
-                placeholder='请输入客户联系方式'
-                placeholderClass='placeholder-style'
-              ></Input>
+              {
+                this.pageParams.pageType === 'edit' ?
+                  <Text className='edit-text'>{mobile}</Text>
+                  :
+                  <Input
+                    type='number'
+                    className='input-public'
+                    placeholder='请输入客户联系方式'
+                    placeholderClass='placeholder-style'
+                    value={mobile}
+                    maxLength='11'
+                    onInput={this.phoneInput}
+                  ></Input>
+              }
             </View>
           </View>
           <View className='info-item'>
             <View className='item-label'>所属经销商</View>
-            <View className='item-text'>
-              <Input
-                className='input-public'
-                placeholder='请输入客户所属经销商'
-                placeholderClass='placeholder-style'
-              ></Input>
+            <View
+              className='item-text'
+              onClick={this.chooseMerchant}
+            >
+              {
+                merchantName ? 
+                  <Text className='edit-text'>{merchantName}</Text>
+                  :
+                  <Text>请选择所属经销商</Text>
+              }
             </View>
           </View>
           <View className='info-item'>
@@ -63,7 +243,9 @@ class MineInfo extends Component {
                 placeholder='请输入客户身份证号'
                 placeholderClass='placeholder-style'
                 maxLength='20'
-                type='number'
+                type='idcard'
+                value={idCard}
+                onInput={this.idCardInput}
               ></Input>
             </View>
           </View>
@@ -71,9 +253,11 @@ class MineInfo extends Component {
         <View className='edit-btn-group'>
           <View
             className='btn cancel'
+            onClick={this.cancel}
           >取消</View>
           <View
             className='btn submit'
+            onClick={this.submit}
           >保存</View>
         </View>
       </View>
@@ -85,4 +269,4 @@ const mapStateToProps = (state) => {
     userInfo: state.user_msg.userInfo
   }
 }
-export default connect(mapStateToProps)(MineInfo)
+export default connect(mapStateToProps)(CustomerEdit)
