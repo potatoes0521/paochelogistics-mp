@@ -3,7 +3,7 @@
  * @description: 订单详情中收车城市的组件
  * @Date: 2019-10-09 16:41:49
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-11 18:04:47
+ * @LastEditTime: 2019-10-12 16:46:28
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -25,23 +25,23 @@ class ReceiveCityComponent extends Component {
       <View className='details-form-wrapper'>
         <View className='details-form-item'>
           <View className='details-form-label'>收车城市:</View>
-          <View className='details-form-content'>{item.inquiryOrderVO.receiveCityId ? item.inquiryOrderVO.receiveCityName : ''}</View>
+          <View className='details-form-content'>{item.inquiryOrderVO.receiveCityName || ''}</View>
         </View>
         <View className='details-form-item'>
           <View className='details-form-label'>详细信息:</View>
-          <View className='details-form-content'>{item.inquiryOrderVO.receiveAddress}</View>
+          <View className='details-form-content'>{item.inquiryOrderVO.receiveAddress || ''}</View>
         </View>
         <View className='details-form-item'>
           <View className='details-form-label'>联系人:</View>
-          <View className='details-form-content'>{item.orderCarriagePersonVo.receivePerson}</View>
+          <View className='details-form-content'>{item.orderCarriagePersonVo.receivePerson || ''}</View>
         </View>
         <View className='details-form-item'>
           <View className='details-form-label'>联系方式:</View>
-          <View className='details-form-content'>{item.orderCarriagePersonVo.receiveMobile}</View>
+          <View className='details-form-content'>{item.orderCarriagePersonVo.receiveMobile || ''}</View>
         </View>
         <View className='details-form-item'>
           <View className='details-form-label'>身份证号:</View>
-          <View className='details-form-content'>{item.orderCarriagePersonVo.receiveCarNo}</View>
+          <View className='details-form-content'>{item.orderCarriagePersonVo.receiveCarNo || ''}</View>
         </View>
       </View>
     )

@@ -3,7 +3,7 @@
  * @description: 注册页面
  * @Date: 2019-08-22 11:58:25
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-12 11:20:38
+ * @LastEditTime: 2019-10-12 16:23:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -201,7 +201,7 @@ class usePhoneNumberRegister extends Component {
       return
     } else {
       this.setState({
-        agreementRadio: true
+        agreementRadio: !agreementRadio
       })
     }
   }

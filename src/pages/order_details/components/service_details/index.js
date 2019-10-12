@@ -3,7 +3,7 @@
  * @description: 订单详情中发车城市、收车城市的组件
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-11 18:08:04
+ * @LastEditTime: 2019-10-12 16:46:10
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -40,15 +40,15 @@ class ServiceDetailsComponent extends Component {
         </View>
         <View className='details-form-item'>
           <View className='details-form-label'>发车时间:</View>
-          <View className='details-form-content'>{item.inquiryOrderVO.sendTimeDesc}</View>
+          <View className='details-form-content'>{item.inquiryOrderVO.sendTimeDesc || ''}</View>
         </View>
         <View className='details-form-item'>
           <View className='details-form-label'>车辆信息:</View>
-          <View className='details-form-content'>{item.inquiryOrderVO.carInfo}</View>
+          <View className='details-form-content'>{item.inquiryOrderVO.carInfo || ''}</View>
         </View>
         <View className='details-form-item'>
           <View className='details-form-label'>台数:</View>
-          <View className='details-form-content'>{item.inquiryOrderVO.carAmount}辆</View>
+          <View className='details-form-content'>{item.inquiryOrderVO.carAmount || ''}辆</View>
         </View>
       </View>
     )

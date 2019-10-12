@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-11 17:56:24
+ * @LastEditTime: 2019-10-12 16:39:08
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -69,21 +69,24 @@ class OrderDetails extends Component {
   }
 
   render() {
+    let {
+      orderDetailsInfo
+    } = this.state
     return (
       <View className='page-wrapper'>
         <View className='page-main'>
           <NoTitleCard>
-            <SendCityComponent item={this.state.orderDetailsInfo}></SendCityComponent>
+            <SendCityComponent item={orderDetailsInfo}></SendCityComponent>
             <View className='dividing-line'></View>
-            <ReceiveCityComponent item={this.state.orderDetailsInfo}></ReceiveCityComponent>
+            <ReceiveCityComponent item={orderDetailsInfo}></ReceiveCityComponent>
             <View className='dividing-line'></View>
-            <ServiceDetailsComponent item={this.state.orderDetailsInfo}></ServiceDetailsComponent>
+            <ServiceDetailsComponent item={orderDetailsInfo}></ServiceDetailsComponent>
             <View className='dividing-line'></View>
-            <PriceDetailsComponent item={this.state.orderDetailsInfo}></PriceDetailsComponent>
+            <PriceDetailsComponent item={orderDetailsInfo}></PriceDetailsComponent>
           </NoTitleCard>
         </View>
         <View className='page-footer'>
-          <FooterDetailsComponent item={this.state.orderDetailsInfo}></FooterDetailsComponent>
+          <FooterDetailsComponent item={orderDetailsInfo}></FooterDetailsComponent>
         </View>
       </View>
     )

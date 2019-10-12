@@ -27,23 +27,23 @@ class SendCityComponent extends Component {
       <View className='details-form-wrapper'>
         <View className='details-form-item'>
           <View className='details-form-label'>发车城市:</View>
-          <View className='details-form-content'>{item.inquiryOrderVO.sendCityId !== 0 ? item.inquiryOrderVO.sendCityName : ''}</View>
+          <View className='details-form-content'>{item.inquiryOrderVO.sendCityName || ''}</View>
         </View>
         <View className='details-form-item'>
           <View className='details-form-label'>详细信息:</View>
-          <View className='details-form-content'>{item.inquiryOrderVO.sendAddress}</View>
+          <View className='details-form-content'>{item.inquiryOrderVO.sendAddress || ''}</View>
         </View>
         <View className='details-form-item'>
           <View className='details-form-label'>联系人:</View>
-          <View className='details-form-content'>{item.orderCarriagePersonVo.sendPerson}</View>
+          <View className='details-form-content'>{item.orderCarriagePersonVo.sendPerson || ''}</View>
         </View>
         <View className='details-form-item'>
           <View className='details-form-label'>联系方式:</View>
-          <View className='details-form-content'>{item.orderCarriagePersonVo.sendMobile}</View>
+          <View className='details-form-content'>{item.orderCarriagePersonVo.sendMobile || ''}</View>
         </View>
         <View className='details-form-item'>
           <View className='details-form-label'>身份证号:</View>
-          <View className='details-form-content'>{item.orderCarriagePersonVo.sendCardNo}</View>
+          <View className='details-form-content'>{item.orderCarriagePersonVo.sendCardNo || ''}</View>
         </View>
       </View>
     )

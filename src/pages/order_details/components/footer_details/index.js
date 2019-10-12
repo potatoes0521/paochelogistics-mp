@@ -3,7 +3,7 @@
  * @description: 订单详情--底部详情
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-11 18:20:30
+ * @LastEditTime: 2019-10-12 16:19:52
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -51,7 +51,7 @@ class FooterDetailsComponent extends Component {
                       <View className='upper-button'>
                         <View className='pay-button buttons'>立即支付
                           {
-                            (!item.promotionsPrice) ?
+                            (item.promotionsPrice) ?
                               <Text className='reduce-price'>(立减{item.promotionsPrice}元)</Text>
                               : null
                           }
