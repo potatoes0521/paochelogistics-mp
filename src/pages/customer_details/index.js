@@ -3,7 +3,7 @@
  * @description: 客户信息详情
  * @Date: 2019-09-27 15:43:53
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-12 15:04:40
+ * @LastEditTime: 2019-10-12 15:48:09
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,7 +13,7 @@ import { connect } from '@tarojs/redux'
 import Storage from '@utils/storage.js'
 import './index.styl'
 
-class MineInfo extends Component { 
+class CustomerDetails extends Component { 
   constructor() { 
     super()
     this.state = {
@@ -92,4 +92,4 @@ const mapStateToProps = (state) => {
     userInfo: state.user_msg.userInfo
   }
 }
-export default connect(mapStateToProps)(MineInfo)
+export default connect(mapStateToProps)(CustomerDetails)
