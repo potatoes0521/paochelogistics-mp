@@ -3,7 +3,7 @@
  * @description: 修改添加客户信息
  * @Date: 2019-09-27 15:47:35
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-12 14:56:20
+ * @LastEditTime: 2019-10-12 15:36:14
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -39,6 +39,7 @@ class CustomerEdit extends Component {
       })
       this.getCustomerDetails()
     }
+    this.getMerchantList()
   }
   /**
    * 获取客户信息详情
@@ -55,6 +56,13 @@ class CustomerEdit extends Component {
         idCard: res.idCard
       })
     })
+  }
+  getMerchantList() { 
+    api.customer.getMerchantList({}, this)
+      .then(res => {
+        if(!res) return
+        this.merchantList = res
+      })
   }
   /**
    * 身份证号
@@ -116,6 +124,10 @@ class CustomerEdit extends Component {
       this.toast('客户身份证号格式有误')
       return
     }
+    if (!merchantId) {
+      this.toast('请选择所属经销商')
+      return
+    }
     let sendData = {
       userId: this.customerInfo.userId,
       mobile,
@@ -152,27 +164,14 @@ class CustomerEdit extends Component {
    */
   chooseMerchant() { 
     if (this.pageParams.pageType === 'edit') return
-    let merchantList = [{
-        id: 1,
-        name: '车到付款（现金）'
-      },
-      {
-        id: 2,
-        name: '回单付款（现金）'
-      },
-      {
-        id: 3,
-        name: '预付油卡+回单现金'
-      }
-    ]
-    let stringMerchantList = merchantList.map(item => item.name)
+    let stringMerchantList = this.merchantList.map(item => item.merchantName)
     Taro.showActionSheet({
         itemList: stringMerchantList
       })
       .then(res => {
         this.setState({
-          merchantId: merchantList[res.tapIndex].id,
-          merchantName: merchantList[res.tapIndex].name
+          merchantId: this.merchantList[res.tapIndex].merchantId,
+          merchantName: this.merchantList[res.tapIndex].merchantName
         })
       })
       .catch(err => console.log(err.errMsg))
@@ -222,20 +221,6 @@ class CustomerEdit extends Component {
             </View>
           </View>
           <View className='info-item'>
-            <View className='item-label'>所属经销商</View>
-            <View
-              className='item-text'
-              onClick={this.chooseMerchant}
-            >
-              {
-                merchantName ? 
-                  <Text className='edit-text'>{merchantName}</Text>
-                  :
-                  <Text>请选择所属经销商</Text>
-              }
-            </View>
-          </View>
-          <View className='info-item'>
             <View className='item-label'>身份证号</View>
             <View className='item-text'>
               <Input
@@ -247,6 +232,20 @@ class CustomerEdit extends Component {
                 value={idCard}
                 onInput={this.idCardInput}
               ></Input>
+            </View>
+          </View>
+          <View className='info-item'>
+            <View className='item-label'>所属经销商</View>
+            <View
+              className='item-text'
+              onClick={this.chooseMerchant}
+            >
+              {
+                merchantName ? 
+                  <Text className='edit-text'>{merchantName}</Text>
+                  :
+                  <Text>请选择所属经销商</Text>
+              }
             </View>
           </View>
         </View>

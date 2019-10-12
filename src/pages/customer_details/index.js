@@ -3,7 +3,7 @@
  * @description: 客户信息详情
  * @Date: 2019-09-27 15:43:53
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-12 12:02:08
+ * @LastEditTime: 2019-10-12 15:04:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -37,6 +37,10 @@ class MineInfo extends Component {
       })
     })
   }
+  /**
+   * 导航到客户详情
+   * @return void
+   */
   navigatorTo() { 
     Taro.navigateTo({
       url: '/pages/customer_edit/index?pageType=edit'

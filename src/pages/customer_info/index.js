@@ -3,7 +3,7 @@
  * @description: 客户信息列表
  * @Date: 2019-09-27 15:38:07
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-12 11:19:24
+ * @LastEditTime: 2019-10-12 15:28:49
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -30,6 +30,7 @@ class CustomerInfo extends Component {
     }
     this.customerPage = 1
     this.customerFlag = false
+    this.merchantList = []
   }
 
   componentDidShow() { 
@@ -42,20 +43,31 @@ class CustomerInfo extends Component {
    * @param {String} selectParam 根据什么查询
    * @param {Number} pageNum 页数
    * @param {Number} pageSize 条数
+   * @param {Boolean} showLoading 是否显示loading
    * @return void
    */
-  getAllCustomerList(selectParam = '', pageNum = 1, pageSize = 10) {
-    Taro.showLoading({
-      title: '加载中...',
-      mask: true
-    })
+  getAllCustomerList(selectParam = '', pageNum = 1, pageSize = 10, showLoading = true) {
+    if (showLoading) {
+      Taro.showLoading({
+        title: '加载中...',
+        mask: true
+      })
+    }
     let sendData = {
       selectParam,
       pageNum,
       pageSize,
     }
     let { customerListData } = this.state
-    api.customer.getCustomerList(sendData,this).then(res => {
+    api.customer.getCustomerList(sendData, this).then(res => {
+      if (!res && selectParam) {
+        Taro.hideLoading()
+        Taro.showToast({
+          title: '没搜索到结果',
+          icon:'none'
+        })
+        return
+      }
       if (res && res.length < pageSize) {
         this.customerFlag = true
       }
@@ -72,12 +84,58 @@ class CustomerInfo extends Component {
       Taro.hideLoading()
     })
   }
+  /**
+   * 跳转到客户详情  
+   * @param {Object} e event对象
+   * @return void
+   */
   navigatorToDetails(e) { 
     let {item} = e.target.dataset
     Storage.setStorage('customer_details', item)
     Taro.navigateTo({
       url: '/pages/customer_details/index'
     })
+  }
+  /**
+   * 搜索框
+   * @param {Object} e event对象
+   * @return void
+   */
+  searchInput(e) { 
+    this.setState({
+      selectParam: e.target.value
+    })
+  }
+  /**
+   * 提交搜索
+   * @return void
+   */
+  searchConfirm() { 
+    this.customerPage = 1
+    this.customerFlag = false
+    this.getAllCustomerList(this.state.selectParam, this.customerPage)
+  }
+  /**
+   * 添加客户
+   * @return void
+   */
+  addCustomer() {
+    Taro.navigateTo({
+      url: '/pages/customer_edit/index'
+    })
+  }
+  /**
+   * 清除输入框内容
+   * @return void
+   */
+  clearSearchInput() {
+    console.log('111')
+    this.setState({
+      selectParam: ''
+    })
+    this.customerPage = 1
+    this.customerFlag = false
+    this.getAllCustomerList('', this.customerPage, 10, false)
   }
   /**
    * 下拉刷新
@@ -109,7 +167,10 @@ class CustomerInfo extends Component {
   }
   
   render() { 
-    let { customerListData } = this.state
+    let {
+      customerListData,
+      selectParam
+    } = this.state
     const customerList = customerListData.map((item,index) => (
       <Block
         key={item.userId}
@@ -135,8 +196,20 @@ class CustomerInfo extends Component {
                 placeholder='输入姓名/联系方式/经销商名称进行搜索'
                 placeholderClass='search-placeholder'
                 className='search-input'
+                value={selectParam}
+                onInput={this.searchInput}
+                confirm-type='search'
+                onConfirm={this.searchConfirm}
               ></Input>
             </View>
+            {
+              selectParam ? 
+                <View
+                  className='iconfont iconguanbi clear-search'
+                  onClick={this.clearSearchInput}
+                ></View>                
+                : null
+            }
           </View>
         </View>
         {
@@ -156,7 +229,10 @@ class CustomerInfo extends Component {
             }
           </View>
         </View>
-        <View className='add-customer'>
+        <View
+          className='add-customer'
+          onClick={this.addCustomer}
+        >
           <View className='iconfont icontianjiakehu icon-add-style'></View>
         </View>
       </View>
