@@ -3,7 +3,7 @@
  * @description: 订单item
  * @Date: 2019-09-23 14:42:25
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-10 09:29:59
+ * @LastEditTime: 2019-10-11 17:56:20
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -94,7 +94,13 @@ export default class OrderItem extends Component {
               null :             
               <View className='btn pay-btn'>
                 立即支付
-                <Text className='small-text'>(立减50元)</Text>
+                {
+                  item.promotionsPrice ? 
+                    <Text
+                      className='small-text'
+                    >(立减{item.promotionsPrice}元)</Text>
+                    : null 
+                }
               </View>
           }
         </View>
