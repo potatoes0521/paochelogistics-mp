@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-10-10 09:33:18
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-12 16:28:43
+ * @LastEditTime: 2019-10-12 16:56:27
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -31,8 +31,8 @@ export default {
         })
       })
     Taro.login().then(res => {
-      console.log(res,'code')
-      // this.codeExchangeOpenID(res.code, that)
+      // console.log(res,'code')
+      this.codeExchangeOpenID(res.code, that)
     }).catch(err => {
       console.log(err, 'code 获取失败')
     })

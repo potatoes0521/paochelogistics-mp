@@ -3,7 +3,7 @@
  * @description: 订单详情--底部详情
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-12 16:19:52
+ * @LastEditTime: 2019-10-12 17:19:14
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -18,6 +18,8 @@ import OrderFooterCard from '../order_footer_card/index.js'
 import { connect } from '@tarojs/redux'
 // eslint-disable-next-line import/first
 import PropTypes from 'prop-types'
+// eslint-disable-next-line import/first
+import classNames from 'classnames'
 import './index.styl'
 
 class FooterDetailsComponent extends Component {
@@ -34,7 +36,11 @@ class FooterDetailsComponent extends Component {
       visible,
       isShow
     } = this.state
-    let { item }  = this.props
+    let { item } = this.props
+    const payButtonClassName = classNames({
+      'pay-button buttons': true,
+      'change-padding': !item.promotionsPrice
+    })
     return (
       <View className='footer-details-wrapper'>
         <OrderFooterCard>
@@ -49,7 +55,7 @@ class FooterDetailsComponent extends Component {
                       </View>
                       :
                       <View className='upper-button'>
-                        <View className='pay-button buttons'>立即支付
+                        <View className={payButtonClassName}>立即支付
                           {
                             (item.promotionsPrice) ?
                               <Text className='reduce-price'>(立减{item.promotionsPrice}元)</Text>
