@@ -3,8 +3,22 @@
  * @description: 服务器状态码错误配置
  * @Date: 2019-08-13 12:22:58
  * @LastEditors: liuYang
- * @LastEditTime: 2019-08-14 10:41:42
+ * @LastEditTime: 2019-10-12 10:23:46
  */
+
+// api地址
+// export const defaultURL = 'http://192.168.3.121:8084/' // 李斌
+// export const defaultURL = 'http://192.168.3.191:8085/' // 测试环境  
+export const defaultApiURL = 'http://192.168.3.191:8081/' // 测试环境  
+// export const defaultURL = 'http://yapi.demo.qunar.com/mock/97800/' // 测试环境
+// export const defaultURL = 'https://api.bang.paoche56.com/'
+
+// 图片资源服务器
+export const defaultResourceImgURL = 'resource.paoche56.com/paochelogistics/mp_img'
+// 文件资源服务器
+export const defaultResourceConfigURL = 'resource.paoche56.com/paochelogistics/mp_config'
+
+
 export const HTTP_STATUS = {
   SUCCESS: 200,
   CLIENT_ERROR: 400,
@@ -38,3 +52,4 @@ export const RESULT_STATUS = {
   SUCCESS: 0,
   SIGNATURE_FAILED: 1000 // 签名失败
 }
+
