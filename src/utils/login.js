@@ -1,9 +1,9 @@
 /*
  * @Author: liuYang
- * @description: 登录业务提取
+ * @description: 请填写描述信息
  * @Date: 2019-10-10 09:33:18
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-10 09:43:14
+ * @LastEditTime: 2019-10-12 09:51:47
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -15,8 +15,7 @@ import api from '@api/index.js'
 
 export default {
   /**
-   * 获取code  然后去换openId
-   * @param {Object} that   this对象
+   * 获取code  然后去换openid
    * @return void
    */
   getCode(that) {
@@ -40,14 +39,13 @@ export default {
   /**
    * code换openid
    * @param {String} code wx.login获取的code
-   * @param {Object} that   this对象
    * @return void
    */
   codeExchangeOpenID(code, that) {
     let sendData = {
       code
     }
-    api.user.codeExchangeOpenID(sendData, that).then(async (res) => {
+    api.user.codeExchangeOpenID(sendData, that).then(res => {
       let openId = res.openid;
       Actions.changeUserInfo({
         openId: openId

@@ -3,7 +3,7 @@
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-09 16:52:25
+ * @LastEditTime: 2019-10-11 09:37:12
  */
 
 // 默认请求连接
@@ -18,14 +18,14 @@
 import Taro from '@tarojs/taro'
 // eslint-disable-next-line import/first
 import refreshToken from '@utils/refreshToken.js'
-// import { backReload } from '@utils/common.js'
 import {
   HTTP_STATUS
 } from '../config/request_config.js'
 import createSignData from './secret.js'
 
-// let defaultURL = 'http://192.168.3.133:8082/' // 李斌
+// let defaultURL = 'http://192.168.3.121:8084/' // 李斌
 let defaultURL = 'http://192.168.3.191:8085/' // 测试环境  
+// let defaultURL = 'http://192.168.3.191:8084/' // 测试环境  
 // let defaultURL = 'http://yapi.demo.qunar.com/mock/97800/' // 测试环境
 // let defaultURL = 'https://api.bang.paoche56.com/'
 
@@ -35,9 +35,8 @@ export const appVersion = '0.8.7'
 export default {
   baseOptions(url, data, that, method = 'GET') {
     const sign = createSignData(data, sign_id)[1]
-
-    console.log(JSON.stringify(data), "sign=" + sign, url)
     const { userInfo } = that.props || {};
+    
     const headerUserLogin = JSON.stringify({
       'token': userInfo.token || '',
       'mobile': userInfo.mobile || '',
@@ -52,7 +51,7 @@ export default {
       'appType': 1, // 1 微信小程序 2 支付宝小程序
       'systemId': 2 // 1 跑车帮   2 跑车物流
     })
-
+    
     return new Promise((resolve, reject) => {
       Taro.request({
         isShowLoading: true,
@@ -65,7 +64,7 @@ export default {
           'user-login': headerUserLogin,
           'sign': sign || '',
           'terminal-type': userInfo.terminalType || 1, // 终端类型  1 小程序   2 H5  3 APP
-          'source-id': userInfo.sourceId || 3, // 1 跑车帮小程序 2 跑车帮app 3 跑车物流小程序
+          'source-id': userInfo.sourceId || 3, // 1 跑车帮小程序注册 2 跑车帮APP注册 3 跑车物流小程序注册 4 跑车物流小程序添加
           'system-info': userInfo.userAgent || '', // 系统信息
           'app-version': appVersion, // 版本号
           'app-type': 1, // 1 微信小程序 2 支付宝小程序
@@ -73,6 +72,19 @@ export default {
         },
         success(res) {
           if (res.statusCode === HTTP_STATUS.NOT_FOUND) {
+            const env = process.env.NODE_ENV;
+            if (env === 'development') {
+              resolve({
+                mobile: '13370130024',
+                openId: 'oLgd75eZdM9Cp-dSE0YpU9gKxJoE',
+                userId: '74',
+                token: 'e56eeabf15316920137dbf850cf0e48e',
+                unionId: 'fjlfjsalfjsalkfjjfdsafjfkdsj',
+                terminalType: '1',
+                userAgent: '',
+                userType: 0
+              })
+            }
             Taro.showToast({
               title: '请求资源不存在',
               icon: 'none',
@@ -99,18 +111,18 @@ export default {
           } else if (res.statusCode === HTTP_STATUS.SUCCESS) {
             if (res.data) {
               let resData = res.data
-              // "200002" 是未注册
+              // '200002' 是未注册
               const env = process.env.NODE_ENV;
               if (env === 'development' && +resData.code === 200002) {
                 resData.data = {
-                  mobile: "13370130024",
-                  openId: "oLgd75eZdM9Cp-dSE0YpU9gKxJoE",
-                  userId: "74",
-                  token: "e56eeabf15316920137dbf850cf0e48e",
-                  unionId: "fjlfjsalfjsalkfjjfdsafjfkdsj",
-                  terminalType: "1",
-                  userAgent: "",
-                  userType: 0
+                  mobile: '13370130024',
+                  openId: 'oLgd75eZdM9Cp-dSE0YpU9gKxJoE',
+                  userId: '74',
+                  token: 'e56eeabf15316920137dbf850cf0e48e',
+                  unionId: 'fjlfjsalfjsalkfjjfdsafjfkdsj',
+                  terminalType: '1',
+                  userAgent: '',
+                  userType: 1
                 }
               }
               if (!+resData.code || +resData.code === 200002 || +resData.code == 200) {
@@ -122,7 +134,7 @@ export default {
                 } else {
                   Taro.showToast({
                     title: resData.message,
-                    icon: "none",
+                    icon: 'none',
                     duration: 2000
                   })
                   // backReload(1800)

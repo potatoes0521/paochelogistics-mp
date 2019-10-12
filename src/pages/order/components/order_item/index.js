@@ -3,7 +3,7 @@
  * @description: 订单item
  * @Date: 2019-09-23 14:42:25
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-10 09:29:59
+ * @LastEditTime: 2019-10-12 09:51:09
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -49,11 +49,15 @@ export default class OrderItem extends Component {
         <View className='msg-wrapper'>
           <View className='list-item'>
             <View className='item-city'>
-              <Text>{offerMsg.sendCityName}</Text>
+              <Text>
+                {
+                  offerMsg.sendCityName || ''
+                }
+              </Text>
               <Text className='iconfont iconjiantou_qiehuanyou icon-style'></Text>
               <Text>
                 {
-                  offerMsg.receiveCityName
+                  offerMsg.receiveCityName || ''
                 }
               </Text>
               {/* <Text className='service-type'>
@@ -68,19 +72,19 @@ export default class OrderItem extends Component {
                 }
               </Text> */}
             </View>
-            <View className='price-wrapper price-state'>{ item.statusDesc }</View>
+            <View className='price-wrapper price-state'>{ item.statusDesc || '' }</View>
           </View>
           <View className='list-item list-item-msg'>
             <View className='order-msg'>
-              <Text className='order-car-info'>{ offerMsg.carInfo }</Text>
+              <Text className='order-car-info'>{ offerMsg.carInfo || '' }</Text>
               <Text>
                 {
-                  offerMsg.carAmount
+                  offerMsg.carAmount || 0
                 }
                 辆
               </Text>
             </View>
-            <View className='price-wrapper price-wrapper-lang'>¥{ item.payPrice ? item.payPrice : '' }</View>
+            <View className='price-wrapper price-wrapper-lang'>¥{ item.payPrice ? item.payPriceDesc : '' }</View>
           </View>
         </View>
         <View className='btn-group'>
@@ -90,12 +94,18 @@ export default class OrderItem extends Component {
             onClick={() =>{this.navigatorTo('transport_state')}}
           >运输状态</View>
           {
-            userInfo.userType === 0 ? 
-              null :             
+            userInfo.userType !== 0 && item.status === 10? 
               <View className='btn pay-btn'>
                 立即支付
-                <Text className='small-text'>(立减50元)</Text>
+                {
+                  item.promotionsPrice ? 
+                    <Text
+                      className='small-text'
+                    >(立减{item.promotionsPrice}元)</Text>
+                    : null 
+                }
               </View>
+              : null
           }
         </View>
       </View>
