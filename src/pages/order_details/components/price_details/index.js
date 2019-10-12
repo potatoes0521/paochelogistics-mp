@@ -3,28 +3,27 @@
  * @description: 订单详情中发车城市、收车城市的组件
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-09 16:50:54
+ * @LastEditTime: 2019-10-11 18:11:19
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
+import { connect } from '@tarojs/redux'
+import PropTypes from 'prop-types'
 import './index.styl'
 
-export default class PriceDetailsComponent extends Component {
+class PriceDetailsComponent extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      visible: true //判断立即支付立减字段是否显示
+    this.state = { 
+      visible: false
     }
   }
 
-  componentWillUnmount () {}
-  
-  componentDidShow() { }
-  
   render() { 
+    let { item } = this.props
     let {
       visible
     } = this.state
@@ -32,7 +31,7 @@ export default class PriceDetailsComponent extends Component {
       <View className='details-form-wrapper'>
         <View className='details-form-item'>
           <View className='details-form-label'>报价:</View>
-          <View className='details-form-price'>￥2189.00</View>
+          <View className='details-form-price'>￥{item.inquiryOrderVO.quotedPriceDesc}</View>
         </View>
         <View className='details-form-item'>
           <View className='details-form-label'>帮砍价:</View>
@@ -48,9 +47,25 @@ export default class PriceDetailsComponent extends Component {
         }
         <View className='details-form-item'>
           <View className='details-form-label'>应付金额:</View>
-          <View className='details-form-price'>￥2100.79</View>
+          <View className='details-form-price'>￥{item.payPriceDesc}</View>
         </View>
       </View>
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    userInfo: state.user_msg.userInfo
+  }
+}
+
+PriceDetailsComponent.defaultProps = {
+  item: {}
+}
+
+PriceDetailsComponent.propTypes = {
+  item: PropTypes.object
+}
+
+export default connect(mapStateToProps)(PriceDetailsComponent)
