@@ -40,6 +40,6 @@ export default {
   },
   // 编辑用户信息
   editUserInfo(data, that) {
-    return requestHandle.post('user/editUser', data, that);
+    return requestHandle.post('user/edituser', data, that);
   }
 }

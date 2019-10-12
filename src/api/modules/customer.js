@@ -16,7 +16,7 @@ export default {
   },
   // 编辑客户信息
   editCustomer(data, that) {
-    return requestHandle.post('user/editCustomer', data, that);
+    return requestHandle.post('user/editcustomer', data, that);
   },
   // 获取商户列表
   getMerchantList(data, that) {
