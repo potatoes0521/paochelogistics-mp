@@ -3,7 +3,7 @@
  * @description: 用户中心
  * @Date: 2019-09-26 11:23:16
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-08 10:51:06
+ * @LastEditTime: 2019-10-12 16:07:44
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -34,4 +34,12 @@ export default {
   getVerificationCode(data, that) {
     return requestHandle.post('code/sendverificationcode', data, that);
   },
+  // 根据ID获取更多用户信息
+  getUserInfo(data, that) {
+    return requestHandle.get('user/getuserinfobyuserid', data, that);
+  },
+  // 编辑用户信息
+  editUserInfo(data, that) {
+    return requestHandle.post('user/edituser', data, that);
+  }
 }

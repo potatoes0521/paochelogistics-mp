@@ -3,7 +3,7 @@
  * @description: 修改添加客户信息
  * @Date: 2019-09-27 15:47:35
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-12 15:36:14
+ * @LastEditTime: 2019-10-12 16:06:19
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -65,7 +65,7 @@ class CustomerEdit extends Component {
       })
   }
   /**
-   * 身份证号
+   * 姓名
    * @param {Object} e event对象
    * @return void
    */
@@ -75,7 +75,7 @@ class CustomerEdit extends Component {
     })
   }
   /**
-   * 身份证号
+   * 手机号
    * @param {Object} e event对象
    * @return void
    */
@@ -139,9 +139,9 @@ class CustomerEdit extends Component {
       title: '提交中...',
       mask: true
     })
-    Taro.hideLoading()
     api.customer.editCustomer(sendData, this)
       .then(() => {
+        Taro.hideLoading()
         let title = '添加成功'
         if (this.pageParams.pageType === 'edit') { 
           title = '编辑成功'

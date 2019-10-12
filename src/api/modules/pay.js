@@ -11,7 +11,7 @@ import requestHandle from '../request_handle.js';
 
 export default {
   getPayParams(data, that) {
-    return requestHandle.post(`pay/wxPay/${data.orderCode}`, data, that);
+    return requestHandle.post(`pay/wxpay/${data.orderCode}`, data, that);
   },
   payCallBack(data, that) {
     return requestHandle.post(`pay/wxnotify`, data, that);
