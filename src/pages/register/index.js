@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 注册页面
  * @Date: 2019-08-22 11:58:25
- * @LastEditors: liuYang
- * @LastEditTime: 2019-10-08 16:02:17
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-10-12 11:20:38
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -26,7 +26,8 @@ class usePhoneNumberRegister extends Component {
     super(props)
     this.state = {
       countDown: 90,
-      timerFlag: false
+      timerFlag: false,
+      agreementRadio: false //协议是否选中
     }
     this.verificationCode = '' // 验证码
     this.phoneNumber = ''       // 手机号
@@ -115,6 +116,13 @@ class usePhoneNumberRegister extends Component {
       })
       return
     }
+    if (!this.state.agreementRadio) {
+      Taro.showToast({
+        title: '请点击注册协议',
+        icon: 'none'
+      })
+      return
+    }
     this.handleRegister(this.phoneNumber, this.verificationCode)
   }
   /**
@@ -179,18 +187,42 @@ class usePhoneNumberRegister extends Component {
     }, 1000)
   }
 
+  /**
+   * 注册协议
+   * @description: agreementRadio 注册协议按钮
+   * @param {type} 
+   * @return: 
+   */
+  getRegistrationAgreementRadio() {
+    let {
+      agreementRadio
+    } = this.state
+    if (agreementRadio) {
+      return
+    } else {
+      this.setState({
+        agreementRadio: true
+      })
+    }
+  }
+
   config = {
-    navigationBarTitleText: '跑车帮'
+    navigationBarTitleText: '跑车物流'
   }
 
   render() {
     let {
       timerFlag,
-      countDown
+      countDown,
+      agreementRadio
     } = this.state
     const getVerificationCodeClassName = classNames({
       'btn-code': true,
       'disabled-btn': timerFlag
+    })
+    const registrationAgreementRadio = classNames({
+      'agreement-radio': true,
+      'agree-agreement iconfont iconduigoux': agreementRadio
     })
     return (
       <View className='page-wrapper'>
@@ -226,7 +258,11 @@ class usePhoneNumberRegister extends Component {
             </View>
           </View>
           <View className='agreement-wrapper'>
-            <View className='agreement-radio agree-agreement iconfont iconduigoux'></View>
+            {/* <View className='agreement-radio agree-agreement iconfont iconduigoux'></View> */}
+            <View
+              className={registrationAgreementRadio}
+              onClick={this.getRegistrationAgreementRadio}
+            ></View>
             <View className='agreement-text'>
               <Text>我已阅读并同意跑车物流</Text>
               <Text className='agreement'>注册协议</Text>
