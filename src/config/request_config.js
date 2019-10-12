@@ -3,12 +3,12 @@
  * @description: 服务器状态码错误配置
  * @Date: 2019-08-13 12:22:58
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-12 16:44:51
+ * @LastEditTime: 2019-10-12 18:18:02
  */
 
 // api地址
-// export const defaultApiURL = 'http://192.168.3.121:8084/' // 李斌
-export const defaultApiURL = 'http://192.168.3.191:8085/' // 测试环境  
+export const defaultApiURL = 'http://192.168.3.113:8085/' // 李斌
+// export const defaultApiURL = 'http://192.168.3.191:8085/' // 测试环境  
 // export const defaultApiURL = 'http://192.168.3.191:8081/' // 测试环境  
 // export const defaultApiURL = 'http://yapi.demo.qunar.com/mock/97800/' // 测试环境
 // export const defaultApiURL = 'https://api.bang.paoche56.com/'
