@@ -3,7 +3,7 @@
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-12 18:19:13
+ * @LastEditTime: 2019-10-14 11:16:12
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -26,7 +26,7 @@ class OfferDetails extends Component {
     this.state = {
       inquiryId: 0, //询价单id
       parentId: '', //父id 基于该询价单id做的再次询价
-      status: 10, //询价单状态  10 未报价  20 已报价  30 已失效  40 已取消
+      status: 30, //询价单状态  10 未报价  20 已报价  30 已失效  40 已取消
       statusDesc: '', //未报价
       quotedPriceDesc: 0, //报价价格
       dueTimeDesc: '', //有效期
@@ -241,6 +241,16 @@ class OfferDetails extends Component {
       <View className='page-wrapper'>
         <NoTitleCard>
           <View className={cancelOfferClassName}>
+            {
+              (status === 30) ?
+                <View className='iconfont iconxunjiayishixiao icon-invalid-style'></View>
+                : null
+            }
+            {
+              (status === 40) ?
+                <View className='iconfont iconxunjiayiquxiao icon-invalid-style'></View>
+                : null
+            }
             <View className='details-form-item'>
               <View className='details-form-label'>报价状态:</View>
               {
