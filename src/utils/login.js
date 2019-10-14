@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-10-10 09:33:18
- * @LastEditors: guorui
- * @LastEditTime: 2019-10-12 16:56:27
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-10-14 10:08:22
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -19,22 +19,24 @@ export default {
    * @return void
    */
   getCode(that) {
-    Taro.showLoading({
-      title: '加载中...',
-      mask: true
-    })
-    Taro.getSystemInfo()
-      .then(res => {
-        const phoneMsg = res.model + '-' + res.system + '-' + res.SDKVersion
-        Actions.changeUserInfo({
-          userAgent: phoneMsg
-        })
+    return new Promise((resolve) => {
+      Taro.showLoading({
+        title: '加载中...',
+        mask: true
       })
-    Taro.login().then(res => {
-      // console.log(res,'code')
-      this.codeExchangeOpenID(res.code, that)
-    }).catch(err => {
-      console.log(err, 'code 获取失败')
+      Taro.getSystemInfo()
+        .then(res => {
+          const phoneMsg = res.model + '-' + res.system + '-' + res.SDKVersion
+          Actions.changeUserInfo({
+            userAgent: phoneMsg
+          })
+        })
+      Taro.login().then(res => {
+        // console.log(res,'code')
+        this.codeExchangeOpenID(res.code, that, resolve)
+      }).catch(err => {
+        console.log(err, 'code 获取失败')
+      })
     })
   },
   /**
@@ -42,7 +44,7 @@ export default {
    * @param {String} code wx.login获取的code
    * @return void
    */
-  codeExchangeOpenID(code, that) {
+  codeExchangeOpenID(code, that, resolve) {
     let sendData = {
       code
     }
@@ -51,7 +53,7 @@ export default {
       Actions.changeUserInfo({
         openId: openId
       })
-      this.login(openId, that);
+      this.login(openId, that, resolve);
     }).catch(err => {
       console.log(err)
     })
@@ -62,7 +64,7 @@ export default {
    * @param {Object} that   this对象
    * @return void
    */
-  login(openId, that) {
+  login(openId, that, resolve) {
     let sendData = {
       token: that.props.userInfo.token,
       openId
@@ -76,6 +78,7 @@ export default {
         }
         Actions.changeUserInfo(resData)
       }
+      resolve()
     })
   }
 }
