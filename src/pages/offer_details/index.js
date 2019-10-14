@@ -3,7 +3,7 @@
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-14 11:16:12
+ * @LastEditTime: 2019-10-14 13:46:28
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -19,6 +19,7 @@ import Storage from '@utils/storage.js'
 // eslint-disable-next-line import/first
 import api from '@api/index.js'
 import './index.styl'
+import '../../assets/icon_font/icon.scss'
 
 class OfferDetails extends Component {
   constructor(props) {
@@ -26,7 +27,7 @@ class OfferDetails extends Component {
     this.state = {
       inquiryId: 0, //询价单id
       parentId: '', //父id 基于该询价单id做的再次询价
-      status: 30, //询价单状态  10 未报价  20 已报价  30 已失效  40 已取消
+      status: 10, //询价单状态  10 未报价  20 已报价  30 已失效  40 已取消
       statusDesc: '', //未报价
       quotedPriceDesc: 0, //报价价格
       dueTimeDesc: '', //有效期

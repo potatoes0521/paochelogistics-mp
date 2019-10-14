@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 修改添加客户信息
  * @Date: 2019-09-27 15:47:35
- * @LastEditors: liuYang
- * @LastEditTime: 2019-10-12 16:06:19
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-10-14 12:12:53
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -26,7 +26,9 @@ class CustomerEdit extends Component {
       mobile: '',
       merchantId: '',
       merchantName: '',
-      idCard: ''
+      idCard: '',
+      districtId: '',
+      districtName: ''
     }
     this.pageParams = {}
     this.customerInfo = {}
@@ -40,6 +42,7 @@ class CustomerEdit extends Component {
       this.getCustomerDetails()
     }
     this.getMerchantList()
+    this.getDistricList()
   }
   /**
    * 获取客户信息详情
@@ -53,7 +56,9 @@ class CustomerEdit extends Component {
         mobile: res.mobile,
         merchantId: res.merchantId,
         merchantName: res.merchantName,
-        idCard: res.idCard
+        idCard: res.idCard,
+        districtId: res.districtId,
+        districtName: res.districtName
       })
     })
   }
@@ -62,6 +67,13 @@ class CustomerEdit extends Component {
       .then(res => {
         if(!res) return
         this.merchantList = res
+      })
+  }
+  getDistricList() {
+    api.customer.getDistricList({}, this)
+      .then(res => {
+        if (!res) return
+        this.districList = res
       })
   }
   /**
@@ -110,7 +122,8 @@ class CustomerEdit extends Component {
       mobile,
       merchantId,
       idCard,
-      remarkName
+      remarkName,
+      districtId
     } = this.state
     if (!(/^[\u4E00-\u9FA5]{2,8}$/).test(remarkName)) {
       this.toast('请输入2-8位的中文姓名')
@@ -128,12 +141,17 @@ class CustomerEdit extends Component {
       this.toast('请选择所属经销商')
       return
     }
+    if (!districtId) {
+      this.toast('请选择所属区域')
+      return
+    }
     let sendData = {
       userId: this.customerInfo.userId,
       mobile,
       merchantId,
       idCard,
-      remarkName
+      remarkName,
+      districtId
     }
     Taro.showLoading({
       title: '提交中...',
@@ -176,6 +194,28 @@ class CustomerEdit extends Component {
       })
       .catch(err => console.log(err.errMsg))
   }
+  /**
+   * 选择区域
+   * @description: 
+   * @param {type} 
+   * @return: 
+   */
+  chooseDistricId() {
+    if (this.pageParams.pageType === 'edit') return
+    let stringDistricList = this.districList.map(item => item.districtName)
+    console.log(stringDistricList, 'stringDistricList')
+    console.log(this.districList, 'this.districList')
+    Taro.showActionSheet({
+        itemList: stringDistricList
+      })
+      .then(res => {
+        this.setState({
+          districtId: this.districList[res.tapIndex].districtId,
+          districtName: this.districList[res.tapIndex].districtName
+        })
+      })
+      .catch(err => console.log(err.errMsg))
+  }
   config = {
     navigationBarTitleText: '添加客户'
   }
@@ -184,7 +224,8 @@ class CustomerEdit extends Component {
       remarkName,
       mobile,
       merchantName,
-      idCard
+      idCard,
+      districtName
     } = this.state
     return (
       <View className='page-wrapper'>
@@ -245,6 +286,20 @@ class CustomerEdit extends Component {
                   <Text className='edit-text'>{merchantName}</Text>
                   :
                   <Text>请选择所属经销商</Text>
+              }
+            </View>
+          </View>
+          <View className='info-item'>
+            <View className='item-label'>所属区域</View>
+            <View
+              className='item-text'
+              onClick={this.chooseDistricId}
+            >
+              {
+                districtName ?
+                  <Text className='edit-text'>{districtName}</Text>
+                  :
+                  <Text>请选择所属区域</Text>
               }
             </View>
           </View>

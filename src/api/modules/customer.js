@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 客户管理
  * @Date: 2019-10-08 15:54:08
- * @LastEditors: liuYang
- * @LastEditTime: 2019-10-12 15:30:43
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-10-14 11:58:21
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -21,5 +21,9 @@ export default {
   // 获取商户列表
   getMerchantList(data, that) {
     return requestHandle.get('merchant/list', data, that);
+  },
+  // 获取区域列表
+  getDistricList(data, that) {
+    return requestHandle.get('district/list', data, that);
   }
 }
