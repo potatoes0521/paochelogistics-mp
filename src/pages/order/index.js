@@ -3,7 +3,7 @@
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-10 09:52:00
+ * @LastEditTime: 2019-10-14 16:39:06
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -37,9 +37,12 @@ class Order extends Component {
     this.allOrderFlag = false
   }
   componentDidMount() {
-    this.getOrderList('', 1, true)
-    this.getOrderList(10, 1, false)
-    this.getOrderList(20, 1, false)
+    let { userInfo } = this.props
+    if (userInfo.userId) {
+      this.getOrderList('', 1, true)
+      this.getOrderList(10, 1, false)
+      this.getOrderList(20, 1, false)
+    }
   }
   /**
    * 获取订单列表
@@ -223,43 +226,48 @@ class Order extends Component {
     })
     return (
       <View className='order-wrapper'>
-        <Tabs
-          activeIndex={current}
-          options={orderTabs}
-          onClick={this.handleClick.bind(this)}
-        >
-          <Swiper
-            duration={300}
-            current={current}
-            className='swiper-wrapper'
-            onChange={this.changeSwiper}
-          >
-            <SwiperItem className='swiper-item'>
-              {
-                waitPayList.length > 0 ?
-                  waitPayItemList
-                  :
-                  <NoData></NoData>
-              }
-            </SwiperItem>
-            <SwiperItem className='swiper-item'>
-              {
-                payOverList.length > 0 ?
-                  payOverItemList
-                  :
-                  <NoData></NoData>
-              }
-            </SwiperItem>
-            <SwiperItem className='swiper-item'>
-              {
-                allOrderList.length > 0 ?
-                allOrderItemList
-                :
-                <NoData></NoData>
-              }
-            </SwiperItem>
-          </Swiper>
-        </Tabs>
+        {
+          userInfo.userId ? 
+            <Tabs
+              activeIndex={current}
+              options={orderTabs}
+              onClick={this.handleClick.bind(this)}
+            >
+              <Swiper
+                duration={300}
+                current={current}
+                className='swiper-wrapper'
+                onChange={this.changeSwiper}
+              >
+                <SwiperItem className='swiper-item'>
+                  {
+                    waitPayList.length > 0 ?
+                      waitPayItemList
+                      :
+                      <NoData pageType='order'></NoData>
+                  }
+                </SwiperItem>
+                <SwiperItem className='swiper-item'>
+                  {
+                    payOverList.length > 0 ?
+                      payOverItemList
+                      :
+                      <NoData pageType='order'></NoData>
+                  }
+                </SwiperItem>
+                <SwiperItem className='swiper-item'>
+                  {
+                    allOrderList.length > 0 ?
+                    allOrderItemList
+                    :
+                    <NoData pageType='order'></NoData>
+                  }
+                </SwiperItem>
+              </Swiper>
+            </Tabs>
+            :
+            <NoData pageType='login'></NoData>
+        }
       </View>
     )
   }

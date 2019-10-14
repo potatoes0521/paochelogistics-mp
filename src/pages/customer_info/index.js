@@ -18,6 +18,8 @@ import { connect } from '@tarojs/redux'
 import api from '@api/index.js'
 // import Storage from '@utils/storage.js'
 import CustomerItem from './components/customer_item/index.js'
+// eslint-disable-next-line import/first
+import NoData from '@c/no_data/index.js'
 import './index.styl'
 
 class CustomerInfo extends Component { 
@@ -240,7 +242,10 @@ class CustomerInfo extends Component {
             onClick={this.navigatorToDetails}
           >
             {
-              customerList
+              customerListData.length ?
+                customerList
+                : 
+                <NoData pageType='customer'></NoData>
             }
           </View>
         </View>

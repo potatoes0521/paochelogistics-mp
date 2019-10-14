@@ -1,6 +1,12 @@
 @import '../../assets/css/theme.styl'
 
 .no-data-wrapper
+  position absolute
+  top 0
+  bottom 0
+  right 0
+  left 0
+  margin auto
   width 100%
   height 100%
   display flex
@@ -8,21 +14,25 @@
   justify-content center
 
 .main
-  width 400px
+  width 450px
   display flex
   align-items center
   justify-content center
   flex-direction column
 
 .image
-  width 228px
-  height 176px
+  width 264px
+  height 222px
   margin-bottom 48px
+
+.login-image
+  height 246px
 
 .tips
   font-size 32px
   color $font-h-color
   margin-bottom 40px
+  text-align center
 
 .btn
   width 284px

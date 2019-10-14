@@ -3,7 +3,7 @@
  * @description: 询价单页面
  * @Date: 2019-09-20 13:24:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-11 09:24:05
+ * @LastEditTime: 2019-10-14 16:37:04
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -38,9 +38,12 @@ class Offer extends Component {
   }
 
   componentDidShow() { 
-    this.getOfferList('', 1, true)
-    this.getOfferList(10, 1, true)
-    this.getOfferList(20, 1, true)
+    let { userInfo } = this.props
+    if (userInfo.userId) { 
+      this.getOfferList('', 1, true)
+      this.getOfferList(10, 1, true)
+      this.getOfferList(20, 1, true)
+    }
   }
 
   /**
@@ -192,6 +195,7 @@ class Offer extends Component {
       hasOfferList,
       noOfferList
     } = this.state
+    let { userInfo } = this.props
     const AllOfferItemList = allOfferList.map(item => {
       return (
         <OfferItem
@@ -218,43 +222,47 @@ class Offer extends Component {
     })
     return (
       <View className='offer-wrapper'>
-        <Tabs
-          activeIndex={current}
-          options={offerTabs}
-          onClick={this.handleClick.bind(this)}
-        >
-          <Swiper
-            duration={300}
-            current={current}
-            className='swiper-wrapper'
-            onChange={this.changeSwiper}
-          >
-            <SwiperItem className='swiper-item'>
-              {
-                allOfferList.length > 0 ?
-                  AllOfferItemList
-                  :
-                  <NoData></NoData>
-              }
-            </SwiperItem>
-            <SwiperItem className='swiper-item'>
-              {
-                hasOfferList.length > 0 ?
-                  hasOfferItemList
-                  :
-                  <NoData></NoData>
-              }
-            </SwiperItem>
-            <SwiperItem className='swiper-item'>
-              { 
-                noOfferList.length > 0 ?
-                  onOfferItemList
-                  :
-                  <NoData></NoData>
-              }
-            </SwiperItem>
-          </Swiper>
-        </Tabs>
+        {
+          userInfo.userId ? 
+            <Tabs
+              activeIndex={current}
+              options={offerTabs}
+              onClick={this.handleClick.bind(this)}
+            >
+              <Swiper
+                duration={300}
+                current={current}
+                className='swiper-wrapper'
+                onChange={this.changeSwiper}
+              >
+                <SwiperItem className='swiper-item'>
+                  {
+                    allOfferList.length > 0 ?
+                      AllOfferItemList
+                      :
+                      <NoData pageType='offer'></NoData>
+                  }
+                </SwiperItem>
+                <SwiperItem className='swiper-item'>
+                  {
+                    hasOfferList.length > 0 ?
+                      hasOfferItemList
+                      :
+                      <NoData pageType='offer'></NoData>
+                  }
+                </SwiperItem>
+                <SwiperItem className='swiper-item'>
+                  { 
+                    noOfferList.length > 0 ?
+                      onOfferItemList
+                      :
+                      <NoData pageType='offer'></NoData>
+                  }
+                </SwiperItem>
+              </Swiper>
+            </Tabs>
+            : <NoData pageType='login'></NoData>
+        }
       </View>
     )
   }
