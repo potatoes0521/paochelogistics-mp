@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
- * @LastEditors: liuYang
- * @LastEditTime: 2019-10-14 15:13:49
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-10-14 15:46:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -204,7 +204,7 @@ class PlaceOrder extends Component {
       placeOrderCustomer
     } = this.state
     let { userInfo } = this.props
-    if (userInfo.userType === 0 && !placeOrderCustomer.merchantId) {
+    if (userInfo.userType === 0 && !placeOrderCustomer.userId) {
       this.toast('请选择代下单的客户')
       return
     }

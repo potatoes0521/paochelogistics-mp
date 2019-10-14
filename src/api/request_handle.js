@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
- * @LastEditors: liuYang
- * @LastEditTime: 2019-10-12 10:18:34
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-10-14 17:25:55
  */
 
 // 默认请求连接
@@ -32,7 +32,7 @@ export default {
   baseOptions(url, data, that, method = 'GET') {
     const sign = createSignData(data, sign_id)[1]
     const { userInfo } = that.props || {};
-    
+    console.log(that, 'that')
     const headerUserLogin = JSON.stringify({
       'token': userInfo.token || '',
       'mobile': userInfo.mobile || '',

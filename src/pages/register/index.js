@@ -206,6 +206,16 @@ class usePhoneNumberRegister extends Component {
     }
   }
 
+  /**
+   * 显示协议
+   * @description: 
+   * @param {type} 
+   * @return: 
+   */
+  showRegistrationAgreement() {
+
+  }
+
   config = {
     navigationBarTitleText: '跑车物流'
   }
@@ -258,20 +268,22 @@ class usePhoneNumberRegister extends Component {
             </View>
           </View>
           <View className='agreement-wrapper'>
-            {/* <View className='agreement-radio agree-agreement iconfont iconduigoux'></View> */}
             <View
               className={registrationAgreementRadio}
               onClick={this.getRegistrationAgreementRadio}
             ></View>
             <View className='agreement-text'>
               <Text>我已阅读并同意跑车物流</Text>
-              <Text className='agreement'>注册协议</Text>
+              <Text className='agreement' onClick={this.showRegistrationAgreement}>注册协议</Text>
             </View>
           </View>
           <View
             className='submit-btn'
             onClick={this.submitRegister}
           >登录</View>
+        </View>
+        <View className='agreements-wrapper'>
+          <View className='agreements-style'>用户注册协议</View>
         </View>
       </View>
     )

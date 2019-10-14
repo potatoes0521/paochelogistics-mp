@@ -3,7 +3,7 @@
  * @description: 客户管理
  * @Date: 2019-10-08 15:54:08
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-14 11:58:21
+ * @LastEditTime: 2019-10-14 16:46:30
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -25,5 +25,9 @@ export default {
   // 获取区域列表
   getDistricList(data, that) {
     return requestHandle.get('district/list', data, that);
+  },
+  // 获取客户详情
+  getCustomerDetails(data, that) {
+    return requestHandle.get('user/getcustomer', data, that);
   }
 }

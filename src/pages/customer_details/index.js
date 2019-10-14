@@ -3,7 +3,7 @@
  * @description: 客户信息详情
  * @Date: 2019-09-27 15:43:53
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-14 14:08:06
+ * @LastEditTime: 2019-10-14 17:28:29
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -11,6 +11,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import Storage from '@utils/storage.js'
+import api from '@api/index.js'
 import './index.styl'
 
 class CustomerDetails extends Component { 
@@ -19,11 +20,13 @@ class CustomerDetails extends Component {
     this.state = {
       customerInfo: {}
     }
+    this.pageParams = {}
   }
   componentWillUnmount() { 
-    Storage.removeStorage('customer_details')
+    // Storage.removeStorage('customer_details')
   }
   componentDidShow() {
+    this.pageParams = this.$router.params || {}
     this.getCustomerDetails()
   }
   /**
@@ -31,10 +34,24 @@ class CustomerDetails extends Component {
    * @return void
    */
   getCustomerDetails() {
-    Storage.getStorage('customer_details').then(res => {
+    if (!this.pageParams.userId) {
+      Taro.navigateBack()
+      return;
+    }
+    Taro.showLoading({
+      title: '加载中...',
+      mask: true
+    })
+    let sendData = {
+      userId: this.pageParams.userId
+    }
+    console.log(this,'this')
+    api.customer.getCustomerDetails(sendData, this).then(res => {
+      if (!res) return
       this.setState({
         customerInfo: res
       })
+      Storage.setStorage('customer_details', res)
     })
   }
   /**

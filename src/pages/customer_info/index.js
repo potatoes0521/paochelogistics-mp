@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 客户信息列表
  * @Date: 2019-09-27 15:38:07
- * @LastEditors: liuYang
- * @LastEditTime: 2019-10-14 15:02:15
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-10-14 17:18:31
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,7 +16,7 @@ import {
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import api from '@api/index.js'
-import Storage from '@utils/storage.js'
+// import Storage from '@utils/storage.js'
 import CustomerItem from './components/customer_item/index.js'
 import './index.styl'
 
@@ -93,7 +93,8 @@ class CustomerInfo extends Component {
    * @return void
    */
   navigatorToDetails(e) { 
-    let {item} = e.target.dataset
+    let { item } = e.target.dataset
+    console.log(item, 'item')
     const { pageType } = this.pageParams
     if (pageType === 'choose') {
       let pages = Taro.getCurrentPages(); //  获取页面栈
@@ -104,9 +105,9 @@ class CustomerInfo extends Component {
         Taro.navigateBack()
       })
     } else {
-      Storage.setStorage('customer_details', item)
+      // Storage.setStorage('customer_details', item)
       Taro.navigateTo({
-        url: '/pages/customer_details/index'
+        url: `/pages/customer_details/index?userId=${item.userId}`
       })
     }
   }
