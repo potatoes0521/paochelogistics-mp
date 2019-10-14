@@ -3,7 +3,7 @@
  * @description: 没有订单的样式
  * @Date: 2019-09-29 15:00:46
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-14 16:30:44
+ * @LastEditTime: 2019-10-14 16:47:28
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,6 +12,7 @@ import {
   View,
   Image
 } from '@tarojs/components'
+import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import noOrderDataImg from '@img/no_data/no_order.png'
 import noOfferDataImg from '@img/no_data/no_offer.png'
@@ -41,6 +42,7 @@ export default class NoData extends Component {
       case 'customer':
         imgSrc = noCustomerDataImg
         text = '去添加'
+        tips = '暂无联系人'
         break;
       case 'login':
         imgSrc = noCustomerDataImg
@@ -51,11 +53,17 @@ export default class NoData extends Component {
         imgSrc = noOfferDataImg
         return
     }
+    const imageClassName = classNames(
+      'image',
+      {
+        'login-image' : pageType === 'login' || pageType === 'customer'
+      }
+    )
     return (
       <View className='no-data-wrapper'>
         <View className='main'>
           <Image
-            className='image'
+            className={imageClassName}
             src={imgSrc}
           ></Image>
           <View className='tips'>{tips}</View>
