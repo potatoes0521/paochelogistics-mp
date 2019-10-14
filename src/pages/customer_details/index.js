@@ -3,7 +3,7 @@
  * @description: 客户信息详情
  * @Date: 2019-09-27 15:43:53
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-14 17:28:29
+ * @LastEditTime: 2019-10-14 17:38:08
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -15,8 +15,8 @@ import api from '@api/index.js'
 import './index.styl'
 
 class CustomerDetails extends Component { 
-  constructor() { 
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       customerInfo: {}
     }
@@ -45,7 +45,6 @@ class CustomerDetails extends Component {
     let sendData = {
       userId: this.pageParams.userId
     }
-    console.log(this,'this')
     api.customer.getCustomerDetails(sendData, this).then(res => {
       if (!res) return
       this.setState({
