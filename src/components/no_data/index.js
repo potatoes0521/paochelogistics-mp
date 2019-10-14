@@ -3,7 +3,7 @@
  * @description: 没有订单的样式
  * @Date: 2019-09-29 15:00:46
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-14 16:47:28
+ * @LastEditTime: 2019-10-14 18:54:32
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -25,7 +25,34 @@ export default class NoData extends Component {
     this.state = {}
   }
   navigatorTo() { 
-
+    let { pageType } = this.props
+    switch (pageType) {
+      case 'offer':
+        Taro.switchTab({
+          url: '/pages/index/index'
+        })
+        break;
+      case 'order':
+        Taro.switchTab({
+          url: '/pages/index/index'
+        })
+        break;
+      case 'customer':
+        Taro.navigateTo({
+          url: '/pages/customer_edit/index'
+        })
+        break;
+      case 'login':
+        Taro.navigateTo({
+          url: '/pages/register/index'
+        })
+        break;
+      default:
+        Taro.switchTab({
+          url: '/pages/index/index'
+        })
+        return
+    }
   }
   render() {
     let { pageType } = this.props
