@@ -3,7 +3,7 @@
  * @description: 没有订单的样式
  * @Date: 2019-09-29 15:00:46
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-14 16:25:47
+ * @LastEditTime: 2019-10-14 16:30:44
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -30,6 +30,7 @@ export default class NoData extends Component {
     let { pageType } = this.props
     let imgSrc = ''
     let text = '去询价'
+    let tips = '亲，暂时没有相关订单哦～'
     switch (pageType) {
       case 'offer':
         imgSrc = noOfferDataImg
@@ -44,6 +45,7 @@ export default class NoData extends Component {
       case 'login':
         imgSrc = noCustomerDataImg
         text = '去登录'
+        tips = '亲，登录后可以查看自己相关的订单哦～'
         break;
       default:
         imgSrc = noOfferDataImg
@@ -56,7 +58,7 @@ export default class NoData extends Component {
             className='image'
             src={imgSrc}
           ></Image>
-          <View className='tips'>亲，暂时没有相关订单哦～</View>
+          <View className='tips'>{tips}</View>
           <View
             className='btn'
             onClick={this.navigatorTo}
