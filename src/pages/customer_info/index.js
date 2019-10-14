@@ -3,7 +3,7 @@
  * @description: 客户信息列表
  * @Date: 2019-09-27 15:38:07
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-12 20:54:59
+ * @LastEditTime: 2019-10-14 15:02:15
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -31,9 +31,11 @@ class CustomerInfo extends Component {
     this.customerPage = 1
     this.customerFlag = false
     this.merchantList = []
+    this.pageParams = {}
   }
 
   componentDidShow() { 
+    this.pageParams = this.$router.params
     this.customerPage = 1
     this.customerFlag = false
     this.getAllCustomerList()
@@ -92,10 +94,21 @@ class CustomerInfo extends Component {
    */
   navigatorToDetails(e) { 
     let {item} = e.target.dataset
-    Storage.setStorage('customer_details', item)
-    Taro.navigateTo({
-      url: '/pages/customer_details/index'
-    })
+    const { pageType } = this.pageParams
+    if (pageType === 'choose') {
+      let pages = Taro.getCurrentPages(); //  获取页面栈
+      let prevPage = pages[pages.length - 2]; // 上一个页面
+      prevPage.$component.setState({
+        placeOrderCustomer: item
+      }, () => {
+        Taro.navigateBack()
+      })
+    } else {
+      Storage.setStorage('customer_details', item)
+      Taro.navigateTo({
+        url: '/pages/customer_details/index'
+      })
+    }
   }
   /**
    * 搜索框

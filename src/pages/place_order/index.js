@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
- * @LastEditors: guorui
- * @LastEditTime: 2019-10-11 13:34:11
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-10-14 15:04:03
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -49,7 +49,7 @@ class PlaceOrder extends Component {
       carAmount: 1, //车辆台数
       vins: '', // 车架号
       quotedPriceDesc: 0, // 报价
-      userType: 0 // 0 驿站人员   1 自由注册  2 驿站人员添加客户
+      placeOrderCustomer: {} // 客户信息
     }
   }
   
