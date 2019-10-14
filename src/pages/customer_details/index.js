@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 客户信息详情
  * @Date: 2019-09-27 15:43:53
- * @LastEditors: liuYang
- * @LastEditTime: 2019-10-12 15:48:09
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-10-14 14:08:06
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -65,6 +65,10 @@ class CustomerDetails extends Component {
           <View className='info-item'>
             <View className='item-label'>所属经销商</View>
             <View className='item-text'>{customerInfo.merchantName || ''}</View>
+          </View>
+          <View className='info-item'>
+            <View className='item-label'>所属区域</View>
+            <View className='item-text'>{customerInfo.districtName || ''}</View>
           </View>
           <View className='info-item'>
             <View className='item-label'>身份证号</View>

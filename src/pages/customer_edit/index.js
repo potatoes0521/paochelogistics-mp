@@ -3,7 +3,7 @@
  * @description: 修改添加客户信息
  * @Date: 2019-09-27 15:47:35
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-14 12:12:53
+ * @LastEditTime: 2019-10-14 14:07:01
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -51,6 +51,7 @@ class CustomerEdit extends Component {
   getCustomerDetails() {
     Storage.getStorage('customer_details').then(res => {
       this.customerInfo = res
+      console.log(res, 'res')
       this.setState({
         remarkName: res.remarkName,
         mobile: res.mobile,
@@ -203,8 +204,8 @@ class CustomerEdit extends Component {
   chooseDistricId() {
     if (this.pageParams.pageType === 'edit') return
     let stringDistricList = this.districList.map(item => item.districtName)
-    console.log(stringDistricList, 'stringDistricList')
-    console.log(this.districList, 'this.districList')
+    // console.log(stringDistricList, 'stringDistricList')
+    // console.log(this.districList, 'this.districList')
     Taro.showActionSheet({
         itemList: stringDistricList
       })
