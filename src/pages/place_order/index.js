@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-14 15:04:03
+ * @LastEditTime: 2019-10-14 15:13:49
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -200,8 +200,14 @@ class PlaceOrder extends Component {
       usedType,
       carAmount,
       vins,
-      quotedPriceDesc
+      quotedPriceDesc,
+      placeOrderCustomer
     } = this.state
+    let { userInfo } = this.props
+    if (userInfo.userType === 0 && !placeOrderCustomer.merchantId) {
+      this.toast('请选择代下单的客户')
+      return
+    }
     if (!(/^[\u4e00-\u9fa5]{2,4}$/.test(sendPerson))) {
       this.toast('发车人名字输入格式有误')
       return
@@ -257,6 +263,11 @@ class PlaceOrder extends Component {
       vins,
       quotedPriceDesc
     }
+    if (userInfo.userType === 0) {
+      sendData = Object.assign({}, sendData, {
+        // 商户的ID 
+      })
+    }
     api.order.placeOrder(sendData, this)
       .then(() => {
         Taro.hideLoading()
@@ -297,17 +308,23 @@ class PlaceOrder extends Component {
       carAmount, //车辆台数
       vins, // 车架号
       quotedPriceDesc, // 报价
-      userType //判断是否是驿站人员
+      placeOrderCustomer
     } = this.state
+    let {userInfo} = this.props
     return (
       <View className='place-order-wrapper'>
         <View className='place-order-top'>
           {
-            (userType === 0) ?
+            (userInfo.userType === 0) ?
               <View className='choose-customer'>
                 <View className='customer-info'>
                   <View className='iconfont iconkehu customer-img'></View>
-                  <View className='customer-name'>选择代下单客户</View>
+                  <View className='customer-name'>
+                    {
+                      placeOrderCustomer && placeOrderCustomer.remarkName ?
+                        placeOrderCustomer.remarkName : '选择代下单客户'
+                    }
+                  </View>
                 </View>
                 <View className='iconfont iconxiangyouxuanzejiantoux choose-arrow' onClick={this.chooseCustomer}></View>
               </View>
