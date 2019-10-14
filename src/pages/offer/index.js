@@ -3,7 +3,7 @@
  * @description: 询价单页面
  * @Date: 2019-09-20 13:24:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-11 09:24:05
+ * @LastEditTime: 2019-10-14 16:19:46
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -234,7 +234,7 @@ class Offer extends Component {
                 allOfferList.length > 0 ?
                   AllOfferItemList
                   :
-                  <NoData></NoData>
+                  <NoData pageType='offer'></NoData>
               }
             </SwiperItem>
             <SwiperItem className='swiper-item'>
@@ -242,7 +242,7 @@ class Offer extends Component {
                 hasOfferList.length > 0 ?
                   hasOfferItemList
                   :
-                  <NoData></NoData>
+                  <NoData pageType='offer'></NoData>
               }
             </SwiperItem>
             <SwiperItem className='swiper-item'>
@@ -250,7 +250,7 @@ class Offer extends Component {
                 noOfferList.length > 0 ?
                   onOfferItemList
                   :
-                  <NoData></NoData>
+                  <NoData pageType='offer'></NoData>
               }
             </SwiperItem>
           </Swiper>

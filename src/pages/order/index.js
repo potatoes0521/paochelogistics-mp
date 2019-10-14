@@ -3,7 +3,7 @@
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-10 09:52:00
+ * @LastEditTime: 2019-10-14 16:20:09
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -239,7 +239,7 @@ class Order extends Component {
                 waitPayList.length > 0 ?
                   waitPayItemList
                   :
-                  <NoData></NoData>
+                  <NoData pageType='order'></NoData>
               }
             </SwiperItem>
             <SwiperItem className='swiper-item'>
@@ -247,7 +247,7 @@ class Order extends Component {
                 payOverList.length > 0 ?
                   payOverItemList
                   :
-                  <NoData></NoData>
+                  <NoData pageType='order'></NoData>
               }
             </SwiperItem>
             <SwiperItem className='swiper-item'>
@@ -255,7 +255,7 @@ class Order extends Component {
                 allOrderList.length > 0 ?
                 allOrderItemList
                 :
-                <NoData></NoData>
+                <NoData pageType='order'></NoData>
               }
             </SwiperItem>
           </Swiper>

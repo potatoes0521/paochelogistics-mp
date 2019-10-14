@@ -3,7 +3,7 @@
  * @description: 客户信息列表
  * @Date: 2019-09-27 15:38:07
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-14 15:02:15
+ * @LastEditTime: 2019-10-14 16:23:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -18,6 +18,8 @@ import { connect } from '@tarojs/redux'
 import api from '@api/index.js'
 import Storage from '@utils/storage.js'
 import CustomerItem from './components/customer_item/index.js'
+// eslint-disable-next-line import/first
+import NoData from '@c/no_data/index.js'
 import './index.styl'
 
 class CustomerInfo extends Component { 
@@ -239,7 +241,10 @@ class CustomerInfo extends Component {
             onClick={this.navigatorToDetails}
           >
             {
-              customerList
+              customerListData.length ?
+                customerList
+                : 
+                <NoData pageType='customer'></NoData>
             }
           </View>
         </View>
