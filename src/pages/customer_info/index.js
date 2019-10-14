@@ -3,7 +3,7 @@
  * @description: 客户信息列表
  * @Date: 2019-09-27 15:38:07
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-12 15:28:49
+ * @LastEditTime: 2019-10-12 20:54:59
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -54,6 +54,7 @@ class CustomerInfo extends Component {
       })
     }
     let sendData = {
+      userId:this.props.userInfo.userId,
       selectParam,
       pageNum,
       pageSize,

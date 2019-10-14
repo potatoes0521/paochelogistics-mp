@@ -3,7 +3,7 @@
  * @description: 个人信息
  * @Date: 2019-09-27 15:38:29
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-12 15:57:27
+ * @LastEditTime: 2019-10-12 20:24:32
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -73,7 +73,7 @@ class MineInfo extends Component {
           </View>
           <View className='info-item'>
             <View className='item-label'>姓名</View>
-            <View className='item-text'>{userDetailsInfo.remarkName || ''}</View>
+            <View className='item-text'>{userDetailsInfo.realName || ''}</View>
           </View>
           <View className='info-item'>
             <View className='item-label'>联系方式</View>

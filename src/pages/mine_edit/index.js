@@ -3,7 +3,7 @@
  * @description: 修改个人信息
  * @Date: 2019-09-27 15:42:38
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-12 16:06:38
+ * @LastEditTime: 2019-10-12 20:24:19
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -22,7 +22,7 @@ class EditMineInfo extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      remarkName: '',
+      realName: '',
       mobile: '',
       merchantName: '',
       idCard: ''
@@ -38,7 +38,7 @@ class EditMineInfo extends Component {
   getCustomerDetails() {
     Storage.getStorage('mine_info_details').then(res => {
       this.setState({
-        remarkName: res.remarkName,
+        realName: res.realName,
         mobile: res.mobile,
         merchantName: res.merchantName,
         idCard: res.idCard
@@ -50,9 +50,9 @@ class EditMineInfo extends Component {
    * @param {Object} e event对象
    * @return void
    */
-  remarkNameInput(e) {
+  realNameInput(e) {
     this.setState({
-      remarkName: e.target.value
+      realName: e.target.value
     })
   }
   /**
@@ -79,9 +79,9 @@ class EditMineInfo extends Component {
   submit() { 
     let {
       idCard,
-      remarkName
+      realName
     } = this.state
-    if (!(/^[\u4E00-\u9FA5]{2,8}$/).test(remarkName)) {
+    if (!(/^[\u4E00-\u9FA5]{2,8}$/).test(realName)) {
       this.toast('请输入2-8位的中文姓名')
       return
     }
@@ -92,7 +92,7 @@ class EditMineInfo extends Component {
     let sendData = {
       userId: this.props.userInfo.userId,
       idCard,
-      remarkName
+      realName
     }
     Taro.showLoading({
       title: '提交中...',
@@ -115,7 +115,7 @@ class EditMineInfo extends Component {
 
   render() { 
     let {
-      remarkName,
+      realName,
       mobile,
       merchantName,
       idCard
@@ -134,8 +134,8 @@ class EditMineInfo extends Component {
                 className='input-public'
                 placeholder='请输入姓名'
                 placeholderClass='placeholder-style'
-                value={remarkName}
-                onInput={this.remarkNameInput}
+                value={realName}
+                onInput={this.realNameInput}
               ></Input>
             </View>
           </View>

@@ -3,7 +3,7 @@
  * @description: 我的
  * @Date: 2019-09-20 13:24:52
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-09 16:32:10
+ * @LastEditTime: 2019-10-12 19:00:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -79,8 +79,7 @@ class Mine extends Component {
         </View>
         <View className='user-list'>
           {
-            userInfo.userType === 0 ? 
-              <Block>
+            userInfo.userType === 0 ?
                 <View className='list-item' onClick={()=>this.navigatorPage('customer_info')}>
                   <View className='list-left'>
                     <View className='icon-img'>
@@ -90,18 +89,17 @@ class Mine extends Component {
                   </View>
                   <View className='list-right iconfont iconxiangyouxuanzejiantoux'></View>
                 </View>
-                <View className='list-item' onClick={()=>this.navigatorPage('mine_info')}>
-                  <View className='list-left'>
-                    <View className='icon-img'>
-                      <image src={idCardImage}></image>
-                    </View>
-                    <View className='item-name'>个人名片</View>
-                  </View>
-                  <View className='list-right iconfont iconxiangyouxuanzejiantoux'></View>
-                </View>
-              </Block>
               : null 
           }
+          <View className='list-item' onClick={()=>this.navigatorPage('mine_info')}>
+            <View className='list-left'>
+              <View className='icon-img'>
+                <image src={idCardImage}></image>
+              </View>
+              <View className='item-name'>个人名片</View>
+            </View>
+            <View className='list-right iconfont iconxiangyouxuanzejiantoux'></View>
+          </View>
           <View className='list-item' onClick={()=>this.navigatorPage('about')}>
             <View className='list-left'>
               <View className='icon-img'>
