@@ -3,7 +3,7 @@
  * @description: 修改添加客户信息
  * @Date: 2019-09-27 15:47:35
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-14 17:09:01
+ * @LastEditTime: 2019-10-14 17:43:45
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -34,7 +34,7 @@ class CustomerEdit extends Component {
     this.customerInfo = {}
   }
   componentWillUnmount() {
-    // Storage.removeStorage('customer_details')
+    Storage.removeStorage('customer_details')
   }
   
   componentDidShow() { 
@@ -55,7 +55,6 @@ class CustomerEdit extends Component {
   getCustomerDetails() {
     Storage.getStorage('customer_details').then(res => {
       this.customerInfo = res
-      console.log(res, 'res')
       this.setState({
         remarkName: res.remarkName,
         mobile: res.mobile,
