@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 修改个人信息
  * @Date: 2019-09-27 15:42:38
- * @LastEditors: guorui
- * @LastEditTime: 2019-10-14 11:36:53
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-10-15 15:48:04
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -157,10 +157,14 @@ class EditMineInfo extends Component {
             <View className='item-label'>联系方式</View>
             <View className='item-text'>{mobile || ''}</View>
           </View>
-          <View className='info-item'>
-            <View className='item-label'>所属经销商</View>
-            <View className='item-text'> {merchantName || ''}</View>
-          </View>
+          {
+            merchantName ? 
+              <View className='info-item'>
+                <View className='item-label'>所属经销商</View>
+                <View className='item-text'> {merchantName || ''}</View>
+              </View>
+              : null
+          }
         </View>
         <View className='edit-btn-group'>
           <View

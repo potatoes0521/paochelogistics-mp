@@ -3,7 +3,7 @@
  * @description: 个人信息
  * @Date: 2019-09-27 15:38:29
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-12 20:24:32
+ * @LastEditTime: 2019-10-15 15:46:32
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -71,22 +71,38 @@ class MineInfo extends Component {
             <View className='item-label'>微信名字</View>
             <OpenData lang='zh_CN' className='item-text' type='userNickName'></OpenData>
           </View>
-          <View className='info-item'>
-            <View className='item-label'>姓名</View>
-            <View className='item-text'>{userDetailsInfo.realName || ''}</View>
-          </View>
-          <View className='info-item'>
-            <View className='item-label'>联系方式</View>
-            <View className='item-text'>{userDetailsInfo.mobile || ''}</View>
-          </View>
-          <View className='info-item'>
-            <View className='item-label'>所属经销商</View>
-            <View className='item-text'>{userDetailsInfo.merchantName || ''}</View>
-          </View>
-          <View className='info-item'>
-            <View className='item-label'>身份证号</View>
-            <View className='item-text'>{userDetailsInfo.idCard || ''}</View>
-          </View>
+          {
+            userDetailsInfo.realName ? 
+              <View className='info-item'>
+                <View className='item-label'>姓名</View>
+                <View className='item-text'>{userDetailsInfo.realName || ''}</View>
+              </View>
+              : null
+          }
+          {
+            userDetailsInfo.mobile ? 
+              <View className='info-item'>
+                <View className='item-label'>联系方式</View>
+                <View className='item-text'>{userDetailsInfo.mobile || ''}</View>
+              </View>
+              : null
+          }
+          {
+            userDetailsInfo.merchantName ? 
+              <View className='info-item'>
+                <View className='item-label'>所属经销商</View>
+                <View className='item-text'>{userDetailsInfo.merchantName || ''}</View>
+              </View>
+              : null
+          }
+          {
+            userDetailsInfo.idCard ? 
+              <View className='info-item'>
+                <View className='item-label'>身份证号</View>
+                <View className='item-text'>{userDetailsInfo.idCard || ''}</View>
+              </View>
+              : null
+          }
           <View className='info-item'>
             <View className='item-label'>注册时间</View>
             <View className='item-text'>{userDetailsInfo.createTimeDesc || ''}</View>
