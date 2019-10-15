@@ -3,7 +3,7 @@
  * @description: 订单详情--底部详情
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-15 16:25:17
+ * @LastEditTime: 2019-10-15 18:27:14
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -11,7 +11,8 @@
 import Taro, { Component } from '@tarojs/taro' 
 import {
   View,
-  Text
+  Text,
+  Button
 } from '@tarojs/components'
 import OrderFooterCard from '../order_footer_card/index.js'
 // eslint-disable-next-line import/first
@@ -38,6 +39,28 @@ class FooterDetailsComponent extends Component {
     Taro.navigateTo({
       url: `/pages/pay_details/index?order_id=${item.orderId}`
     })
+  }
+  /**
+   * 分享砍价
+   * @description: 
+   * @param {type} 
+   * @return: 
+   */
+  shareBargain() {
+    this.onShareAppMessage()
+  }
+  onShareAppMessage(res) {
+    let { item } = this.props
+    if (item.shareType !== 1) return
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+    return {
+      title: `砍价信息`,
+      path: `/pages/share_details/index?order_id=${item.orderId}`,
+      imageUrl: ``
+    }
   }
   render() {
     let {
@@ -69,7 +92,7 @@ class FooterDetailsComponent extends Component {
                     </View>
                     {
                       (item.shareOutDesc) ?
-                        <View className='share-button buttons'>分享砍价</View>
+                        <Button className='share-button buttons' onClick={this.shareBargain} openType='share'>分享砍价</Button>
                         : null
                     }
                   </View>

@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-15 14:37:17
+ * @LastEditTime: 2019-10-15 18:26:33
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -18,7 +18,6 @@ import { connect } from '@tarojs/redux'
 import NoTitleCard from '@c/no_title_card/index.js'
 import '../order_details/components/send_city/index.styl'
 // eslint-disable-next-line import/first
-import Storage from '@utils/storage.js'
 // eslint-disable-next-line import/first
 import api from '@api/index.js'
 // import '@assets/icon_font/icon.scss'
@@ -51,14 +50,12 @@ class PlaceOrder extends Component {
       quotedPriceDesc: 0, // 报价
       placeOrderCustomer: {} // 客户信息
     }
+    this.pageParams = {}
   }
   
-  componentDidMount() {
-    this.getStorageInfo()
-  }
-
-  componentWillUnmount() {
-    Storage.removeStorage('offer_info')
+  componentDidShow() {
+    this.pageParams = this.$router.params || {}
+    this.getOfferDetails()
   }
 
   //页面内的配置
@@ -71,10 +68,21 @@ class PlaceOrder extends Component {
    * @param {type} 
    * @return: 
    */
-  getStorageInfo() {
-    Storage.getStorage('offer_info').then(res => {
-      if (res) {
-        console.log(res,'询价单缓存信息')
+  getOfferDetails() {
+    if (!this.pageParams.offer_id) {
+      Taro.navigateBack()
+      return;
+    }
+    Taro.showLoading({
+      title: '加载中...',
+      mask: true
+    })
+    let sendData = {
+      inquiryId: this.pageParams.offer_id
+    }
+    api.offer.getOfferDetails(sendData, this)
+      .then(res => {
+        Taro.hideLoading()
         this.setState({
           inquiryId: res.inquiryId,
           quotedPriceDesc: res.quotedPriceDesc,
@@ -91,8 +99,8 @@ class PlaceOrder extends Component {
           carAmount: res.carAmount,
           usedType: res.usedType
         })
-      }
-    })
+        Taro.hideLoading()
+      })
   }
   
   /**
