@@ -3,7 +3,7 @@
  * @description: 运输状态时间轴
  * @Date: 2019-09-24 14:59:07
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-15 16:23:21
+ * @LastEditTime: 2019-10-15 16:27:41
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -52,8 +52,8 @@ export default class TimeLine extends Component {
             index === 0 ?
               null :
               <View className='path-time'>
-                <View className='date'>{item.createTime.slice(5,10)}</View>
-                <View className='time'>{item.createTime.slice(12,16)}</View>
+                <View className='date'>{item.createTime && item.createTime.slice(5,10)}</View>
+                <View className='time'>{item.createTime && item.createTime.slice(12,16)}</View>
               </View>
           }
           <View className='path-icon'>
