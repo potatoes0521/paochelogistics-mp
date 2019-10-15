@@ -3,7 +3,7 @@
  * @description: 客户信息详情
  * @Date: 2019-09-27 15:43:53
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-14 17:38:08
+ * @LastEditTime: 2019-10-14 18:45:52
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -43,9 +43,11 @@ class CustomerDetails extends Component {
       mask: true
     })
     let sendData = {
-      userId: this.pageParams.userId
+      userId: this.pageParams.userId,
+      createUserId: this.props.userInfo.userId
     }
     api.customer.getCustomerDetails(sendData, this).then(res => {
+      Taro.hideLoading()
       if (!res) return
       this.setState({
         customerInfo: res

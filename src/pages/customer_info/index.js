@@ -3,7 +3,7 @@
  * @description: 客户信息列表
  * @Date: 2019-09-27 15:38:07
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-14 17:30:36
+ * @LastEditTime: 2019-10-14 18:56:51
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -249,12 +249,16 @@ class CustomerInfo extends Component {
             }
           </View>
         </View>
-        <View
-          className='add-customer'
-          onClick={this.addCustomer}
-        >
-          <View className='iconfont icontianjiakehu icon-add-style'></View>
-        </View>
+        {
+          (customerListData.length > 0) ?
+            <View
+              className='add-customer'
+              onClick={this.addCustomer}
+            >
+              <View className='iconfont icontianjiakehu icon-add-style'></View>
+            </View>
+            : null
+        }
       </View>
     )
   }
