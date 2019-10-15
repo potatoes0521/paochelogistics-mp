@@ -3,7 +3,7 @@
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-14 17:43:12
+ * @LastEditTime: 2019-10-15 10:34:30
  */
 
 // 默认请求连接
@@ -99,6 +99,8 @@ export default {
               } else {
                 if (+resData.code === 200003) {
                   console.log(that)
+                  Taro.hideLoading()
+                  console.log(refreshToken, 'refreshToken')
                   refreshToken.refreshToken(that, url, data, method)
                 } else {
                   Taro.showToast({

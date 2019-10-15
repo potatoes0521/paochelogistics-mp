@@ -52,7 +52,8 @@ class App extends Component {
       'pages/customer_edit/index',
       'pages/choose_city/index',
       'pages/register/index',
-      'pages/pay_details/index'
+      'pages/pay_details/index',
+      'pages/pay_success/index'
     ],
     window: {
       backgroundTextStyle: 'light',

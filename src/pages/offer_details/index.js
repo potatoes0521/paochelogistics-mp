@@ -3,7 +3,7 @@
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-14 13:46:28
+ * @LastEditTime: 2019-10-15 10:14:23
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -80,6 +80,7 @@ class OfferDetails extends Component {
     }
     api.offer.getOfferDetails(sendData, this)
       .then(res => {
+        Taro.hideLoading()
         this.setState({
           inquiryId: res.inquiryId,
           parentId: res.parentId,
@@ -162,6 +163,7 @@ class OfferDetails extends Component {
     }
     api.offer.cancelOffer(sendData, this)
       .then(() => {
+        Taro.hideLoading()
         Taro.showToast({
           title: '取消询价成功',
           icon: 'none'
@@ -187,6 +189,7 @@ class OfferDetails extends Component {
     }
     api.offer.getPromptOffer(sendData, this)
       .then(() => {
+        Taro.hideLoading()
         Taro.showToast({
           title: '催报价成功',
           icon: 'none'
@@ -212,6 +215,7 @@ class OfferDetails extends Component {
     }
     api.offer.getReinquiryOrder(sendData, this)
       .then(() => {
+        Taro.hideLoading()
         Taro.showToast({
           title: '再次询价成功',
           icon: 'none'
@@ -255,7 +259,7 @@ class OfferDetails extends Component {
             <View className='details-form-item'>
               <View className='details-form-label'>报价状态:</View>
               {
-                (quotedPriceDesc !== 0) ?
+                (quotedPriceDesc) ?
                   <View className='details-form-content font-color'>￥{quotedPriceDesc || ''}</View>
                   :
                   <View className='details-form-content no-offer'>{statusDesc}</View>

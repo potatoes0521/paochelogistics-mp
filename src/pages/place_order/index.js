@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-14 15:46:02
+ * @LastEditTime: 2019-10-15 14:37:17
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -265,18 +265,20 @@ class PlaceOrder extends Component {
     }
     if (userInfo.userType === 0) {
       sendData = Object.assign({}, sendData, {
-        // 商户的ID 
+        // 客户的ID 
+        userId: placeOrderCustomer.userId
       })
     }
     api.order.placeOrder(sendData, this)
-      .then(() => {
+      .then((res) => {
+        // console.log(res, 'resres')
         Taro.hideLoading()
         Taro.showToast({
           title: '下单成功',
           icon: 'success'
         })
         Taro.navigateTo({
-          url: '/pages/order_details/index'
+          url: `/pages/order_details/index?order_id=${res.orderId}`
         })
       })
   }
@@ -288,13 +290,11 @@ class PlaceOrder extends Component {
   }
   render() {
     let {
-      sendCityId, //发车城市
       sendCityName, //发车城市名称
       sendAddress, //发车城市详细地址
       sendPerson, //发车城市联系人
       sendMobile, //发车城市联系方式
       sendCardNo, //发车城市联系人身份证号
-      receiveCityId, //收车城市
       receiveCityName, //收车城市名称
       receiveAddress, //收车城市详细地址
       receivePerson, //收车城市联系人
@@ -334,13 +334,13 @@ class PlaceOrder extends Component {
             <View className='start-city'>
               <View className='details-form-item'>
                 <View className='details-form-label'>发车城市:</View>
-                <View className='details-form-content'>{sendCityId ? sendCityName : ''}</View>
+                <View className='details-form-content'>{sendCityName || ''}</View>
               </View>
               {
                 (storePickup !== 0) ?
                   <View className='details-form-item'>
                     <View className='details-form-label'>详细信息:</View>
-                    <View className='details-form-content'>{sendAddress}</View>
+                    <View className='details-form-content'>{sendAddress || ''}</View>
                   </View>
                   : null
               }
@@ -386,13 +386,13 @@ class PlaceOrder extends Component {
             <View className='end-city'>
               <View className='details-form-item'>
                 <View className='details-form-label'>收车城市:</View>
-                <View className='details-form-content'>{receiveCityId ? receiveCityName : ''}</View>
+                <View className='details-form-content'>{receiveCityName || ''}</View>
               </View>
               {
                 (homeDelivery !== 0) ?
                   <View className='details-form-item'>
                     <View className='details-form-label'>详细信息:</View>
-                    <View className='details-form-content'>{receiveAddress}</View>
+                    <View className='details-form-content'>{receiveAddress || ''}</View>
                   </View>
                   : null
               }
@@ -455,11 +455,11 @@ class PlaceOrder extends Component {
               }
               <View className='details-form-item'>
                 <View className='details-form-label'>发车时间:</View>
-                <View className='details-form-content'>{sendTimeDesc}</View>
+                <View className='details-form-content'>{sendTimeDesc || ''}</View>
               </View>
               <View className='details-form-item'>
                 <View className='details-form-label'>车辆信息:</View>
-                <View className='details-form-content'>{carInfo}</View>
+                <View className='details-form-content'>{carInfo || ''}</View>
               </View>
               <View className='details-form-item'>
                 <View className='details-form-label'>车辆类型:</View>
@@ -467,7 +467,7 @@ class PlaceOrder extends Component {
               </View>
               <View className='details-form-item'>
                 <View className='details-form-label'>台数:</View>
-                <View className='details-form-content'>{carAmount}辆</View>
+                <View className='details-form-content'>{carAmount || ''}辆</View>
               </View>
               <View className='details-form-item'>
                 <View className='details-form-label'>车架号:</View>
@@ -484,7 +484,7 @@ class PlaceOrder extends Component {
               <View className='details-form-item'>
                 <View className='details-form-label'>报价:</View>
                 <View className='details-form-content'>
-                  <Text className='single-price'>{quotedPriceDesc}</Text>
+                  <Text className='single-price'>{quotedPriceDesc || ''}</Text>
                   <Text>元/台</Text>
                 </View>
               </View>
