@@ -3,7 +3,7 @@
  * @description: 订单详情--底部详情
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-15 14:30:16
+ * @LastEditTime: 2019-10-15 16:25:17
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -25,9 +25,7 @@ import './index.styl'
 class FooterDetailsComponent extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      isShow: true
-     }
+    this.state = { }
   } 
   
   /**
@@ -46,7 +44,6 @@ class FooterDetailsComponent extends Component {
       item,
       userInfo
     } = this.props
-    let {isShow} = this.state
     const payButtonClassName = classNames({
       'pay-button buttons': true,
       'change-padding': !item.promotionsPrice
@@ -55,31 +52,35 @@ class FooterDetailsComponent extends Component {
       <View className='footer-details-wrapper'>
         <OrderFooterCard>
           <View className='status-wrapper'>
-            {
-              (isShow) ?
-                <View className='immediate_payment'>
-                  {
-                    (userInfo.userType == 1) ?
-                      <View className='lower-button'>
-                        <View className='collect-button buttons'>分享给客户</View>
-                      </View>
-                      :
-                      <View className='upper-button'>
-                        <View className={payButtonClassName} onClick={this.paymentButton}>立即支付
-                          {
-                            (item.promotionsPrice) ?
-                              <Text className='reduce-price'>(立减{item.promotionsPrice}元)</Text>
-                              : null
-                          }
-                        </View>
+            <View className='immediate_payment'>
+              {
+                (userInfo.userType == 1) ?
+                  <View className='lower-button'>
+                    <View className='collect-button buttons'>分享给客户</View>
+                  </View>
+                  :
+                  <View className='upper-button'>
+                    <View className={payButtonClassName} onClick={this.paymentButton}>立即支付
+                      {
+                        (item.promotionsPrice) ?
+                          <Text className='reduce-price'>(立减{item.promotionsPrice}元)</Text>
+                          : null
+                      }
+                    </View>
+                    {
+                      (item.shareOutDesc) ?
                         <View className='share-button buttons'>分享砍价</View>
-                      </View>
-                  }
-                </View>
-                :
+                        : null
+                    }
+                  </View>
+              }
+            </View>
+            {
+              (item.logisticsDetailsDesc) ?
                 <View className='lower-button'>
                   <View className='collect-button buttons'>查看运输状态</View>
                 </View>
+                : null
             }
           </View>
         </OrderFooterCard>
