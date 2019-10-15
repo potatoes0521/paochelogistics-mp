@@ -3,7 +3,7 @@
  * @description: 订单详情--底部详情
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-12 17:19:14
+ * @LastEditTime: 2019-10-15 14:30:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -26,17 +26,27 @@ class FooterDetailsComponent extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      visible: true, //判断订单详情底部状态
-      isShow: false //判断立即支付按钮是否显示
-    }
+      isShow: true
+     }
   } 
   
+  /**
+   * @description: 支付
+   * @param {type} 
+   * @return: 
+   */
+  paymentButton() {
+    let { item } = this.props
+    Taro.navigateTo({
+      url: `/pages/pay_details/index?order_id=${item.orderId}`
+    })
+  }
   render() {
     let {
-      visible,
-      isShow
-    } = this.state
-    let { item } = this.props
+      item,
+      userInfo
+    } = this.props
+    let {isShow} = this.state
     const payButtonClassName = classNames({
       'pay-button buttons': true,
       'change-padding': !item.promotionsPrice
@@ -46,16 +56,16 @@ class FooterDetailsComponent extends Component {
         <OrderFooterCard>
           <View className='status-wrapper'>
             {
-              ( visible ) ?
+              (isShow) ?
                 <View className='immediate_payment'>
                   {
-                    ( isShow ) ?
+                    (userInfo.userType == 1) ?
                       <View className='lower-button'>
                         <View className='collect-button buttons'>分享给客户</View>
                       </View>
                       :
                       <View className='upper-button'>
-                        <View className={payButtonClassName}>立即支付
+                        <View className={payButtonClassName} onClick={this.paymentButton}>立即支付
                           {
                             (item.promotionsPrice) ?
                               <Text className='reduce-price'>(立减{item.promotionsPrice}元)</Text>

@@ -132,6 +132,12 @@
           "name": "支付详情",
           "pathName": "pages/pay_details/index",
           "scene": null
+        },
+        {
+          "id": -1,
+          "name": "支付成功",
+          "pathName": "pages/pay_success/index",
+          "scene": null
         }
 			]
 		}

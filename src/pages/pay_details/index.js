@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 支付详情
  * @Date: 2019-10-08 09:30:22
- * @LastEditors: liuYang
- * @LastEditTime: 2019-10-12 09:51:29
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-10-15 14:58:12
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -21,8 +21,8 @@ class PayDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: true //判断是本人支付还是别人代付
-    }
+      payPriceDesc: 0
+     }
     this.pageParams = {}
     this.orderCode = ''
   }
@@ -44,6 +44,9 @@ class PayDetails extends Component {
     }
     api.order.getOrderDetails(sendData, this).then(res => {
       this.orderCode = res.orderCode
+      this.setState({
+        payPriceDesc: res.payPriceDesc
+      })
     })
   }
   payMoney() { 
@@ -64,10 +67,13 @@ class PayDetails extends Component {
       signType: params.signType,
       paySign: params.paySign,
       success: (res) => {
-        
+        if (!res) return
+        Taro.redirectTo({
+          url: '/pages/pay_success/index'
+        })
       },
       fail: (res) => {
-        
+        console.log(res)
       }
     })
   }
@@ -77,20 +83,21 @@ class PayDetails extends Component {
   } 
 
   render() {
+    let { userInfo } = this.props
     let {
-      visible
+      payPriceDesc
     } = this.state
     return (
       <View className='page-wrapper'>
         <View className='pay-wrapper'>
           <NoTitleCard>
             {
-              (visible) ?
+              (userInfo.userType == 1) ?
               <PriceDetailsComponent></PriceDetailsComponent>
               :
               <View className='others-pay'>
                 <View className='pay-title'>应付金额</View>
-                <View className='pay-number'>￥2100.79</View>
+                <View className='pay-number'>￥{payPriceDesc}</View>
               </View>
             }
           </NoTitleCard>

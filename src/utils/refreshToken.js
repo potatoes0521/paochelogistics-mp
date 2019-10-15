@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 刷新token的操作
  * @Date: 2019-09-03 10:24:49
- * @LastEditors: liuYang
- * @LastEditTime: 2019-09-23 14:33:24
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-10-15 10:41:14
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -22,7 +22,8 @@ const refreshToken = (that, url, data, method) => {
     openId: userInfo.openId,
     token: userInfo.token
   }
-  api.refreshToken(sendData,that).then(res => {
+  api.user.refreshToken(sendData, that).then(res => {
+    if(!res) return
     Actions.changeUserInfo(res)
     setNewToken(res.token)
     console.log(url, data)
