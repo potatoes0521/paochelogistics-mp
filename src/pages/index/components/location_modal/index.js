@@ -2,13 +2,14 @@
  * @Author: guorui
  * @description: 地址授权模态框
  * @Date: 2019-10-16 09:27:37
- * @LastEditors: guorui
- * @LastEditTime: 2019-10-16 11:45:37
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-10-16 15:07:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import Taro, { Component } from '@tarojs/taro'
 import { View, Button } from '@tarojs/components'
+import PropTypes from 'prop-types'
 
 import '@/app.styl'
 import './index.styl'
@@ -16,22 +17,21 @@ import './index.styl'
 export default class LocationModal extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
   }
 
-  cancelModal = () => {
-    this.props.onModalCallBack(true)
+  cancelModal() {
+    this.props.onClick('1')
   }
 
   render() {
     return (
       <View className='modal-wrapper'>
         <View className='modal-box'>
-          <View className='modal-main'>标题</View>
-          <View className='modal-content'>告知当前状态，信息和解决方法</View>
+          <View className='modal-main'>提示</View>
+          <View className='modal-content'>授权地理位置信息,可自动定位显示默认发车城市</View>
           <View className='modal-btn-wrapper'>
             <View className='modal-btn model-btn-cancel'
-              onClick={() => this.cancelModal()}
+              onClick={this.cancelModal.bind(this)}
             >取消</View>
             <Button
               className='modal-btn model-btn-ok'
@@ -42,4 +42,12 @@ export default class LocationModal extends Component {
       </View>
     )
   }
+}
+
+LocationModal.defaultProps = {
+  onClick: () => {}
+}
+
+LocationModal.propTypes = {
+  onClick: PropTypes.func
 }

@@ -3,8 +3,8 @@
  * @description: 首页
  * 
  * @Date: 2019-09-17 11:53:57
- * @LastEditors: guorui
- * @LastEditTime: 2019-10-16 09:57:34
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-10-16 15:04:33
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -41,6 +41,7 @@ import CheckBoxGroup from '@c/checkbox_group/index.js'
 // eslint-disable-next-line import/first
 import InputNumber from '@c/input_number/index.js'
 // eslint-disable-next-line import/first
+import LocationModal from './components/location_modal/index.js'
 import { serviceList, carNatureList } from '@config/text_config.js'
 
 
@@ -63,7 +64,8 @@ class Index extends Component {
       sendAddress: '', // 发车详细地址
       storePickup: 0,  // 上门提车
       homeDelivery: 0, // 上门送车
-      sendTimerInit: ''
+      sendTimerInit: '',
+      locationModal: false
     }
     this.initCity = {}
     this.pageParams = {}
@@ -147,9 +149,9 @@ class Index extends Component {
    */
   handleLocation() {
     getUserLocation().then((res) => {
-      if (!this.state.getLocationModel) {
+      if (!this.state.locationModal) {
         this.setState({
-          getLocationModel: true
+          locationModal: false
         })
       }
       this.handleConvertingGPS(res.latitude, res.longitude)
@@ -192,10 +194,9 @@ class Index extends Component {
    */
   handleGetSetting() {
     getSetting().then(res => {
-      console.log(res, ' get setting ')
       if (!res.authSetting['scope.userLocation']) {
         this.setState({
-          getLocationModel: false
+          locationModal: true
         })
       }
     }).catch((err) => {
@@ -203,9 +204,9 @@ class Index extends Component {
     })
   }
 
-  closeModalCallBack() {
+  modalCallBack() {
     this.setState({
-      getLocationModel: true
+      locationModal: false
     })
   }
   /**
@@ -363,7 +364,8 @@ class Index extends Component {
       sendAddress, // 发车详细地址
       storePickup, // 上门提车
       homeDelivery, // 上门送车
-      sendTimerInit
+      sendTimerInit,
+      locationModal
     } = this.state
     
     return (
@@ -515,6 +517,13 @@ class Index extends Component {
           className='submit-btn'
           onClick={this.submitOffer}
         >立即询价</View>
+        {
+          locationModal ? 
+            <LocationModal
+              onClick={this.modalCallBack.bind(this)}
+            ></LocationModal>
+            : null
+        }
       </View>
     )
   }
