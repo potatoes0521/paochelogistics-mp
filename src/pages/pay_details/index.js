@@ -1,14 +1,14 @@
 /*
  * @Author: guorui
- * @description: 支付详情
+ * @description: 支付详情  本页面注释信息为，别人代付时显示的支付页面
  * @Date: 2019-10-08 09:30:22
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-16 11:24:21
+ * @LastEditTime: 2019-10-16 15:17:47
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 
-import Taro, { Component } from '@tarojs/taro'
+import Taro, { Component, navigateTo } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import api from '@api/index.js'
@@ -21,7 +21,7 @@ class PayDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      payPriceDesc: 0
+      // payPriceDesc: 0
      }
     this.pageParams = {}
     this.orderCode = ''
@@ -44,9 +44,9 @@ class PayDetails extends Component {
     }
     api.order.getOrderDetails(sendData, this).then(res => {
       this.orderCode = res.orderCode
-      this.setState({
-        payPriceDesc: res.payPriceDesc
-      })
+      // this.setState({
+      //   payPriceDesc: res.payPriceDesc
+      // })
     })
   }
   payMoney() { 
@@ -59,7 +59,6 @@ class PayDetails extends Component {
     
   }
   weChatPay(params) {
-    // eval('console.log(1+2,"aaa")')
     Taro.requestPayment({
       timeStamp: params.timeStamp,
       nonceStr: params.nonceStr,
@@ -69,7 +68,7 @@ class PayDetails extends Component {
       success: (res) => {
         if (!res) return
         Taro.redirectTo({
-          url: '/pages/pay_success/index'
+          url: `/pages/pay_success/index?order_id=${this.pageParams.order_id}`
         })
       },
       fail: (res) => {
@@ -83,23 +82,24 @@ class PayDetails extends Component {
   } 
 
   render() {
-    let { userInfo } = this.props
-    let {
-      payPriceDesc
-    } = this.state
+    // let { userInfo } = this.props
+    // let {
+    //   payPriceDesc
+    // } = this.state
     return (
       <View className='page-wrapper'>
         <View className='pay-wrapper'>
           <NoTitleCard>
-            {
-              (userInfo.userType == 1) ?
+            <PriceDetailsComponent></PriceDetailsComponent>
+            {/* {
+              (!userInfo.userType) ?
               <PriceDetailsComponent></PriceDetailsComponent>
               :
               <View className='others-pay'>
                 <View className='pay-title'>应付金额</View>
                 <View className='pay-number'>￥{payPriceDesc}</View>
               </View>
-            }
+            } */}
           </NoTitleCard>
         </View>
         <View

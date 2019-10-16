@@ -3,7 +3,7 @@
  * @description: 注册页面
  * @Date: 2019-08-22 11:58:25
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-14 17:57:41
+ * @LastEditTime: 2019-10-16 14:44:53
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -282,9 +282,11 @@ class usePhoneNumberRegister extends Component {
             onClick={this.submitRegister}
           >登录</View>
         </View>
-        {/* <View className='agreements-wrapper'>
-          <View className='agreements-style'>用户注册协议</View>
-        </View> */}
+        <View className='agreements-wrapper'>
+          <View className='agreements-style'>
+            <View className='agreements-title'>物流运输协议</View>
+          </View>
+        </View>
       </View>
     )
   }
