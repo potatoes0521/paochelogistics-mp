@@ -3,7 +3,7 @@
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-15 10:34:30
+ * @LastEditTime: 2019-10-16 14:19:38
  */
 
 // 默认请求连接
@@ -38,7 +38,7 @@ export default {
       'openId': userInfo.openId || '',
       'userId': userInfo.userId || '', // 常用请求全部放在请求头上
       'unionId': userInfo.unionId || '',
-      'userType': userInfo.userType || 1, // 0 驿站人员  1 自主注册   2 驿站人员添加客户
+      'userType': userInfo.userType, // 0 驿站人员  1 自主注册   2 驿站人员添加客户
       'terminalType': userInfo.terminalType || 1, // 终端类型  1 小程序   2 H5  3 APP
       'sourceId': userInfo.sourceId || 3, // 1 跑车帮小程序 2 跑车帮app 3 跑车物流小程序
       'userAgent': userInfo.userAgent || '',  // 系统信息
