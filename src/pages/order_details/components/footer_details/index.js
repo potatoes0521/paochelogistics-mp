@@ -3,7 +3,7 @@
  * @description: 订单详情--底部详情
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-16 11:17:50
+ * @LastEditTime: 2019-10-16 14:33:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -77,7 +77,7 @@ class FooterDetailsComponent extends Component {
           <View className='status-wrapper'>
             <View className='immediate_payment'>
               {
-                (userInfo.userType == 1) ?
+                (userInfo.userType == 0) ?
                   <View className='lower-button'>
                     <View className='collect-button buttons'>分享给客户</View>
                   </View>
