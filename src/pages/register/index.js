@@ -3,7 +3,7 @@
  * @description: 注册页面
  * @Date: 2019-08-22 11:58:25
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-16 15:25:07
+ * @LastEditTime: 2019-10-16 17:36:52
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -27,7 +27,32 @@ class usePhoneNumberRegister extends Component {
     this.state = {
       countDown: 90,
       timerFlag: false,
-      agreementRadio: false //协议是否选中
+      agreementRadio: false, //协议是否选中
+      // eslint-disable-next-line react/no-unused-state
+      agreementsList: { //协议内容，weight:0  字体加粗， weight:1 字体不加错
+        'paragraph': [
+          {
+            'text': '感谢您选择“跑车物流”服务平台（以下简称“平台”）'
+          },
+          {
+            'text': '跑车物流服务使用协议（以下简称“本协议”）是深圳华供科技有限公司和您签订。'
+          }
+        ],
+        'main': [
+          {
+            'text': '一、跑车物流协议的确认',
+            'weight': '0'
+          },
+          {
+            'text': '1、请您仔细阅读协议内容，特别是字体加粗部分。',
+            'weight': '1'
+          },
+          {
+            'text': '2、如果您对本协议内容存在疑虑或异议，勿进行下一步操作。',
+            'weight': '1'
+          }
+        ]
+      }
     }
     this.verificationCode = '' // 验证码
     this.phoneNumber = ''       // 手机号
@@ -284,7 +309,12 @@ class usePhoneNumberRegister extends Component {
         </View>
         {/* <View className='agreements-wrapper'>
           <View className='agreements-style'>
-            <View className='agreements-title'>物流运输协议</View>
+            <View className='agreements-top'>
+              <View className='agreements-title'>用户注册协议</View>
+              <View className='line'></View>
+              <View className='agreements-content'></View>
+            </View>
+            <View className='agreements-button'>我知道了</View>
           </View>
         </View> */}
       </View>
