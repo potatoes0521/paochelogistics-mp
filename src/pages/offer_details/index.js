@@ -3,7 +3,7 @@
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-15 10:14:23
+ * @LastEditTime: 2019-10-15 18:13:23
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -26,18 +26,13 @@ class OfferDetails extends Component {
     super(props)
     this.state = {
       inquiryId: 0, //询价单id
-      parentId: '', //父id 基于该询价单id做的再次询价
       status: 10, //询价单状态  10 未报价  20 已报价  30 已失效  40 已取消
       statusDesc: '', //未报价
       quotedPriceDesc: 0, //报价价格
       dueTimeDesc: '', //有效期
       sendTimeDesc: '', //发车时间
-      sendCityId: 0, //发车城市
       sendCityName: '', //发车城市名称
-      sendAddress: '', //发车城市详细地址
-      receiveCityId: 0, //收车城市
       receiveCityName: '', //收车城市名称
-      receiveAddress: '', //收车城市详细地址
       homeDelivery: 1, //送车上门 0否 1是
       storePickup: 1, //上门提车 0否 1是
       carInfo: '', //车辆信息
@@ -67,6 +62,7 @@ class OfferDetails extends Component {
    * @return: 
    */
   getOfferDetails() {
+    console.log(this.pageParams.offer_id, 'this.pageParams.offer_id')
     if (!this.pageParams.offer_id) {
       Taro.navigateBack()
       return;
@@ -83,18 +79,13 @@ class OfferDetails extends Component {
         Taro.hideLoading()
         this.setState({
           inquiryId: res.inquiryId,
-          parentId: res.parentId,
           statusDesc: res.statusDesc,
           status: res.status,
           quotedPriceDesc: res.quotedPriceDesc,
           dueTimeDesc: res.dueTimeDesc,
           sendTimeDesc: res.sendTimeDesc,
-          sendCityId: res.sendCityId,
           sendCityName: res.sendCityName,
-          sendAddress: res.sendAddress,
-          receiveCityId: res.receiveCityId,
           receiveCityName: res.receiveCityName,
-          receiveAddress: res.receiveAddress,
           homeDelivery: res.homeDelivery,
           storePickup: res.storePickup,
           carInfo: res.carInfo,
@@ -104,6 +95,7 @@ class OfferDetails extends Component {
           usedType: res.usedType,
           isActive: res.isActive
         })
+        Storage.setStorage('offer_info', res)
         Taro.hideLoading()
       })
   }
@@ -114,35 +106,9 @@ class OfferDetails extends Component {
    * @return: 
    */
   submitOfferOrder() {
-    let sendData = {
-      inquiryId: this.state.inquiryId,
-      parentId: this.state.parentId,
-      statusDesc: this.state.statusDesc,
-      status: this.state.status,
-      quotedPriceDesc: this.state.quotedPriceDesc,
-      dueTimeDesc: this.state.dueTimeDesc,
-      sendTimeDesc: this.state.sendTimeDesc,
-      sendCityId: this.state.sendCityId,
-      sendCityName: this.state.sendCityName,
-      sendAddress: this.state.sendAddress,
-      receiveCityId: this.state.receiveCityId,
-      receiveCityName: this.state.receiveCityName,
-      receiveAddress: this.state.receiveAddress,
-      homeDelivery: this.state.homeDelivery,
-      storePickup: this.state.storePickup,
-      carInfo: this.state.carInfo,
-      carAmount: this.state.carAmount,
-      inquiryTimeDesc: this.state.inquiryTimeDesc,
-      quotedTimeDesc: this.state.quotedTimeDesc,
-      usedType: this.state.usedType,
-    }
-    Storage.setStorage('offer_info', sendData)
-    api.offer.submitOffer({}, this)
-      .then(() => {
-        Taro.reLaunch({
-          url: '/pages/place_order/index'
-        })
-      })
+    Taro.reLaunch({
+      url: `/pages/place_order/index?offer_id=${this.pageParams.offer_id}`
+    })
   }
 
   /**
@@ -237,7 +203,8 @@ class OfferDetails extends Component {
       inquiryTimeDesc,
       quotedTimeDesc,
       status,
-      statusDesc
+      statusDesc,
+      usedType
     } = this.state
     const cancelOfferClassName = classNames({
       'disabled-text': status === 30 || status === 40
@@ -306,6 +273,14 @@ class OfferDetails extends Component {
             <View className='details-form-item'>
               <View className='details-form-label'>车辆信息:</View>
               <View className='details-form-content'>{carInfo || ''}</View>
+            </View>
+            <View className='details-form-item'>
+              <View className='details-form-label'>车辆类型:</View>
+              <View className='details-form-content'>
+                {
+                  usedType === 1 ? '新车' : '二手车'
+                }
+              </View>
             </View>
             <View className='details-form-item'>
               <View className='details-form-label'>台数:</View>
