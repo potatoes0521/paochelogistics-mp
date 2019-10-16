@@ -3,7 +3,7 @@
  * @description: 支付详情
  * @Date: 2019-10-08 09:30:22
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-15 14:58:12
+ * @LastEditTime: 2019-10-16 11:24:21
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -59,7 +59,7 @@ class PayDetails extends Component {
     
   }
   weChatPay(params) {
-    eval('console.log(1+2,"aaa")')
+    // eval('console.log(1+2,"aaa")')
     Taro.requestPayment({
       timeStamp: params.timeStamp,
       nonceStr: params.nonceStr,

@@ -3,8 +3,8 @@
  * @description: 首页
  * 
  * @Date: 2019-09-17 11:53:57
- * @LastEditors: liuYang
- * @LastEditTime: 2019-10-15 09:28:18
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-10-16 09:57:34
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -32,11 +32,15 @@ import {
 // eslint-disable-next-line import/first
 import api from '@api/index.js'
 import login from '@utils/login.js'
-
+// eslint-disable-next-line import/first
 import NoTitleCard from '@c/no_title_card/index.js'
+// eslint-disable-next-line import/first
 import RadioGroups from '@c/radio_group/index.js'
+// eslint-disable-next-line import/first
 import CheckBoxGroup from '@c/checkbox_group/index.js'
+// eslint-disable-next-line import/first
 import InputNumber from '@c/input_number/index.js'
+// eslint-disable-next-line import/first
 import { serviceList, carNatureList } from '@config/text_config.js'
 
 

@@ -3,7 +3,7 @@
  * @description: 订单详情--底部详情
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-15 18:27:14
+ * @LastEditTime: 2019-10-16 11:17:50
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -69,7 +69,7 @@ class FooterDetailsComponent extends Component {
     } = this.props
     const payButtonClassName = classNames({
       'pay-button buttons': true,
-      'change-padding': !item.promotionsPrice
+      'change-padding': item.promotionsPrice
     })
     return (
       <View className='footer-details-wrapper'>
@@ -92,7 +92,9 @@ class FooterDetailsComponent extends Component {
                     </View>
                     {
                       (item.shareOutDesc) ?
-                        <Button className='share-button buttons' onClick={this.shareBargain} openType='share'>分享砍价</Button>
+                        <View className='share-wrapper'>
+                          <Button className='share-button buttons' onClick={this.shareBargain} openType='share'>分享砍价</Button>
+                        </View>
                         : null
                     }
                   </View>
