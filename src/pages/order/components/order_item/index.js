@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 订单item
  * @Date: 2019-09-23 14:42:25
- * @LastEditors: guorui
- * @LastEditTime: 2019-10-17 11:26:06
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-10-17 15:14:30
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -22,7 +22,8 @@ export default class OrderItem extends Component {
     super(props)
   }
 
-  navigatorTo(pageName) { 
+  navigatorTo(pageName, e) {
+    e.stopPropagation()
     let { item } = this.props
     Taro.navigateTo({
       url: `/pages/${pageName}/index?order_id=${item.orderId}`

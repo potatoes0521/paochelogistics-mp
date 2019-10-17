@@ -3,7 +3,7 @@
  * @description: 运输状态时间轴
  * @Date: 2019-09-24 14:59:07
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-15 18:21:37
+ * @LastEditTime: 2019-10-17 15:07:26
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -38,7 +38,7 @@ export default class TimeLine extends Component {
         'icon-spot': true,
         'icon-text icon-text-start': index === timeArray.length - 1,
         'icon-text icon-text-over': index === 0,
-        'icon-text iconfont iconyunshuzhong icon-style': index === 1
+        'icon-text iconfont iconyunshuzhong icon-style': index === 1 && timeArray.length !== 2
       })
       const addressClassName = classNames(
         'path-address',
