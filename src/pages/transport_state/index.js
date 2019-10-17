@@ -3,7 +3,7 @@
  * @description: 运输状态
  * @Date: 2019-09-24 10:51:52
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-16 09:12:49
+ * @LastEditTime: 2019-10-17 16:39:46
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -28,7 +28,10 @@ class TransportState extends Component {
     this.pageParams = this.$router.params
     this.getOrderTransportList()
   }
-
+  /**
+   * 获取订单运输状态
+   * @return void
+   */
   getOrderTransportList() { 
     let sendData = {
       orderId: this.pageParams.order_id

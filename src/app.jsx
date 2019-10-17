@@ -3,14 +3,14 @@ import '@tarojs/async-await'
 import 'taro-ui/dist/style/index.scss'
 import { Provider } from '@tarojs/redux'
 import configStore from './store/index.js'
-
+import './assets/js_sdk/ald-stat'
 import Index from './pages/index'
 import './assets/icon_font/icon.scss'
 import './app.styl'
 
 const store = configStore
 
-class App extends Component {
+class _App extends Component {
 
   componentDidMount() {
     const updateManager = Taro.getUpdateManager()
@@ -111,4 +111,4 @@ class App extends Component {
   }
 }
 
-Taro.render(<App />, document.getElementById('app'))
+Taro.render(<_App />, document.getElementById('app'))
