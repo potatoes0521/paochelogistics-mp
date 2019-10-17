@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
- * @LastEditors: guorui
- * @LastEditTime: 2019-10-16 14:19:38
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-10-17 20:15:25
  */
 
 // 默认请求连接
@@ -95,7 +95,11 @@ export default {
               let resData = res.data
               // '200002' 是未注册
               if (!+resData.code || +resData.code === 200002 || +resData.code == 200) {
-                resolve(resData.data)
+                if (url === 'user/customerlist') {
+                  resolve(resData)
+                } else {
+                  resolve(resData.data)                  
+                }
               } else {
                 if (+resData.code === 200003) {
                   console.log(that)
