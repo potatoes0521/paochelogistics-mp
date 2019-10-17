@@ -3,8 +3,8 @@
  * @description: 首页
  * 
  * @Date: 2019-09-17 11:53:57
- * @LastEditors: guorui
- * @LastEditTime: 2019-10-17 16:07:35
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-10-17 18:32:14
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -79,6 +79,13 @@ class Index extends Component {
     this.initData()
     await login.getCode(this) // 登录
     this.handleLocation()
+  }
+  componentDidShow() { 
+    if (this.state.locationModal) {
+      this.setState({
+        locationModal: true
+      })
+    }
   }
   /**
    * 初始化数据
