@@ -3,7 +3,7 @@
  * @description: 注册页面
  * @Date: 2019-08-22 11:58:25
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-16 17:36:52
+ * @LastEditTime: 2019-10-17 14:54:37
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -222,13 +222,9 @@ class usePhoneNumberRegister extends Component {
     let {
       agreementRadio
     } = this.state
-    if (agreementRadio) {
-      return
-    } else {
-      this.setState({
-        agreementRadio: !agreementRadio
-      })
-    }
+    this.setState({
+      agreementRadio: !agreementRadio
+    })
   }
 
   /**
@@ -256,7 +252,7 @@ class usePhoneNumberRegister extends Component {
       'disabled-btn': timerFlag
     })
     const registrationAgreementRadio = classNames({
-      'agreement-radio': true,
+      'agreement-radio': !agreementRadio,
       'agree-agreement iconfont iconduigoux': agreementRadio
     })
     return (
