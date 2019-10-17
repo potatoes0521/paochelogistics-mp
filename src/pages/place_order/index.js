@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-17 19:29:21
+ * @LastEditTime: 2019-10-17 19:49:42
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,7 +16,7 @@ import {
   Textarea
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
-import NoTitleCard from '@c/no_title_card/index.js'
+// import NoTitleCard from '@c/no_title_card/index.js'
 // eslint-disable-next-line import/first
 // eslint-disable-next-line import/first
 import api from '@api/index.js'
@@ -335,7 +335,7 @@ class PlaceOrder extends Component {
               </View>
               : null
           }
-          <NoTitleCard>
+          <View className='no-card-style'>
             <View className='start-city'>
               <View className='details-form-item'>
                 <View className='details-form-label'>发车城市:</View>
@@ -356,6 +356,7 @@ class PlaceOrder extends Component {
                     className='details-from-input'
                     onInput={this.verificationSendName}
                     placeholder='请填写联系人姓名'
+                    placeholderClass='placeholder-style'
                     value={sendPerson}
                     maxLength='10'
                   ></Input>
@@ -369,6 +370,7 @@ class PlaceOrder extends Component {
                     className='details-from-input'
                     placeholder='请填写联系人电话'
                     onInput={this.verificationSendPhone}
+                    placeholderClass='placeholder-style'
                     maxLength='20'
                     value={sendMobile}
                     auto
@@ -382,6 +384,7 @@ class PlaceOrder extends Component {
                     className='details-from-input'
                     placeholder='请填写联系人证件号'
                     onInput={this.verificationSendCardNo}
+                    placeholderClass='placeholder-style'
                     value={sendCardNo}
                   ></Input>
                 </View>
@@ -408,6 +411,7 @@ class PlaceOrder extends Component {
                     className='details-from-input'
                     onInput={this.verificationReceiveName}
                     placeholder='请填写联系人姓名'
+                    placeholderClass='placeholder-style'
                     maxLength='10'
                     value={receivePerson}
                   ></Input>
@@ -421,6 +425,7 @@ class PlaceOrder extends Component {
                     className='details-from-input'
                     placeholder='请填写联系人电话'
                     onInput={this.verificationReceivePhone}
+                    placeholderClass='placeholder-style'
                     maxLength='20'
                     value={receiveMobile}
                   ></Input>
@@ -433,6 +438,7 @@ class PlaceOrder extends Component {
                     className='details-from-input'
                     onInput={this.verificationReceiveCardNo}
                     placeholder='请填写联系人证件号'
+                    placeholderClass='placeholder-style'
                     value={receiveCarNo}
                   ></Input>
                 </View>
@@ -484,6 +490,7 @@ class PlaceOrder extends Component {
                   auto-height
                   placeholder='请输入车架号，多个车架号请用“,”隔开'
                   placeholderClass='placeholder-style'
+                  maxlength={-1}
                   value={vins}
                 ></Textarea>
               </View>
@@ -496,7 +503,7 @@ class PlaceOrder extends Component {
                 </View>
               </View>
             </View>
-          </NoTitleCard>
+          </View>
         </View>
         <View className='place-order-button' onClick={this.submitOrder}>立即下单</View>
       </View>
