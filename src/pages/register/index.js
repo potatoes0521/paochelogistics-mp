@@ -3,7 +3,7 @@
  * @description: 注册页面
  * @Date: 2019-08-22 11:58:25
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-17 14:54:37
+ * @LastEditTime: 2019-10-17 17:08:26
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -27,7 +27,8 @@ class usePhoneNumberRegister extends Component {
     this.state = {
       countDown: 90,
       timerFlag: false,
-      agreementRadio: false, //协议是否选中
+      agreementRadio: true, //协议是否选中
+      isShow: false,
       // eslint-disable-next-line react/no-unused-state
       agreementsList: { //协议内容，weight:0  字体加粗， weight:1 字体不加错
         'paragraph': [
@@ -228,13 +229,21 @@ class usePhoneNumberRegister extends Component {
   }
 
   /**
-   * 显示协议
+   * 用户注册协议
    * @description: 
    * @param {type} 
    * @return: 
    */
   showRegistrationAgreement() {
+    this.setState({
+      isShow: true
+    })
+  }
 
+  closeRegistrationAgreement() {
+    this.setState({
+      isShow: false
+    })
   }
 
   config = {
@@ -245,7 +254,8 @@ class usePhoneNumberRegister extends Component {
     let {
       timerFlag,
       countDown,
-      agreementRadio
+      agreementRadio,
+      isShow
     } = this.state
     const getVerificationCodeClassName = classNames({
       'btn-code': true,
@@ -254,6 +264,10 @@ class usePhoneNumberRegister extends Component {
     const registrationAgreementRadio = classNames({
       'agreement-radio': !agreementRadio,
       'agree-agreement iconfont iconduigoux': agreementRadio
+    })
+    const showAgreements = classNames({
+      'agreements-wrapper': true,
+      'show-agreements': isShow
     })
     return (
       <View className='page-wrapper'>
@@ -303,16 +317,16 @@ class usePhoneNumberRegister extends Component {
             onClick={this.submitRegister}
           >登录</View>
         </View>
-        {/* <View className='agreements-wrapper'>
+        <View className={showAgreements}>
           <View className='agreements-style'>
+            <View className='agreements-title'>用户注册协议</View>
+            <View className='line'></View>
             <View className='agreements-top'>
-              <View className='agreements-title'>用户注册协议</View>
-              <View className='line'></View>
               <View className='agreements-content'></View>
+              <View className='agreements-button' onClick={this.closeRegistrationAgreement}>我知道了</View>
             </View>
-            <View className='agreements-button'>我知道了</View>
           </View>
-        </View> */}
+        </View>
       </View>
     )
   }

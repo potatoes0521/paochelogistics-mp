@@ -16,7 +16,6 @@ import {
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import NoTitleCard from '@c/no_title_card/index.js'
-import '../order_details/components/send_city/index.styl'
 // eslint-disable-next-line import/first
 // eslint-disable-next-line import/first
 import api from '@api/index.js'

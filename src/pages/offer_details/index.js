@@ -3,7 +3,7 @@
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-15 18:13:23
+ * @LastEditTime: 2019-10-17 15:05:24
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -135,6 +135,7 @@ class OfferDetails extends Component {
           icon: 'none'
         })
       })
+    this.getOfferDetails()
   }
 
   /**
@@ -161,6 +162,7 @@ class OfferDetails extends Component {
           icon: 'none'
         })
       })
+    this.getOfferDetails()
   }
 
   /**
@@ -187,6 +189,7 @@ class OfferDetails extends Component {
           icon: 'none'
         })
       })
+    this.getOfferDetails()
   }
 
   render() {
