@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-15 18:26:33
+ * @LastEditTime: 2019-10-16 15:21:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -269,13 +269,9 @@ class PlaceOrder extends Component {
       usedType,
       carAmount,
       vins,
-      quotedPriceDesc
-    }
-    if (userInfo.userType === 0) {
-      sendData = Object.assign({}, sendData, {
-        // 客户的ID 
-        userId: placeOrderCustomer.userId
-      })
+      quotedPriceDesc,
+      userId: placeOrderCustomer.userId || userInfo.userId,
+      createUserId: userInfo.userId
     }
     api.order.placeOrder(sendData, this)
       .then((res) => {
