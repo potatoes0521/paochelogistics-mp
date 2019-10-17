@@ -3,7 +3,7 @@
  * @description: 注册页面
  * @Date: 2019-08-22 11:58:25
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-17 17:08:26
+ * @LastEditTime: 2019-10-17 17:54:33
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -30,7 +30,7 @@ class usePhoneNumberRegister extends Component {
       agreementRadio: true, //协议是否选中
       isShow: false,
       // eslint-disable-next-line react/no-unused-state
-      agreementsList: { //协议内容，weight:0  字体加粗， weight:1 字体不加错
+      agreementsList: { //协议内容，weight:0  字体不加粗， weight:1 字体加错
         'paragraph': [
           {
             'text': '感谢您选择“跑车物流”服务平台（以下简称“平台”）'
