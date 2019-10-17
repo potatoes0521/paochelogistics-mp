@@ -3,8 +3,8 @@
  * @description: 首页
  * 
  * @Date: 2019-09-17 11:53:57
- * @LastEditors: liuYang
- * @LastEditTime: 2019-10-17 09:12:24
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-10-17 16:07:35
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -42,6 +42,7 @@ import CheckBoxGroup from '@c/checkbox_group/index.js'
 import InputNumber from '@c/input_number/index.js'
 // eslint-disable-next-line import/first
 import LocationModal from './components/location_modal/index.js'
+// eslint-disable-next-line import/first
 import { serviceList, carNatureList } from '@config/text_config.js'
 
 
