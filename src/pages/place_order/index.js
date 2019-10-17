@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-17 18:34:49
+ * @LastEditTime: 2019-10-17 19:29:21
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -164,7 +164,8 @@ class PlaceOrder extends Component {
    */  
   verificationVins(e) {
     //车架号只能是数字和字母
-    let { value } = e.detail
+    let value = e.target.value
+    value = value.replace(/，/g, ",")
     this.setState({
       vins: value
     })
@@ -240,7 +241,7 @@ class PlaceOrder extends Component {
       this.toast('收车人身份证号输入格式有误')
       return
     }
-    if (!(/^(?!^\d+$)(?!^[a-zA-Z]+$)[0-9a-zA-Z]{17}$/.test(vins))) {
+    if (!(/^[0-9A-Za-z,]+$/.test(vins))) {
       this.toast('车架号输入格式有误')
       return
     }
@@ -481,7 +482,7 @@ class PlaceOrder extends Component {
                   className='details-address-input'
                   onInput={this.verificationVins}
                   auto-height
-                  placeholder='请输入车架号'
+                  placeholder='请输入车架号，多个车架号请用“,”隔开'
                   placeholderClass='placeholder-style'
                   value={vins}
                 ></Textarea>
