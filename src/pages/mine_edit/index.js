@@ -3,7 +3,7 @@
  * @description: 修改个人信息
  * @Date: 2019-09-27 15:42:38
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-15 15:48:04
+ * @LastEditTime: 2019-10-17 15:41:03
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -82,11 +82,17 @@ class EditMineInfo extends Component {
       realName
     } = this.state
     if (!(/^[\u4E00-\u9FA5]{2,8}$/).test(realName)) {
-      this.toast('请输入2-8位的中文姓名')
+      Taro.showToast({
+        title: '请输入2-8位的中文姓名',
+        icon: 'none'
+      })
       return
     }
     if (!(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(idCard))) {
-      this.toast('客户身份证号格式有误')
+      Taro.showToast({
+        title: '身份证号格式有误',
+        icon: 'none'
+      })
       return
     }
     let sendData = {
@@ -125,7 +131,7 @@ class EditMineInfo extends Component {
         <View className='mine-info-wrapper'>
           <View className='info-item'>
             <View className='item-label'>微信名字</View>
-            <OpenData lang='zh_CN' className='item-text' type='userNickName'></OpenData>
+            <OpenData lang='zh_CN' className='item-text font-color' type='userNickName'></OpenData>
           </View>
           <View className='info-item'>
             <View className='item-label'>姓名</View>
@@ -155,13 +161,13 @@ class EditMineInfo extends Component {
           </View>
           <View className='info-item'>
             <View className='item-label'>联系方式</View>
-            <View className='item-text'>{mobile || ''}</View>
+            <View className='item-text font-color'>{mobile || ''}</View>
           </View>
           {
             merchantName ? 
               <View className='info-item'>
                 <View className='item-label'>所属经销商</View>
-                <View className='item-text'> {merchantName || ''}</View>
+                <View className='item-text font-color'> {merchantName || ''}</View>
               </View>
               : null
           }

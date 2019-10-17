@@ -3,7 +3,7 @@
  * @description: 订单item
  * @Date: 2019-09-23 14:42:25
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-17 15:14:30
+ * @LastEditTime: 2019-10-17 15:20:27
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -45,7 +45,7 @@ export default class OrderItem extends Component {
     return (
       <View
         className={allWrapperClassName}
-        onClick={()=>{this.navigatorTo('order_details')}}
+        onClick={this.navigatorTo.bind(this, 'order_details')}
       >
         <View className='msg-wrapper'>
           <View className='list-item'>
@@ -92,11 +92,11 @@ export default class OrderItem extends Component {
           {/* <View className='btn cancel-order'>取消订单</View> */}
           <View
             className='btn cancel-order'
-            onClick={() =>{this.navigatorTo('transport_state')}}
+            onClick={this.navigatorTo.bind(this, 'transport_state')}
           >运输状态</View>
           {
             userInfo.userType !== 0 && item.status === 10? 
-              <View className='btn pay-btn' onClick={() =>{this.navigatorTo('pay_details')}}>
+              <View className='btn pay-btn' onClick={this.navigatorTo.bind(this, 'pay_details')}>
                 立即支付
                 {
                   item.promotionsPrice ? 
