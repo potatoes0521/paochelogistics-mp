@@ -2,8 +2,13 @@
  * @Author: liuYang
  * @description: 注册页面
  * @Date: 2019-08-22 11:58:25
+<<<<<<< HEAD
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-17 17:54:33
+ * @LastEditTime: 2019-10-17 18:21:56
+=======
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-10-17 18:10:31
+>>>>>>> ca35f3d63e51a1e3083b3e71aa1c06976da15342
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,6 +19,7 @@ import {
   Input
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
+import { defaultResourceConfigURL } from '@config/request_config.js'
 import api from '@api/index.js'
 import refreshToken from '@utils/refreshToken.js'
 import Actions from '@store/actions/index.js'
@@ -30,30 +36,8 @@ class usePhoneNumberRegister extends Component {
       agreementRadio: true, //协议是否选中
       isShow: false,
       // eslint-disable-next-line react/no-unused-state
-      agreementsList: { //协议内容，weight:0  字体不加粗， weight:1 字体加错
-        'paragraph': [
-          {
-            'text': '感谢您选择“跑车物流”服务平台（以下简称“平台”）'
-          },
-          {
-            'text': '跑车物流服务使用协议（以下简称“本协议”）是深圳华供科技有限公司和您签订。'
-          }
-        ],
-        'main': [
-          {
-            'text': '一、跑车物流协议的确认',
-            'weight': '0'
-          },
-          {
-            'text': '1、请您仔细阅读协议内容，特别是字体加粗部分。',
-            'weight': '1'
-          },
-          {
-            'text': '2、如果您对本协议内容存在疑虑或异议，勿进行下一步操作。',
-            'weight': '1'
-          }
-        ]
-      }
+      agreementsParagraphList: [], //协议内容，weight:0  字体加粗， weight:1 字体不加错
+      agreementsMainList: []
     }
     this.verificationCode = '' // 验证码
     this.phoneNumber = ''       // 手机号
@@ -62,6 +46,9 @@ class usePhoneNumberRegister extends Component {
   
   componentWillUnmount() { 
     clearInterval(this.timer)
+  }
+  componentDidShow() { 
+    this.getAgreement()
   }
   /**
    * 注册
@@ -144,7 +131,7 @@ class usePhoneNumberRegister extends Component {
     }
     if (!this.state.agreementRadio) {
       Taro.showToast({
-        title: '请点击注册协议',
+        title: '请阅读和勾选注册协议',
         icon: 'none'
       })
       return
@@ -214,10 +201,8 @@ class usePhoneNumberRegister extends Component {
   }
 
   /**
-   * 注册协议
-   * @description: agreementRadio 注册协议按钮
-   * @param {type} 
-   * @return: 
+   * 选中用户协议
+   * @return void
    */
   getRegistrationAgreementRadio() {
     let {
@@ -227,19 +212,37 @@ class usePhoneNumberRegister extends Component {
       agreementRadio: !agreementRadio
     })
   }
-
   /**
-   * 用户注册协议
-   * @description: 
-   * @param {type} 
-   * @return: 
+   * 获取用户数据
+   * @return void
+   */
+  getAgreement() {
+    Taro.request({
+      url: `${defaultResourceConfigURL}agreement.json`,
+      method: 'get',
+      success: (res) => {
+        console.log(res)
+        this.setState({
+          agreementsMainList: res.data && res.data.main,
+          agreementsParagraphList: res.data && res.data.paragraph
+        })
+      }
+    })
+  }
+  /**
+   * 打开用户协议
+   * @return void
    */
   showRegistrationAgreement() {
+    console.log("dianji")
     this.setState({
       isShow: true
     })
   }
-
+  /**
+   * 关闭用户协议
+   * @return void
+   */
   closeRegistrationAgreement() {
     this.setState({
       isShow: false
@@ -255,7 +258,9 @@ class usePhoneNumberRegister extends Component {
       timerFlag,
       countDown,
       agreementRadio,
-      isShow
+      isShow,
+      agreementsParagraphList,
+      agreementsMainList
     } = this.state
     const getVerificationCodeClassName = classNames({
       'btn-code': true,
@@ -265,9 +270,19 @@ class usePhoneNumberRegister extends Component {
       'agreement-radio': !agreementRadio,
       'agree-agreement iconfont iconduigoux': agreementRadio
     })
-    const showAgreements = classNames({
-      'agreements-wrapper': true,
-      'show-agreements': isShow
+    const agreementsParagraphListR = agreementsParagraphList.map((item,index) => (
+      <View className='paragraph agreements-font' key={index}>
+        { item.text }
+      </View>
+    ))
+    const agreementsList = agreementsMainList.map((item,index) => {
+      const textClassName = classNames({
+        'agreements-font-bold': +item.weight === 1,
+        'agreements-font': +item.weight === 0,
+      })
+      return (
+        <View className={textClassName} key={index}>{item.text}</View>
+      )
     })
     return (
       <View className='page-wrapper'>
@@ -317,16 +332,26 @@ class usePhoneNumberRegister extends Component {
             onClick={this.submitRegister}
           >登录</View>
         </View>
-        <View className={showAgreements}>
-          <View className='agreements-style'>
-            <View className='agreements-title'>用户注册协议</View>
-            <View className='line'></View>
-            <View className='agreements-top'>
-              <View className='agreements-content'></View>
-              <View className='agreements-button' onClick={this.closeRegistrationAgreement}>我知道了</View>
+        {
+          isShow ?
+            <View className='agreements-wrapper'>
+              <View className='agreements-box'>
+                <View className='agreements-title'>用户注册协议</View>
+                <View className='line'></View>
+                <View className='agreements-content'>
+                  {
+                    agreementsParagraphListR
+                  }
+                  {
+                    agreementsList
+                  }
+                </View>
+                <View className='agreements-button' onClick={this.closeRegistrationAgreement}>我知道了</View>
+              </View>
             </View>
-          </View>
-        </View>
+            : null
+        }
+        
       </View>
     )
   }
