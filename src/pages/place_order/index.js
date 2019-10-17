@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-17 17:37:56
+ * @LastEditTime: 2019-10-17 18:34:49
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,7 +12,8 @@ import Taro, { Component } from '@tarojs/taro'
 import {
   View,
   Input,
-  Text
+  Text,
+  Textarea
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import NoTitleCard from '@c/no_title_card/index.js'
@@ -162,7 +163,7 @@ class PlaceOrder extends Component {
    * @return: 
    */  
   verificationVins(e) {
-    //车架号只能是数字和字符
+    //车架号只能是数字和字母
     let { value } = e.detail
     this.setState({
       vins: value
@@ -476,12 +477,14 @@ class PlaceOrder extends Component {
                 <View className='details-form-label'>车架号:</View>
               </View>
               <View className='details-form-item'>
-                <Input
+                <Textarea
                   className='details-address-input'
                   onInput={this.verificationVins}
+                  auto-height
                   placeholder='请输入车架号'
+                  placeholderClass='placeholder-style'
                   value={vins}
-                ></Input>
+                ></Textarea>
               </View>
               <View className='dividing-line'></View>
               <View className='details-form-item'>
