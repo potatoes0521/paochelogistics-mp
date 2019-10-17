@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-16 15:04:33
+ * @LastEditTime: 2019-10-17 09:12:24
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -79,7 +79,6 @@ class Index extends Component {
     await login.getCode(this) // 登录
     this.handleLocation()
   }
-
   /**
    * 初始化数据
    * @return void
@@ -197,6 +196,10 @@ class Index extends Component {
       if (!res.authSetting['scope.userLocation']) {
         this.setState({
           locationModal: true
+        })
+      } else {
+        this.setState({
+          locationModal: false
         })
       }
     }).catch((err) => {
