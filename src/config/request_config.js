@@ -3,7 +3,7 @@
  * @description: 服务器状态码错误配置
  * @Date: 2019-08-13 12:22:58
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-16 10:49:38
+ * @LastEditTime: 2019-10-16 18:37:16
  */
 
 // api地址
@@ -11,7 +11,7 @@ export const defaultApiURL = 'http://192.168.3.123:8085/' // 李斌
 // export const defaultApiURL = 'http://192.168.3.191:8085/' // 测试环境  
 // export const defaultApiURL = 'http://192.168.3.191:8081/' // 测试环境  
 // export const defaultApiURL = 'http://yapi.demo.qunar.com/mock/97800/' // 测试环境
-// export const defaultApiURL = 'https://api.bang.paoche56.com/'
+// export const defaultApiURL = 'https://api.paoche56.com/'
 
 // 图片资源服务器
 export const defaultResourceImgURL = 'https://resource.paoche56.com/paochelogistics/mp_img/'
