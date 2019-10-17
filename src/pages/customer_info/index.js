@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 客户信息列表
  * @Date: 2019-09-27 15:38:07
- * @LastEditors: guorui
- * @LastEditTime: 2019-10-15 16:16:27
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-10-17 20:16:49
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -28,7 +28,8 @@ class CustomerInfo extends Component {
     super(props)
     this.state = {
       customerListData: [],
-      selectParam: ''
+      selectParam: '',
+      totalCount: 0
     }
     this.customerPage = 1
     this.customerFlag = false
@@ -65,8 +66,8 @@ class CustomerInfo extends Component {
     }
     let { customerListData } = this.state
     api.customer.getCustomerList(sendData, this).then(res => {
-      // console.log(res, 'resresres')
-      if (!res && selectParam) {
+      const data = res.data
+      if (!data && selectParam) {
         Taro.hideLoading()
         Taro.showToast({
           title: '没搜索到结果',
@@ -74,17 +75,18 @@ class CustomerInfo extends Component {
         })
         return
       }
-      if (res && res.length < pageSize) {
+      if (data && data.length < pageSize) {
         this.customerFlag = true
       }
       this.customerPage += 1
       if (pageNum === 1) {
         this.setState({
-          customerListData: [...res]
+          customerListData: [...data],
+          totalCount: res.totalCount
         })
       } else {
         this.setState({
-          customerListData: [...customerListData, ...res]
+          customerListData: [...customerListData, ...data]
         })
       }
       Taro.hideLoading()
@@ -175,6 +177,7 @@ class CustomerInfo extends Component {
    * @return void
    */
   onReachBottom() {
+    console.log('加载')
     if (this.customerFlag) return
     this.getAllCustomerList(this.state.selectParam, this.customerPage)
   }
@@ -187,7 +190,8 @@ class CustomerInfo extends Component {
   render() { 
     let {
       customerListData,
-      selectParam
+      selectParam,
+      totalCount
     } = this.state
     const customerList = customerListData.map((item,index) => (
       <Block
@@ -230,13 +234,9 @@ class CustomerInfo extends Component {
             }
           </View>
         </View>
-        {
-          customerListData.length > 0 ?
-            <View className='customer-num'>
-              共<Text className='number'>{customerListData.length}</Text>个客户
-            </View>
-            : null
-        }
+        <View className='customer-num'>
+          共<Text className='number'>{totalCount}</Text>个客户
+        </View>
         <View className='customer-wrapper'>
           <View
             className='customer-list'
