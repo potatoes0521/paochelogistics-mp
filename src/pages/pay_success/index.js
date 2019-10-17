@@ -3,7 +3,7 @@
  * @description: 支付成功
  * @Date: 2019-10-15 11:14:50
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-16 15:13:36
+ * @LastEditTime: 2019-10-17 20:12:43
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -28,7 +28,11 @@ class PaySuccessDetails extends Component {
     this.pageParams = this.$router.params
     this.getOrderDetails()
   }
-
+  
+  /**
+   * 获取详情
+   * @return void
+   */
   getOrderDetails() {
     let sendData = {
       orderId: this.pageParams.order_id

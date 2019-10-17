@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-17 19:49:42
+ * @LastEditTime: 2019-10-17 20:12:04
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -64,9 +64,8 @@ class PlaceOrder extends Component {
   } 
 
   /**
-   * @description: 
-   * @param {type} 
-   * @return: 
+   * 获取详情
+   * @return void
    */
   getOfferDetails() {
     if (!this.pageParams.offer_id) {
@@ -104,9 +103,9 @@ class PlaceOrder extends Component {
   }
   
   /**
-   * @description: 名字验证
-   * @param {type} 
-   * @return: 
+   * 名字验证
+   * @param {Type} e 参数描述
+   * @return void
    */
   verificationSendName(e) {
     let { value } = e.detail
@@ -122,9 +121,9 @@ class PlaceOrder extends Component {
   }
 
   /**
-   * @description: 手机号验证
-   * @param {type} 
-   * @return: 
+   * 手机号验证
+   * @param {Type} e 参数描述
+   * @return void
    */
   verificationSendPhone(e) {
     let { value } = e.detail
@@ -140,9 +139,9 @@ class PlaceOrder extends Component {
   }
 
   /**
-   * @description: 身份证号验证
-   * @param {type} 
-   * @return: 
+   * 身份证号验证
+   * @param {Type} e 参数描述
+   * @return void
    */
   verificationSendCardNo(e) {
     let { value } = e.detail
@@ -156,12 +155,12 @@ class PlaceOrder extends Component {
       receiveCarNo: value
     })
   }
-
+ 
   /**
-   * @description: 车架号验证
-   * @param {number string} 
-   * @return: 
-   */  
+   * 车架号验证
+   * @param {Type} e 参数描述
+   * @return void
+   */
   verificationVins(e) {
     //车架号只能是数字和字母
     let value = e.target.value
@@ -172,9 +171,8 @@ class PlaceOrder extends Component {
   }
 
   /**
-   * @description: 选择代下单客户
-   * @param {type} 
-   * @return: 
+   * 选择代下单客户
+   * @return void
    */
   chooseCustomer() {
     Taro.navigateTo({
@@ -183,9 +181,8 @@ class PlaceOrder extends Component {
   }
 
   /**
-   * @description: 提交订单
-   * @param {type} 
-   * @return: 
+   * 提交订单
+   * @return void
    */
   submitOrder() {
     let {
@@ -276,7 +273,6 @@ class PlaceOrder extends Component {
     }
     api.order.placeOrder(sendData, this)
       .then((res) => {
-        // console.log(res, 'resres')
         Taro.hideLoading()
         Taro.showToast({
           title: '下单成功',
@@ -287,6 +283,7 @@ class PlaceOrder extends Component {
         })
       })
   }
+
   toast(msg) {
     Taro.showToast({
       title: msg,

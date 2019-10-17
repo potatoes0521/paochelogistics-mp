@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-12 16:39:08
+ * @LastEditTime: 2019-10-17 20:13:22
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -42,9 +42,8 @@ class OrderDetails extends Component {
   } 
 
   /**
-   * @description: 获取订单详情--发车城市信息
-   * @param {type} 
-   * @return: 
+   * 获取订单详情--发车城市信息
+   * @return void
    */
   getOrderDetails() {
     if (!this.pageParams.order_id) {
