@@ -3,7 +3,7 @@
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-17 18:15:33
+ * @LastEditTime: 2019-10-17 22:48:18
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -40,7 +40,8 @@ class OfferDetails extends Component {
       inquiryTimeDesc: '', //询价时间
       quotedTimeDesc: '', //报价时间
       usedType: 1, //车辆类型  1新车  2二手车
-      isActive: 1 //有效状态 0无效 1有效 2删除
+      isActive: 1, //有效状态 0无效 1有效 2删除
+      showSubmitOrder: 0 //是否已下单
     }
     this.pageParams = {}
   }
@@ -93,7 +94,8 @@ class OfferDetails extends Component {
           inquiryTimeDesc: res.inquiryTimeDesc,
           quotedTimeDesc: res.quotedTimeDesc,
           usedType: res.usedType,
-          isActive: res.isActive
+          isActive: res.isActive,
+          showSubmitOrder: +res.showSubmitOrder
         })
         Storage.setStorage('offer_info', res)
         Taro.hideLoading()
@@ -209,7 +211,8 @@ class OfferDetails extends Component {
       quotedTimeDesc,
       status,
       statusDesc,
-      usedType
+      usedType,
+      showSubmitOrder
     } = this.state
     const cancelOfferClassName = classNames({
       'disabled-text': status === 30 || status === 40
@@ -306,7 +309,7 @@ class OfferDetails extends Component {
           </View>
         </NoTitleCard>
         {
-          (status !== 40) ?
+          (status !== 40 && showSubmitOrder) ?
             <View>
               {
                 (status === 10) ?

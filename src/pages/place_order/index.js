@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-17 20:12:04
+ * @LastEditTime: 2019-10-17 22:44:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -214,11 +214,11 @@ class PlaceOrder extends Component {
       this.toast('请选择代下单的客户')
       return
     }
-    if (!(/^[\u4e00-\u9fa5]{2,4}$/.test(sendPerson))) {
+    if (!(/^[\u4e00-\u9fa5]{2,8}$/.test(sendPerson))) {
       this.toast('发车人名字输入格式有误')
       return
     }
-    if (!(/^[\u4e00-\u9fa5]{2,4}$/.test(receivePerson))) {
+    if (!(/^[\u4e00-\u9fa5]{2,8}$/.test(receivePerson))) {
       this.toast('收车人名字输入格式有误')
       return
     }
@@ -368,7 +368,7 @@ class PlaceOrder extends Component {
                     placeholder='请填写联系人电话'
                     onInput={this.verificationSendPhone}
                     placeholderClass='placeholder-style'
-                    maxLength='20'
+                    maxLength='11'
                     value={sendMobile}
                     auto
                   ></Input>
@@ -382,6 +382,7 @@ class PlaceOrder extends Component {
                     placeholder='请填写联系人证件号'
                     onInput={this.verificationSendCardNo}
                     placeholderClass='placeholder-style'
+                    maxLength='20'
                     value={sendCardNo}
                   ></Input>
                 </View>
@@ -423,7 +424,7 @@ class PlaceOrder extends Component {
                     placeholder='请填写联系人电话'
                     onInput={this.verificationReceivePhone}
                     placeholderClass='placeholder-style'
-                    maxLength='20'
+                    maxLength='11'
                     value={receiveMobile}
                   ></Input>
                 </View>
@@ -436,6 +437,7 @@ class PlaceOrder extends Component {
                     onInput={this.verificationReceiveCardNo}
                     placeholder='请填写联系人证件号'
                     placeholderClass='placeholder-style'
+                    maxLength='20'
                     value={receiveCarNo}
                   ></Input>
                 </View>
