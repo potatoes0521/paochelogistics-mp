@@ -2,8 +2,13 @@
  * @Author: liuYang
  * @description: 注册页面
  * @Date: 2019-08-22 11:58:25
+<<<<<<< HEAD
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-10-17 18:21:56
+=======
  * @LastEditors: liuYang
  * @LastEditTime: 2019-10-17 18:10:31
+>>>>>>> ca35f3d63e51a1e3083b3e71aa1c06976da15342
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */

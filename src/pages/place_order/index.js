@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-16 15:21:58
+ * @LastEditTime: 2019-10-17 17:37:56
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -280,7 +280,7 @@ class PlaceOrder extends Component {
           title: '下单成功',
           icon: 'success'
         })
-        Taro.navigateTo({
+        Taro.redirectTo({
           url: `/pages/order_details/index?order_id=${res.orderId}`
         })
       })
