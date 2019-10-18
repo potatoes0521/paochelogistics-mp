@@ -3,7 +3,7 @@
  * @description: 订单详情--底部详情 订单状态status 10 待支付 20 待交车 30 已取消 40 已完成
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-18 21:05:01
+ * @LastEditTime: 2019-10-18 21:11:44
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -62,6 +62,13 @@ class FooterDetailsComponent extends Component {
       imageUrl: ``
     }
   }
+
+  transportStatus() {
+    let { item } = this.props
+    Taro.navigateTo({
+      url: `/pages/transport_state/index?order_id=${item.orderId}`
+    })
+  }
   render() {
     let {
       item,
@@ -78,7 +85,7 @@ class FooterDetailsComponent extends Component {
             {
               (item.logisticsDetailsDesc) ?
                 <View className='share-wrapper'>
-                  <View className='collect-button buttons'>查看运输状态</View>
+                  <View className='collect-button buttons' onClick={this.transportStatus}>查看运输状态</View>
                 </View>
                 : null
             }
