@@ -3,7 +3,7 @@
  * @description: 订单详情--底部详情 订单状态status 10 待支付 20 待交车 30 已取消 40 已完成
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-18 19:08:55
+ * @LastEditTime: 2019-10-18 21:05:01
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -77,15 +77,15 @@ class FooterDetailsComponent extends Component {
           <View className='status-wrapper'>
             {
               (item.logisticsDetailsDesc) ?
-                <View className='lower-button'>
+                <View className='share-wrapper'>
                   <View className='collect-button buttons'>查看运输状态</View>
                 </View>
                 : null
             }
             {
               (userInfo.userType === 0) ?
-                <View className='lower-button'>
-                  <View className='collect-button buttons'>分享给客户</View>
+                <View className='share-wrapper'>
+                  <View className='customer-button buttons'>分享给客户</View>
                 </View>
                 :
                 null
