@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
- * @LastEditors: liuYang
- * @LastEditTime: 2019-10-17 20:15:25
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-10-18 19:36:09
  */
 
 // 默认请求连接
@@ -39,8 +39,8 @@ export default {
       'userId': userInfo.userId || '', // 常用请求全部放在请求头上
       'unionId': userInfo.unionId || '',
       'userType': userInfo.userType, // 0 驿站人员  1 自主注册   2 驿站人员添加客户
-      'terminalType': userInfo.terminalType || 1, // 终端类型  1 小程序   2 H5  3 APP
-      'sourceId': userInfo.sourceId || 3, // 1 跑车帮小程序 2 跑车帮app 3 跑车物流小程序
+      'terminalType': 1, // 终端类型  1 小程序   2 H5  3 APP
+      'sourceId': 3, // 1 跑车帮小程序 2 跑车帮app 3 跑车物流小程序 4 跑车物流运营平台
       'userAgent': userInfo.userAgent || '',  // 系统信息
       'appVersion': appVersion, // 版本号
       'appType': 1, // 1 微信小程序 2 支付宝小程序
