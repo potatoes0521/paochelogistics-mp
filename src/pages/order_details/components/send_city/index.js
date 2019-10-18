@@ -3,7 +3,7 @@
  * @description: 订单详情中发车城市的组件
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-12 16:54:08
+ * @LastEditTime: 2019-10-18 17:14:47
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -29,10 +29,14 @@ class SendCityComponent extends Component {
           <View className='details-form-label'>发车城市:</View>
           <View className='details-form-content'>{item.inquiryOrderVO && item.inquiryOrderVO.sendCityName || ''}</View>
         </View>
-        <View className='details-form-item'>
-          <View className='details-form-label'>详细信息:</View>
-          <View className='details-form-content'>{item.inquiryOrderVO && item.inquiryOrderVO.sendAddress || ''}</View>
-        </View>
+        {
+          (item.inquiryOrderVO && item.inquiryOrderVO.sendAddress) ?
+            <View className='details-form-item'>
+              <View className='details-form-label'>详细信息:</View>
+              <View className='details-form-content'>{item.inquiryOrderVO && item.inquiryOrderVO.sendAddress || ''}</View>
+            </View>
+            : null
+        }
         <View className='details-form-item'>
           <View className='details-form-label'>联系人:</View>
           <View className='details-form-content'>{item.orderCarriagePersonVo && item.orderCarriagePersonVo.sendPerson || ''}</View>
