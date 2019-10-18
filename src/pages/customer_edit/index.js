@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 修改添加客户信息
  * @Date: 2019-09-27 15:47:35
- * @LastEditors: guorui
- * @LastEditTime: 2019-10-14 17:43:45
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-10-18 19:02:45
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -32,6 +32,8 @@ class CustomerEdit extends Component {
     }
     this.pageParams = {}
     this.customerInfo = {}
+    this.districList = []
+    this.merchantList = []
   }
   componentWillUnmount() {
     Storage.removeStorage('customer_details')
