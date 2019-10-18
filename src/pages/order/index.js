@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
- * @LastEditors: liuYang
- * @LastEditTime: 2019-10-14 16:39:06
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-10-18 14:08:07
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -36,7 +36,7 @@ class Order extends Component {
     this.payOverFlag = false
     this.allOrderFlag = false
   }
-  componentDidMount() {
+  componentDidShow() {
     let { userInfo } = this.props
     if (userInfo.userId) {
       this.getOrderList('', 1, true)
