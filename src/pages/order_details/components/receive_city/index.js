@@ -3,7 +3,7 @@
  * @description: 订单详情中收车城市的组件
  * @Date: 2019-10-09 16:41:49
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-12 16:53:25
+ * @LastEditTime: 2019-10-18 17:15:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -27,10 +27,14 @@ class ReceiveCityComponent extends Component {
           <View className='details-form-label'>收车城市:</View>
           <View className='details-form-content'>{item.inquiryOrderVO && item.inquiryOrderVO.receiveCityName || ''}</View>
         </View>
-        <View className='details-form-item'>
-          <View className='details-form-label'>详细信息:</View>
-          <View className='details-form-content'>{item.inquiryOrderVO && item.inquiryOrderVO.receiveAddress || ''}</View>
-        </View>
+        {
+          (item.inquiryOrderVO && item.inquiryOrderVO.receiveAddress) ?
+            <View className='details-form-item'>
+              <View className='details-form-label'>详细信息:</View>
+              <View className='details-form-content'>{item.inquiryOrderVO && item.inquiryOrderVO.receiveAddress || ''}</View>
+            </View>
+            : null
+        }
         <View className='details-form-item'>
           <View className='details-form-label'>联系人:</View>
           <View className='details-form-content'>{item.orderCarriagePersonVo && item.orderCarriagePersonVo.receivePerson || ''}</View>

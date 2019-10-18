@@ -3,7 +3,7 @@
  * @description: 订单详情中发车城市、收车城市的组件
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-12 16:52:31
+ * @LastEditTime: 2019-10-18 17:19:24
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -24,20 +24,24 @@ class ServiceDetailsComponent extends Component {
     let { item }  = this.props
     return (
       <View className='details-form-wrapper'>
-        <View className='details-form-item'>
-          <View className='details-form-label'>服务:</View>
-          <View className='details-form-content'>
-            {
-              item.inquiryOrderVO && item.inquiryOrderVO.storePickup !== 0 ? '上门提车' : ''
-            }
-            {
-              (item.inquiryOrderVO && item.inquiryOrderVO.storePickup !== 0) && (item.inquiryOrderVO && item.inquiryOrderVO.homeDelivery !== 0) ? '，' : ''
-            }
-            {
-              item.inquiryOrderVO && item.inquiryOrderVO.homeDelivery !== 0 ? '上门送车' : ''
-            }
-          </View>
-        </View>
+        {
+          (!item.inquiryOrderVO.storePickup && !item.inquiryOrderVO.homeDelivery) ?
+            null :
+            <View className='details-form-item'>
+              <View className='details-form-label'>服务:</View>
+              <View className='details-form-content'>
+                {
+                  item.inquiryOrderVO && !item.inquiryOrderVO.storePickup ? '上门提车' : ''
+                }
+                {
+                  (item.inquiryOrderVO && !item.inquiryOrderVO.storePickup) && (item.inquiryOrderVO && !item.inquiryOrderVO.homeDelivery) ? '，' : ''
+                }
+                {
+                  item.inquiryOrderVO && !item.inquiryOrderVO.homeDelivery ? '上门送车' : ''
+                }
+              </View>
+            </View>
+        }
         <View className='details-form-item'>
           <View className='details-form-label'>发车时间:</View>
           <View className='details-form-content'>{item.inquiryOrderVO && item.inquiryOrderVO.sendTimeDesc || ''}</View>
