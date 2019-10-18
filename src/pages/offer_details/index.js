@@ -3,7 +3,7 @@
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-17 22:48:18
+ * @LastEditTime: 2019-10-18 13:53:24
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -26,6 +26,7 @@ class OfferDetails extends Component {
     super(props)
     this.state = {
       inquiryId: 0, //询价单id
+      orderId: 0, //订单id
       status: 10, //询价单状态  10 未报价  20 已报价  30 已失效  40 已取消
       statusDesc: '', //未报价
       quotedPriceDesc: 0, //报价价格
@@ -41,7 +42,7 @@ class OfferDetails extends Component {
       quotedTimeDesc: '', //报价时间
       usedType: 1, //车辆类型  1新车  2二手车
       isActive: 1, //有效状态 0无效 1有效 2删除
-      showSubmitOrder: 0 //是否已下单
+      buttons: [] //询价单详情页面的按钮列表
     }
     this.pageParams = {}
   }
@@ -95,7 +96,8 @@ class OfferDetails extends Component {
           quotedTimeDesc: res.quotedTimeDesc,
           usedType: res.usedType,
           isActive: res.isActive,
-          showSubmitOrder: +res.showSubmitOrder
+          buttons: res.buttons,
+          orderId: res.orderId
         })
         Storage.setStorage('offer_info', res)
         Taro.hideLoading()
@@ -114,9 +116,8 @@ class OfferDetails extends Component {
   }
 
   /**
-   * @description: 询价单取消询价
-   * @param {type} 
-   * @return: 
+   * 询价单取消询价
+   * @return void
    */
   cancelOffer() {
     if (this.state.isActive !== 1) {
@@ -141,9 +142,8 @@ class OfferDetails extends Component {
   }
 
   /**
-   * @description: 询价单催报价
-   * @param {type} 
-   * @return: 
+   * 询价单催报价
+   * @return void
    */
   promptOffer() {
     if (this.state.isActive !== 1) {
@@ -168,9 +168,8 @@ class OfferDetails extends Component {
   }
 
   /**
-   * @description: 询价单再次询价
-   * @param {type} 
-   * @return: 
+   * 询价单再次询价
+   * @return void
    */
   reinquiryOrder() {
     if (this.state.isActive !== 1) {
@@ -195,6 +194,15 @@ class OfferDetails extends Component {
         }, 2000)
       })
   }
+  /**
+   * 查看订单
+   * @return void
+   */
+  viewOrder() {
+    Taro.navigateTo({
+      url: `/pages/order_details/index?order_id=${this.state.orderId}`
+    })
+  }
 
   render() {
     let {
@@ -212,7 +220,7 @@ class OfferDetails extends Component {
       status,
       statusDesc,
       usedType,
-      showSubmitOrder
+      buttons
     } = this.state
     const cancelOfferClassName = classNames({
       'disabled-text': status === 30 || status === 40
@@ -309,24 +317,37 @@ class OfferDetails extends Component {
           </View>
         </NoTitleCard>
         {
-          (status !== 40 && showSubmitOrder) ?
+          (status !== 40) ?
             <View>
               {
-                (status === 10) ?
+                (buttons && buttons.includes('cancel-inquiry')) || (buttons && buttons.includes('urge-inquiry')) ?
                   <View className='offer-button'>
-                    <View className='cancel-offer' onClick={this.cancelOffer}>取消询价</View>
-                    <View className='prompt-quotation' onClick={this.promptOffer}>催报价</View>
+                    {
+                      buttons && buttons.includes('cancel-inquiry') ?
+                        <View className='cancel-offer' onClick={this.cancelOffer}>取消询价</View>
+                        : null
+                    }
+                    {
+                      buttons && buttons.includes('urge-inquiry') ?
+                        <View className='prompt-quotation' onClick={this.promptOffer}>催报价</View>
+                        : null
+                    }
                   </View>
                   : null
               }
               {
-                (status === 20) ?
+                buttons && buttons.includes('submit-order') ?
                   <View className='place-order' onClick={this.submitOfferOrder}>立即下单</View>
                   : null
               }
               {
-                (status === 30) ?
+                buttons && buttons.includes('again-inquiry') ?
                   <View className='place-order' onClick={this.reinquiryOrder}>再次询价</View>
+                  : null
+              }
+              {
+                buttons && buttons.includes('view-order') ?
+                  <View className='place-order' onClick={this.viewOrder}>查看订单</View>
                   : null
               }
             </View>
