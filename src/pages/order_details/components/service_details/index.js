@@ -1,9 +1,9 @@
 /*
  * @Author: guorui
- * @description: 订单详情中发车城市、收车城市的组件
+ * @description: 订单详情中发车城市、 收车城市的组件 usedType: 1, //车辆类型  1新车  2二手车
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-18 17:19:24
+ * @LastEditTime: 2019-10-21 16:21:55
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -43,16 +43,28 @@ class ServiceDetailsComponent extends Component {
             </View>
         }
         <View className='details-form-item'>
-          <View className='details-form-label'>发车时间:</View>
-          <View className='details-form-content'>{item.inquiryOrderVO && item.inquiryOrderVO.sendTimeDesc || ''}</View>
-        </View>
-        <View className='details-form-item'>
           <View className='details-form-label'>车辆信息:</View>
           <View className='details-form-content'>{item.inquiryOrderVO && item.inquiryOrderVO.carInfo || ''}</View>
         </View>
         <View className='details-form-item'>
+          <View className='details-form-label'>车辆类型:</View>
+          <View className='details-form-content'>
+            {
+              item.inquiryOrderVO && item.inquiryOrderVO.usedType === 1 ? '新车' : '二手车'
+            }
+          </View>
+        </View>
+        <View className='details-form-item'>
+          <View className='details-form-label'>车架号:</View>
+          <View className='details-form-content'>{item.vins || ''}</View>
+        </View>
+        <View className='details-form-item'>
           <View className='details-form-label'>台数:</View>
           <View className='details-form-content'>{item.inquiryOrderVO && item.inquiryOrderVO.carAmount || ''}辆</View>
+        </View>
+        <View className='details-form-item'>
+          <View className='details-form-label'>发车时间:</View>
+          <View className='details-form-content'>{item.inquiryOrderVO && item.inquiryOrderVO.sendTimeDesc || ''}</View>
         </View>
       </View>
     )
