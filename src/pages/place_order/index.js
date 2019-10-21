@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
- * @LastEditors: guorui
- * @LastEditTime: 2019-10-17 22:44:02
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-10-19 15:02:35
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -483,7 +483,7 @@ class PlaceOrder extends Component {
                 <View className='details-form-label'>车架号:</View>
               </View>
               <View className='details-form-item'>
-                <Textarea
+                <Input
                   className='details-address-input'
                   onInput={this.verificationVins}
                   auto-height
@@ -491,7 +491,7 @@ class PlaceOrder extends Component {
                   placeholderClass='placeholder-style'
                   maxlength={-1}
                   value={vins}
-                ></Textarea>
+                ></Input>
               </View>
               <View className='dividing-line'></View>
               <View className='details-form-item'>

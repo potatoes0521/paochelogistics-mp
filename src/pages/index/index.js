@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-17 18:32:14
+ * @LastEditTime: 2019-10-18 21:35:22
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -319,6 +319,11 @@ class Index extends Component {
         title: '询价单已提交',
         icon: 'success'
       })
+      setTimeout(() => {
+        Taro.switchTab({
+          url: '/pages/offer/index'
+        })
+      }, 1500)
     })
   }
   toast(errMsg) {

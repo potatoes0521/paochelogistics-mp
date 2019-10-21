@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
- * @LastEditors: guorui
- * @LastEditTime: 2019-10-18 13:53:24
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-10-18 21:42:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -137,7 +137,9 @@ class OfferDetails extends Component {
           title: '取消询价成功',
           icon: 'none'
         })
-        this.getOfferDetails()
+        setTimeout(() => {
+          this.getOfferDetails()
+        }, 1800)
       })
   }
 
@@ -163,7 +165,9 @@ class OfferDetails extends Component {
           title: '催报价成功',
           icon: 'none'
         })
-        this.getOfferDetails()
+        setTimeout(() => {
+          this.getOfferDetails()
+        },1800)
       })
   }
 

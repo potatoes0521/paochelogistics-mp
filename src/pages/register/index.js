@@ -3,8 +3,8 @@
  * @description: 注册页面
  * @Date: 2019-08-22 11:58:25
 <<<<<<< HEAD
- * @LastEditors: guorui
- * @LastEditTime: 2019-10-17 18:21:56
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-10-19 15:00:24
 =======
  * @LastEditors: liuYang
  * @LastEditTime: 2019-10-17 18:10:31
@@ -317,20 +317,21 @@ class usePhoneNumberRegister extends Component {
               }
             </View>
           </View>
+          <View
+            className='submit-btn'
+            onClick={this.submitRegister}
+          >同意协议并登录</View>
           <View className='agreement-wrapper'>
-            <View
+            {/* <View
               className={registrationAgreementRadio}
               onClick={this.getRegistrationAgreementRadio}
-            ></View>
+            ></View> */}
             <View className='agreement-text'>
               <Text>我已阅读并同意跑车物流</Text>
               <Text className='agreement' onClick={this.showRegistrationAgreement}>注册协议</Text>
             </View>
           </View>
-          <View
-            className='submit-btn'
-            onClick={this.submitRegister}
-          >登录</View>
+          
         </View>
         {
           isShow ?

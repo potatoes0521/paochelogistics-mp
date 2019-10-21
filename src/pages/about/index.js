@@ -3,7 +3,7 @@
  * @description: 关于跑车帮
  * @Date: 2019-09-24 16:58:58
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-24 16:59:15
+ * @LastEditTime: 2019-10-19 10:53:24
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -17,7 +17,7 @@ import './index.styl'
 
 export default class About extends Component { 
   config = {
-    navigationBarTitleText: '关于跑车帮'
+    navigationBarTitleText: '关于跑车物流'
   }
   
   /**
