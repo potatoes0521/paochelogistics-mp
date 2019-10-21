@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 项目描述文件
  * @Date: 2019-08-14 10:25:22
- * @LastEditors: liuYang
- * @LastEditTime: 2019-10-08 13:02:43
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-10-21 17:54:22
  -->
 ## 跑车帮小程序
  
@@ -74,18 +74,16 @@ taro update project
 * &emsp;&emsp;&emsp;&emsp;&emsp;selling_tab -- 卖板的tab组件
 * &emsp;&emsp;&emsp;&emsp;&emsp;tab
 * &emsp;&emsp;&emsp;mine -- 我的页面
-* &emsp;&emsp;&emsp;mine_publish -- 我的发布的信息
-* &emsp;&emsp;&emsp;&emsp;components -- 我的发布的信息
-* &emsp;&emsp;&emsp;&emsp;&emsp;on_data -- 没有数据
-* &emsp;&emsp;&emsp;&emsp;&emsp;selling_item -- 卖板
-* &emsp;&emsp;&emsp;&emsp;&emsp;vacancy_item -- 空位
+* &emsp;&emsp;&emsp;order -- 订单列表
+* &emsp;&emsp;&emsp;order_details -- 订单详情
+* &emsp;&emsp;&emsp;pay_details -- 支付详情
+* &emsp;&emsp;&emsp;pay_success -- 支付成功
+* &emsp;&emsp;&emsp;place_order -- 下单页面
 * &emsp;&emsp;&emsp;register --注册页面
-* &emsp;&emsp;&emsp;remark --请填写描述信息
-* &emsp;&emsp;&emsp;select_user_identity -- 进入小程序之后的选则用户身份页面
-* &emsp;&emsp;&emsp;selling_details --卖板详情
-* &emsp;&emsp;&emsp;selling_publish --卖板发布
-* &emsp;&emsp;&emsp;vacancy_details --空位详情
-* &emsp;&emsp;&emsp;vacancy_publish --空位发布
+* &emsp;&emsp;&emsp;remark --车架号填写页面
+* &emsp;&emsp;&emsp;transport_state -- 运输状态
+* &emsp;&emsp;&emsp;&emsp;&emsp;driver_item -- 司机信息面板
+* &emsp;&emsp;&emsp;&emsp;&emsp;time_line -- 运输状态时间轴
 * &emsp;&emsp;store -- redux仓库
 * &emsp;&emsp;&emsp;index -- 初始化redux仓库
 * &emsp;&emsp;&emsp;action -- 定义/绑定action到dispatch
@@ -101,10 +99,12 @@ taro update project
 * &emsp;&emsp;&emsp;common -- 针对微信方法等公共系统方法的封装
 * &emsp;&emsp;&emsp;location -- 腾讯地图SDK的引入和方法封装
 * &emsp;&emsp;&emsp;log -- 错误日志处理
+* &emsp;&emsp;&emsp;login -- 登录
 * &emsp;&emsp;&emsp;md5 -- md5加密文件
 * &emsp;&emsp;&emsp;refreshToken --刷新token的操作
-* &emsp;&emsp;&emsp;secret -- 数据处理加密
 * &emsp;&emsp;&emsp;serialize -- 针对JS原生方法的封装
+* &emsp;&emsp;&emsp;storage -- 本地缓存方法的封装
+* &emsp;&emsp;&emsp;timer_handle -- 各种时间处理方法
 * &emsp;&emsp;app.jsx
 * &emsp;&emsp;app.styl
 * &emsp;package
