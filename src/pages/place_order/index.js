@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-21 16:21:56
+ * @LastEditTime: 2019-10-21 16:28:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -19,8 +19,9 @@ import {
 import { connect } from '@tarojs/redux'
 // import NoTitleCard from '@c/no_title_card/index.js'
 // eslint-disable-next-line import/first
-// eslint-disable-next-line import/first
 import api from '@api/index.js'
+import Storage from '@utils/storage.js'
+
 // import '@assets/icon_font/icon.scss'
 import './index.styl'
 
@@ -404,6 +405,7 @@ class PlaceOrder extends Component {
       })
   }
   navigatorTo() {
+    Storage.setStorage('vins', this.state.vins)
     Taro.navigateTo({
       url: '/pages/remark/index'
     })

@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-10-21 15:12:17
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-21 16:17:16
+ * @LastEditTime: 2019-10-21 16:28:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -15,6 +15,7 @@ import {
   Textarea,
   Button
 } from '@tarojs/components'
+import Storage from '@utils/storage.js'
 import './index.styl'
 
 export default class Remark extends Component {
@@ -30,6 +31,12 @@ export default class Remark extends Component {
   }
   componentDidShow() { 
     this.pageParams = this.$router.params
+    Storage.getStorage('vins').then(res => {
+      this.setState({
+        value: res,
+        disabled: res ? false : true
+      })
+    })
   }
 
   textareaInput(e) {
