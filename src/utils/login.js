@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-10-10 09:33:18
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-21 14:43:02
+ * @LastEditTime: 2019-10-21 14:52:26
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -73,7 +73,7 @@ export default {
       Taro.hideLoading()
       if (res) {
         delete res.userAgent
-        let resData = Object.assign({}, res, {userType: 0})
+        let resData = Object.assign({}, res)
         if (!sendData.token || sendData.token !== resData.token) {
           refreshToken.setNewToken(resData.token)
         }
