@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-09-12 11:17:44
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-08 15:49:23
+ * @LastEditTime: 2019-10-21 16:36:44
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -18,7 +18,7 @@ export const serviceList = [
   },
   {
     id: 2,
-    label: '上门送车'
+    label: '送车上门'
   }
 ]
 

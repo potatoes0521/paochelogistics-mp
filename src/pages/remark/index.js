@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-10-21 15:12:17
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-21 16:28:40
+ * @LastEditTime: 2019-10-21 16:38:20
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -29,6 +29,11 @@ export default class Remark extends Component {
     }
     this.pageParams = {}
   }
+
+  componentWillUnmount() { 
+    Storage.removeStorage('vins')    
+  }
+
   componentDidShow() { 
     this.pageParams = this.$router.params
     Storage.getStorage('vins').then(res => {
