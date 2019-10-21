@@ -3,7 +3,7 @@
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-18 21:36:46
+ * @LastEditTime: 2019-10-21 10:17:47
  */
 
 // 默认请求连接
@@ -93,7 +93,6 @@ export default {
           } else if (res.statusCode === HTTP_STATUS.SUCCESS) {
             if (res.data) {
               let resData = res.data
-              console.log(resData)
               // '200002' 是未注册
               if (!+resData.code || +resData.code === 200002 || +resData.code == 200) {
                 if (url === 'user/customerlist') {
@@ -103,7 +102,6 @@ export default {
                 }
               } else {
                 if (+resData.code === 200003) {
-                  console.log(that)
                   Taro.hideLoading()
                   console.log(refreshToken, 'refreshToken')
                   refreshToken.refreshToken(that, url, data, method)

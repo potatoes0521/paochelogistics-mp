@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 订单详情中发车城市的组件
  * @Date: 2019-09-20 09:58:08
- * @LastEditors: guorui
- * @LastEditTime: 2019-10-18 17:14:47
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-10-21 10:18:34
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -22,7 +22,6 @@ class SendCityComponent extends Component {
 
   render() {
     let { item }  = this.props
-    // console.log(this.props, '测试')
     return (
       <View className='details-form-wrapper'>
         <View className='details-form-item'>

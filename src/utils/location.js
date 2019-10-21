@@ -52,7 +52,6 @@ export const convertingGPS = (latitude, longitude, resultType = 'formatted_addre
         }
       },
       fail: (err) => {
-        console.log(err)
         reject(err)
       },
       complete: () => {

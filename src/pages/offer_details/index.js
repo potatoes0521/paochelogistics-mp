@@ -64,7 +64,6 @@ class OfferDetails extends Component {
    * @return: 
    */
   getOfferDetails() {
-    console.log(this.pageParams.offer_id, 'this.pageParams.offer_id')
     if (!this.pageParams.offer_id) {
       Taro.navigateBack()
       return;

@@ -32,7 +32,6 @@ class OrderDetails extends Component {
 
   componentDidShow() {
     this.pageParams = this.$router.params || {}
-    console.log(this.pageParams, "页面参数")
     this.getOrderDetails()
   }
   
@@ -59,7 +58,6 @@ class OrderDetails extends Component {
     }
     api.order.getOrderDetails(sendData, this)
       .then(res => {
-        console.log(res, '订单详情')
         this.setState({
           orderDetailsInfo: res
         })

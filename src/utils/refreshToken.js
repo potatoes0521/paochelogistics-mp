@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 刷新token的操作
  * @Date: 2019-09-03 10:24:49
- * @LastEditors: guorui
- * @LastEditTime: 2019-10-15 10:41:14
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-10-21 10:19:24
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -15,7 +15,6 @@ import Actions from '@store/actions/index.js'
 import requestHandle from '@api/request_handle.js';
 
 const refreshToken = (that, url, data, method) => {
-  console.log(that.props)
   const { userInfo } = that.props || {};
   let sendData = {
     userId: userInfo.userId,
@@ -26,7 +25,6 @@ const refreshToken = (that, url, data, method) => {
     if(!res) return
     Actions.changeUserInfo(res)
     setNewToken(res.token)
-    console.log(url, data)
     // 500ms后重新调用刚刚的接口
     setTimeout(() => {
       if (method === 'GET') {

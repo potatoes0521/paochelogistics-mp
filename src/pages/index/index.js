@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-18 21:35:22
+ * @LastEditTime: 2019-10-21 10:18:18
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -164,7 +164,6 @@ class Index extends Component {
       this.handleConvertingGPS(res.latitude, res.longitude)
     }).catch((err) => {
       if (err.errMsg && err.errMsg.indexOf('fail auth deny') != -1) {
-        console.log('未授权')
         this.handleGetSetting()
       }
     })
@@ -177,7 +176,6 @@ class Index extends Component {
    */
   handleConvertingGPS(latitude, longitude) {
     convertingGPS(latitude, longitude, 'ad_info').then(res => {
-      console.log(res)
       this.cityNameChangeCityID(res.city)
       // 然后去处理一下id
     })

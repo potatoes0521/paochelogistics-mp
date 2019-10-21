@@ -3,7 +3,7 @@
  * @description: 客户信息列表
  * @Date: 2019-09-27 15:38:07
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-17 20:16:49
+ * @LastEditTime: 2019-10-21 10:18:09
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -99,7 +99,6 @@ class CustomerInfo extends Component {
    */
   navigatorToDetails(e) { 
     let { item } = e.target.dataset
-    console.log(item, 'item')
     const { pageType } = this.pageParams
     if (pageType === 'choose') {
       let pages = Taro.getCurrentPages(); //  获取页面栈
@@ -149,7 +148,6 @@ class CustomerInfo extends Component {
    * @return void
    */
   clearSearchInput() {
-    console.log('111')
     this.setState({
       selectParam: ''
     })

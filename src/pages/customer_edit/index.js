@@ -209,8 +209,6 @@ class CustomerEdit extends Component {
   chooseDistricId() {
     if (this.pageParams.pageType === 'edit') return
     let stringDistricList = this.districList.map(item => item.districtName)
-    // console.log(stringDistricList, 'stringDistricList')
-    // console.log(this.districList, 'this.districList')
     Taro.showActionSheet({
         itemList: stringDistricList
       })

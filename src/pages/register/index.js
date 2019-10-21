@@ -2,13 +2,8 @@
  * @Author: liuYang
  * @description: 注册页面
  * @Date: 2019-08-22 11:58:25
-<<<<<<< HEAD
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-19 15:00:24
-=======
- * @LastEditors: liuYang
- * @LastEditTime: 2019-10-17 18:10:31
->>>>>>> ca35f3d63e51a1e3083b3e71aa1c06976da15342
+ * @LastEditTime: 2019-10-21 10:22:23
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -177,7 +172,6 @@ class usePhoneNumberRegister extends Component {
    */
   handleCountDown(countDown, timerFlag) {
     if (timerFlag) return
-    console.log('获取验证码')
     clearInterval(this.timer)
     this.timer = setInterval(() => {
       countDown -= 1
@@ -221,7 +215,6 @@ class usePhoneNumberRegister extends Component {
       url: `${defaultResourceConfigURL}agreement.json`,
       method: 'get',
       success: (res) => {
-        console.log(res)
         this.setState({
           agreementsMainList: res.data && res.data.main,
           agreementsParagraphList: res.data && res.data.paragraph
@@ -234,7 +227,6 @@ class usePhoneNumberRegister extends Component {
    * @return void
    */
   showRegistrationAgreement() {
-    console.log("dianji")
     this.setState({
       isShow: true
     })
@@ -257,7 +249,7 @@ class usePhoneNumberRegister extends Component {
     let {
       timerFlag,
       countDown,
-      agreementRadio,
+      // agreementRadio,
       isShow,
       agreementsParagraphList,
       agreementsMainList
@@ -266,10 +258,10 @@ class usePhoneNumberRegister extends Component {
       'btn-code': true,
       'disabled-btn': timerFlag
     })
-    const registrationAgreementRadio = classNames({
-      'agreement-radio': !agreementRadio,
-      'agree-agreement iconfont iconduigoux': agreementRadio
-    })
+    // const registrationAgreementRadio = classNames({
+    //   'agreement-radio': !agreementRadio,
+    //   'agree-agreement iconfont iconduigoux': agreementRadio
+    // })
     const agreementsParagraphListR = agreementsParagraphList.map((item,index) => (
       <View className='paragraph agreements-font' key={index}>
         { item.text }
