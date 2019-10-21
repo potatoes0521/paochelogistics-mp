@@ -3,7 +3,7 @@
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-18 21:42:40
+ * @LastEditTime: 2019-10-21 15:23:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -99,7 +99,6 @@ class OfferDetails extends Component {
           orderId: res.orderId
         })
         Storage.setStorage('offer_info', res)
-        Taro.hideLoading()
       })
   }
 

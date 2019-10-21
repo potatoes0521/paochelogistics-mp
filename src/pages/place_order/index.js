@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-19 15:02:35
+ * @LastEditTime: 2019-10-21 15:23:31
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -98,7 +98,6 @@ class PlaceOrder extends Component {
           carAmount: res.carAmount,
           usedType: res.usedType
         })
-        Taro.hideLoading()
       })
   }
   
