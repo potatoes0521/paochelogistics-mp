@@ -3,7 +3,7 @@
  * @description: 订单详情中发车城市、 收车城市的组件 usedType: 1, //车辆类型  1新车  2二手车
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-21 16:21:55
+ * @LastEditTime: 2019-10-21 16:35:28
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -24,9 +24,12 @@ class ServiceDetailsComponent extends Component {
     let { item }  = this.props
     return (
       <View className='details-form-wrapper'>
+        <View className='details-form-item'>
+          <View className='details-form-label'>发车时间:</View>
+          <View className='details-form-content'>{item.inquiryOrderVO && item.inquiryOrderVO.sendTimeDesc || ''}</View>
+        </View>
         {
-          (!item.inquiryOrderVO.storePickup && !item.inquiryOrderVO.homeDelivery) ?
-            null :
+          (item.inquiryOrderVO.storePickup || item.inquiryOrderVO.homeDelivery) ?
             <View className='details-form-item'>
               <View className='details-form-label'>服务:</View>
               <View className='details-form-content'>
@@ -41,6 +44,7 @@ class ServiceDetailsComponent extends Component {
                 }
               </View>
             </View>
+            : null
         }
         <View className='details-form-item'>
           <View className='details-form-label'>车辆信息:</View>
@@ -55,16 +59,12 @@ class ServiceDetailsComponent extends Component {
           </View>
         </View>
         <View className='details-form-item'>
-          <View className='details-form-label'>车架号:</View>
-          <View className='details-form-content'>{item.vins || ''}</View>
-        </View>
-        <View className='details-form-item'>
           <View className='details-form-label'>台数:</View>
           <View className='details-form-content'>{item.inquiryOrderVO && item.inquiryOrderVO.carAmount || ''}辆</View>
         </View>
         <View className='details-form-item'>
-          <View className='details-form-label'>发车时间:</View>
-          <View className='details-form-content'>{item.inquiryOrderVO && item.inquiryOrderVO.sendTimeDesc || ''}</View>
+          <View className='details-form-label'>车架号:</View>
+          <View className='details-form-content'>{item.vins || ''}</View>
         </View>
       </View>
     )
