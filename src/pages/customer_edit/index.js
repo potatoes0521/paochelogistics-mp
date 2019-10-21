@@ -3,7 +3,7 @@
  * @description: 修改添加客户信息
  * @Date: 2019-09-27 15:47:35
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-21 10:12:27
+ * @LastEditTime: 2019-10-21 14:43:47
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -47,8 +47,6 @@ class CustomerEdit extends Component {
       })
       this.getCustomerDetails()
     }
-    this.getMerchantList()
-    this.getDistricList()
   }
   /**
    * 获取客户信息详情
@@ -67,20 +65,6 @@ class CustomerEdit extends Component {
         districtName: res.districtName
       })
     })
-  }
-  getMerchantList() { 
-    api.customer.getMerchantList({}, this)
-      .then(res => {
-        if(!res) return
-        this.merchantList = res
-      })
-  }
-  getDistricList() {
-    api.customer.getDistricList({}, this)
-      .then(res => {
-        if (!res) return
-        this.districList = res
-      })
   }
   /**
    * 姓名
@@ -188,17 +172,9 @@ class CustomerEdit extends Component {
    */
   chooseMerchant() { 
     if (this.pageParams.pageType === 'edit') return
-    let stringMerchantList = this.merchantList.map(item => item.merchantName)
-    Taro.showActionSheet({
-        itemList: stringMerchantList
-      })
-      .then(res => {
-        this.setState({
-          merchantId: this.merchantList[res.tapIndex].merchantId,
-          merchantName: this.merchantList[res.tapIndex].merchantName
-        })
-      })
-      .catch(err => console.log(err.errMsg))
+    Taro.navigateTo({
+      url: '/pages/choose_item/index?pageType=merchant'
+    })
   }
   /**
    * 选择区域
@@ -206,19 +182,11 @@ class CustomerEdit extends Component {
    * @param {type} 
    * @return: 
    */
-  chooseDistricId() {
+  chooseDistrictId() {
     if (this.pageParams.pageType === 'edit') return
-    let stringDistricList = this.districList.map(item => item.districtName)
-    Taro.showActionSheet({
-        itemList: stringDistricList
-      })
-      .then(res => {
-        this.setState({
-          districtId: this.districList[res.tapIndex].districtId,
-          districtName: this.districList[res.tapIndex].districtName
-        })
-      })
-      .catch(err => console.log(err.errMsg))
+    Taro.navigateTo({
+      url: '/pages/choose_item/index?pageType=district'
+    })
   }
   config = {
     navigationBarTitleText: '添加客户'
@@ -297,7 +265,7 @@ class CustomerEdit extends Component {
             <View className='item-label'>所属区域</View>
             <View
               className='item-text'
-              onClick={this.chooseDistricId}
+              onClick={this.chooseDistrictId}
             >
               {
                 districtName ?

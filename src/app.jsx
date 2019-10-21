@@ -53,7 +53,8 @@ class _App extends Component {
       'pages/choose_city/index',
       'pages/register/index',
       'pages/pay_details/index',
-      'pages/pay_success/index'
+      'pages/pay_success/index',
+      'pages/choose_item/index'
     ],
     window: {
       backgroundTextStyle: 'light',
