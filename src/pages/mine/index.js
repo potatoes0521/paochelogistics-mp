@@ -3,7 +3,7 @@
  * @description: 我的
  * @Date: 2019-09-20 13:24:52
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-12 19:00:00
+ * @LastEditTime: 2019-10-21 16:32:31
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -11,8 +11,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import {
   View,
-  OpenData,
-  Block
+  OpenData
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import { showModalAndRegister } from '@utils/common.js'
