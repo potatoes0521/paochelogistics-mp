@@ -3,7 +3,7 @@
  * @description: 项目描述文件
  * @Date: 2019-08-14 10:25:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-08 13:02:43
+ * @LastEditTime: 2019-10-21 17:54:41
  -->
 ## 跑车帮小程序
  
@@ -43,45 +43,59 @@ taro update project
 * &emsp;config -- 开发配置
 * &emsp;src    -- 源码目录
 * &emsp;&emsp;api -- 接口统一管理  request_handle
-* &emsp;&emsp;&emsp;index -- 接口配置
+* &emsp;&emsp;&emsp;modules -- 接口模块
+* &emsp;&emsp;&emsp;&emsp;city -- 城市相关接口
+* &emsp;&emsp;&emsp;&emsp;customer -- 客户相关接口
+* &emsp;&emsp;&emsp;&emsp;offer -- 询价相关接口
+* &emsp;&emsp;&emsp;&emsp;order -- 订单相关接口
+* &emsp;&emsp;&emsp;&emsp;pay -- 支付相关接口
+* &emsp;&emsp;&emsp;&emsp;user -- 用户相关接口
+* &emsp;&emsp;&emsp;index -- 接口统一配置
 * &emsp;&emsp;&emsp;request_handle -- 请求封装
 * &emsp;&emsp;assets -- 静态资源文件
+* &emsp;&emsp;&emsp;css -- 公共css
+* &emsp;&emsp;&emsp;&emsp;mine_public -- 我的信息详情和客户详情界面
+* &emsp;&emsp;&emsp;&emsp;theme -- 主题
+* &emsp;&emsp;&emsp;icon_font -- 字体图标
+* &emsp;&emsp;&emsp;&emsp;icon -- 字体图标
 * &emsp;&emsp;&emsp;img -- 图片文件
 * &emsp;&emsp;&emsp;&emsp;indexes -- 城市索引选择器相关图片
 * &emsp;&emsp;&emsp;&emsp;mine -- 我的相关图片
-* &emsp;&emsp;&emsp;&emsp;publish -- 发布相关图片
+* &emsp;&emsp;&emsp;&emsp;no_data -- 无数据相关图片
 * &emsp;&emsp;&emsp;&emsp;register -- 注册相关相关图片
 * &emsp;&emsp;&emsp;&emsp;tabBar -- tabBar相关相关图片
 * &emsp;&emsp;&emsp;js -- js-sdk文件
-* &emsp;&emsp;&emsp;css -- 
+* &emsp;&emsp;&emsp;&emsp;js -- ald-stat-conf 阿拉丁config
+* &emsp;&emsp;&emsp;&emsp;js -- ald-stat 阿拉丁
+* &emsp;&emsp;&emsp;&emsp;js -- qqmap-wx-jssdk 微信地图
 * &emsp;&emsp;components -- 公共组件
-* &emsp;&emsp;&emsp;card -- 卡片
-* &emsp;&emsp;&emsp;float_btn -- 悬浮的发布按钮
+* &emsp;&emsp;&emsp;checkbox_group -- 多选框
 * &emsp;&emsp;&emsp;indexes -- 城市索引选择器
 * &emsp;&emsp;&emsp;input_number -- 数字输入框
-* &emsp;&emsp;&emsp;radio -- 单选框
-* &emsp;&emsp;&emsp;selling_publish -- 卖板发布组件 发布和编辑都是进入发布页面调用这个组件
-* &emsp;&emsp;&emsp;vacancy_publish -- 空位发布组件 空位的发布和编辑都是进入空位发布页面调用这个组件
+* &emsp;&emsp;&emsp;no_data -- 无数据
+* &emsp;&emsp;&emsp;radio_group -- 单选框
+* &emsp;&emsp;&emsp;no_title_card -- 没有标题的卡片
+* &emsp;&emsp;&emsp;tabs -- 订单和询价单顶部
 * &emsp;&emsp;config -- 前端项目配置
 * &emsp;&emsp;&emsp;request_config -- 请求状态码之类的配置
+* &emsp;&emsp;&emsp;text_config -- 文案
 * &emsp;&emsp;pages -- 页面
 * &emsp;&emsp;&emsp;about --关于跑车帮
 * &emsp;&emsp;&emsp;choose_city --城市选择
+* &emsp;&emsp;&emsp;choose_item -- 选择经销商和选择区域都是进这
+* &emsp;&emsp;&emsp;customer_details -- 客户详情
+* &emsp;&emsp;&emsp;customer_edit -- 客户编辑
+* &emsp;&emsp;&emsp;customer_info -- 客户列表
 * &emsp;&emsp;&emsp;index -- 暂定为首页
 * &emsp;&emsp;&emsp;&emsp;components -- index内的组件
 * &emsp;&emsp;&emsp;&emsp;&emsp;location_modal -- 地图授权弹框组件
-* &emsp;&emsp;&emsp;&emsp;&emsp;location_view -- 地址展示组件
-* &emsp;&emsp;&emsp;&emsp;&emsp;selling_tab -- 卖板的tab组件
-* &emsp;&emsp;&emsp;&emsp;&emsp;tab
 * &emsp;&emsp;&emsp;mine -- 我的页面
-* &emsp;&emsp;&emsp;mine_publish -- 我的发布的信息
-* &emsp;&emsp;&emsp;&emsp;components -- 我的发布的信息
-* &emsp;&emsp;&emsp;&emsp;&emsp;on_data -- 没有数据
-* &emsp;&emsp;&emsp;&emsp;&emsp;selling_item -- 卖板
-* &emsp;&emsp;&emsp;&emsp;&emsp;vacancy_item -- 空位
-* &emsp;&emsp;&emsp;register --注册页面
-* &emsp;&emsp;&emsp;remark --请填写描述信息
-* &emsp;&emsp;&emsp;select_user_identity -- 进入小程序之后的选则用户身份页面
+* &emsp;&emsp;&emsp;mine_edit -- 编辑我的信息
+* &emsp;&emsp;&emsp;mine_info -- 我的信息
+* &emsp;&emsp;&emsp;offer -- 询价单列表页面
+* &emsp;&emsp;&emsp;&emsp;components -- 询价单列表页面
+* &emsp;&emsp;&emsp;&emsp;&emsp;offer_item -- 询价单
+* &emsp;&emsp;&emsp;offer_details -- 询价单详情
 * &emsp;&emsp;&emsp;selling_details --卖板详情
 * &emsp;&emsp;&emsp;selling_publish --卖板发布
 * &emsp;&emsp;&emsp;vacancy_details --空位详情
@@ -114,5 +128,17 @@ taro update project
 
 #### 0.8.5
 
-1.第一次上线
+* 1.第一次上线
+* 2.询价
+* 3.订单
+* 4.客户管理
+* 5.支付
+* 6.个人信息编辑
 
+### 0.8.7
+
+* 1.把注册提前 
+* 2.客户信息添加的时候不强制身份证号
+* 3.所有按钮添加disabled状态
+* 4.车架号跳转页面填写
+* 5.创建客户选择经销商和区域
