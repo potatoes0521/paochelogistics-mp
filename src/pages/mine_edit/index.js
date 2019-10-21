@@ -3,7 +3,7 @@
  * @description: 修改个人信息
  * @Date: 2019-09-27 15:42:38
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-17 15:41:03
+ * @LastEditTime: 2019-10-21 10:13:07
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -88,13 +88,13 @@ class EditMineInfo extends Component {
       })
       return
     }
-    if (!(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(idCard))) {
-      Taro.showToast({
-        title: '身份证号格式有误',
-        icon: 'none'
-      })
-      return
-    }
+    // if (!(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(idCard))) {
+    //   Taro.showToast({
+    //     title: '身份证号格式有误',
+    //     icon: 'none'
+    //   })
+    //   return
+    // }
     let sendData = {
       userId: this.props.userInfo.userId,
       idCard,
