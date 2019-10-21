@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 注册页面
  * @Date: 2019-08-22 11:58:25
- * @LastEditors: liuYang
- * @LastEditTime: 2019-10-21 11:08:20
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-10-21 15:56:26
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -11,7 +11,8 @@ import Taro, { Component } from '@tarojs/taro'
 import {
   View,
   Text,
-  Input
+  Input,
+  Button
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import { defaultResourceConfigURL } from '@config/request_config.js'
@@ -32,7 +33,8 @@ class usePhoneNumberRegister extends Component {
       isShow: false,
       // eslint-disable-next-line react/no-unused-state
       agreementsParagraphList: [], //协议内容，weight:0  字体加粗， weight:1 字体不加错
-      agreementsMainList: []
+      agreementsMainList: [],
+      disabled: true
     }
     this.verificationCode = '' // 验证码
     this.phoneNumber = ''       // 手机号
@@ -94,6 +96,15 @@ class usePhoneNumberRegister extends Component {
    */
   onPhoneInputChange(e) {
     let { value } = e.detail
+    if (this.verificationCode && value) {
+      this.setState({
+        disabled: false
+      })
+    } else {
+      this.setState({
+        disabled: true
+      })
+    }
     this.phoneNumber = value
   }
   /**
@@ -103,6 +114,15 @@ class usePhoneNumberRegister extends Component {
    */
   onVerificationCodeInputChange(e) {
     let { value } = e.detail
+    if (this.phoneNumber && value) {
+      this.setState({
+        disabled: false
+      })
+    } else {
+      this.setState({
+        disabled: true
+      })
+    }
     this.verificationCode = value
   }
   /**
@@ -252,7 +272,8 @@ class usePhoneNumberRegister extends Component {
       // agreementRadio,
       isShow,
       agreementsParagraphList,
-      agreementsMainList
+      agreementsMainList,
+      disabled
     } = this.state
     const getVerificationCodeClassName = classNames({
       'btn-code': true,
@@ -309,10 +330,7 @@ class usePhoneNumberRegister extends Component {
               }
             </View>
           </View>
-          <View
-            className='submit-btn'
-            onClick={this.submitRegister}
-          >同意协议并登录</View>
+          <Button type='button' disabled={disabled} className='submit-btn' onClick={this.submitRegister}>同意协议并登录</Button>
           <View className='agreement-wrapper'>
             {/* <View
               className={registrationAgreementRadio}
