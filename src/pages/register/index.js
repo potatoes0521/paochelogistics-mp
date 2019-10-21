@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 注册页面
  * @Date: 2019-08-22 11:58:25
- * @LastEditors: guorui
- * @LastEditTime: 2019-10-21 15:56:26
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-10-21 16:50:56
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -96,7 +96,8 @@ class usePhoneNumberRegister extends Component {
    */
   onPhoneInputChange(e) {
     let { value } = e.detail
-    if (this.verificationCode && value) {
+    
+    if ((/^1[3456789]\d{9}$/.test(value)) && (/^\d{6}\b/.test(this.verificationCode))) {
       this.setState({
         disabled: false
       })
@@ -114,7 +115,7 @@ class usePhoneNumberRegister extends Component {
    */
   onVerificationCodeInputChange(e) {
     let { value } = e.detail
-    if (this.phoneNumber && value) {
+    if ((/^1[3456789]\d{9}$/.test(this.phoneNumber)) && (/^\d{6}\b/.test(value))) {
       this.setState({
         disabled: false
       })

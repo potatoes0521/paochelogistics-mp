@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-21 16:33:27
+ * @LastEditTime: 2019-10-21 16:47:18
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -87,6 +87,27 @@ class Index extends Component {
     if (this.state.locationModal) {
       this.setState({
         locationModal: true
+      })
+    }
+    this.handleDisabled()
+  }
+  /**
+   * 检查发车城市和收车城市选中状态
+   * @return void
+   */
+  handleDisabled() { 
+    let {
+      sendCityName,
+      receiveCityName,
+      carInfo
+    } = this.state
+    if (sendCityName && receiveCityName && carInfo) {
+      this.setState({
+        disabled: false
+      })
+    } else {
+      this.setState({
+        disabled: true
       })
     }
   }
@@ -249,9 +270,10 @@ class Index extends Component {
   inputCarInfo(e) {
     let { value } = e.detail
     let {
-      receiveCityName
+      receiveCityName,
+      sendCityName
     } = this.state
-    if (receiveCityName && value) {
+    if (sendCityName && receiveCityName && value) {
       this.setState({
         disabled: false
       })
