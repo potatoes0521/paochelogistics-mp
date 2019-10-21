@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-21 15:26:29
+ * @LastEditTime: 2019-10-21 15:41:05
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -247,7 +247,11 @@ class Index extends Component {
    * @return void
    */
   inputCarInfo(e) {
-    if (!this.state.receiveCityName && !this.state.carInfo) {
+    let { value } = e.detail
+    let {
+      receiveCityName
+    } = this.state
+    if (receiveCityName && value) {
       this.setState({
         disabled: false
       })
@@ -257,7 +261,7 @@ class Index extends Component {
       })
     }
     this.setState({
-      carInfo: e.target.value
+      carInfo: value
     })
   }
   submitOffer() { 
