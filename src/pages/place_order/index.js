@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-21 16:18:59
+ * @LastEditTime: 2019-10-21 16:21:56
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,7 +13,6 @@ import {
   View,
   Input,
   Text,
-  Textarea,
   Button,
   Block
 } from '@tarojs/components'
@@ -51,7 +50,6 @@ class PlaceOrder extends Component {
       vins: '', // 车架号
       quotedPriceDesc: 0, // 报价
       placeOrderCustomer: {}, // 客户信息
-      // eslint-disable-next-line react/no-unused-state
       disabled: true
     }
     this.pageParams = {}
@@ -113,14 +111,14 @@ class PlaceOrder extends Component {
   verificationSendName(e) {
     let { value } = e.detail
     let {
-      sendPerson,
       sendMobile,
       sendCardNo,
       receivePerson,
       receiveMobile,
-      receiveCarNo
+      receiveCarNo,
+      vins
     } = this.state
-    if (!sendPerson && !sendMobile && !sendCardNo && !receivePerson && !receiveMobile && !receiveCarNo) {
+    if (value && sendMobile && sendCardNo && receivePerson && receiveMobile && receiveCarNo && vins) {
       this.setState({
         disabled: false
       })
@@ -139,11 +137,11 @@ class PlaceOrder extends Component {
       sendPerson,
       sendMobile,
       sendCardNo,
-      receivePerson,
       receiveMobile,
-      receiveCarNo
+      receiveCarNo,
+      vins
     } = this.state
-    if (!sendPerson && !sendMobile && !sendCardNo && !receivePerson && !receiveMobile && !receiveCarNo) {
+    if (sendPerson && sendMobile && sendCardNo && value && receiveMobile && receiveCarNo && vins) {
       this.setState({
         disabled: false
       })
@@ -166,13 +164,13 @@ class PlaceOrder extends Component {
     let { value } = e.detail
     let {
       sendPerson,
-      sendMobile,
       sendCardNo,
       receivePerson,
       receiveMobile,
-      receiveCarNo
+      receiveCarNo,
+      vins
     } = this.state
-    if (!sendPerson && !sendMobile && !sendCardNo && !receivePerson && !receiveMobile && !receiveCarNo) {
+    if (sendPerson && value && sendCardNo && receivePerson && receiveMobile && receiveCarNo && vins) {
       this.setState({
         disabled: false
       })
@@ -192,10 +190,10 @@ class PlaceOrder extends Component {
       sendMobile,
       sendCardNo,
       receivePerson,
-      receiveMobile,
-      receiveCarNo
+      receiveCarNo,
+      vins
     } = this.state
-    if (!sendPerson && !sendMobile && !sendCardNo && !receivePerson && !receiveMobile && !receiveCarNo) {
+    if (sendPerson && sendMobile && sendCardNo && receivePerson && value && receiveCarNo && vins) {
       this.setState({
         disabled: false
       })
@@ -219,12 +217,12 @@ class PlaceOrder extends Component {
     let {
       sendPerson,
       sendMobile,
-      sendCardNo,
       receivePerson,
       receiveMobile,
-      receiveCarNo
+      receiveCarNo,
+      vins
     } = this.state
-    if (!sendPerson && !sendMobile && !sendCardNo && !receivePerson && !receiveMobile && !receiveCarNo) {
+    if (sendPerson && sendMobile && value && receivePerson && receiveMobile && receiveCarNo && vins) {
       this.setState({
         disabled: false
       })
@@ -245,9 +243,9 @@ class PlaceOrder extends Component {
       sendCardNo,
       receivePerson,
       receiveMobile,
-      receiveCarNo
+      vins
     } = this.state
-    if (!sendPerson && !sendMobile && !sendCardNo && !receivePerson && !receiveMobile && !receiveCarNo) {
+    if (sendPerson && sendMobile && sendCardNo && receivePerson && receiveMobile && value && vins) {
       this.setState({
         disabled: false
       })
@@ -269,6 +267,23 @@ class PlaceOrder extends Component {
   verificationVins(e) {
     //车架号只能是数字和字母
     let value = e.target.value
+    let {
+      sendPerson,
+      sendMobile,
+      sendCardNo,
+      receivePerson,
+      receiveMobile,
+      receiveCarNo
+    } = this.state
+    if (sendPerson && sendMobile && sendCardNo && receivePerson && receiveMobile && receiveCarNo && value) {
+      this.setState({
+        disabled: false
+      })
+    } else {
+      this.setState({
+        disabled: true
+      })
+    }
     value = value.replace(/，/g, ",")
     this.setState({
       vins: value
