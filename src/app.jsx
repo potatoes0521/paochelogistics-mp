@@ -54,7 +54,8 @@ class _App extends Component {
       'pages/register/index',
       'pages/pay_details/index',
       'pages/pay_success/index',
-      'pages/choose_item/index'
+      'pages/choose_item/index',
+      'pages/remark/index'
     ],
     window: {
       backgroundTextStyle: 'light',
