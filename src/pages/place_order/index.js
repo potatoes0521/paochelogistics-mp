@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-21 15:27:21
+ * @LastEditTime: 2019-10-21 16:18:59
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,7 +14,8 @@ import {
   Input,
   Text,
   Textarea,
-  Button
+  Button,
+  Block
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 // import NoTitleCard from '@c/no_title_card/index.js'
@@ -63,7 +64,7 @@ class PlaceOrder extends Component {
 
   //页面内的配置
   config = {
-  navigationBarTitleText: '下单'
+    navigationBarTitleText: '下单'
   } 
 
   /**
@@ -387,7 +388,11 @@ class PlaceOrder extends Component {
         })
       })
   }
-
+  navigatorTo() {
+    Taro.navigateTo({
+      url: '/pages/remark/index'
+    })
+  }
   toast(msg) {
     Taro.showToast({
       title: msg,
@@ -584,19 +589,19 @@ class PlaceOrder extends Component {
                 <View className='details-form-label'>台数:</View>
                 <View className='details-form-content'>{carAmount || ''}辆</View>
               </View>
-              <View className='details-form-item'>
+              <View className='details-form-item' onClick={this.navigatorTo}>
                 <View className='details-form-label'>车架号:</View>
-              </View>
-              <View className='details-form-item'>
-                <Textarea
-                  className='details-address-input'
-                  onInput={this.verificationVins}
-                  auto-height
-                  placeholder='请输入车架号，多个车架号请用“,”隔开'
-                  placeholderClass='placeholder-style'
-                  maxlength={-1}
-                  value={vins}
-                ></Textarea>
+                <View className='details-form-content'>
+                  {
+                    vins.length ?
+                      <Text>{vins}</Text>
+                      :
+                      <Block>
+                        <Text className='placeholder-style'>请输入车架号</Text>
+                        <Text className='iconfont iconxiangyouxuanzejiantoux icon-right-style'></Text>                        
+                      </Block>
+                  }
+                </View>
               </View>
               <View className='dividing-line'></View>
               <View className='details-form-item'>

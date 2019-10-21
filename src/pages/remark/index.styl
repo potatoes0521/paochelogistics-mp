@@ -1,0 +1,44 @@
+@import "../../assets/css/theme.styl"
+
+.page-wrapper
+  width 100%
+  box-sizing border-box
+  padding 38px 24px
+
+.textarea-wrapper
+  width 100%
+
+.textarea
+  width 100%
+  height 296px
+  border-radius 8px
+  box-sizing border-box
+  border 1px solid #D2D2D2
+  background-color #f9f9f9
+  font-size 28px
+  line-height 40px
+  padding 24px
+.button
+  width 100%
+  margin 48px auto
+
+.submit
+  width 100%
+  border none 
+  border-radius 8px
+  height 76px
+  display flex
+  align-items center
+  justify-content center
+  color #ffffff
+  background-color $theme-color
+  font-size 32px
+
+.submit::after
+  border none
+  padding 0
+  margin 0
+
+button[disabled]
+  background-color $button-disabled-color !important
+  color rgba(255,255,255,0.8) !important
