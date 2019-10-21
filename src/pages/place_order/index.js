@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-21 17:04:58
+ * @LastEditTime: 2019-10-21 17:39:13
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -62,11 +62,6 @@ class PlaceOrder extends Component {
     this.testFunction()
   }
 
-  //页面内的配置
-  config = {
-    navigationBarTitleText: '下单'
-  } 
-
   /**
    * 获取详情
    * @return void
@@ -104,7 +99,10 @@ class PlaceOrder extends Component {
         })
       })
   }
-
+  /**
+   * 函数功能描述 判断联系人、联系方式、身份证号、车架号是否为空，验证按钮的高亮显示
+   * @return void
+   */
   testFunction() {
     let {
       sendPerson,
@@ -127,8 +125,8 @@ class PlaceOrder extends Component {
   }
   
   /**
-   * 名字验证
-   * @param {Type} e 参数描述
+   * 发车城市--名字验证
+   * @param {Type} e 名字
    * @return void
    */
   verificationSendName(e) {
@@ -139,6 +137,12 @@ class PlaceOrder extends Component {
       this.testFunction()
     })
   }
+
+  /**
+   * 收车城市--名字验证
+   * @param {Type} e 名字
+   * @return void
+   */
   verificationReceiveName(e) {
     let { value } = e.detail
     this.setState({
@@ -149,8 +153,8 @@ class PlaceOrder extends Component {
   }
 
   /**
-   * 手机号验证
-   * @param {Type} e 参数描述
+   * 发车城市--手机号验证
+   * @param {Type} e 手机号
    * @return void
    */
   verificationSendPhone(e) {
@@ -161,6 +165,12 @@ class PlaceOrder extends Component {
       this.testFunction()
     })
   }
+  
+  /**
+   * 收车城市--手机号验证
+   * @param {Type} e 手机号
+   * @return void
+   */
   verificationReceivePhone(e) {
     let { value } = e.detail
     this.setState({
@@ -171,8 +181,8 @@ class PlaceOrder extends Component {
   }
 
   /**
-   * 身份证号验证
-   * @param {Type} e 参数描述
+   * 发车城市--身份证号验证
+   * @param {Type} e 身份证号
    * @return void
    */
   verificationSendCardNo(e) {
@@ -183,6 +193,12 @@ class PlaceOrder extends Component {
       this.testFunction()
     })
   }
+  
+  /**
+   * 收车城市--身份证号验证
+   * @param {Type} e 身份证号
+   * @return void
+   */
   verificationReceiveCardNo(e) {
     let { value } = e.detail
     this.setState({
@@ -306,18 +322,35 @@ class PlaceOrder extends Component {
         })
       })
   }
+
+  /**
+   * 车架号跳转页面
+   * @return void
+   */
   navigatorTo() {
     Storage.setStorage('vins', this.state.vins)
     Taro.navigateTo({
       url: '/pages/remark/index'
     })
   }
+  
+  /**
+   * toast函数
+   * @param {Type} msg 参数描述
+   * @return void
+   */
   toast(msg) {
     Taro.showToast({
       title: msg,
       icon: 'none'
     })
   }
+
+  //页面内的配置
+  config = {
+    navigationBarTitleText: '下单'
+  }
+  
   render() {
     let {
       sendCityName, //发车城市名称
@@ -368,7 +401,7 @@ class PlaceOrder extends Component {
                 <View className='details-form-content'>{sendCityName || ''}</View>
               </View>
               {
-                (storePickup !== 0) ?
+                (!storePickup) ?
                   <View className='details-form-item'>
                     <View className='details-form-label'>详细信息:</View>
                     <View className='details-form-content'>{sendAddress || ''}</View>
@@ -424,7 +457,7 @@ class PlaceOrder extends Component {
                 <View className='details-form-content'>{receiveCityName || ''}</View>
               </View>
               {
-                (homeDelivery !== 0) ?
+                (!homeDelivery) ?
                   <View className='details-form-item'>
                     <View className='details-form-label'>详细信息:</View>
                     <View className='details-form-content'>{receiveAddress || ''}</View>
@@ -475,18 +508,18 @@ class PlaceOrder extends Component {
             <View className='dividing-line'></View>
             <View className='car-info'>
               {
-                (storePickup !== 0 || homeDelivery !== 0) ?
+                (!storePickup || !homeDelivery) ?
                   <View className='details-form-item'>
                     <View className='details-form-label'>服务:</View>
                     <View className='details-form-content'>
                       {
-                        storePickup !== 0 ? '上门提车' : ''
+                        !storePickup ? '上门提车' : ''
                       }
                       {
-                        storePickup !== 0 && homeDelivery !== 0 ? '，' : ''
+                        !storePickup && !homeDelivery ? '，' : ''
                       }
                       {
-                        homeDelivery !== 0 ? '上门送车' : ''
+                        !homeDelivery ? '上门送车' : ''
                       }
                     </View>
                   </View>

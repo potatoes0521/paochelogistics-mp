@@ -3,7 +3,7 @@
  * @description: 项目描述文件
  * @Date: 2019-08-14 10:25:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-21 17:54:41
+ * @LastEditTime: 2019-10-21 17:56:09
  -->
 ## 跑车帮小程序
  
@@ -96,10 +96,16 @@ taro update project
 * &emsp;&emsp;&emsp;&emsp;components -- 询价单列表页面
 * &emsp;&emsp;&emsp;&emsp;&emsp;offer_item -- 询价单
 * &emsp;&emsp;&emsp;offer_details -- 询价单详情
-* &emsp;&emsp;&emsp;selling_details --卖板详情
-* &emsp;&emsp;&emsp;selling_publish --卖板发布
-* &emsp;&emsp;&emsp;vacancy_details --空位详情
-* &emsp;&emsp;&emsp;vacancy_publish --空位发布
+* &emsp;&emsp;&emsp;order -- 订单列表
+* &emsp;&emsp;&emsp;order_details -- 订单详情
+* &emsp;&emsp;&emsp;pay_details -- 支付详情
+* &emsp;&emsp;&emsp;pay_success -- 支付成功
+* &emsp;&emsp;&emsp;place_order -- 下单页面
+* &emsp;&emsp;&emsp;register --注册页面
+* &emsp;&emsp;&emsp;remark --车架号填写页面
+* &emsp;&emsp;&emsp;transport_state -- 运输状态
+* &emsp;&emsp;&emsp;&emsp;&emsp;driver_item -- 司机信息面板
+* &emsp;&emsp;&emsp;&emsp;&emsp;time_line -- 运输状态时间轴
 * &emsp;&emsp;store -- redux仓库
 * &emsp;&emsp;&emsp;index -- 初始化redux仓库
 * &emsp;&emsp;&emsp;action -- 定义/绑定action到dispatch
@@ -115,10 +121,12 @@ taro update project
 * &emsp;&emsp;&emsp;common -- 针对微信方法等公共系统方法的封装
 * &emsp;&emsp;&emsp;location -- 腾讯地图SDK的引入和方法封装
 * &emsp;&emsp;&emsp;log -- 错误日志处理
+* &emsp;&emsp;&emsp;login -- 登录
 * &emsp;&emsp;&emsp;md5 -- md5加密文件
 * &emsp;&emsp;&emsp;refreshToken --刷新token的操作
-* &emsp;&emsp;&emsp;secret -- 数据处理加密
 * &emsp;&emsp;&emsp;serialize -- 针对JS原生方法的封装
+* &emsp;&emsp;&emsp;storage -- 本地缓存方法的封装
+* &emsp;&emsp;&emsp;timer_handle -- 各种时间处理方法
 * &emsp;&emsp;app.jsx
 * &emsp;&emsp;app.styl
 * &emsp;package
