@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-21 15:23:31
+ * @LastEditTime: 2019-10-21 15:26:56
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,7 +13,8 @@ import {
   View,
   Input,
   Text,
-  Textarea
+  Textarea,
+  Button
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 // import NoTitleCard from '@c/no_title_card/index.js'
@@ -48,7 +49,9 @@ class PlaceOrder extends Component {
       carAmount: 1, //车辆台数
       vins: '', // 车架号
       quotedPriceDesc: 0, // 报价
-      placeOrderCustomer: {} // 客户信息
+      placeOrderCustomer: {}, // 客户信息
+      // eslint-disable-next-line react/no-unused-state
+      disabled: true
     }
     this.pageParams = {}
   }
@@ -108,12 +111,50 @@ class PlaceOrder extends Component {
    */
   verificationSendName(e) {
     let { value } = e.detail
+    let {
+      sendPerson,
+      sendMobile,
+      sendCardNo,
+      receivePerson,
+      receiveMobile,
+      receiveCarNo
+    } = this.state
+    if (!sendPerson && !sendMobile && !sendCardNo && !receivePerson && !receiveMobile && !receiveCarNo) {
+      this.setState({
+        // eslint-disable-next-line react/no-unused-state
+        disabled: false
+      })
+    } else {
+      this.setState({
+        // eslint-disable-next-line react/no-unused-state
+        disabled: true
+      })
+    }
     this.setState({
       sendPerson: value
     })
   }
   verificationReceiveName(e) {
     let { value } = e.detail
+    let {
+      sendPerson,
+      sendMobile,
+      sendCardNo,
+      receivePerson,
+      receiveMobile,
+      receiveCarNo
+    } = this.state
+    if (!sendPerson && !sendMobile && !sendCardNo && !receivePerson && !receiveMobile && !receiveCarNo) {
+      this.setState({
+        // eslint-disable-next-line react/no-unused-state
+        disabled: false
+      })
+    } else {
+      this.setState({
+        // eslint-disable-next-line react/no-unused-state
+        disabled: true
+      })
+    }
     this.setState({
       receivePerson: value
     })
@@ -126,12 +167,50 @@ class PlaceOrder extends Component {
    */
   verificationSendPhone(e) {
     let { value } = e.detail
+    let {
+      sendPerson,
+      sendMobile,
+      sendCardNo,
+      receivePerson,
+      receiveMobile,
+      receiveCarNo
+    } = this.state
+    if (!sendPerson && !sendMobile && !sendCardNo && !receivePerson && !receiveMobile && !receiveCarNo) {
+      this.setState({
+        // eslint-disable-next-line react/no-unused-state
+        disabled: false
+      })
+    } else {
+      this.setState({
+        // eslint-disable-next-line react/no-unused-state
+        disabled: true
+      })
+    }
     this.setState({
       sendMobile: value
     })
   }
   verificationReceivePhone(e) {
     let { value } = e.detail
+    let {
+      sendPerson,
+      sendMobile,
+      sendCardNo,
+      receivePerson,
+      receiveMobile,
+      receiveCarNo
+    } = this.state
+    if (!sendPerson && !sendMobile && !sendCardNo && !receivePerson && !receiveMobile && !receiveCarNo) {
+      this.setState({
+        // eslint-disable-next-line react/no-unused-state
+        disabled: false
+      })
+    } else {
+      this.setState({
+        // eslint-disable-next-line react/no-unused-state
+        disabled: true
+      })
+    }
     this.setState({
       receiveMobile: value
     })
@@ -144,12 +223,50 @@ class PlaceOrder extends Component {
    */
   verificationSendCardNo(e) {
     let { value } = e.detail
+    let {
+      sendPerson,
+      sendMobile,
+      sendCardNo,
+      receivePerson,
+      receiveMobile,
+      receiveCarNo
+    } = this.state
+    if (!sendPerson && !sendMobile && !sendCardNo && !receivePerson && !receiveMobile && !receiveCarNo) {
+      this.setState({
+        // eslint-disable-next-line react/no-unused-state
+        disabled: false
+      })
+    } else {
+      this.setState({
+        // eslint-disable-next-line react/no-unused-state
+        disabled: true
+      })
+    }
     this.setState({
       sendCardNo: value
     })
   }
   verificationReceiveCardNo(e) {
     let { value } = e.detail
+    let {
+      sendPerson,
+      sendMobile,
+      sendCardNo,
+      receivePerson,
+      receiveMobile,
+      receiveCarNo
+    } = this.state
+    if (!sendPerson && !sendMobile && !sendCardNo && !receivePerson && !receiveMobile && !receiveCarNo) {
+      this.setState({
+        // eslint-disable-next-line react/no-unused-state
+        disabled: false
+      })
+    } else {
+      this.setState({
+        // eslint-disable-next-line react/no-unused-state
+        disabled: true
+      })
+    }
     this.setState({
       receiveCarNo: value
     })
@@ -482,7 +599,7 @@ class PlaceOrder extends Component {
                 <View className='details-form-label'>车架号:</View>
               </View>
               <View className='details-form-item'>
-                <Input
+                <Textarea
                   className='details-address-input'
                   onInput={this.verificationVins}
                   auto-height
@@ -490,7 +607,7 @@ class PlaceOrder extends Component {
                   placeholderClass='placeholder-style'
                   maxlength={-1}
                   value={vins}
-                ></Input>
+                ></Textarea>
               </View>
               <View className='dividing-line'></View>
               <View className='details-form-item'>
@@ -503,7 +620,7 @@ class PlaceOrder extends Component {
             </View>
           </View>
         </View>
-        <View className='place-order-button' onClick={this.submitOrder}>立即下单</View>
+        <Button type='button' disabled='true' className='place-order-button' onClick={this.submitOrder}>立即下单</Button>
       </View>
     )
   }

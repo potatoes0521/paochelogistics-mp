@@ -3,8 +3,8 @@
  * @description: 首页
  * 
  * @Date: 2019-09-17 11:53:57
- * @LastEditors: liuYang
- * @LastEditTime: 2019-10-21 10:18:18
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-10-21 15:02:14
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,7 +14,8 @@ import {
   Input,
   Text,
   Picker,
-  Textarea
+  Textarea,
+  Button
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import classNames from 'classnames'
@@ -66,7 +67,9 @@ class Index extends Component {
       storePickup: 0,  // 上门提车
       homeDelivery: 0, // 上门送车
       sendTimerInit: '',
-      locationModal: false
+      locationModal: false,
+      // eslint-disable-next-line react/no-unused-state
+      disabled: true
     }
     this.initCity = {}
     this.pageParams = {}
@@ -244,6 +247,17 @@ class Index extends Component {
    * @return void
    */
   inputCarInfo(e) {
+    if (!this.state.receiveCityName && !this.state.carInfo) {
+      this.setState({
+        // eslint-disable-next-line react/no-unused-state
+        disabled: false
+      })
+    } else {
+      this.setState({
+        // eslint-disable-next-line react/no-unused-state
+        disabled: true
+      })
+    }
     this.setState({
       carInfo: e.target.value
     })
@@ -527,10 +541,7 @@ class Index extends Component {
             </View>
           </View>
         </NoTitleCard>
-        <View
-          className='submit-btn'
-          onClick={this.submitOffer}
-        >立即询价</View>
+        <Button type='button' disabled='true' className='submit-btn' onClick={this.submitOffer}>立即询价</Button>
         {
           locationModal ? 
             <LocationModal
