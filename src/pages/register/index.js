@@ -3,7 +3,7 @@
  * @description: 注册页面
  * @Date: 2019-08-22 11:58:25
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-21 10:22:23
+ * @LastEditTime: 2019-10-21 11:08:20
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -262,18 +262,18 @@ class usePhoneNumberRegister extends Component {
     //   'agreement-radio': !agreementRadio,
     //   'agree-agreement iconfont iconduigoux': agreementRadio
     // })
-    const agreementsParagraphListR = agreementsParagraphList.map((item,index) => (
-      <View className='paragraph agreements-font' key={index}>
+    const agreementsParagraphListR = agreementsParagraphList.map((item) => (
+      <View className='paragraph agreements-font' key={item}>
         { item.text }
       </View>
     ))
-    const agreementsList = agreementsMainList.map((item,index) => {
+    const agreementsList = agreementsMainList.map((item) => {
       const textClassName = classNames({
         'agreements-font-bold': +item.weight === 1,
         'agreements-font': +item.weight === 0,
       })
       return (
-        <View className={textClassName} key={index}>{item.text}</View>
+        <View className={textClassName} key={item}>{item.text}</View>
       )
     })
     return (
