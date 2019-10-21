@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
- * @LastEditors: liuYang
- * @LastEditTime: 2019-10-21 16:28:02
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-10-21 17:03:53
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -103,6 +103,27 @@ class PlaceOrder extends Component {
         })
       })
   }
+
+  testFunction() {
+    let {
+      sendPerson,
+      sendMobile,
+      sendCardNo,
+      receivePerson,
+      receiveMobile,
+      receiveCarNo,
+      vins
+    } = this.state
+    if ((/^[\u4e00-\u9fa5]{2,8}$/.test(sendPerson)) && (/^1[3456789]\d{9}$/.test(sendMobile)) && (/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(sendCardNo)) && (/^[\u4e00-\u9fa5]{2,8}$/.test(receivePerson)) && (/^1[3456789]\d{9}$/.test(receiveMobile)) && (/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(receiveCarNo)) && (/^[0-9A-Za-z,]+$/.test(vins))) {
+      this.setState({
+        disabled: false
+      })
+    } else {
+      this.setState({
+        disabled: true
+      })
+    }
+  }
   
   /**
    * 名字验证
@@ -111,48 +132,18 @@ class PlaceOrder extends Component {
    */
   verificationSendName(e) {
     let { value } = e.detail
-    let {
-      sendMobile,
-      sendCardNo,
-      receivePerson,
-      receiveMobile,
-      receiveCarNo,
-      vins
-    } = this.state
-    if (value && sendMobile && sendCardNo && receivePerson && receiveMobile && receiveCarNo && vins) {
-      this.setState({
-        disabled: false
-      })
-    } else {
-      this.setState({
-        disabled: true
-      })
-    }
     this.setState({
       sendPerson: value
+    },() => {
+      this.testFunction()
     })
   }
   verificationReceiveName(e) {
     let { value } = e.detail
-    let {
-      sendPerson,
-      sendMobile,
-      sendCardNo,
-      receiveMobile,
-      receiveCarNo,
-      vins
-    } = this.state
-    if (sendPerson && sendMobile && sendCardNo && value && receiveMobile && receiveCarNo && vins) {
-      this.setState({
-        disabled: false
-      })
-    } else {
-      this.setState({
-        disabled: true
-      })
-    }
     this.setState({
       receivePerson: value
+    }, () => {
+      this.testFunction()
     })
   }
 
@@ -163,48 +154,18 @@ class PlaceOrder extends Component {
    */
   verificationSendPhone(e) {
     let { value } = e.detail
-    let {
-      sendPerson,
-      sendCardNo,
-      receivePerson,
-      receiveMobile,
-      receiveCarNo,
-      vins
-    } = this.state
-    if (sendPerson && value && sendCardNo && receivePerson && receiveMobile && receiveCarNo && vins) {
-      this.setState({
-        disabled: false
-      })
-    } else {
-      this.setState({
-        disabled: true
-      })
-    }
     this.setState({
       sendMobile: value
+    }, () => {
+      this.testFunction()
     })
   }
   verificationReceivePhone(e) {
     let { value } = e.detail
-    let {
-      sendPerson,
-      sendMobile,
-      sendCardNo,
-      receivePerson,
-      receiveCarNo,
-      vins
-    } = this.state
-    if (sendPerson && sendMobile && sendCardNo && receivePerson && value && receiveCarNo && vins) {
-      this.setState({
-        disabled: false
-      })
-    } else {
-      this.setState({
-        disabled: true
-      })
-    }
     this.setState({
       receiveMobile: value
+    }, () => {
+      this.testFunction()
     })
   }
 
@@ -215,81 +176,21 @@ class PlaceOrder extends Component {
    */
   verificationSendCardNo(e) {
     let { value } = e.detail
-    let {
-      sendPerson,
-      sendMobile,
-      receivePerson,
-      receiveMobile,
-      receiveCarNo,
-      vins
-    } = this.state
-    if (sendPerson && sendMobile && value && receivePerson && receiveMobile && receiveCarNo && vins) {
-      this.setState({
-        disabled: false
-      })
-    } else {
-      this.setState({
-        disabled: true
-      })
-    }
     this.setState({
       sendCardNo: value
+    }, () => {
+      this.testFunction()
     })
   }
   verificationReceiveCardNo(e) {
     let { value } = e.detail
-    let {
-      sendPerson,
-      sendMobile,
-      sendCardNo,
-      receivePerson,
-      receiveMobile,
-      vins
-    } = this.state
-    if (sendPerson && sendMobile && sendCardNo && receivePerson && receiveMobile && value && vins) {
-      this.setState({
-        disabled: false
-      })
-    } else {
-      this.setState({
-        disabled: true
-      })
-    }
     this.setState({
       receiveCarNo: value
+    }, () => {
+      this.testFunction()
     })
   }
  
-  /**
-   * 车架号验证
-   * @param {Type} e 参数描述
-   * @return void
-   */
-  verificationVins(e) {
-    //车架号只能是数字和字母
-    let value = e.target.value
-    let {
-      sendPerson,
-      sendMobile,
-      sendCardNo,
-      receivePerson,
-      receiveMobile,
-      receiveCarNo
-    } = this.state
-    if (sendPerson && sendMobile && sendCardNo && receivePerson && receiveMobile && receiveCarNo && value) {
-      this.setState({
-        disabled: false
-      })
-    } else {
-      this.setState({
-        disabled: true
-      })
-    }
-    value = value.replace(/，/g, ",")
-    this.setState({
-      vins: value
-    })
-  }
 
   /**
    * 选择代下单客户
