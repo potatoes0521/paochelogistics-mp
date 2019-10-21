@@ -3,8 +3,8 @@
  * @description: 首页
  * 
  * @Date: 2019-09-17 11:53:57
- * @LastEditors: guorui
- * @LastEditTime: 2019-10-21 15:41:05
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-10-21 16:33:27
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -379,6 +379,10 @@ class Index extends Component {
       homeDelivery: props[1].checked ? 1 : 0
     })
   }
+  navigateToRegister(e) { 
+    e.stopPropagation()
+    showModalAndRegister()
+  }
   config = {
     navigationBarTitleText: '跑车物流'
   }
@@ -398,7 +402,7 @@ class Index extends Component {
       locationModal,
       disabled
     } = this.state
-    
+    let { userInfo } = this.props
     return (
       <View className='index-wrapper'>
         <NoTitleCard>
@@ -551,6 +555,11 @@ class Index extends Component {
               onClick={this.modalCallBack.bind(this)}
             ></LocationModal>
             : null
+        }
+        {
+          userInfo.userId ? 
+            null :
+            <View className='showRegister' onClick={this.navigateToRegister}></View>
         }
       </View>
     )
