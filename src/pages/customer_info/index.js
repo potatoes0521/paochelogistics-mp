@@ -3,7 +3,7 @@
  * @description: 客户信息列表
  * @Date: 2019-09-27 15:38:07
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-21 10:18:09
+ * @LastEditTime: 2019-10-21 14:45:12
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -159,17 +159,17 @@ class CustomerInfo extends Component {
    * 下拉刷新
    * @return void
    */
-  async onPullDownRefresh() {
-    // 显示顶部刷新图标
-    Taro.showNavigationBarLoading();
-    this.customerPage = 1
-    this.customerFlag = false
-    this.getAllCustomerList(this.state.selectParam, this.customerPage)
-    // 隐藏导航栏加载框
-    Taro.hideNavigationBarLoading();
-    // 停止下拉动作
-    Taro.stopPullDownRefresh();
-  }
+  // async onPullDownRefresh() {
+  //   // 显示顶部刷新图标
+  //   Taro.showNavigationBarLoading();
+  //   this.customerPage = 1
+  //   this.customerFlag = false
+  //   this.getAllCustomerList(this.state.selectParam, this.customerPage)
+  //   // 隐藏导航栏加载框
+  //   Taro.hideNavigationBarLoading();
+  //   // 停止下拉动作
+  //   Taro.stopPullDownRefresh();
+  // }
   /**
    * 上拉触底
    * @return void
@@ -182,7 +182,7 @@ class CustomerInfo extends Component {
 
   config = {
     navigationBarTitleText: '客户信息列表',
-    enablePullDownRefresh: true
+    // enablePullDownRefresh: true
   }
   
   render() { 
