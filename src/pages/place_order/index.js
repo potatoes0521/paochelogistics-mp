@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-21 16:28:02
+ * @LastEditTime: 2019-10-21 16:41:31
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -59,6 +59,7 @@ class PlaceOrder extends Component {
   componentDidShow() {
     this.pageParams = this.$router.params || {}
     this.getOfferDetails()
+    this.verificationVins()
   }
 
   //页面内的配置
@@ -262,21 +263,20 @@ class PlaceOrder extends Component {
  
   /**
    * 车架号验证
-   * @param {Type} e 参数描述
    * @return void
    */
-  verificationVins(e) {
+  verificationVins() {
     //车架号只能是数字和字母
-    let value = e.target.value
     let {
       sendPerson,
       sendMobile,
       sendCardNo,
       receivePerson,
       receiveMobile,
-      receiveCarNo
+      receiveCarNo,
+      vins
     } = this.state
-    if (sendPerson && sendMobile && sendCardNo && receivePerson && receiveMobile && receiveCarNo && value) {
+    if (sendPerson && sendMobile && sendCardNo && receivePerson && receiveMobile && receiveCarNo && vins) {
       this.setState({
         disabled: false
       })
@@ -285,10 +285,6 @@ class PlaceOrder extends Component {
         disabled: true
       })
     }
-    value = value.replace(/，/g, ",")
-    this.setState({
-      vins: value
-    })
   }
 
   /**
