@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 客户信息列表
  * @Date: 2019-09-27 15:38:07
- * @LastEditors: liuYang
- * @LastEditTime: 2019-10-21 14:45:12
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-10-21 15:21:29
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -66,9 +66,9 @@ class CustomerInfo extends Component {
     }
     let { customerListData } = this.state
     api.customer.getCustomerList(sendData, this).then(res => {
+      Taro.hideLoading()
       const data = res.data
       if (!data && selectParam) {
-        Taro.hideLoading()
         Taro.showToast({
           title: '没搜索到结果',
           icon:'none'

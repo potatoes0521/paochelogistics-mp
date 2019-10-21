@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-21 15:26:56
+ * @LastEditTime: 2019-10-21 15:27:21
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -121,12 +121,10 @@ class PlaceOrder extends Component {
     } = this.state
     if (!sendPerson && !sendMobile && !sendCardNo && !receivePerson && !receiveMobile && !receiveCarNo) {
       this.setState({
-        // eslint-disable-next-line react/no-unused-state
         disabled: false
       })
     } else {
       this.setState({
-        // eslint-disable-next-line react/no-unused-state
         disabled: true
       })
     }
@@ -146,12 +144,10 @@ class PlaceOrder extends Component {
     } = this.state
     if (!sendPerson && !sendMobile && !sendCardNo && !receivePerson && !receiveMobile && !receiveCarNo) {
       this.setState({
-        // eslint-disable-next-line react/no-unused-state
         disabled: false
       })
     } else {
       this.setState({
-        // eslint-disable-next-line react/no-unused-state
         disabled: true
       })
     }
@@ -177,12 +173,10 @@ class PlaceOrder extends Component {
     } = this.state
     if (!sendPerson && !sendMobile && !sendCardNo && !receivePerson && !receiveMobile && !receiveCarNo) {
       this.setState({
-        // eslint-disable-next-line react/no-unused-state
         disabled: false
       })
     } else {
       this.setState({
-        // eslint-disable-next-line react/no-unused-state
         disabled: true
       })
     }
@@ -202,12 +196,10 @@ class PlaceOrder extends Component {
     } = this.state
     if (!sendPerson && !sendMobile && !sendCardNo && !receivePerson && !receiveMobile && !receiveCarNo) {
       this.setState({
-        // eslint-disable-next-line react/no-unused-state
         disabled: false
       })
     } else {
       this.setState({
-        // eslint-disable-next-line react/no-unused-state
         disabled: true
       })
     }
@@ -233,12 +225,10 @@ class PlaceOrder extends Component {
     } = this.state
     if (!sendPerson && !sendMobile && !sendCardNo && !receivePerson && !receiveMobile && !receiveCarNo) {
       this.setState({
-        // eslint-disable-next-line react/no-unused-state
         disabled: false
       })
     } else {
       this.setState({
-        // eslint-disable-next-line react/no-unused-state
         disabled: true
       })
     }
@@ -258,12 +248,10 @@ class PlaceOrder extends Component {
     } = this.state
     if (!sendPerson && !sendMobile && !sendCardNo && !receivePerson && !receiveMobile && !receiveCarNo) {
       this.setState({
-        // eslint-disable-next-line react/no-unused-state
         disabled: false
       })
     } else {
       this.setState({
-        // eslint-disable-next-line react/no-unused-state
         disabled: true
       })
     }
@@ -426,7 +414,8 @@ class PlaceOrder extends Component {
       carAmount, //车辆台数
       vins, // 车架号
       quotedPriceDesc, // 报价
-      placeOrderCustomer
+      placeOrderCustomer,
+      disabled
     } = this.state
     let {userInfo} = this.props
     return (
@@ -620,7 +609,7 @@ class PlaceOrder extends Component {
             </View>
           </View>
         </View>
-        <Button type='button' disabled='true' className='place-order-button' onClick={this.submitOrder}>立即下单</Button>
+        <Button type='button' disabled={disabled} className='place-order-button' onClick={this.submitOrder}>立即下单</Button>
       </View>
     )
   }
