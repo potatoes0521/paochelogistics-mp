@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-21 15:02:14
+ * @LastEditTime: 2019-10-21 15:26:29
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -249,12 +249,10 @@ class Index extends Component {
   inputCarInfo(e) {
     if (!this.state.receiveCityName && !this.state.carInfo) {
       this.setState({
-        // eslint-disable-next-line react/no-unused-state
         disabled: false
       })
     } else {
       this.setState({
-        // eslint-disable-next-line react/no-unused-state
         disabled: true
       })
     }
@@ -393,7 +391,8 @@ class Index extends Component {
       storePickup, // 上门提车
       homeDelivery, // 上门送车
       sendTimerInit,
-      locationModal
+      locationModal,
+      disabled
     } = this.state
     
     return (
@@ -541,7 +540,7 @@ class Index extends Component {
             </View>
           </View>
         </NoTitleCard>
-        <Button type='button' disabled='true' className='submit-btn' onClick={this.submitOffer}>立即询价</Button>
+        <Button type='button' disabled={disabled} className='submit-btn' onClick={this.submitOffer}>立即询价</Button>
         {
           locationModal ? 
             <LocationModal
