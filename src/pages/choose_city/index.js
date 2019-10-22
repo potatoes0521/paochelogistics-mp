@@ -98,8 +98,8 @@ class ChooseCity extends Component {
    * @return void
    */
   onClick(item, item2) {
-    var pages = Taro.getCurrentPages(); //  获取页面栈
-    var prevPage = pages[pages.length - 2]; // 上一个页面
+    let pages = Taro.getCurrentPages(); //  获取页面栈
+    let prevPage = pages[pages.length - 2]; // 上一个页面
     if (this.type === 'start') {
       prevPage.$component.setState({
         sendCityName: item.cityName,
@@ -156,8 +156,8 @@ class ChooseCity extends Component {
   cancelChecked(type = 'cancel') {
     let {editMsg} = this.props
     if (type === 'submit' && this.throughCityNameList.length) {
-      var pages = Taro.getCurrentPages(); //  获取页面栈
-      var prevPage = pages[pages.length - 2]; // 上一个页面
+      let pages = Taro.getCurrentPages(); //  获取页面栈
+      let prevPage = pages[pages.length - 2]; // 上一个页面
       if (JSON.stringify(editMsg) !== `{}`) {
         prevPage.$component.setState({
           throughCitys: {

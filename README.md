@@ -3,7 +3,7 @@
  * @description: 项目描述文件
  * @Date: 2019-08-14 10:25:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-21 17:56:09
+ * @LastEditTime: 2019-10-22 11:45:11
  -->
 ## 跑车帮小程序
  
@@ -150,3 +150,4 @@ taro update project
 * 3.所有按钮添加disabled状态
 * 4.车架号跳转页面填写
 * 5.创建客户选择经销商和区域
+* 6.必填项的*标标注

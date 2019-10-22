@@ -3,7 +3,7 @@
  * @description: 选择商户列表  选择区域
  * @Date: 2019-10-21 11:20:33
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-21 16:06:56
+ * @LastEditTime: 2019-10-22 15:00:10
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -62,8 +62,8 @@ class ChooseItem extends Component {
   }
   chooseItem(e) { 
     const { pageType } = this.pageParams
-    var pages = Taro.getCurrentPages(); //  获取页面栈
-    var prevPage = pages[pages.length - 2]; // 上一个页面
+    let pages = Taro.getCurrentPages(); //  获取页面栈
+    let prevPage = pages[pages.length - 2]; // 上一个页面
     if (pageType === 'merchant') {
       prevPage.$component.setState({
         merchantId: e.id,

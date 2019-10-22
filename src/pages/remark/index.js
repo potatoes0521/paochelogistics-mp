@@ -63,8 +63,8 @@ export default class Remark extends Component {
   
   submit() { 
     let { value } = this.state
-    var pages = Taro.getCurrentPages(); //  获取页面栈
-    var prevPage = pages[pages.length - 2]; // 上一个页面
+    let pages = Taro.getCurrentPages(); //  获取页面栈
+    let prevPage = pages[pages.length - 2]; // 上一个页面
     prevPage.$component.setState({
       vins: value
     }, () => {
