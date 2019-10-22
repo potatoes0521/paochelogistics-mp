@@ -3,7 +3,7 @@
  * @description: 修改添加客户信息
  * @Date: 2019-09-27 15:47:35
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-22 10:48:43
+ * @LastEditTime: 2019-10-22 11:25:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -203,7 +203,7 @@ class CustomerEdit extends Component {
       <View className='page-wrapper'>
         <View className='customer-info-wrapper'>
           <View className='info-item'>
-            <View className='start-icon'>*</View>
+            {/* <View className='start-icon'>*</View> */}
             <View className='item-label'>姓名</View>
             <View className='item-text'>
               <Input
@@ -216,12 +216,12 @@ class CustomerEdit extends Component {
             </View>
           </View>
           <View className='info-item'>
-            {
+            {/* {
               this.pageParams.pageType === 'edit' ?
                 <View className='start-icon'></View>
                 :
                 <View className='start-icon'>*</View>
-            }
+            } */}
             <View className='item-label'>联系方式</View>
             <View className='item-text'>
               {
@@ -241,7 +241,7 @@ class CustomerEdit extends Component {
             </View>
           </View>
           <View className='info-item'>
-            <View className='start-icon'></View>
+            {/* <View className='start-icon'></View> */}
             <View className='item-label'>身份证号</View>
             <View className='item-text'>
               <Input
@@ -256,12 +256,12 @@ class CustomerEdit extends Component {
             </View>
           </View>
           <View className='info-item'>
-            {
+            {/* {
               this.pageParams.pageType === 'edit' ?
                 <View className='start-icon'></View>
                 :
                 <View className='start-icon'>*</View>
-            }
+            } */}
             <View className='item-label'>所属经销商</View>
             <View
               className='item-text'
@@ -276,12 +276,12 @@ class CustomerEdit extends Component {
             </View>
           </View>
           <View className='info-item'>
-            {
+            {/* {
               this.pageParams.pageType === 'edit' ?
                 <View className='start-icon'></View>
                 :
                 <View className='start-icon'>*</View>
-            }
+            } */}
             <View className='item-label'>所属区域</View>
             <View
               className='item-text'
