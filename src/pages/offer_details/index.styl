@@ -18,18 +18,25 @@
 .no-offer
   color $theme-color
 
-.place-order
+.buttons-style
   width 702px
-  height 80px
   margin 48px auto 0
   display flex
-  align-items center
-  justify-content center
+  justify-content space-between
+  flex-wrap wrap
+
+.submitOrder,
+.viewOrder,
+.againInquiry
+  flex 1
+  height 80px
+  text-align center
+  line-height 80px
   background $theme-color
-  border-radius 8px
   font-size 32px
   font-weight 600
   color $background-color
+  border-radius 8px
 
 .offer-button
   width 702px
@@ -37,29 +44,29 @@
   justify-content space-between
   margin 48px auto 0
 
-.cancel-offer
-  flex 1
+.cancelInquiry
   height 80px
-  border 2px solid $theme-color
-  border-radius 8px
-  box-sizing border-box
-  display flex
-  align-items center
-  justify-content center
+  width 46%
+  text-align center
+  line-height 80px
   font-size 32px
+  font-weight 600
   color $theme-color
-  margin-right 36px
-
-.prompt-quotation
-  flex 1
-  height 80px
+  background-color $background-color
+  border 2px solid $theme-color
+  box-sizing border-box
   border-radius 8px
-  display flex
-  align-items center
-  justify-content center
+
+.urgeInquiry
+  width 46%
+  height 80px
+  text-align center
+  line-height 80px
   font-size 32px
+  font-weight 600
   color $background-color
   background-color $theme-color
+  border-radius 8px
 
 .icon-invalid-style
   color #CD3B3B
@@ -67,3 +74,7 @@
   position absolute
   top -10px
   left 442px
+
+button 
+  padding 0px
+  margin 0px

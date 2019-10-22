@@ -2,14 +2,17 @@
  * @Author: guorui
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
- * @LastEditors: liuYang
- * @LastEditTime: 2019-10-21 15:23:16
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-10-22 18:09:14
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 
 import Taro, { Component } from '@tarojs/taro'
-import { View } from '@tarojs/components'
+import {
+  View,
+  Button
+} from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import NoTitleCard from '@c/no_title_card/index.js'
 import classNames from 'classnames'
@@ -206,6 +209,30 @@ class OfferDetails extends Component {
     })
   }
 
+  buttonsFun(e) {
+    e.stopPropagation()
+    let { value } = e.target
+    switch (value) {
+      case 'cancelInquiry':
+        this.cancelOffer()
+        break;
+      case 'urgeInquiry':
+        this.promptOffer()
+        break;
+      case 'submitOrder':
+        this.submitOfferOrder()
+        break;
+      case 'againInquiry':
+        this.reinquiryOrder()
+        break;
+      case 'viewOrder':
+        this.viewOrder()
+        break;
+      default:
+        return
+    }
+  }
+
   render() {
     let {
       quotedPriceDesc,
@@ -227,6 +254,9 @@ class OfferDetails extends Component {
     const cancelOfferClassName = classNames({
       'disabled-text': status === 30 || status === 40
     })
+    const buttonsList = buttons.map((item) => (
+      <View className={item.key} key={item} onClick={() => this.buttonsFun(item.key)}>{item.name}</View>
+    ))
     return (
       <View className='page-wrapper'>
         <NoTitleCard>
@@ -318,7 +348,12 @@ class OfferDetails extends Component {
             </View>
           </View>
         </NoTitleCard>
-        {
+        <View className='buttons-style'>
+          {
+            buttonsList
+          }
+        </View>
+        {/* {
           (status !== 40) ?
             <View>
               {
@@ -354,7 +389,7 @@ class OfferDetails extends Component {
               }
             </View>
             : null 
-        }
+        } */}
       </View>
     )
   }
