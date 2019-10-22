@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-21 16:47:18
+ * @LastEditTime: 2019-10-22 11:19:47
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,7 +14,6 @@ import {
   Input,
   Text,
   Picker,
-  Textarea,
   Button
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
@@ -418,8 +417,8 @@ class Index extends Component {
       receiveAddress, // 收车详细地址
       sendCityName,
       sendAddress, // 发车详细地址
-      storePickup, // 上门提车
-      homeDelivery, // 上门送车
+      // storePickup, // 上门提车
+      // homeDelivery, // 上门送车
       sendTimerInit,
       locationModal,
       disabled
@@ -430,7 +429,10 @@ class Index extends Component {
         <NoTitleCard>
           <View className='from-item'>
             <View className='label-wrapper'>
-              <View className='from-label'>发车时间</View>
+              <View className='form-required'>
+                <View className='required'>*</View>
+                <View className='from-label'>发车时间</View>
+              </View>
               <View className='from-right'>
                 <Picker
                   className='time-picker'
@@ -456,7 +458,10 @@ class Index extends Component {
           </View>
           <View className='from-item'>
             <View className='label-wrapper' onClick={()=>this.chooseCity('choose_start_city')}>
-              <View className='from-label'>发车地点</View>
+              <View className='form-required'>
+                <View className='required'>*</View>
+                <View className='from-label'>发车地点</View>
+              </View>
               <View className='from-right'>
                 <Text
                   className={classNames({
@@ -470,25 +475,23 @@ class Index extends Component {
                 <Text className='iconfont iconxiangyouxuanzejiantoux icon-right-style'></Text>
               </View>
             </View>
-            {
-              storePickup ?
-                <View className='label-hide'>
-                  <Textarea
-                    className='input'
-                    placeholder='请输入详细发车地址'
-                    placeholderClass='input-placeholder'
-                    maxlength='50'
-                    auto-height
-                    value={sendAddress}
-                    onInput={this.inputSendAddress}
-                  ></Textarea>
-                </View>
-                : null
-            }
+            <View className='label-hide'>
+              <Input
+                className='input textarea'
+                placeholder='请输入详细发车地址'
+                placeholderClass='input-placeholder'
+                maxlength='50'
+                value={sendAddress}
+                onInput={this.inputSendAddress}
+              ></Input>
+            </View>
           </View>
           <View className='from-item'>
             <View className='label-wrapper' onClick={()=>this.chooseCity('choose_target_city')}>
-              <View className='from-label'>收车地点</View>
+              <View className='form-required'>
+                <View className='required'>*</View>
+                <View className='from-label'>收车地点</View>
+              </View>
               <View className='from-right'>
                 <Text
                   className={classNames({
@@ -502,21 +505,16 @@ class Index extends Component {
                 <Text className='iconfont iconxiangyouxuanzejiantoux icon-right-style'></Text>
               </View>
             </View>
-            {
-              homeDelivery ?
-                <View className='label-hide'>
-                  <Textarea
-                    className='input'
-                    placeholder='请输入详细收车地址'
-                    placeholderClass='input-placeholder'
-                    maxlength='50'
-                    auto-height
-                    value={receiveAddress}
-                    onInput={this.inputReceiveAddress}
-                  ></Textarea>
-                </View>
-                : null
-            }
+            <View className='label-hide'>
+              <Input
+                className='input textarea'
+                placeholder='请输入详细收车地址'
+                placeholderClass='input-placeholder'
+                maxlength='50'
+                value={receiveAddress}
+                onInput={this.inputReceiveAddress}
+              ></Input>
+            </View>
           </View>
           <View className='from-item'>
             <View className='label-wrapper'>
@@ -531,7 +529,10 @@ class Index extends Component {
           </View>
           <View className='from-item'>
             <View className='label-wrapper'>
-              <View className='from-label'>车辆信息</View>
+              <View className='form-required'>
+                <View className='required'>*</View>
+                <View className='from-label'>车辆信息</View>
+              </View>
               <View className='from-right'></View>
             </View>
             <View className='label-hide'>
@@ -547,7 +548,10 @@ class Index extends Component {
           </View>
           <View className='from-item'>
             <View className='label-wrapper'>
-              <View className='from-label'>台数:</View>
+              <View className='form-required'>
+                <View className='required'>*</View>
+                <View className='from-label'>台数</View>
+              </View>
               <View className='from-right'>
                 <InputNumber
                   min={1}
@@ -559,7 +563,10 @@ class Index extends Component {
           </View>
           <View className='from-item'>
             <View className='label-wrapper'>
-              <View className='from-label'>车辆性质</View>
+              <View className='form-required'>
+                <View className='required'>*</View>
+                <View className='from-label'>车辆性质</View>
+              </View>
               <View className='from-right from-radio'>
                 <RadioGroups
                   options={carNatureList}
