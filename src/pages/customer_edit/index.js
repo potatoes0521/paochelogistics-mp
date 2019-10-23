@@ -3,7 +3,7 @@
  * @description: 修改添加客户信息
  * @Date: 2019-09-27 15:47:35
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-23 15:28:57
+ * @LastEditTime: 2019-10-23 18:40:42
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -282,7 +282,7 @@ class CustomerEdit extends Component {
             </View>
           </View>
           <View className='info-item'>
-            <View className='start-icon'>*</View>
+            <View className='start-icon'></View>
             <View className='item-label'>经销商类型</View>
             <View
               className='item-text'
@@ -297,7 +297,7 @@ class CustomerEdit extends Component {
             </View>
           </View>
           <View className='info-item'>
-            <View className='start-icon'>*</View>
+            <View className='start-icon'></View>
             <View className='item-label'>经销商名称</View>
             <View className='item-text'>
               <Input
@@ -310,7 +310,7 @@ class CustomerEdit extends Component {
             </View>
           </View>
           <View className='info-item'>
-            <View className='start-icon'>*</View>
+            <View className='start-icon'></View>
             <View className='item-label'>所属区域</View>
             <View
               className='item-text'
