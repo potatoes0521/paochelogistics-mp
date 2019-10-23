@@ -1,9 +1,13 @@
 /*
  * @Author: liuYang
  * @description: 选择商户列表  选择区域
+ *    pageType = merchant 选择商户
+ *    pageType = district 选择区域
+ *    pageType = merchantType 选择区域
+ * 
  * @Date: 2019-10-21 11:20:33
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-22 15:00:10
+ * @LastEditTime: 2019-10-23 14:26:38
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -17,6 +21,7 @@ import {
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import api from '@api/index.js'
+import { defaultResourceConfigURL } from '@config/request_config.js'
 import './index.styl'
 
 // eslint-disable-next-line import/first
@@ -26,7 +31,7 @@ class ChooseItem extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      inputText: '请输入商户名称进行搜索',
+      inputText: '请输入经销商名称进行搜索',
       indexesData: [],
       filterCityList: []
     }
@@ -40,7 +45,13 @@ class ChooseItem extends Component {
         inputText: '请输入区域名称进行搜索'
       })
       this.getDistrictList()
-    } else {
+    } else if (this.pageParams.pageType === 'merchantType') {
+      this.setNavigationBarTitle('选择经销商类型')
+      this.setState({
+        inputText: '请输入经销商类型进行搜索'
+      })
+      this.getMerchantType()
+    }else {
       this.getMerchantList()
     }
   }
@@ -64,21 +75,26 @@ class ChooseItem extends Component {
     const { pageType } = this.pageParams
     let pages = Taro.getCurrentPages(); //  获取页面栈
     let prevPage = pages[pages.length - 2]; // 上一个页面
+    let options = {}
     if (pageType === 'merchant') {
-      prevPage.$component.setState({
+      options = {
         merchantId: e.id,
         merchantName: e.name
-      }, () => {
-        Taro.navigateBack()
-      })
+      }
     } else if (pageType === 'district') {
-      prevPage.$component.setState({
+      options = {
         districtId: e.id,
         districtName: e.name
-      }, () => {
-        Taro.navigateBack()
-      })
+      }
+    } else if (pageType === 'merchantType') {
+      options = {
+        merchantTypeId: e.id,
+        merchantTypeName: e.name
+      }
     }
+    prevPage.$component.setState(options, () => {
+      Taro.navigateBack()
+    })
   }
   /**
    * 获取商户列表
@@ -107,6 +123,24 @@ class ChooseItem extends Component {
           indexesData: data
         })
       })
+  }
+  /**
+   * 获取经销商类型
+   * @return void
+   */
+  getMerchantType() {
+    Taro.request({
+      url: `${defaultResourceConfigURL}merchantType.json`,
+      method: 'get',
+      success: (res) => {
+        if (!res.data) return
+        const data = this.handleData(res.data.data)
+        this.setState({
+          indexesData: data
+        })
+        // this.merchantTypeList = res.data.data
+      }
+    })
   }
   /**
    * 处理数据
