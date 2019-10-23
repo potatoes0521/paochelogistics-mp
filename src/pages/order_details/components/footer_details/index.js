@@ -3,7 +3,7 @@
  * @description: 订单详情--底部详情 订单状态status 10 待支付 20 待交车 30 已取消 40 已完成
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-18 21:11:44
+ * @LastEditTime: 2019-10-23 10:08:05
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -11,7 +11,6 @@
 import Taro, { Component } from '@tarojs/taro' 
 import {
   View,
-  Text,
   Button
 } from '@tarojs/components'
 import OrderFooterCard from '../order_footer_card/index.js'
@@ -19,8 +18,6 @@ import OrderFooterCard from '../order_footer_card/index.js'
 import { connect } from '@tarojs/redux'
 // eslint-disable-next-line import/first
 import PropTypes from 'prop-types'
-// eslint-disable-next-line import/first
-import classNames from 'classnames'
 import './index.styl'
 
 class FooterDetailsComponent extends Component {
@@ -30,9 +27,8 @@ class FooterDetailsComponent extends Component {
   } 
   
   /**
-   * @description: 支付
-   * @param {type} 
-   * @return: 
+   * 立即支付
+   * @return void
    */
   paymentButton() {
     let { item } = this.props
@@ -40,11 +36,10 @@ class FooterDetailsComponent extends Component {
       url: `/pages/pay_details/index?order_id=${item.orderId}`
     })
   }
+  
   /**
    * 分享砍价
-   * @description: 
-   * @param {type} 
-   * @return: 
+   * @return void
    */
   shareBargain() {
     this.onShareAppMessage()
@@ -63,25 +58,61 @@ class FooterDetailsComponent extends Component {
     }
   }
 
+  /**
+   * 分享给客户
+   * @return void
+   */
+  shareCustomer() { }
+  
+  /**
+   * 查看运输状态
+   * @return void
+   */
   transportStatus() {
     let { item } = this.props
     Taro.navigateTo({
       url: `/pages/transport_state/index?order_id=${item.orderId}`
     })
   }
+
+  buttonsFun(e) {
+    e.stopPropagation()
+    let {
+      value
+    } = e.target
+    switch (value) {
+      case 'logisticsDetail':
+        this.transportStatus()
+        break;
+      case 'inviteCustomer':
+        this.shareCustomer()
+        break;
+      case 'payOrder':
+        this.paymentButton()
+        break;
+      case 'shareOrder':
+        this.shareBargain()
+        break;
+      default:
+        return
+    }
+  }
   render() {
     let {
-      item,
-      userInfo
+      item
     } = this.props
-    const payButtonClassName = classNames({
-      'pay-button buttons': true,
-      'change-padding': item.promotionsPrice
-    })
+    const buttonsList = item.buttons.map((itemList) => (
+      <Button className={itemList.key} key={itemList} onClick={() => this.buttonsFun(itemList.key)}>{itemList.name}</Button>
+    ))
     return (
       <View className='footer-details-wrapper'>
         <OrderFooterCard>
           <View className='status-wrapper'>
+            {
+              buttonsList
+            }
+          </View>
+          {/* <View className='status-wrapper'>
             {
               (item.logisticsDetailsDesc) ?
                 <View className='share-wrapper'>
@@ -92,7 +123,7 @@ class FooterDetailsComponent extends Component {
             {
               (userInfo.userType === 0) ?
                 <View className='share-wrapper'>
-                  <View className='customer-button buttons'>分享给客户</View>
+                  <View className='customer-button buttons' onClick={this.shareCustomer}>分享给客户</View>
                 </View>
                 :
                 null
@@ -116,7 +147,7 @@ class FooterDetailsComponent extends Component {
                 : null
             }
             
-          </View>
+          </View> */}
         </OrderFooterCard>
       </View>
     )
