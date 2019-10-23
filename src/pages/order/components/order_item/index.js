@@ -3,7 +3,7 @@
  * @description: 订单item
  * @Date: 2019-09-23 14:42:25
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-23 18:22:03
+ * @LastEditTime: 2019-10-23 18:26:50
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -30,13 +30,12 @@ export default class OrderItem extends Component {
     })
   }
 
-  buttonsFun(key, event) {
+  buttonsFun(event) {
     let {
       item
     } = this.props
     event.stopPropagation()
-
-    switch (key) {
+    switch (event.target.dataset.key) {
       case 'logisticsDetail':
         Taro.navigateTo({
           url: `/pages/transport_state/index?order_id=${item.orderId}`
@@ -65,7 +64,7 @@ export default class OrderItem extends Component {
       }
     )
     const buttonsList = item.buttons && item.buttons.map((itemList) => (
-      <View className={itemList.key} key={itemList} onClick={() => this.buttonsFun(itemList.key)}>{itemList.name}</View>
+      <View className={itemList.key} key={itemList} data-key={itemList.key} onClick={this.buttonsFun}>{itemList.name}</View>
     ))
     return (
       <View
