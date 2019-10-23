@@ -5,38 +5,37 @@
   flex-wrap wrap
   justify-content flex-end
 
-.buttons
+.payOrder
+  padding 0 40px
   height 64px
   font-size 28px
   line-height 64px
   border-radius 8px
-  display flex
-  align-items center
-  justify-content center
-
-.pay-button
-  padding 0 40px
+  text-align center
   margin-left 50px
   box-sizing border-box
   border 2px solid $price-color
   color $price-color
-  font-weight 400
   background-color $background-color
-
-.reduce-price
-  font-size 24px
-
-.change-padding
-  padding 0 20px
   
-.share-button
+.shareOrder
   width 200px
+  height 64px
+  font-size 28px
+  line-height 64px
+  border-radius 8px
+  text-align center
   margin-left 50px
   background-color $price-color
   color $background-color
 
-.collect-button
+.logisticsDetail
   width 200px
+  height 64px
+  font-size 28px
+  line-height 64px
+  border-radius 8px
+  text-align center
   background-color $background-color
   color $font-color
   box-sizing border-box
@@ -49,10 +48,22 @@
   color $price-color
   background-color $background-color
 
-.customer-button
+.inviteCustomer
   width 200px
+  height 64px
+  font-size 28px
+  line-height 64px
+  border-radius 8px
+  text-align center
   margin-left 50px
   background-color $background-color
   color $font-color
   box-sizing border-box
   border 2px solid $font-disabled-color
+
+button 
+  margin 0px
+  padding 0px
+
+button::after
+  border none

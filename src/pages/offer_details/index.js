@@ -3,16 +3,13 @@
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-22 18:09:14
+ * @LastEditTime: 2019-10-23 10:09:51
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 
 import Taro, { Component } from '@tarojs/taro'
-import {
-  View,
-  Button
-} from '@tarojs/components'
+import { View } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import NoTitleCard from '@c/no_title_card/index.js'
 import classNames from 'classnames'
