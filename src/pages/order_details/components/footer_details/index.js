@@ -3,7 +3,7 @@
  * @description: 订单详情--底部详情 订单状态status 10 待支付 20 待交车 30 已取消 40 已完成
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-23 14:30:38
+ * @LastEditTime: 2019-10-23 16:28:07
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -76,11 +76,7 @@ class FooterDetailsComponent extends Component {
   }
 
   buttonsFun(e) {
-    e.stopPropagation()
-    let {
-      value
-    } = e.target
-    switch (value) {
+    switch (e) {
       case 'logisticsDetail':
         this.transportStatus()
         break;

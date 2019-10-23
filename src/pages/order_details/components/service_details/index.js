@@ -3,7 +3,7 @@
  * @description: 订单详情中发车城市、 收车城市的组件 usedType: 1, //车辆类型  1新车  2二手车
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-21 16:35:28
+ * @LastEditTime: 2019-10-23 16:43:55
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -34,13 +34,13 @@ class ServiceDetailsComponent extends Component {
               <View className='details-form-label'>服务:</View>
               <View className='details-form-content'>
                 {
-                  item.inquiryOrderVO && !item.inquiryOrderVO.storePickup ? '上门提车' : ''
+                  item.inquiryOrderVO && item.inquiryOrderVO.storePickup ? '上门提车' : ''
                 }
                 {
-                  (item.inquiryOrderVO && !item.inquiryOrderVO.storePickup) && (item.inquiryOrderVO && !item.inquiryOrderVO.homeDelivery) ? '，' : ''
+                  (item.inquiryOrderVO && item.inquiryOrderVO.storePickup) && (item.inquiryOrderVO && item.inquiryOrderVO.homeDelivery) ? '，' : ''
                 }
                 {
-                  item.inquiryOrderVO && !item.inquiryOrderVO.homeDelivery ? '上门送车' : ''
+                  item.inquiryOrderVO && item.inquiryOrderVO.homeDelivery ? '上门送车' : ''
                 }
               </View>
             </View>

@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-22 10:30:17
+ * @LastEditTime: 2019-10-23 16:33:44
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -402,7 +402,7 @@ class PlaceOrder extends Component {
                 <View className='details-form-content'>{sendCityName || ''}</View>
               </View>
               {
-                (!storePickup) ?
+                (sendAddress.length) ?
                   <View className='details-form-item'>
                     <View className='start-icon'></View>
                     <View className='details-form-label'>详细信息:</View>
@@ -463,7 +463,7 @@ class PlaceOrder extends Component {
                 <View className='details-form-content'>{receiveCityName || ''}</View>
               </View>
               {
-                (!homeDelivery) ?
+                (receiveAddress.length) ?
                   <View className='details-form-item'>
                     <View className='start-icon'></View>
                     <View className='details-form-label'>详细信息:</View>
@@ -518,19 +518,19 @@ class PlaceOrder extends Component {
             <View className='dividing-line'></View>
             <View className='car-info'>
               {
-                (!storePickup || !homeDelivery) ?
+                (storePickup || homeDelivery) ?
                   <View className='details-form-item'>
                     <View className='start-icon'></View>
                     <View className='details-form-label'>服务:</View>
                     <View className='details-form-content'>
                       {
-                        !storePickup ? '上门提车' : ''
+                        storePickup ? '上门提车' : ''
                       }
                       {
-                        !storePickup && !homeDelivery ? '，' : ''
+                        storePickup && homeDelivery ? '，' : ''
                       }
                       {
-                        !homeDelivery ? '上门送车' : ''
+                        homeDelivery ? '上门送车' : ''
                       }
                     </View>
                   </View>

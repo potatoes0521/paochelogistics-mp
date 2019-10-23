@@ -3,7 +3,7 @@
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-23 10:09:51
+ * @LastEditTime: 2019-10-23 16:27:52
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -207,9 +207,7 @@ class OfferDetails extends Component {
   }
 
   buttonsFun(e) {
-    e.stopPropagation()
-    let { value } = e.target
-    switch (value) {
+    switch (e) {
       case 'cancelInquiry':
         this.cancelOffer()
         break;
