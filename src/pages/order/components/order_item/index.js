@@ -3,7 +3,7 @@
  * @description: 订单item
  * @Date: 2019-09-23 14:42:25
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-23 18:16:15
+ * @LastEditTime: 2019-10-23 18:22:03
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -30,11 +30,13 @@ export default class OrderItem extends Component {
     })
   }
 
-  buttonsFun(e) {
+  buttonsFun(key, event) {
     let {
       item
     } = this.props
-    switch (e) {
+    event.stopPropagation()
+
+    switch (key) {
       case 'logisticsDetail':
         Taro.navigateTo({
           url: `/pages/transport_state/index?order_id=${item.orderId}`
