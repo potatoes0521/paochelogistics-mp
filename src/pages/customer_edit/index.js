@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 修改添加客户信息
  * @Date: 2019-09-27 15:47:35
- * @LastEditors: guorui
- * @LastEditTime: 2019-10-22 11:25:02
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-10-23 14:25:25
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -15,6 +15,7 @@ import {
 } from '@tarojs/components'
 import Storage from '@utils/storage.js'
 import { connect } from '@tarojs/redux'
+import { defaultResourceConfigURL } from '@config/request_config.js'
 import api from '@api/index.js'
 import './index.styl'
 
@@ -24,23 +25,23 @@ class CustomerEdit extends Component {
     this.state = {
       remarkName: '',
       mobile: '',
-      merchantId: '',
+      // merchantId: '',
       merchantName: '',
       idCard: '',
       districtId: '',
-      districtName: ''
+      districtName: '',
+      merchantTypeId: '',
+      merchantTypeName: '',
     }
     this.pageParams = {}
     this.customerInfo = {}
     this.districList = []
-    this.merchantList = []
+    this.merchantTypeList = []
   }
-  componentWillUnmount() {
-    Storage.removeStorage('customer_details')
-  }
-  
-  componentDidShow() { 
+
+  componentDidMount() {
     this.pageParams = this.$router.params
+    this.getMerchantType()
     if (this.pageParams.pageType === 'edit') {
       Taro.setNavigationBarTitle({
         title: '编辑客户信息'
@@ -48,6 +49,11 @@ class CustomerEdit extends Component {
       this.getCustomerDetails()
     }
   }
+  
+  componentWillUnmount() {
+    Storage.removeStorage('customer_details')
+  }
+  
   /**
    * 获取客户信息详情
    * @return void
@@ -58,11 +64,12 @@ class CustomerEdit extends Component {
       this.setState({
         remarkName: res.remarkName,
         mobile: res.mobile,
-        merchantId: res.merchantId,
-        merchantName: res.merchantName,
         idCard: res.idCard,
         districtId: res.districtId,
-        districtName: res.districtName
+        districtName: res.districtName,
+        merchantName: res.merchantName,
+        merchantTypeId: res.merchantType,
+        merchantTypeName: res.merchantTypeName
       })
     })
   }
@@ -84,6 +91,16 @@ class CustomerEdit extends Component {
   phoneInput(e) {
     this.setState({
       mobile: e.target.value
+    })
+  }
+  /**
+   * 经销商名字
+   * @param {Object} e event对象
+   * @return void
+   */
+  merchantNameInput(e) {
+    this.setState({
+      merchantName: e.target.value
     })
   }
   /**
@@ -110,7 +127,9 @@ class CustomerEdit extends Component {
   submit() {
     let {
       mobile,
-      merchantId,
+      merchantName,
+      merchantTypeId,
+      // merchantId: '',
       idCard,
       remarkName,
       districtId
@@ -127,8 +146,12 @@ class CustomerEdit extends Component {
     //   this.toast('客户身份证号格式有误')
     //   return
     // }
-    if (!merchantId) {
-      this.toast('请选择所属经销商')
+    if (!merchantName) {
+      this.toast('请填写经销商')
+      return
+    }
+    if (!merchantTypeId) {
+      this.toast('请选择经销商类型')
       return
     }
     if (!districtId) {
@@ -138,7 +161,9 @@ class CustomerEdit extends Component {
     let sendData = {
       userId: this.customerInfo.userId,
       mobile,
-      merchantId,
+      merchantName,
+      merchantType: merchantTypeId,
+      // merchantId: '',
       idCard,
       remarkName,
       districtId
@@ -171,10 +196,23 @@ class CustomerEdit extends Component {
    * @return void
    */
   chooseMerchant() { 
-    if (this.pageParams.pageType === 'edit') return
-    Taro.navigateTo({
-      url: '/pages/choose_item/index?pageType=merchant'
-    })
+    if (this.merchantTypeList.length > 5) {
+      Taro.navigateTo({
+        url: '/pages/choose_item/index?pageType=merchantType'
+      })
+    } else {
+      let stringMerchantTypeName = this.merchantTypeList.map(item => item.merchantTypeName)
+      Taro.showActionSheet({
+          itemList: stringMerchantTypeName
+        })
+        .then(res => {
+          this.setState({
+            merchantTypeId: this.merchantTypeList[res.tapIndex].merchantTypeId,
+            merchantTypeName: this.merchantTypeList[res.tapIndex].merchantTypeName,
+          })
+        })
+        .catch(err => console.log(err.errMsg))
+    }
   }
   /**
    * 选择区域
@@ -183,9 +221,21 @@ class CustomerEdit extends Component {
    * @return: 
    */
   chooseDistrictId() {
-    if (this.pageParams.pageType === 'edit') return
     Taro.navigateTo({
       url: '/pages/choose_item/index?pageType=district'
+    })
+  }
+  /**
+   * 获取经销商类型
+   * @return void
+   */
+  getMerchantType() {
+    Taro.request({
+      url: `${defaultResourceConfigURL}merchantType.json`,
+      method: 'get',
+      success: (res) => {
+        this.merchantTypeList = res.data.data
+      }
     })
   }
   config = {
@@ -196,14 +246,15 @@ class CustomerEdit extends Component {
       remarkName,
       mobile,
       merchantName,
-      idCard,
+      merchantTypeName,
+      // idCard,
       districtName
     } = this.state
     return (
       <View className='page-wrapper'>
         <View className='customer-info-wrapper'>
           <View className='info-item'>
-            {/* <View className='start-icon'>*</View> */}
+            <View className='start-icon'>*</View>
             <View className='item-label'>姓名</View>
             <View className='item-text'>
               <Input
@@ -216,72 +267,50 @@ class CustomerEdit extends Component {
             </View>
           </View>
           <View className='info-item'>
-            {/* {
-              this.pageParams.pageType === 'edit' ?
-                <View className='start-icon'></View>
-                :
-                <View className='start-icon'>*</View>
-            } */}
+            <View className='start-icon'>*</View>
             <View className='item-label'>联系方式</View>
             <View className='item-text'>
-              {
-                this.pageParams.pageType === 'edit' ?
-                  <Text className='edit-text'>{mobile}</Text>
-                  :
-                  <Input
-                    type='number'
-                    className='input-public'
-                    placeholder='请输入客户联系方式'
-                    placeholderClass='placeholder-style'
-                    value={mobile}
-                    maxLength='11'
-                    onInput={this.phoneInput}
-                  ></Input>
-              }
-            </View>
-          </View>
-          <View className='info-item'>
-            {/* <View className='start-icon'></View> */}
-            <View className='item-label'>身份证号</View>
-            <View className='item-text'>
               <Input
+                type='number'
                 className='input-public'
-                placeholder='请输入客户身份证号'
+                placeholder='请输入客户联系方式'
                 placeholderClass='placeholder-style'
-                maxLength='20'
-                type='idcard'
-                value={idCard}
-                onInput={this.idCardInput}
+                value={mobile}
+                maxLength='11'
+                onInput={this.phoneInput}
               ></Input>
             </View>
           </View>
           <View className='info-item'>
-            {/* {
-              this.pageParams.pageType === 'edit' ?
-                <View className='start-icon'></View>
-                :
-                <View className='start-icon'>*</View>
-            } */}
-            <View className='item-label'>所属经销商</View>
+            <View className='start-icon'>*</View>
+            <View className='item-label'>经销商类型</View>
             <View
               className='item-text'
               onClick={this.chooseMerchant}
             >
               {
-                merchantName ? 
-                  <Text className='edit-text'>{merchantName}</Text>
+                merchantTypeName ?
+                  <Text className='edit-text'>{merchantTypeName}</Text>
                   :
-                  <Text>请选择所属经销商</Text>
+                  <Text>请选择经销商类型</Text>
               }
             </View>
           </View>
           <View className='info-item'>
-            {/* {
-              this.pageParams.pageType === 'edit' ?
-                <View className='start-icon'></View>
-                :
-                <View className='start-icon'>*</View>
-            } */}
+            <View className='start-icon'>*</View>
+            <View className='item-label'>经销商名称</View>
+            <View className='item-text'>
+              <Input
+                className='input-public'
+                placeholder='请输入经销商名称'
+                placeholderClass='placeholder-style'
+                value={merchantName}
+                onInput={this.merchantNameInput}
+              ></Input>
+            </View>
+          </View>
+          <View className='info-item'>
+            <View className='start-icon'>*</View>
             <View className='item-label'>所属区域</View>
             <View
               className='item-text'
@@ -295,6 +324,21 @@ class CustomerEdit extends Component {
               }
             </View>
           </View>
+          {/* <View className='info-item'>
+            <View className='start-icon'></View>
+            <View className='item-label'>身份证号</View>
+            <View className='item-text'>
+              <Input
+                className='input-public'
+                placeholder='请输入客户身份证号'
+                placeholderClass='placeholder-style'
+                maxLength='20'
+                type='idcard'
+                value={idCard}
+                onInput={this.idCardInput}
+              ></Input>
+            </View>
+          </View> */}
         </View>
         <View className='edit-btn-group'>
           <View
