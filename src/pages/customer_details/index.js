@@ -3,7 +3,7 @@
  * @description: 客户信息详情
  * @Date: 2019-09-27 15:43:53
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-23 13:57:49
+ * @LastEditTime: 2019-10-23 15:28:34
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -82,7 +82,7 @@ class CustomerDetails extends Component {
           </View>
           <View className='info-item'>
             <View className='item-label'>经销商类型</View>
-            <View className='item-text'>{customerInfo.merchantTypeName || ''}</View>
+            <View className='item-text'>{customerInfo.merchantTypeDesc || ''}</View>
           </View>
           <View className='info-item'>
             <View className='item-label'>经销商名称</View>

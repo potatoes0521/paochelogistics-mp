@@ -3,7 +3,7 @@
  * @description: 修改添加客户信息
  * @Date: 2019-09-27 15:47:35
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-23 14:25:25
+ * @LastEditTime: 2019-10-23 15:28:57
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -69,7 +69,7 @@ class CustomerEdit extends Component {
         districtName: res.districtName,
         merchantName: res.merchantName,
         merchantTypeId: res.merchantType,
-        merchantTypeName: res.merchantTypeName
+        merchantTypeName: res.merchantTypeDesc
       })
     })
   }
