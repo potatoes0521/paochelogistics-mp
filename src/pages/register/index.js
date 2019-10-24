@@ -3,7 +3,7 @@
  * @description: 注册页面
  * @Date: 2019-08-22 11:58:25
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-21 16:50:56
+ * @LastEditTime: 2019-10-24 09:44:47
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -97,7 +97,7 @@ class usePhoneNumberRegister extends Component {
   onPhoneInputChange(e) {
     let { value } = e.detail
     
-    if ((/^1[3456789]\d{9}$/.test(value)) && (/^\d{6}\b/.test(this.verificationCode))) {
+    if ((/^1[3456789]\d{9}$/.test(value)) && (/^\d{4,6}\b/.test(this.verificationCode))) {
       this.setState({
         disabled: false
       })
@@ -115,7 +115,7 @@ class usePhoneNumberRegister extends Component {
    */
   onVerificationCodeInputChange(e) {
     let { value } = e.detail
-    if ((/^1[3456789]\d{9}$/.test(this.phoneNumber)) && (/^\d{6}\b/.test(value))) {
+    if ((/^1[3456789]\d{9}$/.test(this.phoneNumber)) && (/^\d{4,6}\b/.test(value))) {
       this.setState({
         disabled: false
       })
@@ -138,7 +138,7 @@ class usePhoneNumberRegister extends Component {
       })
       return
     }
-    if (!(/^\d{6}\b/.test(this.verificationCode))) {
+    if (!(/^\d{4,6}\b/.test(this.verificationCode))) {
       Taro.showToast({
         title: '验证码格式有误',
         icon: 'none'
