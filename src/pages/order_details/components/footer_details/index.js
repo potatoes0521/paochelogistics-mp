@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 订单详情--底部详情 订单状态status 10 待支付 20 待交车 30 已取消 40 已完成
  * @Date: 2019-09-20 09:58:08
- * @LastEditors: guorui
- * @LastEditTime: 2019-10-23 16:28:07
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-10-24 14:44:45
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -42,20 +42,7 @@ class FooterDetailsComponent extends Component {
    * @return void
    */
   shareBargain() {
-    this.onShareAppMessage()
-  }
-  onShareAppMessage(res) {
-    let { item } = this.props
-    if (item.shareType !== 1) return
-    if (res.from === 'button') {
-      // 来自页面内转发按钮
-      console.log(res.target)
-    }
-    return {
-      title: `砍价信息`,
-      path: `/pages/share_details/index?order_id=${item.orderId}`,
-      imageUrl: ``
-    }
+    // this.onShareAppMessage()
   }
 
   /**
@@ -80,26 +67,32 @@ class FooterDetailsComponent extends Component {
       case 'logisticsDetail':
         this.transportStatus()
         break;
-      case 'inviteCustomer':
-        this.shareCustomer()
-        break;
+      // case 'inviteCustomer':
+      //   this.shareCustomer()
+      //   break;
       case 'payOrder':
         this.paymentButton()
         break;
-      case 'shareOrder':
-        this.shareBargain()
-        break;
+      // case 'shareOrder':
+      //   this.shareBargain()
+      //   break;
       default:
         return
     }
   }
+  
   render() {
-    let {
-      item
-    } = this.props
-    const buttonsList = item.buttons && item.buttons.map((itemList) => (
-      <Button className={itemList.key} key={itemList} onClick={() => this.buttonsFun(itemList.key)}>{itemList.name}</Button>
-    ))
+    let { item } = this.props
+    const buttonsList = item.buttons && item.buttons.map((itemList) => {
+      if (itemList.key == 'inviteCustomer') {
+        return (
+          <Button openType='share' data-type='inviteCustomer' data-item={item} className={itemList.key} key={itemList}>{itemList.name}</Button>
+        )
+      }
+      return (
+        <Button className={itemList.key} key={itemList} onClick={() => this.buttonsFun(itemList.key)}>{itemList.name}</Button>
+      )
+    })
     return (
       <View className='footer-details-wrapper'>
         <OrderFooterCard>

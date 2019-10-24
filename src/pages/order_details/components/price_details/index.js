@@ -2,14 +2,17 @@
  * @Author: guorui
  * @description: 订单详情中发车城市、收车城市的组件
  * @Date: 2019-09-20 09:58:08
- * @LastEditors: guorui
- * @LastEditTime: 2019-10-15 16:19:20
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-10-24 13:39:54
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 
 import Taro, { Component } from '@tarojs/taro'
-import { View } from '@tarojs/components'
+import {
+  View,
+  // Text
+} from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import PropTypes from 'prop-types'
 import './index.styl'
@@ -27,6 +30,7 @@ class PriceDetailsComponent extends Component {
         <View className='details-form-item'>
           <View className='details-form-label'>报价:</View>
           <View className='details-form-price'>￥{item.inquiryOrderVO && item.inquiryOrderVO.quotedPriceDesc || ''}</View>
+          {/* <Text className='number'>/台</Text> */}
         </View>
         {
           (item.bargainPriceDesc) ?

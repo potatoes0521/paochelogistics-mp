@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-22 11:27:09
+ * @LastEditTime: 2019-10-24 13:52:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -78,6 +78,7 @@ class Index extends Component {
   
   async componentDidMount() { 
     this.pageParams = this.$router.params
+    console.log(this.pageParams)
     this.initData()
     await login.getCode(this) // 登录
     this.handleLocation()

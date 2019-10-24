@@ -3,14 +3,15 @@
  * @description: 订单item
  * @Date: 2019-09-23 14:42:25
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-23 18:26:50
+ * @LastEditTime: 2019-10-24 14:42:51
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import Taro, { Component } from '@tarojs/taro'
 import {
   View,
-  Text
+  Text,
+  Button
 } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
@@ -50,7 +51,6 @@ export default class OrderItem extends Component {
         return
     }
   }
-  
   render() {
     let {
       item,
@@ -63,9 +63,16 @@ export default class OrderItem extends Component {
         'order-over': item.isActive !== 1
       }
     )
-    const buttonsList = item.buttons && item.buttons.map((itemList) => (
-      <View className={itemList.key} key={itemList} data-key={itemList.key} onClick={this.buttonsFun}>{itemList.name}</View>
-    ))
+    const buttonsList = item.buttons && item.buttons.map((itemList) => {
+      if (itemList.key == 'inviteCustomer') {
+        return (
+          <Button openType='share' data-item={item} data-type='inviteCustomer' className={itemList.key} key={itemList} onClick={this.buttonsFun}>{itemList.name}</Button>
+        )
+      }
+      return (
+        <Button className={itemList.key} key={itemList} data-key={itemList.key} onClick={this.buttonsFun}>{itemList.name}</Button>
+      )
+    })
     return (
       <View
         className={allWrapperClassName}

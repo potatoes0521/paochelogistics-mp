@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
- * @LastEditors: guorui
- * @LastEditTime: 2019-10-17 20:13:22
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-10-24 14:55:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -64,7 +64,36 @@ class OrderDetails extends Component {
         Taro.hideLoading()
       })
   }
+  /**
+   * 触发了分享
+   * @param {Object} event 参数描述
+   * @return void
+   */
+  onShareAppMessage(event) {
+    let { item } = event.target.dataset
+    let { inquiryOrderVO } = item
+    let path = `/pages/share_bargain/index?order_id=${item.orderId}`
+    let title = `砍价`
+    if (event.from === 'button') {
+      // 来自页面内转发按钮
+      let {
+        type
+      } = event.target.dataset
+      // share_type = 1 发送给客户  不管谁点进来  去订单详情
+      // c_id 是customerID的缩写  主要判断是不是这个用户的单 如果不是就让他进了首页
+      if (type === 'inviteCustomer') { // 分享给客户
+        path = `/pages/index/index?share_type=1&order_id=${item.orderId}&c_id=${item.userId}`
+        title = `${inquiryOrderVO.sendCityName}发往${inquiryOrderVO.receiveCityName}的${inquiryOrderVO.carAmount}辆${inquiryOrderVO.carInfo}已经发车了`
 
+      }
+      // shareOrder 分享砍价的页面
+      return {
+        title: title,
+        path: path,
+        imageUrl: ``
+      }
+    }
+  }
   render() {
     let {
       orderDetailsInfo

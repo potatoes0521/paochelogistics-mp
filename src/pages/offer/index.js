@@ -3,7 +3,7 @@
  * @description: 询价单页面
  * @Date: 2019-09-20 13:24:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-14 16:37:04
+ * @LastEditTime: 2019-10-24 14:32:15
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -207,7 +207,7 @@ class Offer extends Component {
     const hasOfferItemList = hasOfferList.map(item => {
       return (
         <OfferItem
-          key={item.inquiryId}
+          key={item.inquiryId + '1'}
           item={item}
         ></OfferItem>
       )
@@ -215,7 +215,7 @@ class Offer extends Component {
     const onOfferItemList = noOfferList.map(item => {
       return (
         <OfferItem
-          key={item.inquiryId}
+          key={item.inquiryId + '2'}
           item={item}
         ></OfferItem>
       )

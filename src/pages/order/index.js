@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
- * @LastEditors: guorui
- * @LastEditTime: 2019-10-18 14:08:07
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-10-24 14:55:08
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -184,6 +184,35 @@ class Order extends Component {
       this.getOrderList(10, this.allOrderPage, true)
     }
   }
+  /**
+   * 触发了分享
+   * @param {Object} event 参数描述
+   * @return void
+   */
+  onShareAppMessage(event) {
+    const { item } = event.target.dataset
+    const offerMsg = item && item.inquiryOrderVO
+    let path = `/pages/share_bargain/index?order_id=${item.orderId}`
+    let title = `砍价标题`
+    if (event.from === 'button') {
+      let {
+        type
+      } = event.target.dataset
+      // share_type = 1 发送给客户  不管谁点进来  去订单详情
+      // c_id 是customerID的缩写  主要判断是不是这个用户的单 如果不是就让他进了首页
+      if (type === 'inviteCustomer') { // 分享给客户
+        path = `/pages/index/index?share_type=1&order_id=${item.orderId}&c_id=${item.userId}`
+        title = `${offerMsg.sendCityName}发往${offerMsg.receiveCityName}的${offerMsg.carAmount}辆${offerMsg.carInfo}已经发车了`
+      }
+      // shareOrder 分享砍价的页面
+      return {
+        title: title,
+        path: path,
+        imageUrl: ``
+      }
+    }
+  }
+
   config = {
     navigationBarTitleText: '我的订单',
     enablePullDownRefresh: true
@@ -198,18 +227,20 @@ class Order extends Component {
     } = this.state
     let { userInfo } =  this.props
     const waitPayItemList = waitPayList.map(item => {
+      const key = item.orderId + '1'
       return (
         <OrderItem
-          key={item.orderId}
+          key={key}
           item={item}
           userInfo={userInfo}
         ></OrderItem>
       )
     })
     const payOverItemList = payOverList.map(item => {
+      const key = item.orderId + '2'
       return (
         <OrderItem
-          key={item.orderId}
+          key={key}
           item={item}
           userInfo={userInfo}
         ></OrderItem>
