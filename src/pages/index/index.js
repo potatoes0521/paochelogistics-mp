@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-24 13:52:16
+ * @LastEditTime: 2019-10-24 15:06:03
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -78,9 +78,13 @@ class Index extends Component {
   
   async componentDidMount() { 
     this.pageParams = this.$router.params
-    console.log(this.pageParams)
+    console.log('参数:' ,this.pageParams)
     this.initData()
     await login.getCode(this) // 登录
+    // share_type 1 分享给客户 2 分享砍价
+    if (this.pageParams.share_type) {
+      this.handleShare()
+    }
     this.handleLocation()
   }
   componentDidShow() { 
@@ -90,6 +94,16 @@ class Index extends Component {
       })
     }
     this.handleDisabled()
+  }
+  handleShare() { 
+    let { userInfo } = this.props
+    if (this.pageParams.share_type === '1' && +userInfo.userId === +this.pageParams.c_id) {
+      Taro.navigateTo({
+        url: `/pages/order_details/index?order_id=${this.pageParams.order_id}`
+      })
+    } else {
+      console.log('砍价')
+    }
   }
   /**
    * 检查发车城市和收车城市选中状态
