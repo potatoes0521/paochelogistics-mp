@@ -3,7 +3,7 @@
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-24 14:55:08
+ * @LastEditTime: 2019-10-24 14:58:53
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -204,7 +204,6 @@ class Order extends Component {
         path = `/pages/index/index?share_type=1&order_id=${item.orderId}&c_id=${item.userId}`
         title = `${offerMsg.sendCityName}发往${offerMsg.receiveCityName}的${offerMsg.carAmount}辆${offerMsg.carInfo}已经发车了`
       }
-      // shareOrder 分享砍价的页面
       return {
         title: title,
         path: path,
