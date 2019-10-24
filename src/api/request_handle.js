@@ -3,7 +3,7 @@
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-21 17:26:43
+ * @LastEditTime: 2019-10-24 09:40:42
  */
 
 // 默认请求连接
@@ -26,7 +26,7 @@ import createSignData from './secret.js'
 
 const sign_id = 'wx90c791e28c3c7d4d'
 const contentType = 'application/json;charset=UTF-8'
-export const appVersion = '0.8.7'
+export const appVersion = '0.8.10'
 
 export default {
   baseOptions(url, data, that, method = 'GET') {
