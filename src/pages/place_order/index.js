@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: guorui
- * @LastEditTime: 2019-10-23 16:33:44
+ * @LastEditTime: 2019-10-23 20:10:41
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -380,7 +380,7 @@ class PlaceOrder extends Component {
         <View className='place-order-top'>
           {
             (userInfo.userType === 0) ?
-              <View className='choose-customer'>
+              <View className='choose-customer'  onClick={this.chooseCustomer}>
                 <View className='customer-info'>
                   <View className='iconfont iconkehu customer-img'></View>
                   <View className='customer-name'>
@@ -390,7 +390,7 @@ class PlaceOrder extends Component {
                     }
                   </View>
                 </View>
-                <View className='iconfont iconxiangyouxuanzejiantoux choose-arrow' onClick={this.chooseCustomer}></View>
+                <View className='iconfont iconxiangyouxuanzejiantoux choose-arrow'></View>
               </View>
               : null
           }
