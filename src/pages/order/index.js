@@ -3,7 +3,7 @@
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-24 14:58:53
+ * @LastEditTime: 2019-10-24 17:22:29
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -207,7 +207,7 @@ class Order extends Component {
       return {
         title: title,
         path: path,
-        imageUrl: ``
+        imageUrl: `https://resource.paoche56.com/paochelogistics/mp_img/share.png`
       }
     }
   }
