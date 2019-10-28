@@ -3,7 +3,7 @@
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-24 09:40:42
+ * @LastEditTime: 2019-10-28 10:45:09
  */
 
 // 默认请求连接
@@ -46,7 +46,7 @@ export default {
       'appType': 1, // 1 微信小程序 2 支付宝小程序
       'systemId': 2 // 1 跑车帮   2 跑车物流
     })
-    
+    console.log(data)
     return new Promise((resolve, reject) => {
       Taro.request({
         isShowLoading: true,

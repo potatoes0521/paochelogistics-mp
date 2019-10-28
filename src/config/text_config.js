@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-09-12 11:17:44
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-21 16:36:44
+ * @LastEditTime: 2019-10-28 10:34:47
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -35,15 +35,15 @@ export const carNatureList = [
 
 export const offerTabs = [
   {
-    label: '全部',
+    label: '已报价',
     id: 0
   },
   {
-    label: '已报价',
+    label: '未报价',
     id: 1
   },
   {
-    label: '未报价',
+    label: '全部',
     id: 2
   }
 ]

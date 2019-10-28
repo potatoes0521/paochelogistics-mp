@@ -3,7 +3,7 @@
  * @description: 询价单页面
  * @Date: 2019-09-20 13:24:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-24 14:32:15
+ * @LastEditTime: 2019-10-28 10:43:39
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -173,13 +173,13 @@ class Offer extends Component {
    */
   onReachBottom() {
     let { current } = this.state
-    if (current === 0) {
-      if (this.allOfferFlag) return
+    if (current === 2) {
+      // if (this.allOfferFlag) return
       this.getOfferList('', this.allOfferPage, true)
-    } else if (current === 1) {
+    } else if (current === 0) {
       if (this.hasOfferFlag) return
       this.getOfferList(20, this.hasOfferPage, true)
-    } else if (current === 2) {
+    } else if (current === 1) {
       if (this.noOfferFlag) return
       this.getOfferList(10, this.noOfferPage, true)
     }
@@ -196,30 +196,24 @@ class Offer extends Component {
       noOfferList
     } = this.state
     let { userInfo } = this.props
-    const AllOfferItemList = allOfferList.map(item => {
-      return (
-        <OfferItem
-          key={item.inquiryId}
-          item={item}
-        ></OfferItem>
-      )
-    })
-    const hasOfferItemList = hasOfferList.map(item => {
-      return (
-        <OfferItem
-          key={item.inquiryId + '1'}
-          item={item}
-        ></OfferItem>
-      )
-    })
-    const onOfferItemList = noOfferList.map(item => {
-      return (
-        <OfferItem
-          key={item.inquiryId + '2'}
-          item={item}
-        ></OfferItem>
-      )
-    })
+    const AllOfferItemList = allOfferList.map(item =>
+      <OfferItem
+        key={item.inquiryId}
+        item={item}
+      ></OfferItem>
+    ) // 全部
+    const hasOfferItemList = hasOfferList.map(item =>
+      <OfferItem
+        key={item.inquiryId + '1'}
+        item={item}
+      ></OfferItem>
+    ) // 已报价
+    const onOfferItemList = noOfferList.map(item =>
+      <OfferItem
+        key={item.inquiryId + '2'}
+        item={item}
+      ></OfferItem>
+    ) // 待报价
     return (
       <View className='offer-wrapper'>
         {
@@ -237,14 +231,6 @@ class Offer extends Component {
               >
                 <SwiperItem className='swiper-item'>
                   {
-                    allOfferList.length > 0 ?
-                      AllOfferItemList
-                      :
-                      <NoData pageType='offer'></NoData>
-                  }
-                </SwiperItem>
-                <SwiperItem className='swiper-item'>
-                  {
                     hasOfferList.length > 0 ?
                       hasOfferItemList
                       :
@@ -255,6 +241,14 @@ class Offer extends Component {
                   { 
                     noOfferList.length > 0 ?
                       onOfferItemList
+                      :
+                      <NoData pageType='offer'></NoData>
+                  }
+                </SwiperItem>
+                <SwiperItem className='swiper-item'>
+                  {
+                    allOfferList.length > 0 ?
+                      AllOfferItemList
                       :
                       <NoData pageType='offer'></NoData>
                   }
