@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-24 15:06:03
+ * @LastEditTime: 2019-10-30 16:18:44
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -68,7 +68,7 @@ class Index extends Component {
       sendTimerInit: '',
       locationModal: false,
       // eslint-disable-next-line react/no-unused-state
-      disabled: true
+      // disabled: true
     }
     this.initCity = {}
     this.pageParams = {}
@@ -93,7 +93,7 @@ class Index extends Component {
         locationModal: true
       })
     }
-    this.handleDisabled()
+    // this.handleDisabled()
   }
   handleShare() { 
     let { userInfo } = this.props
@@ -110,20 +110,20 @@ class Index extends Component {
    * @return void
    */
   handleDisabled() { 
-    let {
-      sendCityName,
-      receiveCityName,
-      carInfo
-    } = this.state
-    if (sendCityName && receiveCityName && carInfo) {
-      this.setState({
-        disabled: false
-      })
-    } else {
-      this.setState({
-        disabled: true
-      })
-    }
+    // let {
+    //   sendCityName,
+    //   receiveCityName,
+    //   carInfo
+    // } = this.state
+    // if (sendCityName && receiveCityName && carInfo) {
+    //   this.setState({
+    //     disabled: false
+    //   })
+    // } else {
+    //   this.setState({
+    //     disabled: true
+    //   })
+    // }
   }
   /**
    * 初始化数据
@@ -283,19 +283,19 @@ class Index extends Component {
    */
   inputCarInfo(e) {
     let { value } = e.detail
-    let {
-      receiveCityName,
-      sendCityName
-    } = this.state
-    if (sendCityName && receiveCityName && value) {
-      this.setState({
-        disabled: false
-      })
-    } else {
-      this.setState({
-        disabled: true
-      })
-    }
+    // let {
+    //   receiveCityName,
+    //   sendCityName
+    // } = this.state
+    // if (sendCityName && receiveCityName && value) {
+    //   this.setState({
+    //     disabled: false
+    //   })
+    // } else {
+    //   this.setState({
+    //     disabled: true
+    //   })
+    // }
     this.setState({
       carInfo: value
     })
@@ -436,7 +436,7 @@ class Index extends Component {
       // homeDelivery, // 上门送车
       sendTimerInit,
       locationModal,
-      disabled
+      // disabled
     } = this.state
     let { userInfo } = this.props
     return (
@@ -595,7 +595,8 @@ class Index extends Component {
             </View>
           </View>
         </NoTitleCard>
-        <Button type='button' disabled={disabled} className='submit-btn' onClick={this.submitOffer}>立即询价</Button>
+        {/* disabled={disabled}  */}
+        <Button type='button' className='submit-btn' onClick={this.submitOffer}>立即询价</Button>
         {
           locationModal ? 
             <LocationModal

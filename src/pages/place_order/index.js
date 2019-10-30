@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
- * @LastEditors: guorui
- * @LastEditTime: 2019-10-23 20:10:41
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-10-30 16:21:10
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -51,7 +51,7 @@ class PlaceOrder extends Component {
       vins: '', // 车架号
       quotedPriceDesc: 0, // 报价
       placeOrderCustomer: {}, // 客户信息
-      disabled: true
+      // disabled: true
     }
     this.pageParams = {}
   }
@@ -104,24 +104,24 @@ class PlaceOrder extends Component {
    * @return void
    */
   testFunction() {
-    let {
-      sendPerson,
-      sendMobile,
-      sendCardNo,
-      receivePerson,
-      receiveMobile,
-      receiveCarNo,
-      vins
-    } = this.state
-    if ((/^[\u4e00-\u9fa5]{2,8}$/.test(sendPerson)) && (/^1[3456789]\d{9}$/.test(sendMobile)) && (/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(sendCardNo)) && (/^[\u4e00-\u9fa5]{2,8}$/.test(receivePerson)) && (/^1[3456789]\d{9}$/.test(receiveMobile)) && (/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(receiveCarNo)) && (/^[0-9A-Za-z,]+$/.test(vins))) {
-      this.setState({
-        disabled: false
-      })
-    } else {
-      this.setState({
-        disabled: true
-      })
-    }
+    // let {
+    //   sendPerson,
+    //   sendMobile,
+    //   sendCardNo,
+    //   receivePerson,
+    //   receiveMobile,
+    //   receiveCarNo,
+    //   vins
+    // } = this.state
+    // if ((/^[\u4e00-\u9fa5]{2,8}$/.test(sendPerson)) && (/^1[3456789]\d{9}$/.test(sendMobile)) && (/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(sendCardNo)) && (/^[\u4e00-\u9fa5]{2,8}$/.test(receivePerson)) && (/^1[3456789]\d{9}$/.test(receiveMobile)) && (/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(receiveCarNo)) && (/^[0-9A-Za-z,]+$/.test(vins))) {
+    //   this.setState({
+    //     disabled: false
+    //   })
+    // } else {
+    //   this.setState({
+    //     disabled: true
+    //   })
+    // }
   }
   
   /**
@@ -269,18 +269,18 @@ class PlaceOrder extends Component {
       this.toast('收车人手机号输入格式有误')      
       return
     }
-    if (!(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(sendCardNo))) {
-      this.toast('发车人身份证号输入格式有误')
-      return
-    }
-    if (!(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(receiveCarNo))) {
-      this.toast('收车人身份证号输入格式有误')
-      return
-    }
-    if (!(/^[0-9A-Za-z,]+$/.test(vins))) {
-      this.toast('车架号输入格式有误')
-      return
-    }
+    // if (!(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(sendCardNo))) {
+    //   this.toast('发车人身份证号输入格式有误')
+    //   return
+    // }
+    // if (!(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(receiveCarNo))) {
+    //   this.toast('收车人身份证号输入格式有误')
+    //   return
+    // }
+    // if (!(/^[0-9A-Za-z,]+$/.test(vins))) {
+    //   this.toast('车架号输入格式有误')
+    //   return
+    // }
     Taro.showLoading({
       title: '提交中...',
       mask: true
@@ -372,7 +372,7 @@ class PlaceOrder extends Component {
       vins, // 车架号
       quotedPriceDesc, // 报价
       placeOrderCustomer,
-      disabled
+      // disabled
     } = this.state
     let {userInfo} = this.props
     return (
@@ -441,7 +441,7 @@ class PlaceOrder extends Component {
                 </View>
               </View>
               <View className='details-form-item'>
-                <View className='start-icon'>*</View>
+                <View className='start-icon'></View>
                 <View className='details-form-label'>身份证号:</View>
                 <View className='details-form-content'>
                   <Input
@@ -501,7 +501,7 @@ class PlaceOrder extends Component {
                 </View>
               </View>
               <View className='details-form-item'>
-                <View className='start-icon'>*</View>
+                <View className='start-icon'></View>
                 <View className='details-form-label'>身份证号:</View>
                 <View className='details-form-content'>
                   <Input
@@ -557,7 +557,7 @@ class PlaceOrder extends Component {
                 <View className='details-form-content'>{carAmount || ''}辆</View>
               </View>
               <View className='details-form-item' onClick={this.navigatorTo}>
-                <View className='start-icon'>*</View>
+                <View className='start-icon'></View>
                 <View className='details-form-label'>车架号:</View>
                 <View className='details-form-content'>
                   {
@@ -583,7 +583,8 @@ class PlaceOrder extends Component {
             </View>
           </View>
         </View>
-        <Button type='button' disabled={disabled} className='place-order-button' onClick={this.submitOrder}>立即下单</Button>
+        {/* disabled={disabled} */ }
+        <Button type='button' className='place-order-button' onClick={this.submitOrder}>立即下单</Button>
       </View>
     )
   }
