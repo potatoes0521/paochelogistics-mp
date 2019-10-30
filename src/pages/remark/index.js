@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-10-21 15:12:17
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-21 16:38:20
+ * @LastEditTime: 2019-10-30 17:02:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -21,7 +21,7 @@ import './index.styl'
 export default class Remark extends Component {
   constructor() { 
     this.state = {
-      placeholderText: '请输入车架号，多个车架号请用“,”隔开',
+      placeholderText: '请输入车架号或车牌号，多台车请用“回车”隔开',
       maxlength: -1,
       disabled: true,
       autoHeight: false,

@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-30 16:21:10
+ * @LastEditTime: 2019-10-30 17:04:54
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -277,10 +277,10 @@ class PlaceOrder extends Component {
     //   this.toast('收车人身份证号输入格式有误')
     //   return
     // }
-    // if (!(/^[0-9A-Za-z,]+$/.test(vins))) {
-    //   this.toast('车架号输入格式有误')
-    //   return
-    // }
+    if (vins.length <= 0) {
+      this.toast('请输入车架号或车牌号')
+      return
+    }
     Taro.showLoading({
       title: '提交中...',
       mask: true
@@ -557,15 +557,15 @@ class PlaceOrder extends Component {
                 <View className='details-form-content'>{carAmount || ''}辆</View>
               </View>
               <View className='details-form-item' onClick={this.navigatorTo}>
-                <View className='start-icon'></View>
-                <View className='details-form-label'>车架号:</View>
+                <View className='start-icon'>*</View>
+                <View className='details-form-label car-vins'>车架号/车牌号:</View>
                 <View className='details-form-content'>
                   {
                     vins.length ?
                       <Text>{vins}</Text>
                       :
                       <Block>
-                        <Text className='placeholder-style'>请输入车架号</Text>
+                        <Text className='placeholder-style'>请输入车架号/车牌号</Text>
                         <Text className='iconfont iconxiangyouxuanzejiantoux icon-right-style'></Text>                        
                       </Block>
                   }
