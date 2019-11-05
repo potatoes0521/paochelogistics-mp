@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-09-05 15:02:41
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-01 16:33:45
+ * @LastEditTime: 2019-11-01 17:44:06
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -27,16 +27,17 @@ if (env === 'development') {
     isActive: 1,
     loginId: 451,
     loginType: 2,
-    mobile: "",
     systemId: 0,
     terminalIp: "192.168.3.191",
     terminalType: 0,
-    openId: "11akshahsdgjhasgk", // 测试环境被添加的客户的openid   手机号是  13312345678
-    userId: 158,
-    userType: 2,
-    // userType: 0, // 13312345678
-    // openId: "oYl965Zw_TG2G_xiNCkS3yRE-FaU", // 测试环境刘洋的openId
-    // userId: 144,  // 测试环境刘洋的userId
+    mobile: "13370130024",
+    // mobile: "13312345678",
+    // openId: "11akshahsdgjhasgk", // 测试环境被添加的客户的openid   手机号是  13312345678
+    // userId: 158,
+    // userType: 2,
+    userType: 0, // 13312345678
+    openId: "oYl965Zw_TG2G_xiNCkS3yRE-FaU", // 测试环境刘洋的openId
+    userId: 144,  // 测试环境刘洋的userId
     token: "",
     updateTime: "2019-10-18T09:29:44.000+0000",
     userAgent: "",
