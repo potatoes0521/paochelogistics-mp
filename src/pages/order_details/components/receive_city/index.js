@@ -3,7 +3,7 @@
  * @description: 订单详情中收车城市的组件
  * @Date: 2019-10-09 16:41:49
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-31 18:47:42
+ * @LastEditTime: 2019-11-05 14:03:18
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -44,10 +44,10 @@ class ReceiveCityComponent extends Component {
           <View className='details-form-content'>{item.orderCarriagePersonVo && item.orderCarriagePersonVo.receiveMobile || ''}</View>
         </View>
         {
-          item.orderCarriagePersonVo && item.orderCarriagePersonVo.receiveCarNo ?
+          item.orderCarriagePersonVo && item.orderCarriagePersonVo.receiveCardNo ?
             <View className='details-form-item'>
               <View className='details-form-label'>身份证号:</View>
-              <View className='details-form-content'>{item.orderCarriagePersonVo && item.orderCarriagePersonVo.receiveCarNo || ''}</View>
+              <View className='details-form-content'>{item.orderCarriagePersonVo && item.orderCarriagePersonVo.receiveCardNo || ''}</View>
             </View>
             : null
         }

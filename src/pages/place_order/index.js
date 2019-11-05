@@ -41,7 +41,7 @@ class PlaceOrder extends Component {
       receiveAddress: '', //收车城市详细地址
       receivePerson: '', //收车城市联系人
       receiveMobile: '', //收车城市联系方式
-      receiveCarNo: '', //收车城市联系人身份证号
+      receiveCardNo: '', //收车城市联系人身份证号
       homeDelivery: 0, //送车上门 0否 1是
       storePickup: 1, //上门提车 0否 1是
       sendTimeDesc: '', //发车时间
@@ -110,10 +110,10 @@ class PlaceOrder extends Component {
     //   sendCardNo,
     //   receivePerson,
     //   receiveMobile,
-    //   receiveCarNo,
+    //   receiveCardNo,
     //   vins
     // } = this.state
-    // if ((/^[\u4e00-\u9fa5]{2,8}$/.test(sendPerson)) && (/^1[3456789]\d{9}$/.test(sendMobile)) && (/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(sendCardNo)) && (/^[\u4e00-\u9fa5]{2,8}$/.test(receivePerson)) && (/^1[3456789]\d{9}$/.test(receiveMobile)) && (/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(receiveCarNo)) && (/^[0-9A-Za-z,]+$/.test(vins))) {
+    // if ((/^[\u4e00-\u9fa5]{2,8}$/.test(sendPerson)) && (/^1[3456789]\d{9}$/.test(sendMobile)) && (/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(sendCardNo)) && (/^[\u4e00-\u9fa5]{2,8}$/.test(receivePerson)) && (/^1[3456789]\d{9}$/.test(receiveMobile)) && (/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(receiveCardNo)) && (/^[0-9A-Za-z,]+$/.test(vins))) {
     //   this.setState({
     //     disabled: false
     //   })
@@ -202,7 +202,7 @@ class PlaceOrder extends Component {
   verificationReceiveCardNo(e) {
     let { value } = e.detail
     this.setState({
-      receiveCarNo: value
+      receiveCardNo: value
     }, () => {
       this.testFunction()
     })
@@ -237,7 +237,7 @@ class PlaceOrder extends Component {
       receiveAddress,
       receivePerson,
       receiveMobile,
-      receiveCarNo,
+      receiveCardNo,
       homeDelivery,
       storePickup,
       sendTimeDesc,
@@ -273,7 +273,7 @@ class PlaceOrder extends Component {
     //   this.toast('发车人身份证号输入格式有误')
     //   return
     // }
-    // if (!(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(receiveCarNo))) {
+    // if (!(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(receiveCardNo))) {
     //   this.toast('收车人身份证号输入格式有误')
     //   return
     // }
@@ -298,7 +298,7 @@ class PlaceOrder extends Component {
       receiveAddress,
       receivePerson,
       receiveMobile,
-      receiveCarNo,
+      receiveCardNo,
       homeDelivery,
       storePickup,
       sendTimeDesc,
@@ -362,7 +362,7 @@ class PlaceOrder extends Component {
       receiveAddress, //收车城市详细地址
       receivePerson, //收车城市联系人
       receiveMobile, //收车城市联系方式
-      receiveCarNo, //收车城市联系人身份证号
+      receiveCardNo, //收车城市联系人身份证号
       homeDelivery, //送车上门 0否 1是
       storePickup, //上门提车 0否 1是
       sendTimeDesc, //发车时间
@@ -510,7 +510,7 @@ class PlaceOrder extends Component {
                     placeholder='请填写联系人证件号'
                     placeholderClass='placeholder-style'
                     maxLength='20'
-                    value={receiveCarNo}
+                    value={receiveCardNo}
                   ></Input>
                 </View>
               </View>
