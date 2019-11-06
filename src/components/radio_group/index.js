@@ -3,7 +3,7 @@
  * @description: 单选框
  * @Date: 2019-09-02 18:03:41
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-09 10:59:36
+ * @LastEditTime: 2019-11-06 12:12:49
  * @mustParam: 必传参数
  *  options 单选项
  *    id : 传给后端的值
@@ -76,9 +76,10 @@ export default class PCRadio extends Component {
       <View className={wrapperClassName}>
         {
           radioList.map(option => {
+            const key = option.id
             return (
               <View
-                key={option.id}
+                key={key}
                 onClick={this.handleClick.bind(this, option)}
                 className={
                   classNames({

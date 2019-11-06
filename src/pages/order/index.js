@@ -3,7 +3,7 @@
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-24 17:22:29
+ * @LastEditTime: 2019-11-06 14:10:43
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -246,9 +246,10 @@ class Order extends Component {
       )
     })
     const allOrderItemList = allOrderList.map(item => {
+      const key = item.orderId
       return (
         <OrderItem
-          key={item.orderId}
+          key={key}
           item={item}
           userInfo={userInfo}
         ></OrderItem>

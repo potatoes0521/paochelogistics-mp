@@ -3,7 +3,7 @@
  * @description: 客户信息列表
  * @Date: 2019-09-27 15:38:07
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-29 16:45:36
+ * @LastEditTime: 2019-11-06 14:11:49
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -190,21 +190,24 @@ class CustomerInfo extends Component {
       selectParam,
       totalCount
     } = this.state
-    const customerList = customerListData.map((item,index) => (
-      <Block
-        key={item.userId}
-      >
-        <CustomerItem
-          item={item}
-          data-item={item}
-        ></CustomerItem>
-        {
-          index < customerListData.length - 1 ?
-            <View className='line'></View>
-            : null
-        }
-      </Block>
-    ))
+    const customerList = customerListData.map((item, index) => {
+      const key = item.userId
+      return (
+        <Block
+          key={key}
+        >
+          <CustomerItem
+            item={item}
+            data-item={item}
+          ></CustomerItem>
+          {
+            index < customerListData.length - 1 ?
+              <View className='line'></View>
+              : null
+          }
+        </Block>
+      )
+    })
     return (
       <View className='page-wrapper'>
         <View className='search-wrapper'>
