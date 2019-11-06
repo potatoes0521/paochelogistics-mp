@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-05 13:24:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-06 11:31:21
+ * @LastEditTime: 2019-11-06 19:04:06
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -102,20 +102,20 @@ class ShareBargain extends Component {
       <SwiperItem className='swiper-item' key={item}>
         <View className='userInfo-wrapper'>
           <View className='user-icon'>
-            <Image src='https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1330348675,1197135418&fm=26&gp=0.jpg'></Image>
+            <Image src={item.userPhoto}></Image>
           </View>
-          <View className='user-name'>按时肯定会将公开{item}</View>
+          <View className='user-name'>{item.nickName}</View>
         </View>
-        <View className='bargain-price'>砍掉0.88元</View>
+        <View className='bargain-price'>砍掉{(item.bargainPrice / 100).toFixed(2)}元</View>
       </SwiperItem>
     )
     const bargainViewListRender = bargainList.map(item => 
       <View className='swiper-item' key={item}>
         <View className='userInfo-wrapper'>
           <View className='user-icon'>
-            <Image src='https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1330348675,1197135418&fm=26&gp=0.jpg'></Image>
+            <Image src={item.userPhoto}></Image>
           </View>
-          <View className='user-name'>{item.realName}</View>
+          <View className='user-name'>{item.nickName}</View>
         </View>
         <View className='bargain-price'>砍掉{(item.bargainPrice / 100).toFixed(2)}元</View>
       </View>
