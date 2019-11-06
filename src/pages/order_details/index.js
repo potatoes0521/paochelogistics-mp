@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-06 15:11:45
+ * @LastEditTime: 2019-11-06 18:17:04
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -81,15 +81,12 @@ class OrderDetails extends Component {
    * @return void
    */
   onShareAppMessage(event) {
-    let { item } = event.target.dataset
-    let { inquiryOrderVO } = item
-    let path = `/pages/share_bargain/index?order_id=${item.orderId}`
-    let title = `砍价`
     if (event.from === 'button') {
       // 来自页面内转发按钮
-      let {
-        type
-      } = event.target.dataset
+      let { item,type } = event.target.dataset
+      let { inquiryOrderVO } = item
+      let path = `/pages/share_bargain/index?order_id=${item.orderId}`
+      let title = `砍价`
       // share_type = 1 发送给客户  不管谁点进来  去订单详情
       // c_id 是customerID的缩写  主要判断是不是这个用户的单 如果不是就让他进了首页
       if (type === 'inviteCustomer') { // 分享给客户
@@ -103,6 +100,11 @@ class OrderDetails extends Component {
         path: path,
         imageUrl: `https://resource.paoche56.com/paochelogistics/mp_img/share_to_c.png`
       }
+    }
+    return {
+      title: `欢迎您进入跑车物流平台`,
+      path: '/pages/index/index',
+      imageUrl: `https://resource.paoche56.com/paochelogistics/mp_img/share_mp.png`
     }
   }
   render() {

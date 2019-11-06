@@ -3,7 +3,7 @@
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-06 14:10:43
+ * @LastEditTime: 2019-11-06 18:17:33
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -190,25 +190,27 @@ class Order extends Component {
    * @return void
    */
   onShareAppMessage(event) {
-    const { item } = event.target.dataset
-    const offerMsg = item && item.inquiryOrderVO
-    let path = `/pages/share_bargain/index?order_id=${item.orderId}`
-    let title = `砍价标题`
     if (event.from === 'button') {
-      let {
-        type
-      } = event.target.dataset
+      let { type, item } = event.target.dataset
+      const offerMsg = item && item.inquiryOrderVO
+      let path = `/pages/share_bargain/index?order_id=${item.orderId}`
+      let title = `砍价标题`
       // share_type = 1 发送给客户  不管谁点进来  去订单详情
       // c_id 是customerID的缩写  主要判断是不是这个用户的单 如果不是就让他进了首页
       if (type === 'inviteCustomer') { // 分享给客户
-        path = `/pages/index/index?share_type=1&order_id=${item.orderId}&c_id=${item.userId}`
+        path = `/pages/order_details/index?share_type=1&order_id=${item.orderId}&c_id=${item.userId}`
         title = `${offerMsg.sendCityName}发往${offerMsg.receiveCityName}的${offerMsg.carAmount}辆${offerMsg.carInfo}已经发车了`
       }
       return {
         title: title,
         path: path,
-        imageUrl: `https://resource.paoche56.com/paochelogistics/mp_img/share.png`
+        imageUrl: `https://resource.paoche56.com/paochelogistics/mp_img/share_to_c.png`
       }
+    }
+    return {
+      title: `欢迎您进入跑车物流平台`,
+      path: '/pages/index/index',
+      imageUrl: `https://resource.paoche56.com/paochelogistics/mp_img/share_mp.png`
     }
   }
 
