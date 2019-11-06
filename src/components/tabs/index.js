@@ -3,7 +3,7 @@
  * @description: 固定顶部的tab栏
  * @Date: 2019-09-20 17:28:05
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-23 10:56:51
+ * @LastEditTime: 2019-11-06 14:09:48
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -42,11 +42,12 @@ export default class Tabs extends Component {
           'tab-item-active': activeIndex === index
         }
       )
+      const key = item.id
       return (
         <View
           className={tabItemActiveClass}
           data-item={item}
-          key={item.id}
+          key={key}
           onClick={this.handleClick.bind(this, item.id)}
         >{item.label}</View>
       )

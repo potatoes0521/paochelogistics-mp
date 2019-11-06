@@ -3,7 +3,7 @@
  * @description: 询价单页面
  * @Date: 2019-09-20 13:24:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-05 15:00:45
+ * @LastEditTime: 2019-11-06 14:35:44
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -196,24 +196,33 @@ class Offer extends Component {
       noOfferList
     } = this.state
     let { userInfo } = this.props
-    const AllOfferItemList = allOfferList.map(item =>
-      <OfferItem
-        key={item.inquiryId}
-        item={item}
-      ></OfferItem>
-    ) // 全部
-    const hasOfferItemList = hasOfferList.map(item =>
-      <OfferItem
-        key={item.inquiryId + '1'}
-        item={item}
-      ></OfferItem>
-    ) // 已报价
-    const onOfferItemList = noOfferList.map(item =>
-      <OfferItem
-        key={item.inquiryId + '2'}
-        item={item}
-      ></OfferItem>
-    ) // 待报价
+    const AllOfferItemList = allOfferList.map(item => {
+      const key = item.inquiryId
+      return (
+        <OfferItem
+          key={key}
+          item={item}
+        ></OfferItem>
+      )
+    }) // 全部
+    const hasOfferItemList = hasOfferList.map(item =>{
+      const key = item.inquiryId + '1'
+      return (
+        <OfferItem
+          key={key}
+          item={item}
+        ></OfferItem>
+      )
+    }) // 已报价
+    const onOfferItemList = noOfferList.map(item =>{
+      const key = item.inquiryId + '2'
+      return (
+        <OfferItem
+          key={key}
+          item={item}
+        ></OfferItem>
+      )
+    }) // 待报价
     return (
       <View className='offer-wrapper'>
         {

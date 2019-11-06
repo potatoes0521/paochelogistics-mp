@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-06 10:41:42
+ * @LastEditTime: 2019-11-06 14:35:34
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -44,7 +44,8 @@ import InputNumber from '@c/input_number/index.js'
 import LocationModal from './components/location_modal/index.js'
 // eslint-disable-next-line import/first
 import { serviceList, carNatureList } from '@config/text_config.js'
-
+// eslint-disable-next-line import/first
+import { handleShare } from '@utils/handleShare.js'
 
 import './index.styl'
 
@@ -97,13 +98,7 @@ class Index extends Component {
   }
   handleShare() { 
     let { userInfo } = this.props
-    if (this.pageParams.share_type === '1' && +userInfo.userId === +this.pageParams.c_id) {
-      Taro.navigateTo({
-        url: `/pages/order_details/index?order_id=${this.pageParams.order_id}`
-      })
-    } else {
-      console.log('砍价')
-    }
+    handleShare(this.pageParams, userInfo)
   }
   /**
    * 检查发车城市和收车城市选中状态
