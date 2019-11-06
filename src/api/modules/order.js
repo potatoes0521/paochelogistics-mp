@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-09-26 11:23:34
- * @LastEditors: guorui
- * @LastEditTime: 2019-10-10 14:21:41
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-11-06 11:07:54
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -29,5 +29,13 @@ export default {
   // 根据订单id获取位置
   getOrderTransportList(data, that) { 
     return requestHandle.get(`position/list/${data.orderId}`, data, that);
-  }
+  },
+  // 获取订单砍价详情
+  getOrderBargainDetail(data, that) {
+    return requestHandle.get(`order/orderbargaindetail/${data.orderCode}`, data, that);
+  },
+  // 分享砍价接口
+  BargainPrice(data, that) {
+    return requestHandle.post(`order/bargainprice`, data, that);
+  },
 }

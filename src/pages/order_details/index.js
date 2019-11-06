@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-24 17:22:17
+ * @LastEditTime: 2019-11-06 10:47:42
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -74,6 +74,7 @@ class OrderDetails extends Component {
     let { inquiryOrderVO } = item
     let path = `/pages/share_bargain/index?order_id=${item.orderId}`
     let title = `砍价`
+    let imageUrl = `https://resource.paoche56.com/paochelogistics/mp_img/share.png`
     if (event.from === 'button') {
       // 来自页面内转发按钮
       let {
@@ -84,13 +85,18 @@ class OrderDetails extends Component {
       if (type === 'inviteCustomer') { // 分享给客户
         path = `/pages/index/index?share_type=1&order_id=${item.orderId}&c_id=${item.userId}`
         title = `${inquiryOrderVO.sendCityName}发往${inquiryOrderVO.receiveCityName}的${inquiryOrderVO.carAmount}辆${inquiryOrderVO.carInfo}已经发车了`
-
+        imageUrl = `https://resource.paoche56.com/paochelogistics/mp_img/share_to_c.png`
       }
-      // shareOrder 分享砍价的页面
+      // share_type = 2 分享砍价  本人去订单详情  其他人去砍价
+      if (type === 'inviteCustomer') { // 分享给客户
+        path = `/pages/index/index?share_type=2&order_code=${item.orderCode}&c_id=${item.userId}`
+        title = `我要运车,需要你助我一臂之力!`
+        imageUrl = `https://resource.paoche56.com/paochelogistics/mp_img/share_to_bargain.png`
+      }
       return {
-        title: title,
-        path: path,
-        imageUrl: `https://resource.paoche56.com/paochelogistics/mp_img/share.png`
+        title,
+        path,
+        imageUrl
       }
     }
   }

@@ -3,7 +3,7 @@
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-28 10:45:09
+ * @LastEditTime: 2019-11-05 15:08:01
  */
 
 // 默认请求连接

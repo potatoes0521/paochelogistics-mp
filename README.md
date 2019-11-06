@@ -3,7 +3,7 @@
  * @description: 项目描述文件
  * @Date: 2019-08-14 10:25:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-25 11:06:24
+ * @LastEditTime: 2019-11-05 11:08:39
  -->
 ## 跑车帮小程序
  
@@ -163,3 +163,4 @@ taro update project
 
 * 1.注册验证码修改为4位数
 * 2.分享给客户功能完善
+
