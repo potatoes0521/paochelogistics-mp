@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-24 17:22:17
+ * @LastEditTime: 2019-11-06 14:06:44
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -19,6 +19,10 @@ import PriceDetailsComponent from './components/price_details/index.js'
 import FooterDetailsComponent from './components/footer_details/index.js'
 // eslint-disable-next-line import/first
 import api from '@api/index.js'
+// eslint-disable-next-line import/first
+import login from '@utils/login.js'
+// eslint-disable-next-line import/first
+import { handleShareInOrderDetails } from '@utils/handleShare.js'
 import './index.styl'
 
 class OrderDetails extends Component {
@@ -30,9 +34,21 @@ class OrderDetails extends Component {
     this.pageParams = {}
   }
 
-  componentDidShow() {
+  async componentDidMount() {
     this.pageParams = this.$router.params || {}
-    this.getOrderDetails()
+    if (this.pageParams.share_type) { 
+      await login.getCode(this)
+      const next = await handleShareInOrderDetails(this.pageParams, this.props.userInfo)
+      if (!next) return
+      this.getOrderDetails()
+    }
+  }
+
+  componentDidShow() {
+    let { userInfo } = this.props
+    if (userInfo.userId) {
+      this.getOrderDetails()
+    }
   }
   
   //页面内的配置
@@ -82,7 +98,7 @@ class OrderDetails extends Component {
       // share_type = 1 发送给客户  不管谁点进来  去订单详情
       // c_id 是customerID的缩写  主要判断是不是这个用户的单 如果不是就让他进了首页
       if (type === 'inviteCustomer') { // 分享给客户
-        path = `/pages/index/index?share_type=1&order_id=${item.orderId}&c_id=${item.userId}`
+        path = `/pages/order_details/index?share_type=1&order_id=${item.orderId}&c_id=${item.userId}`
         title = `${inquiryOrderVO.sendCityName}发往${inquiryOrderVO.receiveCityName}的${inquiryOrderVO.carAmount}辆${inquiryOrderVO.carInfo}已经发车了`
 
       }
@@ -90,7 +106,7 @@ class OrderDetails extends Component {
       return {
         title: title,
         path: path,
-        imageUrl: `https://resource.paoche56.com/paochelogistics/mp_img/share.png`
+        imageUrl: `https://resource.paoche56.com/paochelogistics/mp_img/share_to_c.png`
       }
     }
   }

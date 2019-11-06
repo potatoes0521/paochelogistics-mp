@@ -3,7 +3,7 @@
  * @description: 注册页面
  * @Date: 2019-08-22 11:58:25
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-24 09:44:47
+ * @LastEditTime: 2019-11-06 13:58:55
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -20,7 +20,7 @@ import api from '@api/index.js'
 import refreshToken from '@utils/refreshToken.js'
 import Actions from '@store/actions/index.js'
 import classNames from 'classnames'
-
+import { handleRegisterShare } from '@utils/handleShare.js'
 import './index.styl'
 
 class usePhoneNumberRegister extends Component { 
@@ -84,7 +84,7 @@ class usePhoneNumberRegister extends Component {
         Actions.changeUserInfo(resData)
         // 给redux一个反应时间
         setTimeout(() => {
-          Taro.navigateBack()
+          handleRegisterShare(this.pageParams, this.props.userInfo)
         }, 300)
       }
     })
