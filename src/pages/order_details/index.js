@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-06 18:33:36
+ * @LastEditTime: 2019-11-06 18:43:03
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -111,7 +111,7 @@ class OrderDetails extends Component {
         imageUrl = `https://resource.paoche56.com/paochelogistics/mp_img/share_to_c.png`
       }
       // share_type = 2 分享砍价  本人去订单详情  其他人去砍价
-      if (userInfo.userType === 2) { // 分享给客户
+      if (userInfo.userType === 2 || userInfo.userType === 1) { // 分享给客户
         path = `/pages/share_bargain/index?share_type=2&order_code=${orderDetailsInfo.orderCode}&c_id=${orderDetailsInfo.userId}`
         title = `我要运车,需要你助我一臂之力!`
         imageUrl = `https://resource.paoche56.com/paochelogistics/mp_img/share_to_bargain.png`
