@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-05 13:24:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 12:28:13
+ * @LastEditTime: 2019-11-07 12:38:07
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -84,10 +84,10 @@ class ShareBargain extends Component {
     }
     api.order.getOrderBargainDetail(sendData, this)
       .then(res => {
-        res.dueTime = 1573344000000
-        this.timeCountNumber = res.timeCountNumber
+        res.dueTime = 1573139471000
+        this.timeCountNumber = res.timeCountNumber || 43200000
         let time = Number(new Date(res.dueTime))
-        let progress = timerPercent(time, time - this.timeCountNumber)
+        let progress = timerPercent(time, (time - this.timeCountNumber))
         console.log(progress)
         progress = progress > 100 ? 0 : progress
         this.setState({
@@ -117,7 +117,10 @@ class ShareBargain extends Component {
       let time = Number(new Date(targetTimeStamp))
       let nowTime = new Date().getTime()
       let num = countDown(time, nowTime)
-      let progress = nowTime / time * 100 > 100 ? 0 : nowTime / time * 100
+      let time = Number(new Date(targetTimeStamp))
+      let progress = timerPercent(time, (time - this.timeCountNumber))
+      progress = progress > 100 ? 0 : progress
+      console.log(progress)
       if (!num) {
         clearInterval(this.timer)
         this.setState({
