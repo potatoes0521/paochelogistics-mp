@@ -3,7 +3,7 @@
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 11:29:04
+ * @LastEditTime: 2019-11-07 11:32:33
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -83,6 +83,8 @@ class Order extends Component {
    * @return void
    */
   handleClick(value) {
+    this.orderPage = 1
+    this.orderFlag = false
     this.setState({
       current: value
     }, () => {
@@ -90,14 +92,15 @@ class Order extends Component {
     })
   }
   handleRequest() { 
+    //  10 待支付 20 已支付 30 已取消
     let { current } = this.state
     let status = ''
     if (current === 0) {
-      status = ''
+      status = 10
     } else if (current === 1) {
       status = 20
     } else if (current === 2) {
-      status = 10
+      status = ''
     }
     this.getOrderList(status, this.orderPage, true)
   }

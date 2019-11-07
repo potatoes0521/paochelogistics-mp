@@ -3,7 +3,7 @@
  * @description: 询价单页面
  * @Date: 2019-09-20 13:24:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 11:17:29
+ * @LastEditTime: 2019-11-07 11:31:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -85,7 +85,6 @@ class Offer extends Component {
    * @return void
    */
   handleClick(value) {
-    console.log('click')
     this.offerPage = 1
     this.offerFlag = false
     this.setState({
