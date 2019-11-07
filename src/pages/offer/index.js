@@ -3,12 +3,15 @@
  * @description: 询价单页面
  * @Date: 2019-09-20 13:24:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-06 14:35:44
+ * @LastEditTime: 2019-11-07 11:17:29
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import Taro, { Component } from '@tarojs/taro'
-import { View, Swiper ,SwiperItem } from '@tarojs/components'
+import {
+  View,
+  Block
+} from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import Tabs from '@c/tabs/index.js'
 import OfferItem from './components/offer_item/index.js'
@@ -25,23 +28,15 @@ class Offer extends Component {
     super(props)
     this.state = {
       current: 0,
-      allOfferList: [],   // 全部报价单
-      hasOfferList: [],   // 已报价
-      noOfferList: []     // 未报价
+      offerList: []
     }
-    this.allOfferPage = 1
-    this.hasOfferPage = 1
-    this.noOfferPage = 1
-    this.allOfferFlag = false
-    this.hasOfferFlag = false
-    this.noOfferFlag = false
+    this.offerPage = 1
+    this.offerFlag = false
   }
 
   componentDidShow() { 
     let { userInfo } = this.props
     if (userInfo.userId) { 
-      this.getOfferList('', 1, true)
-      this.getOfferList(10, 1, true)
       this.getOfferList(20, 1, true)
     }
   }
@@ -68,61 +63,21 @@ class Offer extends Component {
     }
     api.offer.getOfferList(sendData, this).then(res => {
       if (res && res.length < pageSize) {
-        if (status === '') {          // 全部
-          this.allOfferFlag = true   
-        } else if (status === 10) {   // 未报价
-          this.noOfferFlag = true
-        } else if (status === 20){    // 已报价
-          this.hasOfferFlag = true          
-        }
+        this.offerFlag = true
       }
-      let {
-        allOfferList,
-        hasOfferList,
-        noOfferList
-      } = this.state
-      
+      this.offerPage += 1
+      let { offerList } = this.state
       if (pageNum === 1) {
-        this.updateState(status, [...res])
+        this.setState({
+          offerList: [...res]
+        })
       } else {
-        if (status === '') { // 全部
-          this.updateState(status, [...allOfferList, ...res])
-        } else if (status === 10) { // 未报价
-          this.updateState(status, [...noOfferList, ...res])
-        } else if (status === 20) { // 已报价
-          this.updateState(status, [...hasOfferList, ...res])
-        }
+        this.setState({
+          offerList: [...offerList, ...res]
+        })
       }
       Taro.hideLoading()
     })
-  }
-  /**
-   * 函数功能描述
-   * @param {Number || String} status 状态
-   * @param {Array} value 要改的值
-   * @return void
-   */
-  updateState(status, value) {
-    switch (status) {
-      case '': 
-        this.allOfferPage += 1        
-        this.setState({
-          allOfferList: value
-        })
-        break
-      case 10:  // 未报价
-        this.noOfferPage += 1
-        this.setState({
-          noOfferList: value
-        })
-        break
-      case 20:  // 已报价
-        this.hasOfferPage += 1
-        this.setState({
-          hasOfferList: value
-        })
-        break
-    }
   }
   /**
    * 处理tabs点击事件
@@ -130,19 +85,26 @@ class Offer extends Component {
    * @return void
    */
   handleClick(value) {
+    console.log('click')
+    this.offerPage = 1
+    this.offerFlag = false
     this.setState({
       current: value
+    }, () => {
+      this.handleRequest()
     })
   }
-  /**
-   * swiper onChange事件
-   * @param {Object} e 参数描述
-   * @return void
-   */
-  changeSwiper(e) { 
-    this.setState({
-      current: e.detail.current
-    })
+  handleRequest() { 
+    let { current } = this.state
+    let status = ''
+    if (current === 2) {
+      status = ''
+    } else if (current === 0) {
+      status = 20
+    } else if (current === 1) {
+      status = 10
+    }
+    this.getOfferList(status, this.offerPage, true)
   }
   /**
    * 下拉刷新
@@ -151,38 +113,22 @@ class Offer extends Component {
   async onPullDownRefresh() {
     // 显示顶部刷新图标
     Taro.showNavigationBarLoading()
-    this.allOfferPage = 1
-    this.hasOfferPage = 1
-    this.noOfferPage = 1
-    this.allOfferFlag = false
-    this.hasOfferFlag = false
-    this.noOfferFlag = false
-    this.getOfferList('', 1, true)
-    this.getOfferList(10, 1, false)
-    this.getOfferList(20, 1, false)
+    this.offerPage = 1
+    this.offerFlag = false
+    this.handleRequest()
     // 隐藏导航栏加载框
     Taro.hideNavigationBarLoading();
     // 停止下拉动作
     Taro.stopPullDownRefresh();
   }
-
-
   /**
    * 上拉触底
    * @return void
    */
   onReachBottom() {
-    let { current } = this.state
-    if (current === 2) {
-      // if (this.allOfferFlag) return
-      this.getOfferList('', this.allOfferPage, true)
-    } else if (current === 0) {
-      if (this.hasOfferFlag) return
-      this.getOfferList(20, this.hasOfferPage, true)
-    } else if (current === 1) {
-      if (this.noOfferFlag) return
-      this.getOfferList(10, this.noOfferPage, true)
-    }
+    console.log('触底')
+    if (this.offerFlag) return
+    this.handleRequest()
   }
   config = {
     navigationBarTitleText: '我的询价单',
@@ -191,12 +137,10 @@ class Offer extends Component {
   render() {
     let {
       current,
-      allOfferList,
-      hasOfferList,
-      noOfferList
+      offerList
     } = this.state
     let { userInfo } = this.props
-    const AllOfferItemList = allOfferList.map(item => {
+    const offerItemList = offerList.map(item => {
       const key = item.inquiryId
       return (
         <OfferItem
@@ -204,66 +148,28 @@ class Offer extends Component {
           item={item}
         ></OfferItem>
       )
-    }) // 全部
-    const hasOfferItemList = hasOfferList.map(item =>{
-      const key = item.inquiryId + '1'
-      return (
-        <OfferItem
-          key={key}
-          item={item}
-        ></OfferItem>
-      )
-    }) // 已报价
-    const onOfferItemList = noOfferList.map(item =>{
-      const key = item.inquiryId + '2'
-      return (
-        <OfferItem
-          key={key}
-          item={item}
-        ></OfferItem>
-      )
-    }) // 待报价
+    })
     return (
-      <View className='offer-wrapper'>
+      <View className='page-wrapper'>
         {
           userInfo.userId ? 
-            <Tabs
-              activeIndex={current}
-              options={offerTabs}
-              onClick={this.handleClick.bind(this)}
-            >
-              <Swiper
-                duration={300}
-                current={current}
-                className='swiper-wrapper'
-                onChange={this.changeSwiper}
-              >
-                <SwiperItem className='swiper-item'>
-                  {
-                    hasOfferList.length > 0 ?
-                      hasOfferItemList
-                      :
-                      <NoData pageType='offer'></NoData>
-                  }
-                </SwiperItem>
-                <SwiperItem className='swiper-item'>
-                  { 
-                    noOfferList.length > 0 ?
-                      onOfferItemList
-                      :
-                      <NoData pageType='offer'></NoData>
-                  }
-                </SwiperItem>
-                <SwiperItem className='swiper-item'>
-                  {
-                    allOfferList.length > 0 ?
-                      AllOfferItemList
-                      :
-                      <NoData pageType='offer'></NoData>
-                  }
-                </SwiperItem>
-              </Swiper>
-            </Tabs>
+            <Block>
+              <View className='tabs-wrapper'>
+                <Tabs
+                  activeIndex={current}
+                  options={offerTabs}
+                  onClick={this.handleClick.bind(this)}
+                ></Tabs>
+              </View>                
+              <View className='swiper-wrapper'>
+                {
+                  offerList.length > 0 ?
+                    offerItemList
+                    :
+                    <NoData pageType='offer'></NoData>
+                }
+              </View>
+            </Block>
             : <NoData pageType='login'></NoData>
         }
       </View>

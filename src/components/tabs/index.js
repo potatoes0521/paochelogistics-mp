@@ -3,7 +3,7 @@
  * @description: 固定顶部的tab栏
  * @Date: 2019-09-20 17:28:05
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-06 14:09:48
+ * @LastEditTime: 2019-11-07 10:57:13
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -54,17 +54,10 @@ export default class Tabs extends Component {
     })
     
     return (
-      <View className='tabs-wrapper'>
-        <View className='tabs-list'>
-          {
-            tabList
-          }
-        </View>
-        <View className='tabs-plane'>
-          {
-            this.props.children
-          }
-        </View>
+      <View className='tabs-list'>
+        {
+          tabList
+        }
       </View>
     )
   }
