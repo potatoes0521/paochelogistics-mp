@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-05 13:24:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-06 19:04:06
+ * @LastEditTime: 2019-11-07 09:59:46
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -21,7 +21,7 @@ import {
 import { connect } from '@tarojs/redux'
 import login from '@utils/login.js'
 import api from '@api/index.js'
-
+import { countDown } from '@utils/timer_handle.js'
 import './index.styl'
 
 class ShareBargain extends Component {
@@ -34,9 +34,16 @@ class ShareBargain extends Component {
       receiveCityName: '收车城市',
       summary: '',
       carInfo: '',
-      bargainTotalPrice: '0.00'
-      // carAmount: ''
+      bargainTotalPrice: '0.00',
+      // carAmount: '',
+      hour: 0,
+      minute: 0,
+      second: 0,
+      progress: 0.1,
+      userPhoto: '',
+      nickName: ''
     }
+    this.timer = null
     this.pageParams = {}
   }
   
@@ -47,7 +54,9 @@ class ShareBargain extends Component {
     this.getBargainDetails()
     this.getSwiperHeight()
   }
-  
+  componentWillUnmount() {
+    clearInterval(this.timer)
+  }
   getSwiperHeight() { 
     const query = Taro.createSelectorQuery()
     query.select('#swiper').boundingClientRect()
@@ -77,11 +86,68 @@ class ShareBargain extends Component {
           receiveCityName: res.receiveCityName,
           summary: res.summary,
           carInfo: res.carInfo,
-          bargainTotalPrice: res.bargainTotalPrice
+          bargainTotalPrice: res.bargainTotalPrice,
+          userPhoto: res.userPhoto,
+          nickName: res.nickName
           // carAmount: res.carAmount
         })
+        let time = Number(new Date(res.dueTime))
+        let nowTime = new Date().getTime()
+        let progress = nowTime / time * 100 > 100 ? 0 : nowTime / time * 100
+        this.setState({
+          progress
+        })
+        this.countDown(res.dueTime)
         Taro.hideLoading()
       })
+  }
+  /**
+   * 倒计时函数
+   * @param {Type} targetTimeStamp 参数描述
+   * @return void
+   */
+  countDown(targetTimeStamp) {
+    clearInterval(this.timer)
+    this.timer = setInterval(() => {
+      let time = Number(new Date(targetTimeStamp))
+      let nowTime = new Date().getTime()
+      let num = countDown(time, nowTime)
+      let progress = nowTime / time * 100 > 100 ? 0 : nowTime / time * 100
+      if (!num) {
+        clearInterval(this.timer)
+        this.setState({
+          hour: 0,
+          minute: 0,
+          second: 0,
+          progress
+        })
+      } else {
+        let { hour, minute, second } = num
+        this.setState({
+          hour,
+          minute,
+          second,
+          progress
+        })
+      }
+    }, 1000)
+  }
+
+  submit() {
+    let { progress } = this.state
+    let str = ''
+    for (let i in this.pageParams) {
+      str += i + '=' + this.pageParams[i] + '&'
+    }
+    if (progress > 0) { // 活动进行中
+      Taro.navigateTo({
+        url: `/pages/register/index?${str}`
+      })
+    } else { // 活动结束
+      Taro.switchTab({
+        url: '/pages/index/index'
+      })
+    }
   }
 
   config = {
@@ -95,8 +161,14 @@ class ShareBargain extends Component {
       receiveCityName,
       summary,
       carInfo,
-      bargainTotalPrice
-      // carAmount
+      bargainTotalPrice,
+      // carAmount,
+      hour,
+      minute,
+      second,
+      progress,
+      userPhoto,
+      nickName
     } = this.state
     const bargainSwiperListRender = bargainList.map(item =>
       <SwiperItem className='swiper-item' key={item}>
@@ -123,27 +195,48 @@ class ShareBargain extends Component {
     return (
       <View className='page-wrapper'>
         <View className='wrapper-main'>
-          <View className='order-user-info'>{summary}</View>
+          <View className='order-user-info'>
+            <View className='order-user-icon'>
+              <Image src={userPhoto}></Image>
+            </View>
+            <View className='order-user-msg'>
+              <View className='user-nick-name'>{nickName}</View>
+              <View className='user-summary'>{summary}</View>
+            </View>
+          </View>
           <View className='order-msg'>
             <Text>{sendCityName}</Text>
             <Text className='iconfont iconjiantou_qiehuanyou icon-style'></Text>
             <Text>{receiveCityName}</Text>
             <Text className='car-info'>{carInfo}</Text>
           </View>
-          <View className='timer'>
-            <Text className='text'>还剩</Text>
-            <Text className='timer-box'>12</Text>
-            <Text>:</Text>
-            <Text className='timer-box'>12</Text>
-            <Text>:</Text>
-            <Text className='timer-box'>12</Text>
-            <Text className='text'>过期</Text>
-          </View>
+          {
+            progress > 0 ?
+              <View className='timer'>
+                <Text className='text'>还剩</Text>
+                <Text className='timer-box'>{hour}</Text>
+                <Text>:</Text>
+                <Text className='timer-box'>{minute}</Text>
+                <Text>:</Text>
+                <Text className='timer-box'>{second}</Text>
+                <Text className='text'>过期</Text>
+              </View>
+              :
+              <View className='timer timer-tips'>
+                <Text className='iconfont icongantanhao icon-style'></Text>
+                <Text className='tip'>活动已结束</Text>
+              </View>
+          }
           <View className='timer-progress'>
-            <View className='progress-fill' style={{width: 70 + '%'}}></View>
+            <View className='progress-fill' style={{width: progress + '%'}}></View>
           </View>
           <View className='bargain-wrapper'>
-            <Button className='btn'>帮砍一刀</Button>
+            <Button
+              className='btn'
+              onClick={this.submit}
+            >
+              {progress > 0 ? '帮砍一刀' : '我也要发车'}
+            </Button>
           </View>
           <View className='bargain-list'>
             <View className='bargain-title'>

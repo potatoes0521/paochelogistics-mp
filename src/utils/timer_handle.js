@@ -3,7 +3,7 @@
  * @description: 各种时间处理方法
  * @Date: 2019-10-08 14:45:15
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-21 10:19:38
+ * @LastEditTime: 2019-11-06 15:49:01
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -143,4 +143,28 @@ export const dateTimeInterval = (d1, d2) => {
   */
 export const timestampOfDay = (hours=0, minutes=0, seconds=0, milliseconds=0) => {
   return new Date(new Date().setHours(hours, minutes, seconds, milliseconds)).getTime()
+}
+
+export const countDown = (targetTimeStamp, nowTimeStamp) => {
+  //获取时间差
+  let timeDiff = Math.round((targetTimeStamp - nowTimeStamp) / 1000);
+  //获取还剩多少天
+  let day = parseInt(timeDiff / 3600 / 24);
+  //获取还剩多少小时
+  let hour = parseInt(timeDiff / 3600 % 24);
+  //获取还剩多少分钟
+  let minute = parseInt(timeDiff / 60 % 60);
+  //获取还剩多少秒
+  let second = timeDiff % 60;
+  //输出还剩多少时间
+  if (timeDiff <= 0) {
+    return 0;
+  } else {
+    return {
+      day,
+      hour,
+      minute,
+      second
+    }
+  }
 }
