@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-05 13:24:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 10:44:17
+ * @LastEditTime: 2019-11-07 12:24:08
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -88,6 +88,7 @@ class ShareBargain extends Component {
         this.timeCountNumber = res.timeCountNumber
         let time = Number(new Date(res.dueTime))
         let progress = timerPercent(time, time - this.timeCountNumber)
+        console.log(progress)
         progress = progress > 100 ? 0 : progress
         this.setState({
           bargainList: res.bargainRecordList || [],
@@ -101,7 +102,6 @@ class ShareBargain extends Component {
           progress
           // carAmount: res.carAmount
         })
-        console.log(progress)
         this.countDown(res.dueTime)
         Taro.hideLoading()
       })
@@ -184,7 +184,7 @@ class ShareBargain extends Component {
           <View className='user-icon'>
             <Image src={item.userPhoto}></Image>
           </View>
-          <View className='user-name'>{item.nickName}</View>
+          <View className='user-name'>{item.nickName || ''}</View>
         </View>
         <View className='bargain-price'>砍掉{(item.bargainPrice / 100).toFixed(2)}元</View>
       </SwiperItem>
@@ -195,7 +195,7 @@ class ShareBargain extends Component {
           <View className='user-icon'>
             <Image src={item.userPhoto}></Image>
           </View>
-          <View className='user-name'>{item.nickName}</View>
+          <View className='user-name'>{item.nickName || ''}</View>
         </View>
         <View className='bargain-price'>砍掉{(item.bargainPrice / 100).toFixed(2)}元</View>
       </View>
@@ -208,7 +208,7 @@ class ShareBargain extends Component {
               <Image src={userPhoto}></Image>
             </View>
             <View className='order-user-msg'>
-              <View className='user-nick-name'>{nickName}</View>
+              <View className='user-nick-name'>{nickName  || ''}</View>
               <View className='user-summary'>{summary}</View>
             </View>
           </View>
