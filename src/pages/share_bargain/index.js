@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-05 13:24:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 09:59:46
+ * @LastEditTime: 2019-11-07 10:44:17
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -21,7 +21,10 @@ import {
 import { connect } from '@tarojs/redux'
 import login from '@utils/login.js'
 import api from '@api/index.js'
-import { countDown } from '@utils/timer_handle.js'
+import {
+  countDown,
+  timerPercent
+} from '@utils/timer_handle.js'
 import './index.styl'
 
 class ShareBargain extends Component {
@@ -44,6 +47,7 @@ class ShareBargain extends Component {
       nickName: ''
     }
     this.timer = null
+    this.timeCountNumber = 43200000  // 砍价多少个小时
     this.pageParams = {}
   }
   
@@ -80,6 +84,11 @@ class ShareBargain extends Component {
     }
     api.order.getOrderBargainDetail(sendData, this)
       .then(res => {
+        res.dueTime = 1573344000000
+        this.timeCountNumber = res.timeCountNumber
+        let time = Number(new Date(res.dueTime))
+        let progress = timerPercent(time, time - this.timeCountNumber)
+        progress = progress > 100 ? 0 : progress
         this.setState({
           bargainList: res.bargainRecordList || [],
           sendCityName: res.sendCityName,
@@ -88,15 +97,11 @@ class ShareBargain extends Component {
           carInfo: res.carInfo,
           bargainTotalPrice: res.bargainTotalPrice,
           userPhoto: res.userPhoto,
-          nickName: res.nickName
+          nickName: res.nickName,
+          progress
           // carAmount: res.carAmount
         })
-        let time = Number(new Date(res.dueTime))
-        let nowTime = new Date().getTime()
-        let progress = nowTime / time * 100 > 100 ? 0 : nowTime / time * 100
-        this.setState({
-          progress
-        })
+        console.log(progress)
         this.countDown(res.dueTime)
         Taro.hideLoading()
       })
@@ -132,7 +137,10 @@ class ShareBargain extends Component {
       }
     }, 1000)
   }
-
+  /**
+   * 点了砍价按钮
+   * @return void
+   */
   submit() {
     let { progress } = this.state
     let str = ''

@@ -3,7 +3,7 @@
  * @description: 各种时间处理方法
  * @Date: 2019-10-08 14:45:15
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-06 15:49:01
+ * @LastEditTime: 2019-11-07 10:34:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -149,13 +149,13 @@ export const countDown = (targetTimeStamp, nowTimeStamp) => {
   //获取时间差
   let timeDiff = Math.round((targetTimeStamp - nowTimeStamp) / 1000);
   //获取还剩多少天
-  let day = parseInt(timeDiff / 3600 / 24);
+  let day = toDou(parseInt(timeDiff / 3600 / 24));
   //获取还剩多少小时
-  let hour = parseInt(timeDiff / 3600 % 24);
+  let hour = toDou(parseInt(timeDiff / 3600 % 24));
   //获取还剩多少分钟
-  let minute = parseInt(timeDiff / 60 % 60);
+  let minute = toDou(parseInt(timeDiff / 60 % 60));
   //获取还剩多少秒
-  let second = timeDiff % 60;
+  let second = toDou(timeDiff % 60);
   //输出还剩多少时间
   if (timeDiff <= 0) {
     return 0;
@@ -167,4 +167,21 @@ export const countDown = (targetTimeStamp, nowTimeStamp) => {
       second
     }
   }
+}
+
+const toDou = (time) => {
+  return time > 9 ? time : '0' + time
+}
+ /**
+  * 计算两个时间 之间的百分比
+  * @param {Number || String} targetTime 目标时间 如果时间是时间戳就是Number
+  * @param {Number || String} beginTime 开始时间
+  * @return void
+  */
+export const timerPercent = (targetTime, beginTime) => {
+  // (当前时间-开始时间) / (目标时间-开始时间) * 100
+  let now = new Date().getTime() - new Date(beginTime).getTime()
+  let target = new Date(targetTime).getTime() - new Date(beginTime).getTime()
+  let percent = now / target * 100
+  return percent
 }
