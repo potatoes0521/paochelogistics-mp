@@ -35,7 +35,7 @@ export default {
     return requestHandle.get(`order/orderbargaindetail/${data.orderCode}`, data, that);
   },
   // 分享砍价接口
-  BargainPrice(data, that) {
+  bargainPrice(data, that) {
     return requestHandle.post(`order/bargainprice`, data, that);
   },
 }

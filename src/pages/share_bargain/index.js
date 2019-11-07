@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-05 13:24:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 13:39:58
+ * @LastEditTime: 2019-11-07 14:27:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -25,6 +25,11 @@ import {
   countDown,
   timerPercent
 } from '@utils/timer_handle.js'
+import {
+  getSetting,
+  getUserInfo,
+  requestBargain
+} from '@utils/get_user_info.js'
 import './index.styl'
 
 class ShareBargain extends Component {
@@ -44,7 +49,8 @@ class ShareBargain extends Component {
       second: 0,
       progress: 0.1,
       userPhoto: '',
-      nickName: ''
+      nickName: '',
+      userInfoFromWX: null
     }
     this.timer = null
     this.timeCountNumber = 43200000  // 砍价多少个小时
@@ -141,16 +147,28 @@ class ShareBargain extends Component {
    * 点了砍价按钮
    * @return void
    */
-  submit() {
-    let { progress } = this.state
-    let str = ''
-    for (let i in this.pageParams) {
-      str += i + '=' + this.pageParams[i] + '&'
-    }
+  async submit() {
+    let { progress, userInfoFromWX } = this.state
+    let { userInfo } = this.props
     if (progress > 0) { // 活动进行中
-      Taro.navigateTo({
-        url: `/pages/register/index?${str}`
-      })
+      if (userInfo.userId) { // 是已注册过的用户
+        let wxUserInfo = await getUserInfo()
+        if (wxUserInfo) {
+          this.setState({
+            userInfoFromWX: wxUserInfo
+          }, () => {
+            requestBargain(this)
+          })
+        }
+      } else {
+        let str = ''
+        for (let i in this.pageParams) {
+          str += i + '=' + this.pageParams[i] + '&'
+        }
+        Taro.navigateTo({
+          url: `/pages/register/index?${str}`
+        })
+      }
     } else { // 活动结束
       Taro.switchTab({
         url: '/pages/index/index'
