@@ -3,7 +3,7 @@
  * @description: 获取授权
  * @Date: 2019-11-07 13:45:09
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 16:33:15
+ * @LastEditTime: 2019-11-07 17:01:09
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -64,5 +64,4 @@ export const requestBargain = (that) => {
         resolve(res.data)
       })
   })
-  
 }
