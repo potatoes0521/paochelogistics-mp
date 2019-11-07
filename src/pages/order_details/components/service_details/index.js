@@ -3,7 +3,7 @@
  * @description: 订单详情中发车城市、 收车城市的组件 usedType: 1, //车辆类型  1新车  2二手车
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-30 17:39:11
+ * @LastEditTime: 2019-11-07 17:04:57
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -60,7 +60,7 @@ class ServiceDetailsComponent extends Component {
         </View>
         <View className='details-form-item'>
           <View className='details-form-label'>台数:</View>
-          <View className='details-form-content'>{item.inquiryOrderVO && item.inquiryOrderVO.carAmount || ''}辆</View>
+          <View className='details-form-content'>{item.inquiryOrderVO && item.inquiryOrderVO.carAmount || ''}台</View>
         </View>
         <View className='details-form-item'>
           <View className='details-form-label car-vins'>车架号/车牌号:</View>

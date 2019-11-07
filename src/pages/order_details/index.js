@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 13:45:58
+ * @LastEditTime: 2019-11-07 17:06:14
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -94,7 +94,7 @@ class OrderDetails extends Component {
       // c_id 是customerID的缩写  主要判断是不是这个用户的单 如果不是就让他进了首页
       if (type === 'inviteCustomer') { // 分享给客户
         path = `/pages/order_details/index?share_type=1&order_id=${orderDetailsInfo.orderId}&c_id=${orderDetailsInfo.userId}`
-        title = `${inquiryOrderVO.sendCityName}发往${inquiryOrderVO.receiveCityName}的${inquiryOrderVO.carAmount}辆${inquiryOrderVO.carInfo}已经发车了`
+        title = `${inquiryOrderVO.sendCityName}发往${inquiryOrderVO.receiveCityName}的${inquiryOrderVO.carAmount}台${inquiryOrderVO.carInfo}已经发车了`
         imageUrl = `https://resource.paoche56.com/paochelogistics/mp_img/share_to_c.png`
       }
       // share_type = 2 分享砍价  本人去订单详情  其他人去砍价
@@ -107,7 +107,7 @@ class OrderDetails extends Component {
     if (event.from === 'menu') {
       if (userInfo.userType === 0) { // 分享给客户
         path = `/pages/order_details/index?share_type=1&order_id=${orderDetailsInfo.orderId}&c_id=${orderDetailsInfo.userId}`
-        title = `${inquiryOrderVO.sendCityName}发往${inquiryOrderVO.receiveCityName}的${inquiryOrderVO.carAmount}辆${inquiryOrderVO.carInfo}已经发车了`
+        title = `${inquiryOrderVO.sendCityName}发往${inquiryOrderVO.receiveCityName}的${inquiryOrderVO.carAmount}台${inquiryOrderVO.carInfo}已经发车了`
         imageUrl = `https://resource.paoche56.com/paochelogistics/mp_img/share_to_c.png`
       }
       // share_type = 2 分享砍价  本人去订单详情  其他人去砍价

@@ -113,7 +113,7 @@ export default class OrderItem extends Component {
                 {
                   offerMsg.carAmount || 0
                 }
-                辆
+                台
               </Text>
             </View>
             <View className='price-wrapper price-wrapper-lang'>¥{ item.payPrice ? item.payPriceDesc : '' }</View>

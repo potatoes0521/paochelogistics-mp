@@ -340,7 +340,7 @@ class OfferDetails extends Component {
             </View>
             <View className='details-form-item'>
               <View className='details-form-label'>台数:</View>
-              <View className='details-form-content'>{carAmount || ''}辆</View>
+              <View className='details-form-content'>{carAmount || ''}台</View>
             </View>
             {
               (quotedTimeDesc && status !== 30) ?

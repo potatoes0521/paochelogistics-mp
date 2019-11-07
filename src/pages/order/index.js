@@ -3,7 +3,7 @@
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 17:00:33
+ * @LastEditTime: 2019-11-07 17:06:05
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -152,7 +152,7 @@ class Order extends Component {
       // c_id 是customerID的缩写  主要判断是不是这个用户的单 如果不是就让他进了首页
       if (type === 'inviteCustomer') { // 分享给客户
         path = `/pages/order_details/index?share_type=1&order_id=${item.orderId}&c_id=${item.userId}`
-        title = `${offerMsg.sendCityName}发往${offerMsg.receiveCityName}的${offerMsg.carAmount}辆${offerMsg.carInfo}已经发车了`
+        title = `${offerMsg.sendCityName}发往${offerMsg.receiveCityName}的${offerMsg.carAmount}台${offerMsg.carInfo}已经发车了`
         imageUrl = `https://resource.paoche56.com/paochelogistics/mp_img/share_to_c.png`
       }
       if (type === 'shareOrder') { // 分享给客户

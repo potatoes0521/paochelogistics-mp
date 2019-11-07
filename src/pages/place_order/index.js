@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-30 17:04:54
+ * @LastEditTime: 2019-11-07 17:05:49
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -554,7 +554,7 @@ class PlaceOrder extends Component {
               <View className='details-form-item'>
                 <View className='start-icon'></View>
                 <View className='details-form-label'>台数:</View>
-                <View className='details-form-content'>{carAmount || ''}辆</View>
+                <View className='details-form-content'>{carAmount || ''}台</View>
               </View>
               <View className='details-form-item' onClick={this.navigatorTo}>
                 <View className='start-icon'>*</View>
