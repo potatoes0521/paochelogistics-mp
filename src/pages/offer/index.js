@@ -3,7 +3,7 @@
  * @description: 询价单页面
  * @Date: 2019-09-20 13:24:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 11:31:16
+ * @LastEditTime: 2019-11-07 11:59:55
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -88,7 +88,8 @@ class Offer extends Component {
     this.offerPage = 1
     this.offerFlag = false
     this.setState({
-      current: value
+      current: value,
+      offerList: []
     }, () => {
       this.handleRequest()
     })
@@ -114,7 +115,11 @@ class Offer extends Component {
     Taro.showNavigationBarLoading()
     this.offerPage = 1
     this.offerFlag = false
-    this.handleRequest()
+    this.setState({
+      offerList: []
+    }, () => {
+      this.handleRequest()
+    })
     // 隐藏导航栏加载框
     Taro.hideNavigationBarLoading();
     // 停止下拉动作
