@@ -3,7 +3,7 @@
  * @description: 询价单页面
  * @Date: 2019-09-20 13:24:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 12:01:42
+ * @LastEditTime: 2019-11-07 14:44:21
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -32,12 +32,13 @@ class Offer extends Component {
     }
     this.offerPage = 1
     this.offerFlag = false
+    this.status = 20
   }
 
-  componentDidMount() { 
+  componentDidShow() { 
     let { userInfo } = this.props
-    if (userInfo.userId) { 
-      this.getOfferList(20, 1, true)
+    if (userInfo.userId) {
+      this.getOfferList(this.status, this.offerPage, true)
     }
   }
 
@@ -96,15 +97,15 @@ class Offer extends Component {
   }
   handleRequest() { 
     let { current } = this.state
-    let status = ''
+    this.status = ''
     if (current === 2) {
-      status = ''
+      this.status = ''
     } else if (current === 0) {
-      status = 20
+      this.status = 20
     } else if (current === 1) {
-      status = 10
+      this.status = 10
     }
-    this.getOfferList(status, this.offerPage, true)
+    this.getOfferList(this.status, this.offerPage, true)
   }
   /**
    * 下拉刷新
