@@ -3,7 +3,7 @@
  * @description: 各种时间处理方法
  * @Date: 2019-10-08 14:45:15
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 18:51:07
+ * @LastEditTime: 2019-11-07 18:55:51
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -144,8 +144,27 @@ export const dateTimeInterval = (d1, d2) => {
 export const timestampOfDay = (hours=0, minutes=0, seconds=0, milliseconds=0) => {
   return new Date(new Date().setHours(hours, minutes, seconds, milliseconds)).getTime()
 }
-
+ /**
+  * 函数功能描述
+  * @param {Number} targetTimeStamp 目标时间戳
+  * @param {Number} nowTimeStamp 第二个时间戳
+  * @return {
+  * day       天
+  * hour      时
+  * minute    分
+  * second    秒
+  * }
+  */
 export const countDown = (targetTimeStamp, nowTimeStamp) => {
+  if (!targetTimeStamp || !nowTimeStamp) {
+    console.log("Error:传入参数不正确");
+    return;
+  }
+
+  if (nowTimeStamp < targetTimeStamp) {
+    console.log("Error:第二个时间不能小于第一个时间");
+    return;
+  }
   //获取时间差
   let timeDiff = Math.round((targetTimeStamp - nowTimeStamp) / 1000);
   //获取还剩多少天
@@ -168,7 +187,11 @@ export const countDown = (targetTimeStamp, nowTimeStamp) => {
     }
   }
 }
-
+ /**
+  * 转换 小于10的为 0X
+  * @param {Number} time 参数描述
+  * @return time
+  */
 const toDou = (time) => {
   return time > 9 ? time : '0' + time
 }
