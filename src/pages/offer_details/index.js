@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
- * @LastEditors: guorui
- * @LastEditTime: 2019-10-23 16:27:52
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-11-07 14:37:41
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -266,15 +266,28 @@ class OfferDetails extends Component {
                 <View className='iconfont iconxunjiayiquxiao icon-invalid-style'></View>
                 : null
             }
+            {/* 10 未报价 20 已报价 */}
             <View className='details-form-item'>
               <View className='details-form-label'>报价状态:</View>
               {
-                (quotedPriceDesc) ?
-                  <View className='details-form-content font-color'>￥{quotedPriceDesc || ''}</View>
-                  :
-                  <View className='details-form-content no-offer'>{statusDesc}</View>
+                status === 10 ? 
+                  <View className='details-form-content no-offer'>{statusDesc || ''}</View>
+                  : null
+              }
+              {
+                status === 20 ? 
+                  <View className='details-form-content font-color'>{statusDesc || ''}</View>
+                  : null
               }
             </View>
+            {
+              (quotedPriceDesc) ?
+                <View className='details-form-item'>
+                  <View className='details-form-label'>报价金额:</View>
+                  <View className='details-form-content font-color'>￥{quotedPriceDesc || ''} /台</View>
+                </View>
+                : null
+            }
             {
               (dueTimeDesc) ?
                 <View className='details-form-item'>

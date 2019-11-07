@@ -3,7 +3,7 @@
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 12:00:09
+ * @LastEditTime: 2019-11-07 17:00:33
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -32,11 +32,12 @@ class Order extends Component {
     }
     this.orderPage = 1
     this.orderFlag = false
+    this.status = 10
   }
-  componentDidMount() {
+  componentDidShow() {
     let { userInfo } = this.props
     if (userInfo.userId) {
-      this.getOrderList(10, 1, false)
+      this.getOrderList(this.status, this.orderPage, false)
     }
   }
   /**
@@ -95,15 +96,15 @@ class Order extends Component {
   handleRequest() { 
     //  10 待支付 20 已支付 30 已取消
     let { current } = this.state
-    let status = ''
+    this.status = ''
     if (current === 0) {
-      status = 10
+      this.status = 10
     } else if (current === 1) {
-      status = 20
+      this.status = 20
     } else if (current === 2) {
-      status = ''
+      this.status = ''
     }
-    this.getOrderList(status, this.orderPage, true)
+    this.getOrderList(this.status, this.orderPage, true)
   }
   /**
    * 下拉刷新

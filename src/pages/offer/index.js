@@ -32,12 +32,13 @@ class Offer extends Component {
     }
     this.offerPage = 1
     this.offerFlag = false
+    this.status = 20
   }
 
-  componentDidMount() { 
+  componentDidShow() { 
     let { userInfo } = this.props
-    if (userInfo.userId) { 
-      this.getOfferList(20, 1, true)
+    if (userInfo.userId) {
+      this.getOfferList(this.status, this.offerPage, true)
     }
   }
 
@@ -96,15 +97,15 @@ class Offer extends Component {
   }
   handleRequest() { 
     let { current } = this.state
-    let status = ''
+    this.status = ''
     if (current === 2) {
-      status = ''
+      this.status = ''
     } else if (current === 0) {
-      status = 20
+      this.status = 20
     } else if (current === 1) {
-      status = 10
+      this.status = 10
     }
-    this.getOfferList(status, this.offerPage, true)
+    this.getOfferList(this.status, this.offerPage, true)
   }
   /**
    * 下拉刷新
