@@ -33,7 +33,7 @@ class Order extends Component {
     this.orderPage = 1
     this.orderFlag = false
   }
-  componentDidShow() {
+  componentDidMount() {
     let { userInfo } = this.props
     if (userInfo.userId) {
       this.getOrderList(10, 1, false)
