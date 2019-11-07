@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-06 14:09:23
+ * @LastEditTime: 2019-11-07 13:02:54
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -417,11 +417,11 @@ class Index extends Component {
   onShareAppMessage() {
     let path = `/pages/index/index`
     let title = `欢迎您进入跑车物流平台~`
-    // const imagePath = `https://resource.paoche56.com/paochelogistics/mp_img/share_mp.png`
+    const imageUrl = `https://resource.paoche56.com/paochelogistics/mp_img/share_mp.png`
     return {
       title: title,
       path: path,
-      // imageUrl: ``
+      imageUrl
     }
   }
   config = {
