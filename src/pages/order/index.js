@@ -3,7 +3,7 @@
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 11:32:33
+ * @LastEditTime: 2019-11-07 11:53:48
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -86,7 +86,8 @@ class Order extends Component {
     this.orderPage = 1
     this.orderFlag = false
     this.setState({
-      current: value
+      current: value,
+      orderList: []
     }, () => {
       this.handleRequest()
     })
@@ -113,7 +114,11 @@ class Order extends Component {
     Taro.showNavigationBarLoading()
     this.orderPage = 1
     this.orderFlag = false
-    this.handleRequest()
+    this.setState({
+      orderList: []
+    }, () => {
+      this.handleRequest()        
+    })
     // 隐藏导航栏加载框
     Taro.hideNavigationBarLoading();
     // 停止下拉动作
