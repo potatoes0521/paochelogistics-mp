@@ -143,7 +143,7 @@ class Order extends Component {
   onShareAppMessage(event) {
     let imageUrl = `https://resource.paoche56.com/paochelogistics/mp_img/share_mp.png`
     let path = `/pages/index/index`
-    let title = `欢迎您进入跑车物流平台~`
+    let title = `欢迎您进入跑车物流~`
     if (event.from === 'button') {
       let { type, item } = event.target.dataset
       const offerMsg = item && item.inquiryOrderVO
