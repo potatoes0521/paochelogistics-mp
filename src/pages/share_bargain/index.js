@@ -1,9 +1,9 @@
 /*
  * @Author: liuYang
- * @description: 请填写描述信息
+ * @description: 分享砍价
  * @Date: 2019-11-05 13:24:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 14:27:00
+ * @LastEditTime: 2019-11-07 16:59:14
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -26,10 +26,11 @@ import {
   timerPercent
 } from '@utils/timer_handle.js'
 import {
-  getSetting,
   getUserInfo,
   requestBargain
 } from '@utils/get_user_info.js'
+// eslint-disable-next-line no-unused-vars
+import BargainBox from '@c/bargain/index.js'
 import './index.styl'
 
 class ShareBargain extends Component {
@@ -50,7 +51,9 @@ class ShareBargain extends Component {
       progress: 0.1,
       userPhoto: '',
       nickName: '',
-      userInfoFromWX: null
+      userInfoFromWX: null,
+      showBargainBox: false,
+      bargainPrice: ''
     }
     this.timer = null
     this.timeCountNumber = 43200000  // 砍价多少个小时
@@ -67,6 +70,20 @@ class ShareBargain extends Component {
   componentWillUnmount() {
     clearInterval(this.timer)
   }
+  /**
+   * 获取微信授权信息
+   * @return void
+   */
+  async handleWXUserInfo() { 
+    let wxUserInfo = await getUserInfo()
+    this.setState({
+      userInfoFromWX: wxUserInfo
+    })
+  }
+  /**
+   * 计算一屏幕几个item合适
+   * @return void
+   */
   getSwiperHeight() { 
     const query = Taro.createSelectorQuery()
     query.select('#swiper').boundingClientRect()
@@ -79,7 +96,10 @@ class ShareBargain extends Component {
       })
     })
   }
-
+  /**
+   * 获取砍价详情 
+   * @return void
+   */
   getBargainDetails() {
     Taro.showLoading({
       title: '加载中...',
@@ -147,27 +167,57 @@ class ShareBargain extends Component {
    * 点了砍价按钮
    * @return void
    */
-  async submit() {
-    let { progress, userInfoFromWX } = this.state
+  submit(e) {
+    let {
+      progress,
+      bargainPrice,
+      userInfoFromWX
+    } = this.state
     let { userInfo } = this.props
     if (progress > 0) { // 活动进行中
+      if (bargainPrice) {
+        Taro.showToast({
+          title: '您已经砍过价了哦~',
+          icon: 'none'
+        })
+        return
+      }
+      Taro.showLoading({
+        title: '砍价中...',
+        mask: true
+      })
       if (userInfo.userId) { // 是已注册过的用户
-        let wxUserInfo = await getUserInfo()
-        if (wxUserInfo) {
+        if (userInfoFromWX) { // 如果能获取到微信授权
+          requestBargain(this).then(res => {
+            this.setState({
+              bargainPrice: res,
+              showBargainBox: true
+            })
+          })
+        } else { // 获取不到授权的点击这个按钮会获取授权
+          const wxUserInfo = e.target.userInfo
+          if (!wxUserInfo) {
+            Taro.hideLoading()
+            Taro.showToast({
+              title: '需要获取您的头像和昵称才能砍价哦~',
+              icon: 'none',
+              duration: 3000
+            })
+            return
+          }
           this.setState({
             userInfoFromWX: wxUserInfo
           }, () => {
-            requestBargain(this)
+            requestBargain(this).then(res => {
+              this.setState({
+                bargainPrice: res,
+                showBargainBox: true
+              })
+            })
           })
         }
-      } else {
-        let str = ''
-        for (let i in this.pageParams) {
-          str += i + '=' + this.pageParams[i] + '&'
-        }
-        Taro.navigateTo({
-          url: `/pages/register/index?${str}`
-        })
+      } else { // 没有注册过的用户去注册
+        this.navigatorToRegister()
       }
     } else { // 活动结束
       Taro.switchTab({
@@ -175,7 +225,25 @@ class ShareBargain extends Component {
       })
     }
   }
-
+  navigatorToRegister() { 
+    Taro.hideLoading()
+    let str = ''
+    for (let i in this.pageParams) {
+      str += i + '=' + this.pageParams[i] + '&'
+    }
+    Taro.navigateTo({
+      url: `/pages/register/index?${str}`
+    })
+  }
+  bargainBoxClick(e) { 
+    if (e === 'btn') { 
+      
+    } else {
+      this.setState({
+        showBargainBox: false
+      })
+    }
+  }
   config = {
     navigationBarTitleText: '帮砍价'
   }
@@ -194,7 +262,10 @@ class ShareBargain extends Component {
       second,
       progress,
       userPhoto,
-      nickName
+      nickName,
+      userInfoFromWX,
+      showBargainBox,
+      bargainPrice
     } = this.state
     const bargainSwiperListRender = bargainList.map(item =>
       <SwiperItem className='swiper-item' key={item}>
@@ -257,12 +328,14 @@ class ShareBargain extends Component {
             <View className='progress-fill' style={{width: progress + '%'}}></View>
           </View>
           <View className='bargain-wrapper'>
-            <Button
-              className='btn'
-              onClick={this.submit}
-            >
-              {progress > 0 ? '帮砍一刀' : '我也要发车'}
-            </Button>
+            {
+              progress ?
+                userInfoFromWX ? 
+                  <Button className='btn' onClick={this.submit} >帮砍一刀</Button>
+                  :
+                  <Button className='btn' openType='getUserInfo' onGetUserInfo={this.submit}>帮砍一刀</Button>
+                : <Button className='btn' onClick={this.submit}>我也要发车</Button>
+            }
           </View>
           <View className='bargain-list'>
             <View className='bargain-title'>
@@ -297,6 +370,12 @@ class ShareBargain extends Component {
             </View>
           </View>
         </View>
+        <BargainBox
+          show={showBargainBox}
+          type='bargain'
+          price={bargainPrice}
+          onClick={this.bargainBoxClick.bind(this)}
+        ></BargainBox>
       </View>
     )
   }

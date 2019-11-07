@@ -3,7 +3,7 @@
  * @description: 获取授权
  * @Date: 2019-11-07 13:45:09
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 14:30:03
+ * @LastEditTime: 2019-11-07 16:33:15
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -45,11 +45,24 @@ export const getUserInfo = () => {
     })
   })
 }
-
+ /**
+  * 砍价
+  * @param {Object} that this
+  * @return void
+  */
 export const requestBargain = (that) => {
-  let sendData = {}
-  api.order.bargainPrice(sendData, that)
-    .then(res => {
-      
+  return new Promise(resolve => {
+    let { order_code } = that.pageParams
+    let { userId } = that.props.userInfo
+    let sendData = Object.assign({}, that.state.userInfoFromWX, {
+      userId,
+      orderCode: order_code
     })
+    api.order.bargainPrice(sendData, that)
+      .then(res => {
+        Taro.hideLoading()
+        resolve(res.data)
+      })
+  })
+  
 }
