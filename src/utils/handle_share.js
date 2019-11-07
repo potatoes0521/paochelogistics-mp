@@ -3,11 +3,12 @@
  * @description: 处理进入小程序的分享
  * @Date: 2019-11-06 12:25:04
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-06 14:07:05
+ * @LastEditTime: 2019-11-07 18:19:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import Taro from '@tarojs/taro'
+import { requestBargain } from '@utils/get_user_info.js'
  /**
   * 处理分享的时候  判断用户是不是注册了 
   * 注册了根据 shareType干活
@@ -68,9 +69,11 @@ export const handleShareInOrderDetails = (pageParams, userInfo) => {
   * 处理注册后面的分享
   * @param {Object} pageParams 分享参数
   * @param {Object} userInfo 用户信息
+  * @param {wxUserInfo} wxUserInfo 微信授权信息
+  * @param {that} that this
   * @return void
   */
-export const handleRegisterShare = (pageParams, userInfo) => {
+export const handleRegisterShare = ({pageParams, userInfo, wxUserInfo, that}) => {
   if (pageParams.share_type === '1') {
     if (+userInfo.id === +pageParams.c_id) {
       redirectToOrderDetails(pageParams)  // 是客户本身  
@@ -80,7 +83,22 @@ export const handleRegisterShare = (pageParams, userInfo) => {
         url: '/pages/index/index'
       })
     }
-  } else {
+  } else if (pageParams.share_type === '2') {
+    let pages = Taro.getCurrentPages(); //  获取页面栈
+    let prevPage = pages[pages.length - 2]; // 上一个页面
+    prevPage.$component.setState({
+      userInfoFromWX: wxUserInfo
+    }, () => {
+      requestBargain(that).then(res => {
+        prevPage.$component.setState({
+          bargainPrice: res,
+          showBargainBox: true
+        }, () => {  
+          Taro.navigateBack()
+        })
+      })
+    })
+  }else {
     Taro.navigateBack()
   }
 }

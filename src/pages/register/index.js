@@ -3,7 +3,7 @@
  * @description: 注册页面
  * @Date: 2019-08-22 11:58:25
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-06 13:58:55
+ * @LastEditTime: 2019-11-07 18:24:07
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -34,7 +34,9 @@ class usePhoneNumberRegister extends Component {
       // eslint-disable-next-line react/no-unused-state
       agreementsParagraphList: [], //协议内容，weight:0  字体加粗， weight:1 字体不加错
       agreementsMainList: [],
-      disabled: true
+      disabled: true,
+      // eslint-disable-next-line react/no-unused-state
+      userInfoFromWX: null
     }
     this.verificationCode = '' // 验证码
     this.phoneNumber = ''       // 手机号
@@ -47,48 +49,7 @@ class usePhoneNumberRegister extends Component {
   componentDidShow() { 
     this.getAgreement()
   }
-  /**
-   * 注册
-   * @param {String || Number} phoneNumber 手机号
-   * @param {Number} verificationCode 验证码
-   * @return void
-   */
-  handleRegister(phoneNumber, verificationCode='') {
-    let sendData = {
-      mobile: phoneNumber,
-      verificationCode,
-      openId: this.props.userInfo.openId
-    }
-    api.user.register(sendData, this).then(res => {
-      let resData = Object.assign({}, res.userInfo, res.userInfoExt)
-      Actions.changeUserInfo(resData)
-      this.login(this.props.userInfo.openId)
-    })
-  }
-  /**
-  * 使用openID登录
-  * @param {String} openid
-  * @return void
-  */
-  login(openId = this.props.userInfo.openId) {
-    let sendData = {
-      token: this.props.userInfo.token,
-      openId
-    }
-    api.user.loginUseOpenID(sendData, this).then(res => {
-      if (res) {
-        let resData = Object.assign({}, res)
-        if (!sendData.token || sendData.token !== resData.token) {
-          refreshToken.setNewToken(resData.token)
-        }
-        Actions.changeUserInfo(resData)
-        // 给redux一个反应时间
-        setTimeout(() => {
-          handleRegisterShare(this.pageParams, this.props.userInfo)
-        }, 300)
-      }
-    })
-  }
+
   /**
    * 输入手机号
    * @param {Object} e event对象
@@ -130,7 +91,7 @@ class usePhoneNumberRegister extends Component {
    * 提交注册
    * @return void
    */
-  submitRegister() { 
+  submitRegister(e) { 
     if (!(/^1[3456789]\d{9}$/.test(this.phoneNumber))) {
       Taro.showToast({
         title: '手机号输入格式有误',
@@ -152,7 +113,72 @@ class usePhoneNumberRegister extends Component {
       })
       return
     }
-    this.handleRegister(this.phoneNumber, this.verificationCode)
+    Taro.showLoading({
+      title: '登录中...'
+    })
+    const wxUserInfo = e.target.userInfo
+    if (!wxUserInfo) {
+      Taro.hideLoading()
+      Taro.showToast({
+        title: '需要获取您的头像和昵称才能砍价哦~',
+        icon: 'none',
+        duration: 3000
+      })
+      return
+    }
+    this.handleRegister(this.phoneNumber, this.verificationCode, wxUserInfo)
+  }
+  /**
+   * 注册
+   * @param {String || Number} phoneNumber 手机号
+   * @param {Number} verificationCode 验证码
+   * @return void
+   */
+  handleRegister(phoneNumber, verificationCode = '', wxUserInfo) {
+    this.setState({
+      // eslint-disable-next-line react/no-unused-state
+      userInfoFromWX: wxUserInfo
+    })
+    let sendData = Object.assign({},{
+      mobile: phoneNumber,
+      verificationCode,
+      openId: this.props.userInfo.openId
+    }, wxUserInfo)
+    api.user.register(sendData, this).then(res => {
+      let resData = Object.assign({}, res.userInfo, res.userInfoExt)
+      Actions.changeUserInfo(resData)
+      this.login(this.props.userInfo.openId, wxUserInfo)
+    })
+  }
+  /**
+   * 使用openID登录
+   * @param {String} openid
+   * @return void
+   */
+  login(openId = this.props.userInfo.openId, wxUserInfo) {
+    let sendData = {
+      token: this.props.userInfo.token,
+      openId
+    }
+    api.user.loginUseOpenID(sendData, this).then(res => {
+      Taro.hideLoading()
+      if (res) {
+        let resData = Object.assign({}, res)
+        if (!sendData.token || sendData.token !== resData.token) {
+          refreshToken.setNewToken(resData.token)
+        }
+        Actions.changeUserInfo(resData)
+        // 给redux一个反应时间
+        setTimeout(() => {
+          handleRegisterShare({
+            pageParams:this.pageParams,
+            userInfo: this.props.userInfo,
+            wxUserInfo,
+            that: this
+          })
+        }, 300)
+      }
+    })
   }
   /**
    * 获取验证码
@@ -331,7 +357,12 @@ class usePhoneNumberRegister extends Component {
               }
             </View>
           </View>
-          <Button type='button' disabled={disabled} className='submit-btn' onClick={this.submitRegister}>同意协议并登录</Button>
+          <Button
+            openType='getUserInfo'
+            disabled={disabled}
+            className='submit-btn'
+            onGetUserInfo={this.submitRegister}
+          >同意协议并登录</Button>
           <View className='agreement-wrapper'>
             {/* <View
               className={registrationAgreementRadio}
@@ -342,7 +373,6 @@ class usePhoneNumberRegister extends Component {
               <Text className='agreement' onClick={this.showRegistrationAgreement}>注册协议</Text>
             </View>
           </View>
-          
         </View>
         {
           isShow ?
