@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 17:06:14
+ * @LastEditTime: 2019-11-07 19:05:14
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -129,6 +129,12 @@ class OrderDetails extends Component {
     } = this.state
     return (
       <View className='page-wrapper'>
+        <View className='bargain-tips-wrapper'>
+          <View className='time-tips'></View>
+          <View className='tips-text'>
+            
+          </View>
+        </View>
         <View className='page-main'>
           <NoTitleCard>
             <SendCityComponent item={orderDetailsInfo}></SendCityComponent>
