@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-05 13:24:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 12:38:07
+ * @LastEditTime: 2019-11-07 13:39:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -88,7 +88,6 @@ class ShareBargain extends Component {
         this.timeCountNumber = res.timeCountNumber || 43200000
         let time = Number(new Date(res.dueTime))
         let progress = timerPercent(time, (time - this.timeCountNumber))
-        console.log(progress)
         progress = progress > 100 ? 0 : progress
         this.setState({
           bargainList: res.bargainRecordList || [],
@@ -117,10 +116,8 @@ class ShareBargain extends Component {
       let time = Number(new Date(targetTimeStamp))
       let nowTime = new Date().getTime()
       let num = countDown(time, nowTime)
-      let time = Number(new Date(targetTimeStamp))
       let progress = timerPercent(time, (time - this.timeCountNumber))
       progress = progress > 100 ? 0 : progress
-      console.log(progress)
       if (!num) {
         clearInterval(this.timer)
         this.setState({

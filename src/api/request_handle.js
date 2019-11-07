@@ -3,7 +3,7 @@
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-05 15:08:01
+ * @LastEditTime: 2019-11-07 13:46:46
  */
 
 // 默认请求连接
@@ -17,7 +17,7 @@
 
 import Taro from '@tarojs/taro'
 // eslint-disable-next-line import/first
-import refreshToken from '@utils/refreshToken.js'
+import refreshToken from '@utils/refresh_token.js'
 import {
   HTTP_STATUS,
   defaultApiURL

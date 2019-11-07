@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 13:09:21
+ * @LastEditTime: 2019-11-07 13:45:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -22,7 +22,7 @@ import api from '@api/index.js'
 // eslint-disable-next-line import/first
 import login from '@utils/login.js'
 // eslint-disable-next-line import/first
-import { handleShareInOrderDetails } from '@utils/handleShare.js'
+import { handleShareInOrderDetails } from '@utils/handle_share.js'
 import './index.styl'
 
 class OrderDetails extends Component {

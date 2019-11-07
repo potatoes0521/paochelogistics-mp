@@ -17,10 +17,10 @@ import {
 import { connect } from '@tarojs/redux'
 import { defaultResourceConfigURL } from '@config/request_config.js'
 import api from '@api/index.js'
-import refreshToken from '@utils/refreshToken.js'
+import refreshToken from '@utils/refresh_token.js'
 import Actions from '@store/actions/index.js'
 import classNames from 'classnames'
-import { handleRegisterShare } from '@utils/handleShare.js'
+import { handleRegisterShare } from '@utils/handle_share.js'
 import './index.styl'
 
 class usePhoneNumberRegister extends Component { 

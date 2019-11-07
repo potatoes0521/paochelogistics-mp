@@ -3,13 +3,13 @@
  * @description: 请填写描述信息
  * @Date: 2019-10-10 09:33:18
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-21 14:52:26
+ * @LastEditTime: 2019-11-07 13:46:53
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import Taro from '@tarojs/taro'
 import Actions from '@store/actions/index.js'
-import refreshToken from './refreshToken.js'
+import refreshToken from './refresh_token.js'
 // eslint-disable-next-line import/first
 import api from '@api/index.js'
 

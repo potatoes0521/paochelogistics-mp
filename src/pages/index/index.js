@@ -45,7 +45,7 @@ import LocationModal from './components/location_modal/index.js'
 // eslint-disable-next-line import/first
 import { serviceList, carNatureList } from '@config/text_config.js'
 // eslint-disable-next-line import/first
-import { handleShare } from '@utils/handleShare.js'
+import { handleShare } from '@utils/handle_share.js'
 
 import './index.styl'
 
