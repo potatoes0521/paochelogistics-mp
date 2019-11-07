@@ -3,7 +3,7 @@
  * @description: 分享砍价
  * @Date: 2019-11-05 13:24:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 16:59:14
+ * @LastEditTime: 2019-11-07 18:47:44
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,13 +16,14 @@ import {
   Button,
   Image,
   Swiper,
-  SwiperItem
+  SwiperItem,
+  Block
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import login from '@utils/login.js'
 import api from '@api/index.js'
 import {
-  countDown,
+  interValCountDown,
   timerPercent
 } from '@utils/timer_handle.js'
 import {
@@ -45,6 +46,7 @@ class ShareBargain extends Component {
       carInfo: '',
       bargainTotalPrice: '0.00',
       // carAmount: '',
+      day: 0,
       hour: 0,
       minute: 0,
       second: 0,
@@ -56,7 +58,6 @@ class ShareBargain extends Component {
       bargainPrice: ''
     }
     this.timer = null
-    this.timeCountNumber = 43200000  // 砍价多少个小时
     this.pageParams = {}
   }
   
@@ -110,10 +111,9 @@ class ShareBargain extends Component {
     }
     api.order.getOrderBargainDetail(sendData, this)
       .then(res => {
-        res.dueTime = 1573139471000
-        this.timeCountNumber = res.timeCountNumber || 43200000
-        let time = Number(new Date(res.dueTime))
-        let progress = timerPercent(time, (time - this.timeCountNumber))
+        let dueTime = Number(new Date(res.dueTime)) // 目标时间
+        let startTime = Number(new Date(res.startTime)) // 开始时间
+        let progress = timerPercent(dueTime, startTime)
         progress = progress > 100 ? 0 : progress
         this.setState({
           bargainList: res.bargainRecordList || [],
@@ -127,41 +127,22 @@ class ShareBargain extends Component {
           progress
           // carAmount: res.carAmount
         })
-        this.countDown(res.dueTime)
+        this.countDown(dueTime, startTime)
         Taro.hideLoading()
       })
   }
   /**
    * 倒计时函数
-   * @param {Type} targetTimeStamp 参数描述
+   * @param {Number} targetTimeStamp 结束时间
+   * @param {Number} startTimeStamp 开始时间
    * @return void
    */
-  countDown(targetTimeStamp) {
-    clearInterval(this.timer)
-    this.timer = setInterval(() => {
-      let time = Number(new Date(targetTimeStamp))
-      let nowTime = new Date().getTime()
-      let num = countDown(time, nowTime)
-      let progress = timerPercent(time, (time - this.timeCountNumber))
-      progress = progress > 100 ? 0 : progress
-      if (!num) {
-        clearInterval(this.timer)
-        this.setState({
-          hour: 0,
-          minute: 0,
-          second: 0,
-          progress
-        })
-      } else {
-        let { hour, minute, second } = num
-        this.setState({
-          hour,
-          minute,
-          second,
-          progress
-        })
-      }
-    }, 1000)
+  countDown(targetTimeStamp, startTimeStamp) {
+    interValCountDown({
+      targetTimeStamp,
+      startTimeStamp,
+      that: this
+    })
   }
   /**
    * 点了砍价按钮
@@ -257,6 +238,7 @@ class ShareBargain extends Component {
       carInfo,
       bargainTotalPrice,
       // carAmount,
+      day,
       hour,
       minute,
       second,
@@ -311,6 +293,14 @@ class ShareBargain extends Component {
             progress > 0 ?
               <View className='timer'>
                 <Text className='text'>还剩</Text>
+                {
+                  day > 0 ?
+                    <Block>
+                      <Text className='timer-box'>{day}</Text>
+                      <Text>天</Text>
+                    </Block>
+                    : null
+                }
                 <Text className='timer-box'>{hour}</Text>
                 <Text>:</Text>
                 <Text className='timer-box'>{minute}</Text>

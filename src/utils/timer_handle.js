@@ -3,7 +3,7 @@
  * @description: 各种时间处理方法
  * @Date: 2019-10-08 14:45:15
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 12:28:26
+ * @LastEditTime: 2019-11-07 18:51:07
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -149,7 +149,7 @@ export const countDown = (targetTimeStamp, nowTimeStamp) => {
   //获取时间差
   let timeDiff = Math.round((targetTimeStamp - nowTimeStamp) / 1000);
   //获取还剩多少天
-  let day = toDou(parseInt(timeDiff / 3600 / 24));
+  let day = parseInt(timeDiff / 3600 / 24);
   //获取还剩多少小时
   let hour = toDou(parseInt(timeDiff / 3600 % 24));
   //获取还剩多少分钟
@@ -172,6 +172,54 @@ export const countDown = (targetTimeStamp, nowTimeStamp) => {
 const toDou = (time) => {
   return time > 9 ? time : '0' + time
 }
+ /**
+  * 倒计时
+  * 对象形式传参
+  * 引入的地方必须定义一个 this.timer 
+  * 在 卸载页面的时候清除定时器
+  * componentWillUnmount() {
+  *   clearInterval(this.timer)
+  * }
+  * @param {Number} targetTimeStamp 参数描述
+  * @param {Number} startTimeStamp 参数描述
+  * @param {Object} that 参数描述
+  * @return {
+  * day       天
+  * hour      时
+  * minute    分
+  * second    秒
+  * progress  两个时间戳进行的百分比
+  * }
+  */
+export const interValCountDown = ({targetTimeStamp, startTimeStamp, that}) => {
+  clearInterval(that.timer)
+  that.timer = setInterval(() => {
+    let nowTime = new Date().getTime()
+    let num = countDown(targetTimeStamp, nowTime)
+    let progress = timerPercent(targetTimeStamp, startTimeStamp)
+    progress = progress > 100 ? 0 : progress
+    if (!num) {
+      clearInterval(that.timer)
+      that.setState({
+        day: 0,
+        hour: 0,
+        minute: 0,
+        second: 0,
+        progress
+      })
+    } else {
+      let { day, hour, minute, second } = num
+      that.setState({
+        day,
+        hour,
+        minute,
+        second,
+        progress
+      })
+    }
+  }, 1000)
+}
+
  /**
   * 计算两个时间 之间的百分比
   * @param {Number || String} targetTime 目标时间 如果时间是时间戳就是Number
