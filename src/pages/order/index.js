@@ -3,12 +3,15 @@
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-06 18:39:39
+ * @LastEditTime: 2019-11-07 11:29:04
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import Taro, { Component } from '@tarojs/taro'
-import { View, Swiper ,SwiperItem } from '@tarojs/components'
+import {
+  View,
+  Block
+} from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import Tabs from '@c/tabs/index.js'
 import OrderItem from './components/order_item/index.js'
@@ -25,23 +28,15 @@ class Order extends Component {
     super(props)
     this.state = {
       current: 0,
-      waitPayList: [], // 待支付
-      payOverList: [], // 待交车
-      allOrderList: [] // 全部
+      orderList: [] // 全部
     }
-    this.waitPayPage = 1
-    this.payOverPage = 1
-    this.allOrderPage = 1
-    this.waitPayFlag = false
-    this.payOverFlag = false
-    this.allOrderFlag = false
+    this.orderPage = 1
+    this.orderFlag = false
   }
   componentDidShow() {
     let { userInfo } = this.props
     if (userInfo.userId) {
-      this.getOrderList('', 1, true)
       this.getOrderList(10, 1, false)
-      this.getOrderList(20, 1, false)
     }
   }
   /**
@@ -66,61 +61,21 @@ class Order extends Component {
     }
     api.order.getOrderList(sendData, this).then(res => {
       if (res && res.length < pageSize) {
-        if (status === 10) { // 待支付
-          this.waitPayFlag = true
-        } else if (status === '') { // 全部
-          this.allOrderFlag = true
-        } else if (status === 20) { // 已支付
-          this.payOverFlag = true
-        }
+        this.orderFlag = true
       }
-      let {
-        waitPayList,
-        payOverList,
-        allOrderList
-      } = this.state
-
+      let { orderList } = this.state
+      this.orderPage += 1
       if (pageNum === 1) {
-        this.updateState(status, [...res])
+        this.setState({
+          orderList: [...res]
+        })
       } else {
-        if (status === 10) { // 全部
-          this.updateState(status, [...waitPayList, ...res])
-        } else if (status === '') { // 未报价
-          this.updateState(status, [...allOrderList, ...res])
-        } else if (status === 20) { // 已支付
-          this.updateState(status, [...payOverList, ...res])
-        }
+        this.setState({
+          orderList: [...orderList, ...res]
+        })
       }
       Taro.hideLoading()
     })
-  }
-  /**
-   * 函数功能描述
-   * @param {Number || String} status 状态
-   * @param {Array} value 要改的值
-   * @return void
-   */
-  updateState(status, value) {
-    switch (status) {
-      case 10:  // 未支付
-        this.waitPayPage += 1
-        this.setState({
-          waitPayList: value
-        })
-        break
-      case '': // 全部
-        this.allOrderPage += 1
-        this.setState({
-          allOrderList: value
-        })
-        break
-      case 20: // 已支付
-        this.payOverPage += 1
-        this.setState({
-          payOverList: value
-        })
-        break
-    }
   }
   /**
    * 处理tabs点击事件
@@ -130,17 +85,21 @@ class Order extends Component {
   handleClick(value) {
     this.setState({
       current: value
+    }, () => {
+      this.handleRequest()
     })
   }
-  /**
-   * swiper onChange事件
-   * @param {Object} e 参数描述
-   * @return void
-   */
-  changeSwiper(e) {
-    this.setState({
-      current: e.detail.current
-    })
+  handleRequest() { 
+    let { current } = this.state
+    let status = ''
+    if (current === 0) {
+      status = ''
+    } else if (current === 1) {
+      status = 20
+    } else if (current === 2) {
+      status = 10
+    }
+    this.getOrderList(status, this.orderPage, true)
   }
   /**
    * 下拉刷新
@@ -149,15 +108,9 @@ class Order extends Component {
   async onPullDownRefresh() {
     // 显示顶部刷新图标
     Taro.showNavigationBarLoading()
-    this.waitPayPage = 1
-    this.payOverPage = 1
-    this.allOrderPage = 1
-    this.waitPayFlag = false
-    this.payOverFlag = false
-    this.allOrderFlag = false
-    this.getOrderList('', 1, true)
-    this.getOrderList(10, 1, false)
-    this.getOrderList(20, 1, false)
+    this.orderPage = 1
+    this.orderFlag = false
+    this.handleRequest()
     // 隐藏导航栏加载框
     Taro.hideNavigationBarLoading();
     // 停止下拉动作
@@ -170,19 +123,9 @@ class Order extends Component {
    * @return void
    */
   onReachBottom() {
-    let {
-      current
-    } = this.state
-    if (current === 0) {
-      if (this.waitPayFlag) return
-      this.getOrderList('', this.waitPayPage, true)
-    } else if (current === 1) {
-      if (this.payOverFlag) return
-      this.getOrderList(20, this.payOverPage, true)
-    } else if (current === 2) {
-      if (this.allOrderFlag) return
-      this.getOrderList(10, this.allOrderPage, true)
-    }
+    console.log('触底')
+    if (this.orderFlag) return
+    this.handleRequest()
   }
   /**
    * 触发了分享
@@ -224,32 +167,10 @@ class Order extends Component {
   render() {
     let {
       current,
-      waitPayList,
-      payOverList,
-      allOrderList
+      orderList
     } = this.state
     let { userInfo } =  this.props
-    const waitPayItemList = waitPayList.map(item => {
-      const key = item.orderId + '1'
-      return (
-        <OrderItem
-          key={key}
-          item={item}
-          userInfo={userInfo}
-        ></OrderItem>
-      )
-    })
-    const payOverItemList = payOverList.map(item => {
-      const key = item.orderId + '2'
-      return (
-        <OrderItem
-          key={key}
-          item={item}
-          userInfo={userInfo}
-        ></OrderItem>
-      )
-    })
-    const allOrderItemList = allOrderList.map(item => {
+    const orderItemList = orderList.map(item => {
       const key = item.orderId
       return (
         <OrderItem
@@ -263,43 +184,23 @@ class Order extends Component {
       <View className='order-wrapper'>
         {
           userInfo.userId ? 
-            <Tabs
-              activeIndex={current}
-              options={orderTabs}
-              onClick={this.handleClick.bind(this)}
-            >
-              <Swiper
-                duration={300}
-                current={current}
-                className='swiper-wrapper'
-                onChange={this.changeSwiper}
-              >
-                <SwiperItem className='swiper-item'>
-                  {
-                    waitPayList.length > 0 ?
-                      waitPayItemList
-                      :
-                      <NoData pageType='order'></NoData>
-                  }
-                </SwiperItem>
-                <SwiperItem className='swiper-item'>
-                  {
-                    payOverList.length > 0 ?
-                      payOverItemList
-                      :
-                      <NoData pageType='order'></NoData>
-                  }
-                </SwiperItem>
-                <SwiperItem className='swiper-item'>
-                  {
-                    allOrderList.length > 0 ?
-                    allOrderItemList
+            <Block>
+              <View className='tabs-wrapper'>
+                <Tabs
+                  activeIndex={current}
+                  options={orderTabs}
+                  onClick={this.handleClick.bind(this)}
+                ></Tabs>
+              </View>
+              <View className='swiper-wrapper'>
+                {
+                  orderList.length > 0 ?
+                    orderItemList
                     :
                     <NoData pageType='order'></NoData>
-                  }
-                </SwiperItem>
-              </Swiper>
-            </Tabs>
+                }
+              </View>
+            </Block>
             :
             <NoData pageType='login'></NoData>
         }
