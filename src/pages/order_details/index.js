@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-06 18:46:56
+ * @LastEditTime: 2019-11-07 13:04:01
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -85,7 +85,7 @@ class OrderDetails extends Component {
     let { orderDetailsInfo } = this.state
     let { inquiryOrderVO } = orderDetailsInfo
     let path = `/pages/index/index`
-    let title = `欢迎您进入跑车物流平台~`
+    let title = `欢迎您进入跑车物流~`
     let imageUrl = `https://resource.paoche56.com/paochelogistics/mp_img/share_mp.png`
     if (event.from === 'button') {
       // 来自页面内转发按钮
