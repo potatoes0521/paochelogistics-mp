@@ -3,7 +3,7 @@
  * @description: 订单详情中发车城市、收车城市的组件
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 17:00:50
+ * @LastEditTime: 2019-11-08 18:09:07
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -35,7 +35,7 @@ export default class PriceDetailsComponent extends Component {
       <View className='details-form-wrapper'>
         <View className='details-form-item'>
           <View className='details-form-label'>报价:</View>
-          <View className='details-form-price'>￥{item.inquiryOrderVO && item.inquiryOrderVO.quotedPriceDesc || ''}</View>
+          <View className='details-form-price'>￥{item.inquiryOrderVO && item.inquiryOrderVO.quotedPriceDesc || item.quotedPriceDesc || ''}</View>
           {/* <Text className='number'>/台</Text> */}
         </View>
         {

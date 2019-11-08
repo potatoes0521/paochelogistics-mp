@@ -3,7 +3,7 @@
  * @description: 支付详情  本页面注释信息为，别人代付时显示的支付页面
  * @Date: 2019-10-08 09:30:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 16:54:05
+ * @LastEditTime: 2019-11-08 18:10:15
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -50,10 +50,14 @@ class PayDetails extends Component {
    * @return void
    */
   getOrderDetails() { 
+    Taro.showLoading({
+      title: '加载中...'
+    })
     let sendData = {
       orderId: this.pageParams.order_id
     }
     api.order.getOrderDetails(sendData, this).then(res => {
+      Taro.hideLoading()
       this.orderCode = res.orderCode
       this.setState({
         quotedPriceDesc: res.inquiryOrderVO.quotedPriceDesc,
