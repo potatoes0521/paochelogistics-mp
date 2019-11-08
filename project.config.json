@@ -4,7 +4,7 @@
 	"description": " paochelogistics-mp 跑车物流小程序  taro框架",
 	"appid": "wx90c791e28c3c7d4d",
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": false,
 		"postcss": false,
 		"minified": false
@@ -138,6 +138,12 @@
           "name": "支付成功",
           "pathName": "pages/pay_success/index",
           "scene": null
+        },
+        {
+          "id": -1,
+          "name": "砍价",
+          "pathName": "pages/share_bargain/index",
+          "query": "share_type=2&order_code=PC378588938798336&user_id=158"
         }
 			]
 		}

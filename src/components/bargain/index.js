@@ -3,7 +3,7 @@
  * @description: 砍价弹框
  * @Date: 2019-11-07 15:58:24
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 16:42:01
+ * @LastEditTime: 2019-11-08 10:19:50
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -65,7 +65,7 @@ export default class BargainBox extends Component {
                 <View className='tips'>
                   {tips}
                   {
-                    price ?
+                    Number(price) ?
                       <Text className='price'>{price}元</Text>
                       : null                      
                     }

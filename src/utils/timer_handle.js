@@ -1,9 +1,11 @@
+import { object } from "prop-types";
+
 /*
  * @Author: liuYang
  * @description: 各种时间处理方法
  * @Date: 2019-10-08 14:45:15
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 18:55:51
+ * @LastEditTime: 2019-11-08 10:56:48
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -200,12 +202,13 @@ const toDou = (time) => {
   * 对象形式传参
   * 引入的地方必须定义一个 this.timer 
   * 在 卸载页面的时候清除定时器
+  * 如果没有开始时间那么将没有  progress  返回
   * componentWillUnmount() {
   *   clearInterval(this.timer)
   * }
-  * @param {Number} targetTimeStamp 参数描述
-  * @param {Number} startTimeStamp 参数描述
-  * @param {Object} that 参数描述
+  * @param {Number} targetTimeStamp 结束时间
+  * @param {Number} startTimeStamp 开始时间
+  * @param {Object} that this主要用来清除定时器
   * @return {
   * day       天
   * hour      时
@@ -214,32 +217,42 @@ const toDou = (time) => {
   * progress  两个时间戳进行的百分比
   * }
   */
-export const interValCountDown = ({targetTimeStamp, startTimeStamp, that}) => {
+export const interValCountDown = ({ targetTimeStamp, startTimeStamp = 0, that }) => {
+  if (!targetTimeStamp) {
+    console.log("Error:传入参数不正确");
+    return false
+  }
   clearInterval(that.timer)
   that.timer = setInterval(() => {
-    let nowTime = new Date().getTime()
-    let num = countDown(targetTimeStamp, nowTime)
-    let progress = timerPercent(targetTimeStamp, startTimeStamp)
-    progress = progress > 100 ? 0 : progress
+    let nowTime = new Date().getTime() // 当前时间
+    let num = countDown(targetTimeStamp, nowTime) // 计算时间相差多久
+    let progress = 0
+    let state = {}
+    if (startTimeStamp) {
+      startTimeStamp = 0
+      progress = timerPercent(targetTimeStamp, startTimeStamp)
+      progress = progress > 100 ? 0 : progress
+      state = Object.assign({}, { progress }, state)
+    }
     if (!num) {
       clearInterval(that.timer)
-      that.setState({
+      state = Object.assign({}, {
         day: 0,
         hour: 0,
         minute: 0,
         second: 0,
-        progress
-      })
+      }, state)
     } else {
       let { day, hour, minute, second } = num
-      that.setState({
+      state = Object.assign({}, {
         day,
         hour,
         minute,
-        second,
-        progress
-      })
+        second
+      }, state)
     }
+    console.log(state)
+    return state
   }, 1000)
 }
 

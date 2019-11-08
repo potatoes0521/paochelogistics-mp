@@ -3,13 +3,17 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 19:05:14
+ * @LastEditTime: 2019-11-08 10:55:08
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 
 import Taro, { Component } from '@tarojs/taro'
-import { View } from '@tarojs/components'
+import {
+  View,
+  Text,
+  Block
+} from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import NoTitleCard from '@c/no_title_card/index.js'
 import SendCityComponent from './components/send_city/index.js'
@@ -18,20 +22,32 @@ import ServiceDetailsComponent from './components/service_details/index.js'
 import PriceDetailsComponent from './components/price_details/index.js'
 import FooterDetailsComponent from './components/footer_details/index.js'
 // eslint-disable-next-line import/first
+import BargainBox from '@c/bargain/index.js' // 砍价过期 弹框 
+// eslint-disable-next-line import/first
 import api from '@api/index.js'
 // eslint-disable-next-line import/first
 import login from '@utils/login.js'
 // eslint-disable-next-line import/first
 import { handleShareInOrderDetails } from '@utils/handle_share.js'
+// eslint-disable-next-line import/first
+import { interValCountDown } from '@utils/timer_handle.js'
 import './index.styl'
 
 class OrderDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      orderDetailsInfo: {} //订单信息
+      orderDetailsInfo: {}, //订单信息
+      day: 0,
+      hour: 0,
+      minute: 0,
+      second: 0,
+      showBargainBox: false,
+      tipContent: '',
+      fail: false
     }
     this.pageParams = {}
+    this.timer = null
   }
 
   async componentDidMount() {
@@ -45,12 +61,9 @@ class OrderDetails extends Component {
       this.getOrderDetails()      
     }
   }
-  
-  //页面内的配置
-  config = {
-    navigationBarTitleText: '订单详情'
-  } 
-
+  componentWillUnmount() {
+    clearInterval(this.timer)
+  }
   /**
    * 获取订单详情--发车城市信息
    * @return void
@@ -70,10 +83,38 @@ class OrderDetails extends Component {
     api.order.getOrderDetails(sendData, this)
       .then(res => {
         this.setState({
-          orderDetailsInfo: res
+          orderDetailsInfo: res,
+          tipContent: res.tipContent
         })
         Taro.hideLoading()
+        const nowTimer = new Date().getTime()
+        console.log('现在的时间戳' + nowTimer, '到期的时间戳' + res.discountDueTime, nowTimer - res.discountDueTime, nowTimer > res.discountDueTime)
+        if (nowTimer > res.discountDueTime) {
+          this.setState({
+            fail: true,
+            showBargainBox: true
+          })
+        }
+        this.countDown(res.discountDueTime)
       })
+  }
+  /**
+   * 倒计时函数
+   * @param {Number} targetTimeStamp 结束时间
+   * @return void
+   */
+  countDown(targetTimeStamp) {
+    let data = interValCountDown({
+      targetTimeStamp,
+      that: this
+    })
+    if (data && data.day <= 0 && data.hour <= 0 && data.minute <= 0 && data.second <= 0) {
+      data = Object.assign({}, data, {
+        fail: true,
+        showBargainBox: true
+      })
+    }
+    this.setState(data)
   }
   /**
    * 触发了分享
@@ -123,18 +164,62 @@ class OrderDetails extends Component {
       imageUrl
     }
   }
+  bargainBoxClick() {
+    this.setState({
+      showBargainBox: false
+    })
+  }
+  //页面内的配置
+  config = {
+    navigationBarTitleText: '订单详情'
+  }
   render() {
     let {
-      orderDetailsInfo
+      orderDetailsInfo,
+      day,
+      hour,
+      minute,
+      second,
+      showBargainBox,
+      tipContent,
+      fail
     } = this.state
     return (
       <View className='page-wrapper'>
-        <View className='bargain-tips-wrapper'>
-          <View className='time-tips'></View>
-          <View className='tips-text'>
-            
-          </View>
-        </View>
+        {
+          !fail && orderDetailsInfo.status === 10 ?
+            <View className='bargain-tips-wrapper'>
+              <View className='time-tips'>
+                <View className='tips'>优惠倒计时</View>
+                <View className='timer'>
+                  {
+                    day > 0 ?
+                      <Block>
+                        <Text className='timer-box'>{day}</Text>
+                        <Text>天</Text>
+                      </Block>
+                      : null
+                  }
+                  <Text className='timer-box'>{hour}</Text>
+                  <Text>:</Text>
+                  <Text className='timer-box'>{minute}</Text>
+                  <Text>:</Text>
+                  <Text className='timer-box'>{second}</Text>
+                </View>
+              </View>
+              <View className='tips-text'>{tipContent}</View>
+            </View>
+            : null
+        }
+        {
+          fail && orderDetailsInfo.status === 10 ? 
+            <BargainBox
+              show={showBargainBox}
+              type='fail'
+              onClick={this.bargainBoxClick.bind(this)}
+            ></BargainBox>
+            : null
+        }
         <View className='page-main'>
           <NoTitleCard>
             <SendCityComponent item={orderDetailsInfo}></SendCityComponent>

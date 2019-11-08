@@ -3,7 +3,7 @@
  * @description: 分享砍价
  * @Date: 2019-11-05 13:24:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 18:47:44
+ * @LastEditTime: 2019-11-08 10:17:22
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -138,11 +138,12 @@ class ShareBargain extends Component {
    * @return void
    */
   countDown(targetTimeStamp, startTimeStamp) {
-    interValCountDown({
+    let data = interValCountDown({
       targetTimeStamp,
       startTimeStamp,
       that: this
     })
+    this.setState(data)
   }
   /**
    * 点了砍价按钮
@@ -217,8 +218,10 @@ class ShareBargain extends Component {
     })
   }
   bargainBoxClick(e) { 
-    if (e === 'btn') { 
-      
+    if (e === 'btn') { // 点击我知道了或者我要发车就去首页
+      Taro.switchTab({
+        url: `/pages/index/index`
+      })
     } else {
       this.setState({
         showBargainBox: false
