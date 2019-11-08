@@ -3,7 +3,7 @@
  * @description: 支付详情  本页面注释信息为，别人代付时显示的支付页面
  * @Date: 2019-10-08 09:30:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 19:33:22
+ * @LastEditTime: 2019-11-08 20:56:19
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -31,7 +31,6 @@ class PayDetails extends Component {
       showBargainBox: false
      }
     this.pageParams = {}
-    this.orderId = ''
   }
   componentDidShow() { 
     this.pageParams = this.$router.params
@@ -58,7 +57,6 @@ class PayDetails extends Component {
     }
     api.order.getOrderDetails(sendData, this).then(res => {
       Taro.hideLoading()
-      this.orderId = res.orderId
       this.setState({
         quotedPriceDesc: res.inquiryOrderVO.quotedPriceDesc,
         bargainPriceDesc: res.bargainPriceDesc,
@@ -80,7 +78,7 @@ class PayDetails extends Component {
    */
   payMoney() { 
     let sendData = {
-      orderId: this.orderId
+      orderCode: this.pageParams.order_code
     }
     api.pay.getPayParams(sendData, this).then(res => {
       this.weChatPay(res)
