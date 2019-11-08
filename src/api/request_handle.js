@@ -3,7 +3,7 @@
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 17:22:19
+ * @LastEditTime: 2019-11-08 17:29:47
  */
 
 // 默认请求连接
@@ -31,10 +31,12 @@ export const appVersion = '0.8.14'
 export default {
   baseOptions(url, data, that, method = 'GET') {
     const { userInfo } = that.props || {};
-    data = Object.assign({}, {
-      nickName: userInfo.nickName,
-      userPhoto: userInfo.userPhoto
-    }, data)
+    if (userInfo.nickName && userInfo.userPhoto) {
+      data = Object.assign({}, {
+        nickName: userInfo.nickName,
+        userPhoto: userInfo.userPhoto
+      }, data)
+    }
     const sign = createSignData(data, sign_id)[1]
     const headerUserLogin = JSON.stringify({
       'token': userInfo.token || '',
