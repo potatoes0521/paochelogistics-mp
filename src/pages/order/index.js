@@ -3,7 +3,7 @@
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 14:47:47
+ * @LastEditTime: 2019-11-08 11:49:36
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -68,7 +68,7 @@ class Order extends Component {
       this.orderPage += 1
       if (pageNum === 1) {
         this.setState({
-          orderList: [...res]
+          orderList: res
         })
       } else {
         this.setState({
