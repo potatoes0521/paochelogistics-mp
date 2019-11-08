@@ -3,7 +3,7 @@
  * @description: 订单详情--底部详情 订单状态status 10 待支付 20 待交车 30 已取消 40 已完成
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-06 10:54:16
+ * @LastEditTime: 2019-11-08 18:12:43
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -84,6 +84,7 @@ class FooterDetailsComponent extends Component {
   render() {
     let { item } = this.props
     const buttonsList = item.buttons && item.buttons.map((itemList) => {
+      const key = itemList.key
       if (itemList.key == 'inviteCustomer') {
         return (
           <Button
@@ -91,7 +92,7 @@ class FooterDetailsComponent extends Component {
             data-type='inviteCustomer'
             data-item={item}
             className={itemList.key}
-            key={itemList}
+            key={key}
           >{itemList.name}</Button>
         )
       } else if (itemList.key == 'shareOrder') {
@@ -101,12 +102,12 @@ class FooterDetailsComponent extends Component {
             data-type='shareOrder'
             data-item={item}
             className={itemList.key}
-            key={itemList}
+            key={key}
           >{itemList.name}</Button>
         )
       }
       return (
-        <Button className={itemList.key} key={itemList} onClick={() => this.buttonsFun(itemList.key)}>{itemList.name}</Button>
+        <Button className={itemList.key} key={key} onClick={() => this.buttonsFun(itemList.key)}>{itemList.name}</Button>
       )
     })
     return (
