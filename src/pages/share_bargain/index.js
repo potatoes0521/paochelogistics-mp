@@ -136,7 +136,7 @@ class ShareBargain extends Component {
           carInfo: res.carInfo,
           bargainTotalPrice: res.bargainTotalPrice,
           userPhoto: res.userPhoto,
-          nickName: res.nickName,
+          nickName: decodeURIComponent(res.nickName),
           progress
           // carAmount: res.carAmount
         })

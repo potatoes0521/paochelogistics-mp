@@ -3,12 +3,13 @@
  * @description: 服务器状态码错误配置
  * @Date: 2019-08-13 12:22:58
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-30 17:30:05
+ * @LastEditTime: 2019-11-08 21:30:40
  */
 
 // api地址
-export const defaultApiURL = 'http://api.paoche56.in/' // 测试环境  
-// export const defaultApiURL = 'https://api.paoche56.com/'
+// export const defaultApiURL = 'http://api.paoche56.in/' // 测试环境  
+// export const defaultApiURL = 'https://api.paoche56.com/'  
+export const defaultApiURL = 'http://192.168.3.139:8085/'
 
 // 图片资源服务器
 export const defaultResourceImgURL = 'https://resource.paoche56.com/paochelogistics/mp_img/'

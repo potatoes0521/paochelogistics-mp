@@ -3,7 +3,7 @@
  * @description: 注册页面
  * @Date: 2019-08-22 11:58:25
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 19:08:10
+ * @LastEditTime: 2019-11-08 21:59:56
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -139,12 +139,13 @@ class usePhoneNumberRegister extends Component {
       // eslint-disable-next-line react/no-unused-state
       userInfoFromWX: wxUserInfo
     })
-    let sendData = Object.assign({},{
+    let sendData = Object.assign({}, wxUserInfo,{
       mobile: phoneNumber,
       verificationCode,
       openId: this.props.userInfo.openId,
-      userPhoto: wxUserInfo.avatarUrl
-    }, wxUserInfo)
+      userPhoto: wxUserInfo.avatarUrl,
+      nickName: encodeURIComponent(wxUserInfo.nickName),
+    })
     api.user.register(sendData, this).then(res => {
       let resData = Object.assign(
         {},
@@ -152,7 +153,8 @@ class usePhoneNumberRegister extends Component {
         res.userInfo,
         res.userInfoExt,
         {
-          userPhoto: wxUserInfo.avatarUrl
+          userPhoto: wxUserInfo.avatarUrl,
+          nickName: encodeURIComponent(wxUserInfo.nickName),
         }
       )
       Actions.changeUserInfo(resData)

@@ -3,7 +3,7 @@
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 17:29:47
+ * @LastEditTime: 2019-11-08 21:58:06
  */
 
 // 默认请求连接
@@ -33,7 +33,7 @@ export default {
     const { userInfo } = that.props || {};
     if (userInfo.nickName && userInfo.userPhoto) {
       data = Object.assign({}, {
-        nickName: userInfo.nickName,
+        nickName: encodeURIComponent(userInfo.nickName),
         userPhoto: userInfo.userPhoto
       }, data)
     }
