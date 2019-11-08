@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 17:21:56
+ * @LastEditTime: 2019-11-08 19:09:28
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -423,6 +423,15 @@ class Index extends Component {
       homeDelivery: props[1].checked ? 1 : 0
     })
   }
+  getUserInfo(e) { 
+    let { userInfo } = e.target
+    Actions.changeUserInfo(
+      Object.assign({}, userInfo, {
+        userPhoto: userInfo.avatarUrl,
+      })
+    )
+    this.submitOffer()
+  }
   navigateToRegister(e) { 
     e.stopPropagation()
     showModalAndRegister()
@@ -614,7 +623,12 @@ class Index extends Component {
           </View>
         </NoTitleCard>
         {/* disabled={disabled}  */}
-        <Button type='button' className='submit-btn' onClick={this.submitOffer}>立即询价</Button>
+        {
+          !userInfo.nickName ? 
+            <Button type='button' openType='getUserInfo' onGetUserInfo={this.getUserInfo} className='submit-btn'>立即询价</Button>
+            :
+            <Button type='button' className='submit-btn' onClick={this.submitOffer}>立即询价</Button>
+        }
         {
           locationModal ? 
             <LocationModal

@@ -3,7 +3,7 @@
  * @description: 注册页面
  * @Date: 2019-08-22 11:58:25
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 17:25:05
+ * @LastEditTime: 2019-11-08 19:08:10
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -146,7 +146,15 @@ class usePhoneNumberRegister extends Component {
       userPhoto: wxUserInfo.avatarUrl
     }, wxUserInfo)
     api.user.register(sendData, this).then(res => {
-      let resData = Object.assign({}, res.userInfo, res.userInfoExt)
+      let resData = Object.assign(
+        {},
+        wxUserInfo,
+        res.userInfo,
+        res.userInfoExt,
+        {
+          userPhoto: wxUserInfo.avatarUrl
+        }
+      )
       Actions.changeUserInfo(resData)
       this.login(this.props.userInfo.openId, wxUserInfo)
     })
