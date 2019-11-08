@@ -3,7 +3,7 @@
  * @description: 订单详情中发车城市、收车城市的组件
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-24 13:39:54
+ * @LastEditTime: 2019-11-08 17:00:50
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -11,20 +11,26 @@
 import Taro, { Component } from '@tarojs/taro'
 import {
   View,
-  // Text
+  Block,
+  Text
 } from '@tarojs/components'
-import { connect } from '@tarojs/redux'
 import PropTypes from 'prop-types'
+import '../../../../assets/icon_font/icon.scss'
 import './index.styl'
 
-class PriceDetailsComponent extends Component {
+export default class PriceDetailsComponent extends Component {
   constructor(props) {
     super(props)
     this.state = { }
   }
-
+  click() { 
+    this.props.onClick(...arguments)
+  }
   render() { 
-    let { item } = this.props
+    let {
+      item,
+      fail
+    } = this.props
     return (
       <View className='details-form-wrapper'>
         <View className='details-form-item'>
@@ -36,7 +42,20 @@ class PriceDetailsComponent extends Component {
           (item.bargainPriceDesc) ?
             <View className='details-form-item'>
               <View className='details-form-label'>帮砍价:</View>
-              <View className='details-form-price'>-￥{item.bargainPriceDesc}</View>
+              {
+                fail ? 
+                  <Block>
+                    <View
+                      className='details-form-price fail-price'
+                      onClick={this.click}
+                    >
+                      <Text>-￥{item.bargainPriceDesc}(不可用)</Text>
+                      <Text className='iconfont icongantanhao icon-style'></Text>
+                    </View>
+                  </Block>
+                  :
+                  <View className='details-form-price'>-￥{item.bargainPriceDesc}</View>
+              }
             </View>
             : null
         }
@@ -57,20 +76,15 @@ class PriceDetailsComponent extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    userInfo: state.user_msg.userInfo
-  }
-}
 
 PriceDetailsComponent.defaultProps = {
   item: {},
-  fail: false
+  fail: false,
+  onClick: () => {},
 }
 
 PriceDetailsComponent.propTypes = {
   item: PropTypes.object,
-  fail: PropTypes.bool
+  fail: PropTypes.bool,
+  onClick: PropTypes.func,
 }
-
-export default connect(mapStateToProps)(PriceDetailsComponent)

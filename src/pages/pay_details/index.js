@@ -3,7 +3,7 @@
  * @description: 支付详情  本页面注释信息为，别人代付时显示的支付页面
  * @Date: 2019-10-08 09:30:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 11:37:08
+ * @LastEditTime: 2019-11-08 16:54:05
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -15,6 +15,8 @@ import api from '@api/index.js'
 import loginHandle from '@utils/login.js'
 import NoTitleCard from '@c/no_title_card/index.js'
 import PriceDetailsComponent from '../order_details/components/price_details/index.js'
+// eslint-disable-next-line import/first
+import BargainBox from '@c/bargain/index.js' // 砍价过期 弹框 
 import './index.styl'
 
 class PayDetails extends Component {
@@ -25,7 +27,8 @@ class PayDetails extends Component {
       bargainPriceDesc: 0, //帮砍价
       promotionsPrice: 0, //支付立减
       payPriceDesc: 0, //应付金额
-      fail: false
+      fail: false,
+      showBargainBox: false
      }
     this.pageParams = {}
     this.orderCode = ''
@@ -42,6 +45,10 @@ class PayDetails extends Component {
       this.getOrderDetails()
     }
   }
+  /**
+   * 获取订单信息
+   * @return void
+   */
   getOrderDetails() { 
     let sendData = {
       orderId: this.pageParams.order_id
@@ -63,6 +70,10 @@ class PayDetails extends Component {
       }
     })
   }
+  /**
+   * 请求支付内容
+   * @return void
+   */
   payMoney() { 
     let sendData = {
       orderCode: this.orderCode
@@ -72,6 +83,11 @@ class PayDetails extends Component {
     })
     
   }
+  /**
+   * 支付
+   * @param {Object} params 后端返回的支付的参数
+   * @return void
+   */
   weChatPay(params) {
     Taro.requestPayment({
       timeStamp: params.timeStamp,
@@ -90,6 +106,24 @@ class PayDetails extends Component {
       }
     })
   }
+  /**
+   * 为什么不能用
+   * @return void
+   */
+  clickWhyNotUse() {
+    this.setState({
+      showBargainBox: true
+    })
+  }
+  /**
+   * 点击了我知道了
+   * @return void
+   */
+  bargainBoxClick() {
+    this.setState({
+      showBargainBox: false
+    })
+  }
   //页面内的配置
   config = {
     navigationBarTitleText: '支付详情'
@@ -102,7 +136,8 @@ class PayDetails extends Component {
       bargainPriceDesc,
       promotionsPrice,
       payPriceDesc,
-      fail
+      fail,
+      showBargainBox
     } = this.state
     const item = {
       quotedPriceDesc,
@@ -143,6 +178,7 @@ class PayDetails extends Component {
             <PriceDetailsComponent
               item={item}
               fail={fail}
+              onClick={this.clickWhyNotUse.bind(this)}
             ></PriceDetailsComponent>
           </NoTitleCard>
         </View>
@@ -150,6 +186,11 @@ class PayDetails extends Component {
           className='pay-button'
           onClick={this.payMoney}
         >确认支付</View>
+        <BargainBox
+          show={showBargainBox}
+          type='fail'
+          onClick={this.bargainBoxClick.bind(this)}
+        ></BargainBox>
       </View>
     )
   }

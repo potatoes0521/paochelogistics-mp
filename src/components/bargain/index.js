@@ -3,7 +3,7 @@
  * @description: 砍价弹框
  * @Date: 2019-11-07 15:58:24
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 10:19:50
+ * @LastEditTime: 2019-11-08 17:08:51
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -33,10 +33,18 @@ export default class BargainBox extends Component {
    * 点击了tab栏
    * @return void
    */
-  handleClick() {
+  handleClick(value,e) {
+    e.stopPropagation()
     this.props.onClick(...arguments)
   }
-
+  /**
+   * 阻止默认事件
+   * @param {Type} e 参数描述
+   * @return void
+   */
+  stop(e) { 
+    e.stopPropagation()
+  }
   render() { 
     const {
       type,
@@ -56,8 +64,11 @@ export default class BargainBox extends Component {
       <Block>
         {
           show ? 
-            <View className='bargain-medal'>
-              <View className='bargain-box'>
+            <View className='bargain-medal' onClick={this.handleClick.bind(this, 'close')}>
+              <View
+                className='bargain-box'
+                onClick={this.stop}
+              >
                 <View className='tips-img'>
                   <Image src={bargainImage}></Image>
                 </View>

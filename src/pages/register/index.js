@@ -3,7 +3,7 @@
  * @description: 注册页面
  * @Date: 2019-08-22 11:58:25
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 18:24:07
+ * @LastEditTime: 2019-11-08 17:25:05
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -120,7 +120,7 @@ class usePhoneNumberRegister extends Component {
     if (!wxUserInfo) {
       Taro.hideLoading()
       Taro.showToast({
-        title: '需要获取您的头像和昵称才能砍价哦~',
+        title: '需要获取一下您的头像和昵称哦~',
         icon: 'none',
         duration: 3000
       })
@@ -142,7 +142,8 @@ class usePhoneNumberRegister extends Component {
     let sendData = Object.assign({},{
       mobile: phoneNumber,
       verificationCode,
-      openId: this.props.userInfo.openId
+      openId: this.props.userInfo.openId,
+      userPhoto: wxUserInfo.avatarUrl
     }, wxUserInfo)
     api.user.register(sendData, this).then(res => {
       let resData = Object.assign({}, res.userInfo, res.userInfoExt)

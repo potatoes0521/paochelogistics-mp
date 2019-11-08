@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 11:45:20
+ * @LastEditTime: 2019-11-08 17:01:39
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -100,7 +100,7 @@ class OrderDetails extends Component {
         if (nowTimer > res.discountDueTime) {
           this.setState({
             fail: true,
-            showBargainBox: true
+            // showBargainBox: true
           })
         }
         this.countDown(res.discountDueTime)
@@ -172,9 +172,22 @@ class OrderDetails extends Component {
       imageUrl
     }
   }
+  /**
+   * 点击了我知道
+   * @return void
+   */
   bargainBoxClick() {
     this.setState({
       showBargainBox: false
+    })
+  }
+  /**
+   * 为什么不能用
+   * @return void
+   */
+  clickWhyNotUse() { 
+    this.setState({
+      showBargainBox: true
     })
   }
   //页面内的配置
@@ -192,11 +205,10 @@ class OrderDetails extends Component {
       tipContent,
       fail
     } = this.state
-    let {userInfo} = this.props
     return (
       <View className='page-wrapper'>
         {
-          !fail && orderDetailsInfo.status === 10 && userInfo.userType !== 0 ?
+          !fail && orderDetailsInfo.status === 10 ?
             <View className='bargain-tips-wrapper'>
               <View className='time-tips'>
                 <View className='tips'>优惠倒计时</View>
@@ -221,7 +233,7 @@ class OrderDetails extends Component {
             : null
         }
         {
-          fail && orderDetailsInfo.status === 10 && userInfo.userType !== 0 ?
+          fail && orderDetailsInfo.status === 10 ?
             <BargainBox
               show={showBargainBox}
               type='fail'
@@ -240,6 +252,7 @@ class OrderDetails extends Component {
             <PriceDetailsComponent
               item={orderDetailsInfo}
               fail={fail}
+              onClick={this.clickWhyNotUse.bind(this)}
             ></PriceDetailsComponent>
           </NoTitleCard>
         </View>

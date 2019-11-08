@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 13:09:14
+ * @LastEditTime: 2019-11-08 17:21:56
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -46,6 +46,10 @@ import LocationModal from './components/location_modal/index.js'
 import { serviceList, carNatureList } from '@config/text_config.js'
 // eslint-disable-next-line import/first
 import { handleShare } from '@utils/handle_share.js'
+// eslint-disable-next-line import/first
+import { getUserInfo } from '@utils/get_user_info.js'
+// eslint-disable-next-line import/first
+import Actions from '@store/actions/index.js'
 
 import './index.styl'
 
@@ -87,6 +91,7 @@ class Index extends Component {
       this.handleShare()
     }
     this.handleLocation()
+    this.handleWXUserInfo()
   }
   componentDidShow() { 
     if (this.state.locationModal) {
@@ -95,6 +100,14 @@ class Index extends Component {
       })
     }
     // this.handleDisabled()
+  }
+  async handleWXUserInfo() {
+    let wxUserInfo = await getUserInfo()
+    Actions.changeUserInfo(
+      Object.assign({}, wxUserInfo, {
+        userPhoto: wxUserInfo.avatarUrl,
+      })
+    )
   }
   handleShare() { 
     let { userInfo } = this.props
