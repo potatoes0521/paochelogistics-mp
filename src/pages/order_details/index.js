@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 17:01:39
+ * @LastEditTime: 2019-11-08 17:56:49
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -44,7 +44,8 @@ class OrderDetails extends Component {
       second: 0,
       showBargainBox: false,
       tipContent: '',
-      fail: false
+      fail: false,
+      showTips: false // 等数据请求到了再显示
     }
     this.pageParams = {}
     this.timer = null
@@ -92,7 +93,7 @@ class OrderDetails extends Component {
       .then(res => {
         this.setState({
           orderDetailsInfo: res,
-          tipContent: res.tipContent
+          tipContent: res.tipContent,
         })
         Taro.hideLoading()
         const nowTimer = new Date().getTime()
@@ -112,17 +113,23 @@ class OrderDetails extends Component {
    * @return void
    */
   countDown(targetTimeStamp) {
-    let data = interValCountDown({
+    interValCountDown({
       targetTimeStamp,
       that: this
+    }, () => {
+      let {
+        day,
+        hour,
+        minute,
+        second
+      } = this.state
+      if (day <= 0 && hour <= 0 && minute <= 0 && second <= 0) {
+        this.setState({
+          fail: true,
+          showBargainBox: true,
+        })
+      }
     })
-    if (data && data.day <= 0 && data.hour <= 0 && data.minute <= 0 && data.second <= 0) {
-      data = Object.assign({}, data, {
-        fail: true,
-        showBargainBox: true
-      })
-    }
-    this.setState(data)
   }
   /**
    * 触发了分享
@@ -203,12 +210,13 @@ class OrderDetails extends Component {
       second,
       showBargainBox,
       tipContent,
-      fail
+      fail,
+      showTips
     } = this.state
     return (
       <View className='page-wrapper'>
         {
-          !fail && orderDetailsInfo.status === 10 ?
+          showTips && !fail && orderDetailsInfo.status === 10 ?
             <View className='bargain-tips-wrapper'>
               <View className='time-tips'>
                 <View className='tips'>优惠倒计时</View>

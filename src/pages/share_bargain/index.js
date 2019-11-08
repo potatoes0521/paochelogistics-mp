@@ -3,7 +3,7 @@
  * @description: 分享砍价
  * @Date: 2019-11-05 13:24:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 17:13:55
+ * @LastEditTime: 2019-11-08 17:46:31
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -138,12 +138,11 @@ class ShareBargain extends Component {
    * @return void
    */
   countDown(targetTimeStamp, startTimeStamp) {
-    let data = interValCountDown({
+    interValCountDown({
       targetTimeStamp,
       startTimeStamp,
       that: this
     })
-    this.setState(data)
   }
   /**
    * 点了砍价按钮

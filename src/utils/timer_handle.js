@@ -3,7 +3,7 @@
  * @description: 各种时间处理方法
  * @Date: 2019-10-08 14:45:15
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 11:28:41
+ * @LastEditTime: 2019-11-08 17:57:39
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -161,10 +161,6 @@ export const countDown = (targetTimeStamp, nowTimeStamp) => {
     return;
   }
 
-  if (nowTimeStamp < targetTimeStamp) {
-    console.log("Error:第二个时间不能小于第一个时间");
-    return;
-  }
   //获取时间差
   let timeDiff = Math.round((targetTimeStamp - nowTimeStamp) / 1000);
   //获取还剩多少天
@@ -246,11 +242,11 @@ export const interValCountDown = ({ targetTimeStamp, startTimeStamp = 0, that })
         day,
         hour,
         minute,
-        second
+        second,
+        showTips: true
       }, state)
     }
-    console.log(state)
-    return state
+    that.setState(state)
   }, 1000)
 }
 
