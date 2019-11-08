@@ -3,7 +3,7 @@
  * @description: 分享砍价
  * @Date: 2019-11-05 13:24:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 17:46:31
+ * @LastEditTime: 2019-11-08 18:04:59
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -115,6 +115,7 @@ class ShareBargain extends Component {
         let startTime = Number(new Date(res.startTime)) // 开始时间
         let progress = timerPercent(dueTime, startTime)
         progress = progress > 100 ? 0 : progress
+        this.countDown(dueTime, startTime)
         this.setState({
           bargainList: res.bargainRecordList || [],
           sendCityName: res.sendCityName,
@@ -127,7 +128,6 @@ class ShareBargain extends Component {
           progress
           // carAmount: res.carAmount
         })
-        this.countDown(dueTime, startTime)
         Taro.hideLoading()
       })
   }

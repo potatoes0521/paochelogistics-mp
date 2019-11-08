@@ -3,7 +3,7 @@
  * @description: 各种时间处理方法
  * @Date: 2019-10-08 14:45:15
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 17:57:39
+ * @LastEditTime: 2019-11-08 18:05:11
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -211,7 +211,7 @@ const toDou = (time) => {
   * progress  两个时间戳进行的百分比
   * }
   */
-export const interValCountDown = ({ targetTimeStamp, startTimeStamp = 0, that }) => {
+export const interValCountDown = ({ targetTimeStamp, startTimeStamp, that }) => {
   if (!targetTimeStamp) {
     console.log("Error:传入参数不正确");
     return false
@@ -223,7 +223,6 @@ export const interValCountDown = ({ targetTimeStamp, startTimeStamp = 0, that })
     let progress = 0
     let state = {}
     if (startTimeStamp) {
-      startTimeStamp = 0
       progress = timerPercent(targetTimeStamp, startTimeStamp)
       progress = progress > 100 ? 0 : progress
       state = Object.assign({}, { progress }, state)
