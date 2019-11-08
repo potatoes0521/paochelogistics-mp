@@ -13,6 +13,7 @@ page
   justify-content center
   box-sizing border-box
   padding 32px 24px
+  position relative
 
 .wrapper-main
   width 100%
@@ -24,6 +25,8 @@ page
   box-sizing border-box
   padding 24px
   padding-top 40px
+  position relative
+  z-index 1
 
 .order-user-info
   width 100%
@@ -210,3 +213,31 @@ button::after
 image
   width 100%
   height 100%
+
+.public
+  position absolute
+  background-size cover
+  background-repeat no-repeat
+  // background-position center center
+
+.bottom
+  width 238px
+  height 72px
+  bottom 0
+  right 0
+  background-image url('https://resource.paoche56.com/paochelogistics/mp_img/bargain_bg_bottom.png') 
+  
+.right
+  width 61px
+  height 787px
+  top 132px
+  right 0
+  background-image url('https://resource.paoche56.com/paochelogistics/mp_img/bargain_bg_right.png')
+  background-position right top
+
+.left
+  width 138px
+  height 359px
+  top 106px
+  left 0
+  background-image url('https://resource.paoche56.com/paochelogistics/mp_img/bargain_bg_left.png')
