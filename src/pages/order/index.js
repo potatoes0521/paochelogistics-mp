@@ -3,7 +3,7 @@
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 18:48:15
+ * @LastEditTime: 2019-11-08 21:02:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -38,7 +38,7 @@ class Order extends Component {
     let { userInfo } = this.props
     if (userInfo.userId) {
       this.orderPage = 1
-      this.getOrderList(this.status, this.orderPage, false)
+      this.getOrderList(this.status, this.orderPage, true)
     }
   }
   /**
