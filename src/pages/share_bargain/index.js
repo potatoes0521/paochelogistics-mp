@@ -3,7 +3,7 @@
  * @description: 分享砍价
  * @Date: 2019-11-05 13:24:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 20:03:39
+ * @LastEditTime: 2019-11-08 20:20:27
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -180,10 +180,18 @@ class ShareBargain extends Component {
       if (userInfo.userId) { // 是已注册过的用户
         if (userInfoFromWX) { // 如果能获取到微信授权
           requestBargain(this).then(res => {
-            this.setState({
-              bargainPrice: res,
-              showBargainBox: true
-            })
+            if (res) {
+              this.setState({
+                bargainPrice: (res / 100).toFixed(2),
+                showBargainBox: true
+              })
+              this.getBargainDetails()
+            } else {
+              Taro.showToast({
+                title: '您已经砍过价，不能再次砍价',
+                icon: 'none'
+              })
+            }
           })
         } else { // 获取不到授权的点击这个按钮会获取授权
           const wxUserInfo = e.target.userInfo
@@ -200,11 +208,18 @@ class ShareBargain extends Component {
             userInfoFromWX: wxUserInfo
           }, () => {
             requestBargain(this).then(res => {
-              this.setState({
-                bargainPrice: (res / 100).toFixed(2),
-                showBargainBox: true
-              })
-              this.getBargainDetails()
+              if (res) { 
+                this.setState({
+                  bargainPrice: (res / 100).toFixed(2),
+                  showBargainBox: true
+                })
+                this.getBargainDetails()
+              } else {
+                Taro.showToast({
+                  title: '您已经砍过价，不能再次砍价',
+                  icon: 'none'
+                })
+              }
             })
           })
         }

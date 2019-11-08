@@ -3,7 +3,7 @@
  * @description: 处理进入小程序的分享
  * @Date: 2019-11-06 12:25:04
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 18:19:16
+ * @LastEditTime: 2019-11-08 20:14:17
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -90,12 +90,14 @@ export const handleRegisterShare = ({pageParams, userInfo, wxUserInfo, that}) =>
       userInfoFromWX: wxUserInfo
     }, () => {
       requestBargain(that).then(res => {
-        prevPage.$component.setState({
-          bargainPrice: res,
-          showBargainBox: true
-        }, () => {  
-          Taro.navigateBack()
-        })
+        if (res) {
+          prevPage.$component.setState({
+            bargainPrice: res,
+            showBargainBox: true
+          }, () => {
+            Taro.navigateBack()
+          })
+        }
       })
     })
   }else {
