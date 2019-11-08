@@ -3,7 +3,7 @@
  * @description: 分享砍价
  * @Date: 2019-11-05 13:24:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 18:39:11
+ * @LastEditTime: 2019-11-08 20:03:39
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -201,9 +201,10 @@ class ShareBargain extends Component {
           }, () => {
             requestBargain(this).then(res => {
               this.setState({
-                bargainPrice: res,
+                bargainPrice: (res / 100).toFixed(2),
                 showBargainBox: true
               })
+              this.getBargainDetails()
             })
           })
         }
@@ -261,28 +262,34 @@ class ShareBargain extends Component {
       showBargainBox,
       bargainPrice
     } = this.state
-    const bargainSwiperListRender = bargainList.map(item =>
-      <SwiperItem className='swiper-item' key={item}>
-        <View className='userInfo-wrapper'>
-          <View className='user-icon'>
-            <Image src={item.userPhoto}></Image>
+    const bargainSwiperListRender = bargainList.map(item => {
+      const key = item.id
+        return (
+          <SwiperItem className='swiper-item' key={key}>
+            <View className='userInfo-wrapper'>
+              <View className='user-icon'>
+                <Image src={item.userPhoto}></Image>
+              </View>
+              <View className='user-name'>{item.nickName || ''}</View>
+            </View>
+            <View className='bargain-price'>砍掉{(item.bargainPrice / 100).toFixed(2)}元</View>
+          </SwiperItem>
+        )
+    })
+    const bargainViewListRender = bargainList.map(item => {
+      const key = item.id
+      return (
+        <View className='swiper-item' key={key}>
+          <View className='userInfo-wrapper'>
+            <View className='user-icon'>
+              <Image src={item.userPhoto}></Image>
+            </View>
+            <View className='user-name'>{item.nickName || ''}</View>
           </View>
-          <View className='user-name'>{item.nickName || ''}</View>
+          <View className='bargain-price'>砍掉{(item.bargainPrice / 100).toFixed(2)}元</View>
         </View>
-        <View className='bargain-price'>砍掉{(item.bargainPrice / 100).toFixed(2)}元</View>
-      </SwiperItem>
-    )
-    const bargainViewListRender = bargainList.map(item => 
-      <View className='swiper-item' key={item}>
-        <View className='userInfo-wrapper'>
-          <View className='user-icon'>
-            <Image src={item.userPhoto}></Image>
-          </View>
-          <View className='user-name'>{item.nickName || ''}</View>
-        </View>
-        <View className='bargain-price'>砍掉{(item.bargainPrice / 100).toFixed(2)}元</View>
-      </View>
-    )
+      )
+    })
     return (
       <View className='page-wrapper'>
         <View className='wrapper-main'>

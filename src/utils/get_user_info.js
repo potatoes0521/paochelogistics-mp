@@ -3,7 +3,7 @@
  * @description: 获取授权
  * @Date: 2019-11-07 13:45:09
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 17:17:49
+ * @LastEditTime: 2019-11-08 19:59:24
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -62,7 +62,7 @@ export const requestBargain = (that) => {
     api.order.bargainPrice(sendData, that)
       .then(res => {
         Taro.hideLoading()
-        resolve(res.data)
+        resolve(res)
       })
   })
 }
