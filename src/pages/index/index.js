@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 21:59:10
+ * @LastEditTime: 2019-11-08 22:06:23
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -627,7 +627,7 @@ class Index extends Component {
         {/* disabled={disabled}  */}
         {
           !userInfo.nickName ? 
-            <Button type='button' openType='getUserInfo' onGetUserInfo={this.getUserInfo} className='submit-btn'>立即询价</Button>
+            <Button type='button' openType='getUserInfo' lang='zh_CN' onGetUserInfo={this.getUserInfo} className='submit-btn'>立即询价</Button>
             :
             <Button type='button' className='submit-btn' onClick={this.submitOffer}>立即询价</Button>
         }

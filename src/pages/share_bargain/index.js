@@ -3,7 +3,7 @@
  * @description: 分享砍价
  * @Date: 2019-11-05 13:24:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 20:48:00
+ * @LastEditTime: 2019-11-08 22:06:53
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -359,7 +359,7 @@ class ShareBargain extends Component {
                 userInfoFromWX ? 
                   <Button className='btn' onClick={this.submit} >帮砍一刀</Button>
                   :
-                  <Button className='btn' openType='getUserInfo' onGetUserInfo={this.submit}>帮砍一刀</Button>
+                  <Button className='btn' openType='getUserInfo' lang='zh_CN' onGetUserInfo={this.submit}>帮砍一刀</Button>
                 : <Button className='btn' onClick={this.submit}>我也要发车</Button>
             }
           </View>
