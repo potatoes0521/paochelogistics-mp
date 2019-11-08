@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-09-26 11:23:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 18:56:16
+ * @LastEditTime: 2019-11-08 19:30:03
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,7 +12,7 @@ import requestHandle from '../request_handle.js';
 export default {
   // 获取订单详情
   getOrderDetails(data, that) {
-    return requestHandle.get(`order/detailbycode/${data.orderCode}`, data, that);
+    return requestHandle.get(`order/detailbycode?orderCode=${data.orderCode}`, data, that);
   },
   // 获取订单列表
   getOrderList(data, that) {
