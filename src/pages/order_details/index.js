@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 11:43:38
+ * @LastEditTime: 2019-11-08 11:45:20
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -67,7 +67,8 @@ class OrderDetails extends Component {
   }
 
   async componentDidShow() {
-    if (this.userInfo.userId) {
+    this.pageParams = this.$router.params || {}
+    if (this.props.userInfo.userId) {
       this.getOrderDetails()
     }
   }
