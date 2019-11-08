@@ -3,7 +3,7 @@
  * @description: 询价单页面
  * @Date: 2019-09-20 13:24:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 12:09:40
+ * @LastEditTime: 2019-11-08 12:02:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -38,6 +38,7 @@ class Offer extends Component {
   componentDidShow() { 
     let { userInfo } = this.props
     if (userInfo.userId) {
+      this.offerPage = 1
       this.getOfferList(this.status, this.offerPage, true)
     }
   }
@@ -70,7 +71,7 @@ class Offer extends Component {
       let { offerList } = this.state
       if (pageNum === 1) {
         this.setState({
-          offerList: [...res]
+          offerList: res
         })
       } else {
         this.setState({
