@@ -64,11 +64,13 @@ const mapStateToProps = (state) => {
 }
 
 PriceDetailsComponent.defaultProps = {
-  item: {}
+  item: {},
+  fail: false
 }
 
 PriceDetailsComponent.propTypes = {
-  item: PropTypes.object
+  item: PropTypes.object,
+  fail: PropTypes.bool
 }
 
 export default connect(mapStateToProps)(PriceDetailsComponent)

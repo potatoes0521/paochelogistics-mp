@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 10:55:08
+ * @LastEditTime: 2019-11-08 11:43:38
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -52,17 +52,24 @@ class OrderDetails extends Component {
 
   async componentDidMount() {
     this.pageParams = this.$router.params || {}
-    if (this.pageParams.share_type) { 
+    if (this.pageParams.share_type) {
       await login.getCode(this)
       const next = await handleShareInOrderDetails(this.pageParams, this.props.userInfo)
       if (!next) return
       this.getOrderDetails()
     } else {
-      this.getOrderDetails()      
+      this.getOrderDetails()
     }
   }
+
   componentWillUnmount() {
     clearInterval(this.timer)
+  }
+
+  async componentDidShow() {
+    if (this.userInfo.userId) {
+      this.getOrderDetails()
+    }
   }
   /**
    * 获取订单详情--发车城市信息
@@ -184,10 +191,11 @@ class OrderDetails extends Component {
       tipContent,
       fail
     } = this.state
+    let {userInfo} = this.props
     return (
       <View className='page-wrapper'>
         {
-          !fail && orderDetailsInfo.status === 10 ?
+          !fail && orderDetailsInfo.status === 10 && userInfo.userType !== 0 ?
             <View className='bargain-tips-wrapper'>
               <View className='time-tips'>
                 <View className='tips'>优惠倒计时</View>
@@ -212,7 +220,7 @@ class OrderDetails extends Component {
             : null
         }
         {
-          fail && orderDetailsInfo.status === 10 ? 
+          fail && orderDetailsInfo.status === 10 && userInfo.userType !== 0 ?
             <BargainBox
               show={showBargainBox}
               type='fail'
@@ -228,7 +236,10 @@ class OrderDetails extends Component {
             <View className='dividing-line'></View>
             <ServiceDetailsComponent item={orderDetailsInfo}></ServiceDetailsComponent>
             <View className='dividing-line'></View>
-            <PriceDetailsComponent item={orderDetailsInfo}></PriceDetailsComponent>
+            <PriceDetailsComponent
+              item={orderDetailsInfo}
+              fail={fail}
+            ></PriceDetailsComponent>
           </NoTitleCard>
         </View>
         <View className='page-footer'>

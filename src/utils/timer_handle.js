@@ -1,11 +1,9 @@
-import { object } from "prop-types";
-
 /*
  * @Author: liuYang
  * @description: 各种时间处理方法
  * @Date: 2019-10-08 14:45:15
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 10:56:48
+ * @LastEditTime: 2019-11-08 11:28:41
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
