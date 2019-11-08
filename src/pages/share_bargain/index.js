@@ -3,7 +3,7 @@
  * @description: 分享砍价
  * @Date: 2019-11-05 13:24:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 20:20:27
+ * @LastEditTime: 2019-11-08 20:48:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -111,11 +111,13 @@ class ShareBargain extends Component {
    * 获取砍价详情 
    * @return void
    */
-  getBargainDetails() {
-    Taro.showLoading({
-      title: '加载中...',
-      mask: true
-    })
+  getBargainDetails(showLoading = true) {
+    if (showLoading) {
+      Taro.showLoading({
+        title: '加载中...',
+        mask: true
+      })
+    }
     let sendData = {
       orderCode: this.pageParams.order_code
     }
@@ -185,7 +187,7 @@ class ShareBargain extends Component {
                 bargainPrice: (res / 100).toFixed(2),
                 showBargainBox: true
               })
-              this.getBargainDetails()
+              this.getBargainDetails(false)
             } else {
               Taro.showToast({
                 title: '您已经砍过价，不能再次砍价',
@@ -213,7 +215,7 @@ class ShareBargain extends Component {
                   bargainPrice: (res / 100).toFixed(2),
                   showBargainBox: true
                 })
-                this.getBargainDetails()
+                this.getBargainDetails(false)
               } else {
                 Taro.showToast({
                   title: '您已经砍过价，不能再次砍价',
