@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 18:37:19
+ * @LastEditTime: 2019-11-08 18:47:50
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -78,7 +78,7 @@ class OrderDetails extends Component {
    * @return void
    */
   getOrderDetails() {
-    if (!this.pageParams.order_id) {
+    if (!this.pageParams.order_code) {
       Taro.navigateBack()
       return;
     }
@@ -87,7 +87,7 @@ class OrderDetails extends Component {
       mask: true
     })
     let sendData = {
-      orderId: this.pageParams.order_id
+      orderCode: this.pageParams.order_code
     }
     api.order.getOrderDetails(sendData, this)
       .then(res => {
@@ -149,7 +149,7 @@ class OrderDetails extends Component {
       // share_type = 1 发送给客户  不管谁点进来  去订单详情
       // c_id 是customerID的缩写  主要判断是不是这个用户的单 如果不是就让他进了首页
       if (type === 'inviteCustomer') { // 分享给客户
-        path = `/pages/order_details/index?share_type=1&order_id=${orderDetailsInfo.orderId}&c_id=${orderDetailsInfo.userId}`
+        path = `/pages/order_details/index?share_type=1&order_code=${orderDetailsInfo.orderCode}&c_id=${orderDetailsInfo.userId}`
         title = `${inquiryOrderVO.sendCityName}发往${inquiryOrderVO.receiveCityName}的${inquiryOrderVO.carAmount}台${inquiryOrderVO.carInfo}已经发车了`
         imageUrl = `https://resource.paoche56.com/paochelogistics/mp_img/share_to_c.png`
       }
@@ -162,7 +162,7 @@ class OrderDetails extends Component {
     }
     if (event.from === 'menu') {
       if (userInfo.userType === 0) { // 分享给客户
-        path = `/pages/order_details/index?share_type=1&order_id=${orderDetailsInfo.orderId}&c_id=${orderDetailsInfo.userId}`
+        path = `/pages/order_details/index?share_type=1&order_code=${orderDetailsInfo.orderCode}&c_id=${orderDetailsInfo.userId}`
         title = `${inquiryOrderVO.sendCityName}发往${inquiryOrderVO.receiveCityName}的${inquiryOrderVO.carAmount}台${inquiryOrderVO.carInfo}已经发车了`
         imageUrl = `https://resource.paoche56.com/paochelogistics/mp_img/share_to_c.png`
       }

@@ -3,7 +3,7 @@
  * @description: 订单item
  * @Date: 2019-09-23 14:42:25
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-24 14:42:51
+ * @LastEditTime: 2019-11-08 18:52:26
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -27,7 +27,7 @@ export default class OrderItem extends Component {
     e.stopPropagation()
     let { item } = this.props
     Taro.navigateTo({
-      url: `/pages/${pageName}/index?order_id=${item.orderId}`
+      url: `/pages/${pageName}/index?order_code=${item.orderCode}`
     })
   }
 
@@ -44,7 +44,7 @@ export default class OrderItem extends Component {
         break;
       case 'payOrder':
         Taro.navigateTo({
-          url: `/pages/pay_details/index?order_id=${item.orderId}`
+          url: `/pages/pay_details/index?order_code=${item.orderCode}`
         })
         break;
       default:

@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 17:05:49
+ * @LastEditTime: 2019-11-08 18:48:42
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -318,7 +318,7 @@ class PlaceOrder extends Component {
           icon: 'success'
         })
         Taro.redirectTo({
-          url: `/pages/order_details/index?order_id=${res.orderId}`
+          url: `/pages/order_details/index?order_code=${res.orderCode}`
         })
       })
   }

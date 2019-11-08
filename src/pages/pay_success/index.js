@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 支付成功
  * @Date: 2019-10-15 11:14:50
- * @LastEditors: guorui
- * @LastEditTime: 2019-10-17 20:12:43
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-11-08 18:48:32
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -35,7 +35,7 @@ class PaySuccessDetails extends Component {
    */
   getOrderDetails() {
     let sendData = {
-      orderId: this.pageParams.order_id
+      orderCode: this.pageParams.order_code
     }
     api.order.getOrderDetails(sendData, this).then(res => {
       this.orderCode = res.orderCode

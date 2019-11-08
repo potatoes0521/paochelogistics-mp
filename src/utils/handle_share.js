@@ -109,7 +109,7 @@ export const handleRegisterShare = ({pageParams, userInfo, wxUserInfo, that}) =>
   */
 export const navigateToOrderDetails = (pageParams) => {
   Taro.navigateTo({
-    url: `/pages/order_details/index?order_id=${pageParams.order_id}`
+    url: `/pages/order_details/index?order_code=${pageParams.order_code}`
   })
 }
  /**
@@ -119,6 +119,6 @@ export const navigateToOrderDetails = (pageParams) => {
   */
 export const redirectToOrderDetails = (pageParams) => {
   Taro.redirectTo({
-    url: `/pages/order_details/index?order_id=${pageParams.order_id}`
+    url: `/pages/order_details/index?order_code=${pageParams.order_code}`
   })
 }

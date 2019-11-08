@@ -3,7 +3,7 @@
  * @description: 订单详情--底部详情 订单状态status 10 待支付 20 待交车 30 已取消 40 已完成
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 18:12:43
+ * @LastEditTime: 2019-11-08 18:52:56
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -33,7 +33,7 @@ class FooterDetailsComponent extends Component {
   paymentButton() {
     let { item } = this.props
     Taro.navigateTo({
-      url: `/pages/pay_details/index?order_id=${item.orderId}`
+      url: `/pages/pay_details/index?order_code=${item.orderCode}`
     })
   }
   
