@@ -3,7 +3,7 @@
  * @description: 分享砍价
  * @Date: 2019-11-05 13:24:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-11 11:39:58
+ * @LastEditTime: 2019-11-11 12:09:47
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -34,6 +34,7 @@ import {
 import BargainBox from '@c/bargain/index.js'
 import noBargainImage from '@img/bargain/no_bargain.png'
 import { defaultResourceConfigURL } from '@config/request_config.js'
+import classNames from 'classnames'
 import './index.styl'
 
 class ShareBargain extends Component {
@@ -133,6 +134,7 @@ class ShareBargain extends Component {
         let progress = timerPercent(dueTime, startTime)
         progress = progress > 100 ? 0 : progress
         this.countDown(dueTime, startTime)
+        res.bargainRecordList = []
         this.setState({
           bargainList: res.bargainRecordList || [],
           sendCityName: res.sendCityName,
@@ -278,6 +280,10 @@ class ShareBargain extends Component {
       showStrategyFlag: !this.state.showStrategyFlag
     })
   }
+  /**
+   * 获取砍价攻略
+   * @return void
+   */
   getStrategy() {
     Taro.request({
       url: `${defaultResourceConfigURL}strategy.json`,
@@ -345,11 +351,16 @@ class ShareBargain extends Component {
         </View>
       )
     })
-    const strategyList = strategyDataList.map(item => 
-      <View className='strategy-font' key={item}>
-        { item.text }
-      </View>
-    )
+    const strategyList = strategyDataList.map(item => {
+      const textClassName = classNames('strategy-font', {
+        'strategy-font-weight': item.weight 
+      })
+      return (
+        <View className={textClassName} key={item}>
+          { item.text }
+        </View>
+      )
+    })
     return (
       <View className='page-wrapper'>
         <View className='wrapper-main'>
@@ -446,8 +457,11 @@ class ShareBargain extends Component {
                     }
                   </Block>
                   : 
-                  <View className='no-bargain'>
-                    <Image src={noBargainImage}></Image>
+                  <View className='no-bargain-wrapper'>
+                    <View className='no-bargain-image'>
+                      <Image src={noBargainImage}></Image>
+                    </View>
+                    <View className='no-bargain-btn'>抢沙发~</View>
                   </View>
               }
             </View>
