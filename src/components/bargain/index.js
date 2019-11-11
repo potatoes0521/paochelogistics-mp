@@ -3,7 +3,7 @@
  * @description: 砍价弹框
  * @Date: 2019-11-07 15:58:24
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 17:08:51
+ * @LastEditTime: 2019-11-11 10:39:21
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -17,8 +17,9 @@ import {
   Text,
   Block
 } from '@tarojs/components'
-// import classNames from 'classnames'
+import classNames from 'classnames'
 import bargainImage from '@img/bargain/bargain.png'
+import regret from '@img/bargain/regret.png'
 import '../../assets/icon_font/icon.scss'
 import './index.styl'
 
@@ -55,11 +56,19 @@ export default class BargainBox extends Component {
     let tipsTitle = '很遗憾!'
     let tips = '您未在规定时间内支付，将不享受砍价优惠，下次努力哦～'
     let btnText = '我知道了'
+    let imgUrl = regret
     if (type === 'bargain') {
       tipsTitle = ''
       tips = '砍价成功，帮TA砍掉'
       btnText = '我也要发车'
+      imgUrl = bargainImage
     }
+    const tipsImageClassName = classNames('tips-img', {
+      'tips-img-regret': type === 'fail'
+    })
+    const tipsTitleClassName = classNames('tips-title', {
+      'tips-title-regret': type === 'fail'
+    })
     return (
       <Block>
         {
@@ -69,10 +78,10 @@ export default class BargainBox extends Component {
                 className='bargain-box'
                 onClick={this.stop}
               >
-                <View className='tips-img'>
-                  <Image src={bargainImage}></Image>
+                <View className={tipsImageClassName}>
+                  <Image src={imgUrl}></Image>
                 </View>
-                <View className='tips-title'>{tipsTitle}</View>
+                <View className={tipsTitleClassName}>{tipsTitle}</View>
                 <View className='tips'>
                   {tips}
                   {
