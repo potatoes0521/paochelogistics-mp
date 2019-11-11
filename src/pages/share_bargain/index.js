@@ -3,7 +3,7 @@
  * @description: 分享砍价
  * @Date: 2019-11-05 13:24:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 22:30:22
+ * @LastEditTime: 2019-11-11 11:39:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -32,6 +32,8 @@ import {
 } from '@utils/get_user_info.js'
 // eslint-disable-next-line no-unused-vars
 import BargainBox from '@c/bargain/index.js'
+import noBargainImage from '@img/bargain/no_bargain.png'
+import { defaultResourceConfigURL } from '@config/request_config.js'
 import './index.styl'
 
 class ShareBargain extends Component {
@@ -53,9 +55,11 @@ class ShareBargain extends Component {
       progress: 0.1,
       userPhoto: '',
       nickName: '',
-      userInfoFromWX: null,
-      showBargainBox: false,
-      bargainPrice: ''
+      userInfoFromWX: null,  // 微信用户信息
+      showBargainBox: false, // 砍价成功或者遗憾的框
+      bargainPrice: '', // 砍了多少钱
+      showStrategyFlag: false, // 展示砍价攻略
+      strategyDataList: []
     }
     this.timer = null
     this.pageParams = {}
@@ -77,6 +81,7 @@ class ShareBargain extends Component {
     }
     this.getBargainDetails()
     this.getSwiperHeight()
+    this.getStrategy()
   }
   componentWillUnmount() {
     clearInterval(this.timer)
@@ -99,8 +104,8 @@ class ShareBargain extends Component {
     const query = Taro.createSelectorQuery()
     query.select('#swiper').boundingClientRect()
     query.exec((res) => {
-      const height = res[0].height
-      const number = Math.floor(height / 44)
+      const height = res[0].height - 32
+      const number = Math.floor(height / (44))
       console.log(number + ' 个 swiper item')
       this.setState({
         swiperNumber:  number
@@ -234,6 +239,10 @@ class ShareBargain extends Component {
       })
     }
   }
+  /**
+   * 导航到注册
+   * @return void
+   */
   navigatorToRegister() { 
     Taro.hideLoading()
     let str = ''
@@ -244,6 +253,11 @@ class ShareBargain extends Component {
       url: `/pages/register/index?${str}`
     })
   }
+  /**
+   * 点击了砍价框里的什么
+   * @param {String} e btn就是点击了里面的我要发车
+   * @return void
+   */
   bargainBoxClick(e) { 
     if (e === 'btn') { // 点击我知道了或者我要发车就去首页
       Taro.switchTab({
@@ -254,6 +268,26 @@ class ShareBargain extends Component {
         showBargainBox: false
       })
     }
+  }
+  /**
+   * 显示攻略
+   * @return void
+   */
+  showStrategy() { 
+    this.setState({
+      showStrategyFlag: !this.state.showStrategyFlag
+    })
+  }
+  getStrategy() {
+    Taro.request({
+      url: `${defaultResourceConfigURL}strategy.json`,
+      method: 'get',
+      success: (res) => {
+        this.setState({
+          strategyDataList: res.data
+        })
+      }
+    })
   }
   config = {
     navigationBarTitleText: '帮砍价'
@@ -277,36 +311,45 @@ class ShareBargain extends Component {
       nickName,
       userInfoFromWX,
       showBargainBox,
-      bargainPrice
+      bargainPrice,
+      strategyDataList,
+      showStrategyFlag
     } = this.state
     const bargainSwiperListRender = bargainList.map(item => {
       const key = item.id
-        return (
-          <SwiperItem className='swiper-item' key={key}>
-            <View className='userInfo-wrapper'>
-              <View className='user-icon'>
-                <Image src={item.userPhoto}></Image>
-              </View>
-              <View className='user-name'>{item.nickName || ''}</View>
+      const NickName = decodeURIComponent(item.nickName) || ''
+      return (
+        <SwiperItem className='swiper-item' key={key}>
+          <View className='userInfo-wrapper'>
+            <View className='user-icon'>
+              <Image src={item.userPhoto}></Image>
             </View>
-            <View className='bargain-price'>砍掉{(item.bargainPrice / 100).toFixed(2)}元</View>
-          </SwiperItem>
-        )
+            <View className='user-name'>{NickName}</View>
+          </View>
+          <View className='bargain-price'>砍掉{(item.bargainPrice / 100).toFixed(2)}元</View>
+        </SwiperItem>
+      )
     })
     const bargainViewListRender = bargainList.map(item => {
       const key = item.id
+      const NickName = decodeURIComponent(item.nickName) || ''
       return (
         <View className='swiper-item' key={key}>
           <View className='userInfo-wrapper'>
             <View className='user-icon'>
               <Image src={item.userPhoto}></Image>
             </View>
-            <View className='user-name'>{item.nickName || ''}</View>
+            <View className='user-name'>{NickName}</View>
           </View>
           <View className='bargain-price'>砍掉{(item.bargainPrice / 100).toFixed(2)}元</View>
         </View>
       )
     })
+    const strategyList = strategyDataList.map(item => 
+      <View className='strategy-font' key={item}>
+        { item.text }
+      </View>
+    )
     return (
       <View className='page-wrapper'>
         <View className='wrapper-main'>
@@ -366,33 +409,47 @@ class ShareBargain extends Component {
           <View className='bargain-list'>
             <View className='bargain-title'>
               <View className='bargain-now'>已砍掉{bargainTotalPrice || "0.00"}元</View>
+              <View
+                className='bargain-strategy'
+                onClick={this.showStrategy}
+              >
+                <Text className='iconfont iconwenhao icon-style-strategy'></Text>
+                <Text className='bargain-strategy-text'>砍价攻略</Text>
+              </View>
             </View>
-            <View className='bargain-main'>
+            <View className='bargain-main' id='swiper'>
               {
-                bargainList.length > swiperNumber ?
-                  <Swiper
-                    autoplay
-                    vertical
-                    circular
-                    displayMultipleItems={swiperNumber}
-                    className='swiper'
-                    id='swiper'
-                  >
+                bargainList.length ? 
+                  <Block>
                     {
-                      bargainSwiperListRender
+                      bargainList.length > swiperNumber ?
+                        <Swiper
+                          autoplay
+                          vertical
+                          circular
+                          displayMultipleItems={swiperNumber}
+                          className='swiper'
+                        >
+                          {
+                            bargainSwiperListRender
+                          }
+                        </Swiper>
+                        :
+                        <View
+                          className='swiper'
+                          id='swiper'
+                        >
+                          {
+                            bargainViewListRender
+                          }
+                        </View>
                     }
-                  </Swiper>
-                  :
-                  <View
-                    className='swiper'
-                    id='swiper'
-                  >
-                    {
-                      bargainViewListRender
-                    }
+                  </Block>
+                  : 
+                  <View className='no-bargain'>
+                    <Image src={noBargainImage}></Image>
                   </View>
-            }
-            
+              }
             </View>
           </View>
         </View>
@@ -402,6 +459,22 @@ class ShareBargain extends Component {
           price={bargainPrice}
           onClick={this.bargainBoxClick.bind(this)}
         ></BargainBox>
+        {
+          showStrategyFlag ? 
+            <View className='bargain-strategy-wrapper'>
+              <View className='strategy-box'>
+                <View className='strategy-title'>砍价攻略</View>
+                <View className='line'></View>
+                <View className='strategy-content'>
+                  {
+                    strategyList
+                  }
+                </View>
+                <View className='strategy-button' onClick={this.showStrategy}>我知道了</View>
+              </View>
+            </View>
+            :null
+        }
         <View className='public left'></View>
         <View className='public right'></View>
         <View className='public bottom'></View>
