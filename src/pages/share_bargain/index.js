@@ -3,7 +3,7 @@
  * @description: 分享砍价
  * @Date: 2019-11-05 13:24:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-11 16:27:53
+ * @LastEditTime: 2019-11-11 16:33:12
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -74,7 +74,6 @@ class ShareBargain extends Component {
     console.log(this.pageParams)
     await login.getCode(this) // 登录   
     let { userInfo } = this.props
-    if (!userInfo.userId) return
     if (+userInfo.userId === +this.pageParams.c_id) {
       let str = ''
       for (let i in this.pageParams) {
