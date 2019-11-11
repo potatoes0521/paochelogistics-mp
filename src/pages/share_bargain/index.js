@@ -322,7 +322,7 @@ class ShareBargain extends Component {
       str += i + '=' + this.pageParams[i] + '&'
     }
     let path = `/pages/share_bargain/index?${str}`
-    let title = `我要运车,需要大侠助我一臂之力!!`
+    let title = `我要运车,需要大侠助我一臂之力!!!`
     let imageUrl = `https://resource.paoche56.com/paochelogistics/mp_img/share_to_bargain.png`
     return {
       title: title,

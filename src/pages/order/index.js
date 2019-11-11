@@ -163,7 +163,7 @@ class Order extends Component {
       }
       if (type === 'shareOrder') { // 分享给客户
         path = `/pages/share_bargain/index?share_type=2&order_code=${offerMsg.orderCode}&c_id=${offerMsg.userId}`
-        title = `我要运车,需要大侠助我一臂之力!!`
+        title = `我要运车,需要大侠助我一臂之力!!!`
         imageUrl = `https://resource.paoche56.com/paochelogistics/mp_img/share_to_bargain.png`
       }
     }
