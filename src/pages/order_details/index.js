@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-11 15:12:17
+ * @LastEditTime: 2019-11-11 15:45:55
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -50,14 +50,19 @@ class OrderDetails extends Component {
     }
     this.pageParams = {}
     this.timer = null
+    this.loadingTimer = null
   }
-
+  componentWillUnmount() {
+    Taro.hideLoading()
+    clearTimeout(this.loadingTimer)
+  }
   componentWillUnmount() {
     clearInterval(this.timer)
   }
   
   async componentDidShow() {
     this.pageParams = this.$router.params || {}
+    console.log(this.pageParams)
     if (this.pageParams.share_type) {
       await login.getCode(this)
       const next = await handleShareInOrderDetails(this.pageParams, this.props.userInfo)
@@ -76,10 +81,12 @@ class OrderDetails extends Component {
       Taro.navigateBack()
       return;
     }
-    Taro.showLoading({
-      title: '加载中...',
-      mask: true
-    })
+    this.loadingTimer = setTimeout(() => {
+      Taro.showLoading({
+        title: '加载中...',
+        mask: true
+      })
+    }, 350)
     let sendData = {
       orderCode: this.pageParams.order_code
     }
@@ -91,6 +98,7 @@ class OrderDetails extends Component {
           // canBargain: res.canBargain
         })
         Taro.hideLoading()
+        clearTimeout(this.loadingTimer)
         const nowTimer = new Date().getTime()
         console.log('现在的时间戳' + nowTimer, '到期的时间戳' + res.discountDueTime, nowTimer - res.discountDueTime, nowTimer > res.discountDueTime)
         if (nowTimer > res.discountDueTime) {

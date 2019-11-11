@@ -6,7 +6,7 @@
  * 
  * @Date: 2019-08-30 15:53:51
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-21 14:32:54
+ * @LastEditTime: 2019-11-11 15:55:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -41,13 +41,17 @@ class ChooseCity extends Component {
     this.timer = null
     this.throughCityNameList = []
     this.throughCityIdList = []
+    this.loadingTimer = null
   }
   
   componentDidMount() {
     this.type = this.$router.params && this.$router.params.type
     this.handleLocationMsg()
   }
-
+  componentWillUnmount() {
+    Taro.hideLoading()
+    clearTimeout(this.loadingTimer)
+  }
   handleLocationMsg() { 
     Storage.getStorage('city_list').then(res => {
       if (res) {
@@ -71,12 +75,16 @@ class ChooseCity extends Component {
    * @return void
    */
   getLocationMsg() {
-    Taro.showLoading({
-      title: '加载中...',
-      mask: true
-    })
+    this.loadingTimer = setTimeout(() => {
+      Taro.showLoading({
+        title: '加载中...',
+        mask: true
+      })
+    }, 350)
     api.city.getLocationMsg({}, this)
       .then(res => {
+        Taro.hideLoading()
+        clearTimeout(this.loadingTimer)
         let hotCity = res.hotCities || []
         let allCity = res.all || []
         Storage.setStorage('city_list', res)
@@ -88,7 +96,6 @@ class ChooseCity extends Component {
           hotCity,
           allCity
         })
-        Taro.hideLoading()
       })
   }
   /**

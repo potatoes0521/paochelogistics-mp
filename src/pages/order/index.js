@@ -3,7 +3,7 @@
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 21:02:02
+ * @LastEditTime: 2019-11-11 15:46:56
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -33,29 +33,33 @@ class Order extends Component {
     this.orderPage = 1
     this.orderFlag = false
     this.status = 10
+    this.loadingTimer = null
+  }
+  componentWillUnmount() {
+    Taro.hideLoading()
+    clearTimeout(this.loadingTimer)
   }
   componentDidShow() {
     let { userInfo } = this.props
     if (userInfo.userId) {
       this.orderPage = 1
-      this.getOrderList(this.status, this.orderPage, true)
+      this.getOrderList(this.status, this.orderPage)
     }
   }
   /**
    * 获取订单列表
    * @param {Number} status='' 订单状态 10 待支付 20 已支付 30 已取消
    * @param {Number} pageNum=1 页数
-   * @param {Boolean} showLoading=true 是否显示loading
    * @param {Number} pageSize=10 条数
    * @return void
    */
-  getOrderList(status = '', pageNum = 1, showLoading = true, pageSize = 10) {
-    if (showLoading) {
+  getOrderList(status = '', pageNum = 1, pageSize = 10) {
+    this.loadingTimer = setTimeout(() => {
       Taro.showLoading({
         title: '加载中...',
         mask: true
       })
-    }
+    }, 350)
     let sendData = {
       status,
       pageNum,
@@ -77,6 +81,7 @@ class Order extends Component {
         })
       }
       Taro.hideLoading()
+      clearTimeout(this.loadingTimer)
     })
   }
   /**
@@ -105,7 +110,7 @@ class Order extends Component {
     } else if (current === 2) {
       this.status = ''
     }
-    this.getOrderList(this.status, this.orderPage, true)
+    this.getOrderList(this.status, this.orderPage)
   }
   /**
    * 下拉刷新

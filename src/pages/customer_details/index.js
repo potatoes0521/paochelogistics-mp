@@ -3,7 +3,7 @@
  * @description: 客户信息详情
  * @Date: 2019-09-27 15:43:53
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-23 15:28:34
+ * @LastEditTime: 2019-11-11 15:56:15
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -21,9 +21,11 @@ class CustomerDetails extends Component {
       customerInfo: {}
     }
     this.pageParams = {}
+    this.loadingTimer = null
   }
-  componentWillUnmount() { 
-    // Storage.removeStorage('customer_details')
+  componentWillUnmount() {
+    Taro.hideLoading()
+    clearTimeout(this.loadingTimer)
   }
   componentDidShow() {
     this.pageParams = this.$router.params || {}
@@ -38,16 +40,19 @@ class CustomerDetails extends Component {
       Taro.navigateBack()
       return;
     }
-    Taro.showLoading({
-      title: '加载中...',
-      mask: true
-    })
+    this.loadingTimer = setTimeout(() => {
+      Taro.showLoading({
+        title: '加载中...',
+        mask: true
+      })
+    }, 350)
     let sendData = {
       userId: this.pageParams.userId,
       createUserId: this.props.userInfo.userId
     }
     api.customer.getCustomerDetails(sendData, this).then(res => {
       Taro.hideLoading()
+      clearTimeout(this.loadingTimer)
       if (!res) return
       this.setState({
         customerInfo: res

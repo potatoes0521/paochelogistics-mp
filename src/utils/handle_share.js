@@ -3,7 +3,7 @@
  * @description: 处理进入小程序的分享
  * @Date: 2019-11-06 12:25:04
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 20:14:17
+ * @LastEditTime: 2019-11-11 16:00:25
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -44,10 +44,13 @@ export const handleShare = (pageParams, userInfo) => {
 */
 export const handleShareInOrderDetails = (pageParams, userInfo) => {
   if (!pageParams.share_type) return // 没有页面参数返回
-  if (pageParams.share_type === '1') {
+  if (pageParams.share_type === '1' || pageParams.share_type === '2') {
+    console.log(pageParams)
     if (+userInfo.userId === +pageParams.c_id) { // 当前用户是订单客户
+      console.log(pageParams, "当前用户")
       return Promise.resolve(true)
     } else if (!userInfo.userId) { // 如果没有注册去注册
+      console.log(pageParams, "未注册")
       let str = ''
       for (let i in pageParams) {
         str += i + '=' + pageParams[i] + '&'
@@ -57,6 +60,7 @@ export const handleShareInOrderDetails = (pageParams, userInfo) => {
       })
       return Promise.resolve(false)
     } else if (+userInfo.userId !== +pageParams.c_id) { // 不是本人的订单就去首页
+      console.log(pageParams, "去首页")
       Taro.switchTab({
         url: '/pages/index/index'
       })

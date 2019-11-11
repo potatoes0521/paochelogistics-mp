@@ -3,7 +3,7 @@
  * @description: 询价单页面
  * @Date: 2019-09-20 13:24:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 12:02:58
+ * @LastEditTime: 2019-11-11 15:58:21
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -33,13 +33,17 @@ class Offer extends Component {
     this.offerPage = 1
     this.offerFlag = false
     this.status = 20
+    this.loadingTimer = null
   }
-
+  componentWillUnmount() {
+    Taro.hideLoading()
+    clearTimeout(this.loadingTimer)
+  }
   componentDidShow() { 
     let { userInfo } = this.props
     if (userInfo.userId) {
       this.offerPage = 1
-      this.getOfferList(this.status, this.offerPage, true)
+      this.getOfferList(this.status, this.offerPage)
     }
   }
 
@@ -47,23 +51,24 @@ class Offer extends Component {
    * 获取询价单列表
    * @param {Number} status='' 询价单状态 10 未报价 20 已报价 30 已失效 40 已取消
    * @param {Number} pageNum=1 页数
-   * @param {Boolean} showLoading=true 是否显示loading
    * @param {Number} pageSize=10 条数
    * @return void
    */
-  getOfferList(status = '', pageNum = 1, showLoading = true,pageSize = 10) {
-    if (showLoading) {
+  getOfferList(status = '', pageNum = 1, pageSize = 10) {
+    this.loadingTimer = setTimeout(() => {
       Taro.showLoading({
         title: '加载中...',
         mask: true
       })
-    }
+    }, 350)
     let sendData = {
       status,
       pageNum,
       pageSize
     }
     api.offer.getOfferList(sendData, this).then(res => {
+      Taro.hideLoading()
+      clearTimeout(this.loadingTimer)
       if (res && res.length < pageSize) {
         this.offerFlag = true
       }
@@ -106,7 +111,7 @@ class Offer extends Component {
     } else if (current === 1) {
       this.status = 10
     }
-    this.getOfferList(this.status, this.offerPage, true)
+    this.getOfferList(this.status, this.offerPage)
   }
   /**
    * 下拉刷新

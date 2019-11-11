@@ -3,7 +3,7 @@
  * @description: 客户信息列表
  * @Date: 2019-09-27 15:38:07
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-06 14:11:49
+ * @LastEditTime: 2019-11-11 15:39:17
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -35,8 +35,12 @@ class CustomerInfo extends Component {
     this.customerFlag = false
     this.merchantList = []
     this.pageParams = {}
+    this.loadingTimer = null
   }
-
+  componentWillUnmount() {
+    Taro.hideLoading()
+    clearTimeout(this.loadingTimer)
+  }
   componentDidShow() { 
     this.pageParams = this.$router.params
     this.customerPage = 1
@@ -48,16 +52,15 @@ class CustomerInfo extends Component {
    * @param {String} selectParam 根据什么查询
    * @param {Number} pageNum 页数
    * @param {Number} pageSize 条数
-   * @param {Boolean} showLoading 是否显示loading
    * @return void
    */
-  getAllCustomerList(selectParam = '', pageNum = 1, pageSize = 10, showLoading = true) {
-    if (showLoading) {
+  getAllCustomerList(selectParam = '', pageNum = 1, pageSize = 10) {
+    this.loadingTimer = setTimeout(() => {
       Taro.showLoading({
         title: '加载中...',
         mask: true
       })
-    }
+    }, 350)
     let sendData = {
       userId:this.props.userInfo.userId,
       selectParam,
@@ -67,6 +70,7 @@ class CustomerInfo extends Component {
     let { customerListData } = this.state
     api.customer.getCustomerList(sendData, this).then(res => {
       Taro.hideLoading()
+      clearTimeout(this.loadingTimer)
       const data = res.data
       if (!data && selectParam) {
         Taro.showToast({

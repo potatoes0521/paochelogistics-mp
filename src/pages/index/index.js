@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 22:06:23
+ * @LastEditTime: 2019-11-11 15:57:36
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -78,6 +78,7 @@ class Index extends Component {
     this.initCity = {}
     this.pageParams = {}
     this.serviceList = serviceList
+    this.loadingTimer = null
   }
   
   
@@ -92,6 +93,10 @@ class Index extends Component {
     }
     this.handleLocation()
     this.handleWXUserInfo()
+  }
+  componentDidHide() {
+    Taro.hideLoading()
+    clearTimeout(this.loadingTimer)
   }
   componentDidShow() { 
     if (this.state.locationModal) {
@@ -353,10 +358,12 @@ class Index extends Component {
       showModalAndRegister()
       return
     }
-    Taro.showLoading({
-      title: '提交中...',
-      mask: true
-    })
+    this.loadingTimer = setTimeout(() => {
+      Taro.showLoading({
+        title: '提交中...',
+        mask: true
+      })
+    }, 350)
     let sendData = {
       carAmount, // 台数
       usedType, // 车辆性质
@@ -374,6 +381,7 @@ class Index extends Component {
     api.offer.submitOffer(sendData, this).then(() => {
       this.initData()
       Taro.hideLoading()
+      clearTimeout(this.loadingTimer)
       Taro.showToast({
         title: '询价单已提交',
         icon: 'success'
