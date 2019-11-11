@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 18:47:50
+ * @LastEditTime: 2019-11-11 13:34:51
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -45,13 +45,18 @@ class OrderDetails extends Component {
       showBargainBox: false,
       tipContent: '',
       fail: false,
-      showTips: false // 等数据请求到了再显示
+      showTips: false, // 等数据请求到了再显示
+      canBargain: false
     }
     this.pageParams = {}
     this.timer = null
   }
 
-  async componentDidMount() {
+  componentWillUnmount() {
+    clearInterval(this.timer)
+  }
+  
+  async componentDidShow() {
     this.pageParams = this.$router.params || {}
     if (this.pageParams.share_type) {
       await login.getCode(this)
@@ -59,17 +64,6 @@ class OrderDetails extends Component {
       if (!next) return
       this.getOrderDetails()
     } else {
-      this.getOrderDetails()
-    }
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timer)
-  }
-
-  async componentDidShow() {
-    this.pageParams = this.$router.params || {}
-    if (this.props.userInfo.userId) {
       this.getOrderDetails()
     }
   }
@@ -94,6 +88,7 @@ class OrderDetails extends Component {
         this.setState({
           orderDetailsInfo: res,
           tipContent: res.tipContent,
+          canBargain: res.canBargain
         })
         Taro.hideLoading()
         const nowTimer = new Date().getTime()
@@ -211,12 +206,13 @@ class OrderDetails extends Component {
       showBargainBox,
       tipContent,
       fail,
-      showTips
+      showTips,
+      canBargain
     } = this.state
     return (
       <View className='page-wrapper'>
         {
-          showTips && !fail && orderDetailsInfo.status === 10 ?
+          showTips && canBargain && !fail && orderDetailsInfo.status === 10 ?
             <View className='bargain-tips-wrapper'>
               <View className='time-tips'>
                 <View className='tips'>优惠倒计时</View>

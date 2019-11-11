@@ -3,7 +3,7 @@
  * @description: 分享砍价
  * @Date: 2019-11-05 13:24:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-11 12:20:58
+ * @LastEditTime: 2019-11-11 13:43:38
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -60,7 +60,9 @@ class ShareBargain extends Component {
       showBargainBox: false, // 砍价成功或者遗憾的框
       bargainPrice: '', // 砍了多少钱
       showStrategyFlag: false, // 展示砍价攻略
-      strategyDataList: []
+      strategyDataList: [],
+      canBargain: 0,
+      tipContent : ''
     }
     this.timer = null
     this.pageParams = {}
@@ -134,7 +136,6 @@ class ShareBargain extends Component {
         let progress = timerPercent(dueTime, startTime)
         progress = progress > 100 ? 0 : progress
         this.countDown(dueTime, startTime)
-        res.bargainRecordList = []
         this.setState({
           bargainList: res.bargainRecordList || [],
           sendCityName: res.sendCityName,
@@ -144,6 +145,8 @@ class ShareBargain extends Component {
           bargainTotalPrice: res.bargainTotalPrice,
           userPhoto: res.userPhoto,
           nickName: decodeURIComponent(res.nickName),
+          canBargain: res.canBargain,
+          tipContent: res.tipContent,
           progress
           // carAmount: res.carAmount
         })
@@ -171,10 +174,18 @@ class ShareBargain extends Component {
     let {
       progress,
       bargainPrice,
-      userInfoFromWX
+      userInfoFromWX,
+      canBargain,
+      tipContent,
     } = this.state
     let { userInfo } = this.props
     if (progress > 0) { // 活动进行中
+      if (!canBargain) {
+        Taro.showToast({
+          title: tipContent,
+          icon: 'none'
+        })
+      }
       if (bargainPrice) {
         Taro.showToast({
           title: '您已经砍过价了哦~',
@@ -458,7 +469,7 @@ class ShareBargain extends Component {
                     <View className='no-bargain-image'>
                       <Image src={noBargainImage}></Image>
                     </View>
-                    <View className='no-bargain-btn'>抢沙发~</View>
+                    <Button className='no-bargain-btn' openType='getUserInfo' lang='zh_CN' onGetUserInfo={this.submit}>抢沙发~</Button>
                   </View>
               }
             </View>
