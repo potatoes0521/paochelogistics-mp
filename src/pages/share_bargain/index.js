@@ -3,7 +3,7 @@
  * @description: 分享砍价
  * @Date: 2019-11-05 13:24:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-11 13:43:38
+ * @LastEditTime: 2019-11-11 13:45:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -185,6 +185,7 @@ class ShareBargain extends Component {
           title: tipContent,
           icon: 'none'
         })
+        return
       }
       if (bargainPrice) {
         Taro.showToast({
