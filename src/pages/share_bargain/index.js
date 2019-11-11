@@ -3,7 +3,7 @@
  * @description: 分享砍价
  * @Date: 2019-11-05 13:24:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-11 12:09:47
+ * @LastEditTime: 2019-11-11 12:20:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -446,10 +446,7 @@ class ShareBargain extends Component {
                           }
                         </Swiper>
                         :
-                        <View
-                          className='swiper'
-                          id='swiper'
-                        >
+                        <View className='swiper'>
                           {
                             bargainViewListRender
                           }
