@@ -3,7 +3,7 @@
  * @description: 处理进入小程序的分享
  * @Date: 2019-11-06 12:25:04
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-11 16:00:25
+ * @LastEditTime: 2019-11-11 19:53:54
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -77,7 +77,8 @@ export const handleShareInOrderDetails = (pageParams, userInfo) => {
   * @param {that} that this
   * @return void
   */
-export const handleRegisterShare = ({pageParams, userInfo, wxUserInfo, that}) => {
+export const handleRegisterShare = ({ pageParams, userInfo, wxUserInfo, that }) => {
+  console.log(pageParams, userInfo)
   if (pageParams.share_type === '1') {
     if (+userInfo.id === +pageParams.c_id) {
       redirectToOrderDetails(pageParams)  // 是客户本身  
@@ -93,10 +94,10 @@ export const handleRegisterShare = ({pageParams, userInfo, wxUserInfo, that}) =>
     prevPage.$component.setState({
       userInfoFromWX: wxUserInfo
     }, () => {
-      requestBargain(that).then(res => {
+        requestBargain(that).then(res => {
         if (res) {
           prevPage.$component.setState({
-            bargainPrice: res,
+            bargainPrice: (res / 100).toFixed(2),
             showBargainBox: true
           }, () => {
             Taro.navigateBack()

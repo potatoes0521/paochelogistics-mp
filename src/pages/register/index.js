@@ -3,7 +3,7 @@
  * @description: 注册页面
  * @Date: 2019-08-22 11:58:25
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 22:06:46
+ * @LastEditTime: 2019-11-11 19:48:33
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -41,12 +41,14 @@ class usePhoneNumberRegister extends Component {
     this.verificationCode = '' // 验证码
     this.phoneNumber = ''       // 手机号
     this.timer = null
+    this.pageParams = {}
   }
   
   componentWillUnmount() { 
     clearInterval(this.timer)
   }
   componentDidShow() { 
+    this.pageParams = this.$router.params
     this.getAgreement()
   }
 
@@ -182,7 +184,7 @@ class usePhoneNumberRegister extends Component {
         // 给redux一个反应时间
         setTimeout(() => {
           handleRegisterShare({
-            pageParams:this.pageParams,
+            pageParams: this.pageParams,
             userInfo: this.props.userInfo,
             wxUserInfo,
             that: this
