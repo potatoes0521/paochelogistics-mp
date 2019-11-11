@@ -3,7 +3,7 @@
  * @description: 分享砍价
  * @Date: 2019-11-05 13:24:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-11 15:52:05
+ * @LastEditTime: 2019-11-11 16:27:53
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -74,6 +74,7 @@ class ShareBargain extends Component {
     console.log(this.pageParams)
     await login.getCode(this) // 登录   
     let { userInfo } = this.props
+    if (!userInfo.userId) return
     if (+userInfo.userId === +this.pageParams.c_id) {
       let str = ''
       for (let i in this.pageParams) {
@@ -122,7 +123,7 @@ class ShareBargain extends Component {
    * 获取砍价详情 
    * @return void
    */
-  getBargainDetails(showLoading = true) {
+  getBargainDetails(showLoading = false) {
     if (showLoading) {
       this.loadingTimer = setTimeout(() => {
         Taro.showLoading({
@@ -312,6 +313,20 @@ class ShareBargain extends Component {
         })
       }
     })
+  }
+  onShareAppMessage() {
+    let str = ''
+    for (let i in this.pageParams) {
+      str += i + '=' + this.pageParams[i] + '&'
+    }
+    let path = `/pages/share_bargain/index?${str}`
+    let title = `我要运车,需要大侠助我一臂之力!!`
+    let imageUrl = `https://resource.paoche56.com/paochelogistics/mp_img/share_to_bargain.png`
+    return {
+      title: title,
+      path: path,
+      imageUrl
+    }
   }
   config = {
     navigationBarTitleText: '帮砍价'

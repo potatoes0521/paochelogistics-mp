@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-11 15:45:55
+ * @LastEditTime: 2019-11-11 16:04:24
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -65,7 +65,9 @@ class OrderDetails extends Component {
     console.log(this.pageParams)
     if (this.pageParams.share_type) {
       await login.getCode(this)
+      console.log('登录休息鞋休息鞋先')
       const next = await handleShareInOrderDetails(this.pageParams, this.props.userInfo)
+      console.log('登录休息鞋休息鞋先next', next)
       if (!next) return
       this.getOrderDetails()
     } else {
