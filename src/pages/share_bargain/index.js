@@ -3,7 +3,7 @@
  * @description: 分享砍价
  * @Date: 2019-11-05 13:24:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-11 16:33:12
+ * @LastEditTime: 2019-11-11 17:48:06
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -313,6 +313,9 @@ class ShareBargain extends Component {
       }
     })
   }
+  catchSwiperMove(e) { 
+    e.stopPropagation()
+  }
   onShareAppMessage() {
     let str = ''
     for (let i in this.pageParams) {
@@ -357,7 +360,7 @@ class ShareBargain extends Component {
       const key = item.id
       const NickName = decodeURIComponent(item.nickName) || ''
       return (
-        <SwiperItem className='swiper-item' key={key}>
+        <SwiperItem className='swiper-item' key={key} onTouchMove={this.catchSwiperMove}>
           <View className='userInfo-wrapper'>
             <View className='user-icon'>
               <Image src={item.userPhoto}></Image>
