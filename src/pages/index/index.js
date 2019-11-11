@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-11 15:57:36
+ * @LastEditTime: 2019-11-11 20:31:05
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -108,9 +108,10 @@ class Index extends Component {
   }
   async handleWXUserInfo() {
     let wxUserInfo = await getUserInfo()
+    if (!wxUserInfo.nickName) return
     Actions.changeUserInfo(
       Object.assign({}, wxUserInfo, {
-        nickName: encodeURIComponent(wxUserInfo.nickName),
+        nickName: wxUserInfo.nickName,
         userPhoto: wxUserInfo.avatarUrl,
       })
     )
@@ -436,7 +437,7 @@ class Index extends Component {
     let { userInfo } = e.target
     Actions.changeUserInfo(
       Object.assign({}, userInfo, {
-        nickName: encodeURIComponent(userInfo.nickName),
+        nickName: userInfo.nickName,
         userPhoto: userInfo.avatarUrl,
       })
     )
