@@ -3,7 +3,7 @@
  * @description: 询价单页面
  * @Date: 2019-09-20 13:24:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-11 15:58:21
+ * @LastEditTime: 2019-11-11 17:11:51
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -35,18 +35,17 @@ class Offer extends Component {
     this.status = 20
     this.loadingTimer = null
   }
+  
+  componentDidMount() { 
+    let { userInfo } = this.props
+    if (userInfo.userId) {
+      this.getOfferList(this.status, this.offerPage)
+    }
+  }
   componentWillUnmount() {
     Taro.hideLoading()
     clearTimeout(this.loadingTimer)
   }
-  componentDidShow() { 
-    let { userInfo } = this.props
-    if (userInfo.userId) {
-      this.offerPage = 1
-      this.getOfferList(this.status, this.offerPage)
-    }
-  }
-
   /**
    * 获取询价单列表
    * @param {Number} status='' 询价单状态 10 未报价 20 已报价 30 已失效 40 已取消
