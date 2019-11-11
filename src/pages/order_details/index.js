@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-11 13:34:51
+ * @LastEditTime: 2019-11-11 15:12:17
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -46,7 +46,7 @@ class OrderDetails extends Component {
       tipContent: '',
       fail: false,
       showTips: false, // 等数据请求到了再显示
-      canBargain: false
+      // canBargain: false
     }
     this.pageParams = {}
     this.timer = null
@@ -88,7 +88,7 @@ class OrderDetails extends Component {
         this.setState({
           orderDetailsInfo: res,
           tipContent: res.tipContent,
-          canBargain: res.canBargain
+          // canBargain: res.canBargain
         })
         Taro.hideLoading()
         const nowTimer = new Date().getTime()
@@ -207,12 +207,12 @@ class OrderDetails extends Component {
       tipContent,
       fail,
       showTips,
-      canBargain
+      // canBargain
     } = this.state
     return (
       <View className='page-wrapper'>
         {
-          showTips && canBargain && !fail && orderDetailsInfo.status === 10 ?
+          showTips && tipContent && !fail && orderDetailsInfo.status === 10 ?
             <View className='bargain-tips-wrapper'>
               <View className='time-tips'>
                 <View className='tips'>优惠倒计时</View>
