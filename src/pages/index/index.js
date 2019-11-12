@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-11 20:31:05
+ * @LastEditTime: 2019-11-12 13:12:39
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -111,7 +111,6 @@ class Index extends Component {
     if (!wxUserInfo.nickName) return
     Actions.changeUserInfo(
       Object.assign({}, wxUserInfo, {
-        nickName: wxUserInfo.nickName,
         userPhoto: wxUserInfo.avatarUrl,
       })
     )

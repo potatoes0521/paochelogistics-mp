@@ -3,7 +3,7 @@
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-11 17:18:24
+ * @LastEditTime: 2019-11-12 13:08:29
  */
 
 // 默认请求连接
@@ -26,12 +26,13 @@ import createSignData from './secret.js'
 
 const sign_id = 'wx90c791e28c3c7d4d'
 const contentType = 'application/json;charset=UTF-8'
-export const appVersion = '0.8.14'
+export const appVersion = '0.8.15'
 
 export default {
   baseOptions(url, data, that, method = 'GET') {
     const { userInfo } = that.props || {};
     if (userInfo.nickName && userInfo.userPhoto) {
+      console.log(userInfo.nickName)
       data = Object.assign({}, {
         nickName: encodeURIComponent(userInfo.nickName),
         userPhoto: userInfo.userPhoto
@@ -118,6 +119,7 @@ export default {
                     icon: 'none',
                     duration: 2000
                   })
+                  reject(url + '接口出现问题', resData)
                   // backReload(1800)
                 }
               }
@@ -127,6 +129,7 @@ export default {
                 title: res.message,
                 duration: 2000
               })
+              reject(url + '接口出现问题', res)
               // backReload(1800)
             }
           }
@@ -137,8 +140,7 @@ export default {
             title: '网络连接超时',
             icon: 'none'
           })
-          console.log('请求接口出现问题')
-          reject('api', '请求接口出现问题', e)
+          reject(url + '接口出现问题', e)
         }
       })
     })
