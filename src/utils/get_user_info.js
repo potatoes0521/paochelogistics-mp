@@ -48,9 +48,10 @@ export const getUserInfo = () => {
  /**
   * 砍价
   * @param {Object} that this
+  * @param {Number} newUser // newUser 0 老客户  1新客户
   * @return void
   */
-export const requestBargain = (that) => {
+export const requestBargain = (that, newUser) => {
   return new Promise(resolve => {
     let { order_code } = that.pageParams
     let { userId } = that.props.userInfo
@@ -59,6 +60,7 @@ export const requestBargain = (that) => {
       userId,
       orderCode: order_code,
       nickName: encodeURIComponent(that.state.userInfoFromWX.nickName),
+      newUser
     })
     api.order.bargainPrice(sendData, that)
       .then(res => {

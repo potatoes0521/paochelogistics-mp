@@ -3,7 +3,7 @@
  * @description: 分享砍价
  * @Date: 2019-11-05 13:24:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-11 16:33:12
+ * @LastEditTime: 2019-11-12 09:53:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -206,7 +206,7 @@ class ShareBargain extends Component {
       })
       if (userInfo.userId) { // 是已注册过的用户
         if (userInfoFromWX) { // 如果能获取到微信授权
-          requestBargain(this).then(res => {
+          requestBargain(this, 0).then(res => {
             if (res) {
               this.setState({
                 bargainPrice: (res / 100).toFixed(2),
@@ -234,7 +234,7 @@ class ShareBargain extends Component {
           this.setState({
             userInfoFromWX: wxUserInfo
           }, () => {
-            requestBargain(this).then(res => {
+            requestBargain(this, 0).then(res => {
               if (res) { 
                 this.setState({
                   bargainPrice: (res / 100).toFixed(2),
