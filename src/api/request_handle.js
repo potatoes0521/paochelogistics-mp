@@ -3,7 +3,7 @@
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-12 13:08:29
+ * @LastEditTime: 2019-11-12 14:32:36
  */
 
 // 默认请求连接
@@ -53,7 +53,7 @@ export default {
       'appType': 1, // 1 微信小程序 2 支付宝小程序
       'systemId': 2 // 1 跑车帮   2 跑车物流
     })
-    console.log(data)
+    console.log(data,'接口是' + url)
     return new Promise((resolve, reject) => {
       Taro.request({
         isShowLoading: true,
@@ -101,7 +101,7 @@ export default {
             if (res.data) {
               let resData = res.data
               // '200002' 是未注册
-              console.log(resData, url)
+              console.log(resData, '接口是' + url)
               if (!+resData.code || +resData.code === 200002 || +resData.code == 200) {
                 if (url === 'user/customerlist') {
                   resolve(resData)
