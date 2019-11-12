@@ -3,7 +3,7 @@
  * @description: 刷新token的操作
  * @Date: 2019-09-03 10:24:49
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-12 17:43:36
+ * @LastEditTime: 2019-11-12 17:57:51
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -20,7 +20,8 @@ const refreshToken = (that, url, data, method) => {
   num++
   if (num > 3) {
     Taro.showToast({
-      title: 'token无效 刷新token过载'
+      title: 'token无效 刷新token过载',
+      icon: 'none'
     })
     return
   }
