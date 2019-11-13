@@ -4,7 +4,7 @@
  * 官网地址 https: //lbs.qq.com/qqmap_wx_jssdk/method-reverseGeocoder.html
  * @Date: 2019-08-14 15:12:20
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-08 10:46:19
+ * @LastEditTime: 2019-11-13 13:27:14
  */
 
 import Taro from '@tarojs/taro'
@@ -53,9 +53,6 @@ export const convertingGPS = (latitude, longitude, resultType = 'formatted_addre
       },
       fail: (err) => {
         reject(err)
-      },
-      complete: () => {
-        Taro.hideLoading()
       }
     })
   })

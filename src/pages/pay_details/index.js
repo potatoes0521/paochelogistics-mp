@@ -3,7 +3,7 @@
  * @description: 支付详情  本页面注释信息为，别人代付时显示的支付页面
  * @Date: 2019-10-08 09:30:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-11 15:59:27
+ * @LastEditTime: 2019-11-13 13:24:19
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -31,11 +31,6 @@ class PayDetails extends Component {
       showBargainBox: false
      }
     this.pageParams = {}
-    this.loadingTimer = null
-  }
-  componentWillUnmount() {
-    Taro.hideLoading()
-    clearTimeout(this.loadingTimer)
   }
   componentDidShow() { 
     this.pageParams = this.$router.params
@@ -53,19 +48,11 @@ class PayDetails extends Component {
    * 获取订单信息
    * @return void
    */
-  getOrderDetails() { 
-    this.loadingTimer = setTimeout(() => {
-      Taro.showLoading({
-        title: '加载中...',
-        mask: true
-      })
-    }, 350)
+  getOrderDetails() {
     let sendData = {
       orderCode: this.pageParams.order_code
     }
     api.order.getOrderDetails(sendData, this).then(res => {
-      Taro.hideLoading()
-      clearTimeout(this.loadingTimer)
       this.setState({
         quotedPriceDesc: res.inquiryOrderVO.quotedPriceDesc,
         bargainPriceDesc: res.bargainPriceDesc,

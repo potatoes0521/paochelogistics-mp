@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-11 20:36:56
+ * @LastEditTime: 2019-11-13 13:23:41
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -50,11 +50,6 @@ class OrderDetails extends Component {
     }
     this.pageParams = {}
     this.timer = null
-    this.loadingTimer = null
-  }
-  componentWillUnmount() {
-    Taro.hideLoading()
-    clearTimeout(this.loadingTimer)
   }
   componentWillUnmount() {
     clearInterval(this.timer)
@@ -83,12 +78,6 @@ class OrderDetails extends Component {
       Taro.navigateBack()
       return;
     }
-    this.loadingTimer = setTimeout(() => {
-      Taro.showLoading({
-        title: '加载中...',
-        mask: true
-      })
-    }, 350)
     let sendData = {
       orderCode: this.pageParams.order_code
     }
@@ -99,8 +88,6 @@ class OrderDetails extends Component {
           tipContent: res.tipContent,
           // canBargain: res.canBargain
         })
-        Taro.hideLoading()
-        clearTimeout(this.loadingTimer)
         const nowTimer = new Date().getTime()
         console.log('现在的时间戳' + nowTimer, '到期的时间戳' + res.discountDueTime, nowTimer - res.discountDueTime, nowTimer > res.discountDueTime)
         if (nowTimer > res.discountDueTime) {

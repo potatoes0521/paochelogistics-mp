@@ -3,7 +3,7 @@
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-11 17:11:35
+ * @LastEditTime: 2019-11-13 13:24:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -33,7 +33,6 @@ class Order extends Component {
     this.orderPage = 1
     this.orderFlag = false
     this.status = 10
-    this.loadingTimer = null
   }
   
   componentDidMount() {
@@ -41,10 +40,6 @@ class Order extends Component {
     if (userInfo.userId) {
       this.getOrderList(this.status, this.orderPage)
     }
-  }
-  componentWillUnmount() {
-    Taro.hideLoading()
-    clearTimeout(this.loadingTimer)
   }
   /**
    * 获取订单列表
@@ -54,12 +49,6 @@ class Order extends Component {
    * @return void
    */
   getOrderList(status = '', pageNum = 1, pageSize = 10) {
-    this.loadingTimer = setTimeout(() => {
-      Taro.showLoading({
-        title: '加载中...',
-        mask: true
-      })
-    }, 350)
     let sendData = {
       status,
       pageNum,
@@ -80,8 +69,6 @@ class Order extends Component {
           orderList: [...orderList, ...res]
         })
       }
-      Taro.hideLoading()
-      clearTimeout(this.loadingTimer)
     })
   }
   /**

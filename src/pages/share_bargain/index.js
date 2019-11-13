@@ -3,7 +3,7 @@
  * @description: 分享砍价
  * @Date: 2019-11-05 13:24:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-13 10:14:33
+ * @LastEditTime: 2019-11-13 13:26:53
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -66,7 +66,6 @@ class ShareBargain extends Component {
     }
     this.timer = null
     this.pageParams = {}
-    this.loadingTimer = null
   }
   
   async componentDidMount() {
@@ -90,7 +89,6 @@ class ShareBargain extends Component {
   
   componentWillUnmount() {
     Taro.hideLoading()
-    clearTimeout(this.loadingTimer)
     clearInterval(this.timer)
   }
   componentDidShow() { 
@@ -130,15 +128,7 @@ class ShareBargain extends Component {
    * 获取砍价详情 
    * @return void
    */
-  getBargainDetails(showLoading = false) {
-    if (showLoading) {
-      this.loadingTimer = setTimeout(() => {
-        Taro.showLoading({
-          title: '加载中...',
-          mask: true
-        })
-      }, 350)
-    }
+  getBargainDetails() {
     let sendData = {
       orderCode: this.pageParams.order_code
     }
@@ -163,8 +153,6 @@ class ShareBargain extends Component {
           progress
           // carAmount: res.carAmount
         })
-        Taro.hideLoading()
-        clearTimeout(this.loadingTimer)
       })
   }
   /**

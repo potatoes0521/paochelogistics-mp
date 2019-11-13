@@ -3,7 +3,7 @@
  * @description: 修改个人信息
  * @Date: 2019-09-27 15:42:38
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-11 15:41:10
+ * @LastEditTime: 2019-11-13 13:22:08
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -27,11 +27,6 @@ class EditMineInfo extends Component {
       merchantName: '',
       idCard: ''
     }
-    this.loadingTimer = null
-  }
-  componentWillUnmount() {
-    Taro.hideLoading()
-    clearTimeout(this.loadingTimer)
   }
   componentDidShow() {
     this.getCustomerDetails()
@@ -105,16 +100,8 @@ class EditMineInfo extends Component {
       idCard,
       realName
     }
-    this.loadingTimer = setTimeout(() => {
-      Taro.showLoading({
-        title: '提交中...',
-        mask: true
-      })
-    }, 350)
     api.user.editUserInfo(sendData, this)
       .then(() => {
-        Taro.hideLoading()
-        clearTimeout(this.loadingTimer)
         Taro.showToast({
           title: '编辑成功'
         })

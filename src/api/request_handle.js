@@ -3,7 +3,7 @@
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-13 10:31:28
+ * @LastEditTime: 2019-11-13 13:28:40
  */
 
 // 默认请求连接
@@ -27,9 +27,10 @@ import createSignData from './secret.js'
 const sign_id = 'wx90c791e28c3c7d4d'
 const contentType = 'application/json;charset=UTF-8'
 export const appVersion = '0.8.15'
+let loadingTimer = null
 
 export default {
-  baseOptions(url, data, that, method = 'GET') {
+  baseOptions(url, data, that, loadingTitle, method = 'GET') {
     const { userInfo } = that.props || {};
     if (userInfo.nickName && userInfo.userPhoto) {
       console.log(userInfo.nickName)
@@ -53,7 +54,13 @@ export default {
       'appType': 1, // 1 微信小程序 2 支付宝小程序
       'systemId': 2 // 1 跑车帮   2 跑车物流
     })
-    console.log(data,'接口是' + url)
+    console.log(data, '接口是' + url)
+    loadingTimer = setTimeout(() => {
+      Taro.showLoading({
+        title: loadingTitle,
+        mask: true
+      })
+    }, 350)
     return new Promise((resolve, reject) => {
       Taro.request({
         isShowLoading: true,
@@ -73,6 +80,8 @@ export default {
           'system-id': 2 // 1 跑车帮   2 跑车物流
         },
         success(res) {
+          Taro.hideLoading()
+          clearTimeout(loadingTimer)
           if (res.statusCode === HTTP_STATUS.NOT_FOUND) {
             Taro.showToast({
               title: '请求资源不存在',
@@ -110,7 +119,6 @@ export default {
                 }
               } else {
                 if (+resData.code === 200003) {
-                  Taro.hideLoading()
                   console.log(refreshToken, 'refreshToken')
                   refreshToken.refreshToken(that, url, data, method)
                 } else {
@@ -124,7 +132,6 @@ export default {
                 }
               }
             } else {
-              Taro.hideLoading()
               Taro.showToast({
                 title: res.message,
                 duration: 2000
@@ -145,10 +152,10 @@ export default {
       })
     })
   },
-  get(url, data, that) {
-    return this.baseOptions(url, data, that, 'GET')
+  get(url, data, that, loadingTitle = '加载中...') {
+    return this.baseOptions(url, data, that, loadingTitle, 'GET')
   },
-  post(url, data, that) {
-    return this.baseOptions(url, data, that, 'POST')
+  post(url, data, that, loadingTitle = '提交中...') {
+    return this.baseOptions(url, data, that, loadingTitle, 'POST')
   }
 }

@@ -35,11 +35,6 @@ class CustomerInfo extends Component {
     this.customerFlag = false
     this.merchantList = []
     this.pageParams = {}
-    this.loadingTimer = null
-  }
-  componentWillUnmount() {
-    Taro.hideLoading()
-    clearTimeout(this.loadingTimer)
   }
   componentDidShow() { 
     this.pageParams = this.$router.params
@@ -55,12 +50,6 @@ class CustomerInfo extends Component {
    * @return void
    */
   getAllCustomerList(selectParam = '', pageNum = 1, pageSize = 10) {
-    this.loadingTimer = setTimeout(() => {
-      Taro.showLoading({
-        title: '加载中...',
-        mask: true
-      })
-    }, 350)
     let sendData = {
       userId:this.props.userInfo.userId,
       selectParam,
@@ -69,8 +58,6 @@ class CustomerInfo extends Component {
     }
     let { customerListData } = this.state
     api.customer.getCustomerList(sendData, this).then(res => {
-      Taro.hideLoading()
-      clearTimeout(this.loadingTimer)
       const data = res.data
       if (!data && selectParam) {
         Taro.showToast({
@@ -93,7 +80,6 @@ class CustomerInfo extends Component {
           customerListData: [...customerListData, ...data]
         })
       }
-      Taro.hideLoading()
     })
   }
   /**

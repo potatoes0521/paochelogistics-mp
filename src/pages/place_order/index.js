@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-11 15:59:42
+ * @LastEditTime: 2019-11-13 13:24:44
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -54,11 +54,6 @@ class PlaceOrder extends Component {
       // disabled: true
     }
     this.pageParams = {}
-    this.loadingTimer = null
-  }
-  componentWillUnmount() {
-    Taro.hideLoading()
-    clearTimeout(this.loadingTimer)
   }
   componentDidShow() {
     this.pageParams = this.$router.params || {}
@@ -75,19 +70,11 @@ class PlaceOrder extends Component {
       Taro.navigateBack()
       return;
     }
-    this.loadingTimer = setTimeout(() => {
-      Taro.showLoading({
-        title: '加载中...',
-        mask: true
-      })
-    }, 350)
     let sendData = {
       inquiryId: this.pageParams.offer_id
     }
     api.offer.getOfferDetails(sendData, this)
       .then(res => {
-        Taro.hideLoading()
-        clearTimeout(this.loadingTimer)
         this.setState({
           inquiryId: res.inquiryId,
           quotedPriceDesc: res.quotedPriceDesc,
@@ -288,12 +275,6 @@ class PlaceOrder extends Component {
       this.toast('请输入车架号或车牌号')
       return
     }
-    this.loadingTimer = setTimeout(() => {
-      Taro.showLoading({
-        title: '提交中...',
-        mask: true
-      })
-    }, 350)
     let sendData = {
       inquiryId,
       sendCityId,
@@ -321,8 +302,6 @@ class PlaceOrder extends Component {
     }
     api.order.placeOrder(sendData, this)
       .then((res) => {
-        Taro.hideLoading()
-        clearTimeout(this.loadingTimer)
         Taro.showToast({
           title: '下单成功',
           icon: 'success'

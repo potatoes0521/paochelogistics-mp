@@ -3,7 +3,7 @@
  * @description: 询价单页面
  * @Date: 2019-09-20 13:24:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-11 17:11:51
+ * @LastEditTime: 2019-11-13 13:23:27
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -33,7 +33,6 @@ class Offer extends Component {
     this.offerPage = 1
     this.offerFlag = false
     this.status = 20
-    this.loadingTimer = null
   }
   
   componentDidMount() { 
@@ -41,10 +40,6 @@ class Offer extends Component {
     if (userInfo.userId) {
       this.getOfferList(this.status, this.offerPage)
     }
-  }
-  componentWillUnmount() {
-    Taro.hideLoading()
-    clearTimeout(this.loadingTimer)
   }
   /**
    * 获取询价单列表
@@ -54,20 +49,12 @@ class Offer extends Component {
    * @return void
    */
   getOfferList(status = '', pageNum = 1, pageSize = 10) {
-    this.loadingTimer = setTimeout(() => {
-      Taro.showLoading({
-        title: '加载中...',
-        mask: true
-      })
-    }, 350)
     let sendData = {
       status,
       pageNum,
       pageSize
     }
     api.offer.getOfferList(sendData, this).then(res => {
-      Taro.hideLoading()
-      clearTimeout(this.loadingTimer)
       if (res && res.length < pageSize) {
         this.offerFlag = true
       }
@@ -82,7 +69,6 @@ class Offer extends Component {
           offerList: [...offerList, ...res]
         })
       }
-      Taro.hideLoading()
     })
   }
   /**

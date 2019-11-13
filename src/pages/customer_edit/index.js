@@ -3,7 +3,7 @@
  * @description: 修改添加客户信息
  * @Date: 2019-09-27 15:47:35
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-11 15:56:38
+ * @LastEditTime: 2019-11-13 13:21:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -37,7 +37,6 @@ class CustomerEdit extends Component {
     this.customerInfo = {}
     this.districList = []
     this.merchantTypeList = []
-    this.loadingTimer = null
   }
 
   componentDidMount() {
@@ -53,8 +52,6 @@ class CustomerEdit extends Component {
   
   componentWillUnmount() {
     Storage.removeStorage('customer_details')
-    Taro.hideLoading()
-    clearTimeout(this.loadingTimer)
   }
   
   /**
@@ -171,16 +168,8 @@ class CustomerEdit extends Component {
       remarkName,
       districtId
     }
-    this.loadingTimer = setTimeout(() => {
-      Taro.showLoading({
-        title: '提交中...',
-        mask: true
-      })
-    }, 350)
     api.customer.editCustomer(sendData, this)
       .then(() => {
-        Taro.hideLoading()
-        clearTimeout(this.loadingTimer)
         let title = '添加成功'
         if (this.pageParams.pageType === 'edit') { 
           title = '编辑成功'

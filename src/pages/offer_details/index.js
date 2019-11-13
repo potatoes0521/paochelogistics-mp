@@ -3,7 +3,7 @@
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-11 15:58:52
+ * @LastEditTime: 2019-11-13 13:22:49
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -45,12 +45,8 @@ class OfferDetails extends Component {
       buttons: [] //询价单详情页面的按钮列表
     }
     this.pageParams = {}
-    this.loadingTimer = null
   }
-  componentWillUnmount() {
-    Taro.hideLoading()
-    clearTimeout(this.loadingTimer)
-  }
+  
   componentDidShow() {
     this.pageParams = this.$router.params || {}
     this.getOfferDetails()
@@ -72,19 +68,11 @@ class OfferDetails extends Component {
       Taro.navigateBack()
       return;
     }
-    this.loadingTimer = setTimeout(() => { 
-      Taro.showLoading({
-        title: '加载中...',
-        mask: true
-      })
-    }, 350)
     let sendData = {
       inquiryId: this.pageParams.offer_id
     }
     api.offer.getOfferDetails(sendData, this)
       .then(res => {
-        Taro.hideLoading()
-        clearTimeout(this.loadingTimer)
         this.setState({
           inquiryId: res.inquiryId,
           statusDesc: res.statusDesc,
@@ -128,19 +116,11 @@ class OfferDetails extends Component {
     if (this.state.isActive !== 1) {
       return
     }
-    this.loadingTimer = setTimeout(() => { 
-      Taro.showLoading({
-        title: '请求中...',
-        mask: true
-      })
-    }, 350)
     let sendData = {
       inquiryId: this.state.inquiryId
     }
     api.offer.cancelOffer(sendData, this)
       .then(() => {
-        Taro.hideLoading()
-        clearTimeout(this.loadingTimer)
         Taro.showToast({
           title: '取消询价成功',
           icon: 'none'
@@ -159,19 +139,11 @@ class OfferDetails extends Component {
     if (this.state.isActive !== 1) {
       return
     }
-    this.loadingTimer = setTimeout(() => {
-      Taro.showLoading({
-        title: '请求中...',
-        mask: true
-      })
-    }, 350)
     let sendData = {
       inquiryId: this.state.inquiryId
     }
     api.offer.getPromptOffer(sendData, this)
       .then(() => {
-        Taro.hideLoading()
-        clearTimeout(this.loadingTimer)
         Taro.showToast({
           title: '催报价成功',
           icon: 'none'
@@ -190,19 +162,11 @@ class OfferDetails extends Component {
     if (this.state.isActive !== 1) {
       return
     }
-    this.loadingTimer = setTimeout(() => {
-      Taro.showLoading({
-        title: '请求中...',
-        mask: true
-      })
-    }, 350)
     let sendData = {
       inquiryId: this.state.inquiryId
     }
     api.offer.getReinquiryOrder(sendData, this)
       .then(() => {
-        Taro.hideLoading()
-        clearTimeout(this.loadingTimer)
         Taro.showToast({
           title: '再次询价成功',
           icon: 'none'
