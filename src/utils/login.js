@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-10-10 09:33:18
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-13 13:25:53
+ * @LastEditTime: 2019-11-13 18:27:29
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -75,7 +75,7 @@ export default {
         delete res.userAgent
         res.nickName = decodeURIComponent(res.nickName)
         for (let i in res) {
-          if (!i) {
+          if (i === null) {
             delete res[i]
           }
         }
