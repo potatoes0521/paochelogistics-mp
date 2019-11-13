@@ -3,7 +3,7 @@
  * @description: 项目描述文件
  * @Date: 2019-08-14 10:25:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 22:13:17
+ * @LastEditTime: 2019-11-13 15:13:06
  -->
 ## 跑车帮小程序
  
@@ -172,3 +172,5 @@ taro update project
 ### 0.8.15
 
 * 1.分享砍价
+* 2.限制token刷新次数
+* 3.loading全局控制
