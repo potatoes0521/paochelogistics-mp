@@ -3,7 +3,7 @@
  * @description: 分享砍价
  * @Date: 2019-11-05 13:24:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-13 13:26:53
+ * @LastEditTime: 2019-11-13 14:58:53
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -260,11 +260,13 @@ class ShareBargain extends Component {
    * @return void
    */
   navigatorToRegister() { 
+    console.log('去注册')
     Taro.hideLoading()
     let str = ''
     for (let i in this.pageParams) {
       str += i + '=' + this.pageParams[i] + '&'
     }
+    console.log('navigateTo', str)
     Taro.navigateTo({
       url: `/pages/register/index?${str}`
     })
