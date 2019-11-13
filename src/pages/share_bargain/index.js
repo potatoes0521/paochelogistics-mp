@@ -3,7 +3,7 @@
  * @description: 分享砍价
  * @Date: 2019-11-05 13:24:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-12 09:53:02
+ * @LastEditTime: 2019-11-13 10:14:33
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -87,10 +87,18 @@ class ShareBargain extends Component {
     this.getSwiperHeight()
     this.getStrategy()
   }
+  
   componentWillUnmount() {
     Taro.hideLoading()
     clearTimeout(this.loadingTimer)
     clearInterval(this.timer)
+  }
+  componentDidShow() { 
+    // 用户已经登录并且不是本人   主要是用来注册返回的时候触发请求
+    let { userInfo } = this.props
+    if (+userInfo.userId && + userInfo.userId !== +this.pageParams.c_id) {
+      this.getBargainDetails()
+    }
   }
   /**
    * 获取微信授权信息
