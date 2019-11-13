@@ -3,7 +3,7 @@
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-12 14:32:36
+ * @LastEditTime: 2019-11-13 09:35:35
  */
 
 // 默认请求连接
@@ -65,7 +65,7 @@ export default {
           'content-type': contentType,
           'user-login': headerUserLogin,
           'sign': sign || '',
-          'terminal-type': userInfo.terminalType || 1, // 终端类型  1 小程序   2 H5  3 APP
+          'terminal-type': 1, // 终端类型  1 小程序   2 H5  3 APP
           'source-id': userInfo.sourceId || 3, // 1 跑车帮小程序注册 2 跑车帮APP注册 3 跑车物流小程序注册 4 跑车物流小程序添加
           'system-info': userInfo.userAgent || '', // 系统信息
           'app-version': appVersion, // 版本号
