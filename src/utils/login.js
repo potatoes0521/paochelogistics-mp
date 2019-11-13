@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-10-10 09:33:18
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 13:46:53
+ * @LastEditTime: 2019-11-13 11:46:14
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -73,6 +73,12 @@ export default {
       Taro.hideLoading()
       if (res) {
         delete res.userAgent
+        res.nickName = decodeURIComponent(res.nickName)
+        for (let i in res) {
+          if (!i) {
+            delete res[i]
+          }
+        }
         let resData = Object.assign({}, res)
         if (!sendData.token || sendData.token !== resData.token) {
           refreshToken.setNewToken(resData.token)
