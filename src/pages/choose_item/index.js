@@ -7,7 +7,7 @@
  * 
  * @Date: 2019-10-21 11:20:33
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-23 14:26:38
+ * @LastEditTime: 2019-11-14 18:31:33
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -37,7 +37,7 @@ class ChooseItem extends Component {
     }
     this.pageParams = {}
   }
-  componentDidShow() { 
+  componentDidMount() { 
     this.pageParams = this.$router.params
     if (this.pageParams.pageType === 'district') {
       this.setNavigationBarTitle('选择所属区域')

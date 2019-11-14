@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-13 13:24:44
+ * @LastEditTime: 2019-11-14 18:28:29
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -55,7 +55,7 @@ class PlaceOrder extends Component {
     }
     this.pageParams = {}
   }
-  componentDidShow() {
+  componentDidMount() {
     this.pageParams = this.$router.params || {}
     this.getOfferDetails()
     this.testFunction()

@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-10-21 15:12:17
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-30 17:02:40
+ * @LastEditTime: 2019-11-14 18:31:22
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -30,11 +30,7 @@ export default class Remark extends Component {
     this.pageParams = {}
   }
 
-  componentWillUnmount() { 
-    Storage.removeStorage('vins')    
-  }
-
-  componentDidShow() { 
+  componentDidMount() { 
     this.pageParams = this.$router.params
     Storage.getStorage('vins').then(res => {
       this.setState({
@@ -42,6 +38,10 @@ export default class Remark extends Component {
         disabled: res ? false : true
       })
     })
+  }
+  
+  componentWillUnmount() {
+    Storage.removeStorage('vins')
   }
 
   textareaInput(e) {
