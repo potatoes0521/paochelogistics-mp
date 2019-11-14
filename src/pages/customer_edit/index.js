@@ -3,7 +3,7 @@
  * @description: 修改添加客户信息
  * @Date: 2019-09-27 15:47:35
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-13 13:21:16
+ * @LastEditTime: 2019-11-14 16:47:37
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -142,7 +142,7 @@ class CustomerEdit extends Component {
       this.toast('手机号格式有误')
       return
     }
-    // if (!(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(idCard))) {
+    // if (!(/^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/)/.test(idCard))) {
     //   this.toast('客户身份证号格式有误')
     //   return
     // }

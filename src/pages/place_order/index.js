@@ -107,7 +107,7 @@ class PlaceOrder extends Component {
     //   receiveCardNo,
     //   vins
     // } = this.state
-    // if ((/^[\u4e00-\u9fa5]{2,8}$/.test(sendPerson)) && (/^1[3456789]\d{9}$/.test(sendMobile)) && (/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(sendCardNo)) && (/^[\u4e00-\u9fa5]{2,8}$/.test(receivePerson)) && (/^1[3456789]\d{9}$/.test(receiveMobile)) && (/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(receiveCardNo)) && (/^[0-9A-Za-z,]+$/.test(vins))) {
+    // if ((/^[\u4e00-\u9fa5]{2,8}$/.test(sendPerson)) && (/^1[3456789]\d{9}$/.test(sendMobile)) && (/^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/)/.test(sendCardNo)) && (/^[\u4e00-\u9fa5]{2,8}$/.test(receivePerson)) && (/^1[3456789]\d{9}$/.test(receiveMobile)) && (/^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/)/.test(receiveCardNo)) && (/^[0-9A-Za-z,]+$/.test(vins))) {
     //   this.setState({
     //     disabled: false
     //   })
@@ -263,11 +263,11 @@ class PlaceOrder extends Component {
       this.toast('收车人手机号输入格式有误')      
       return
     }
-    // if (!(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(sendCardNo))) {
+    // if (!(/^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/)/.test(sendCardNo))) {
     //   this.toast('发车人身份证号输入格式有误')
     //   return
     // }
-    // if (!(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(receiveCardNo))) {
+    // if (!(/^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/)/.test(receiveCardNo))) {
     //   this.toast('收车人身份证号输入格式有误')
     //   return
     // }
