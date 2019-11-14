@@ -3,7 +3,7 @@
  * @description: 没有订单的样式
  * @Date: 2019-09-29 15:00:46
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-18 20:32:01
+ * @LastEditTime: 2019-11-14 11:18:35
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -23,6 +23,9 @@ export default class NoData extends Component {
   constructor(props) {
     super(props)
     this.state = {}
+  }
+  stopPropagation(e) {
+    e.stopPropagation()
   }
   navigatorTo(e) { 
     e.stopPropagation()
@@ -88,7 +91,7 @@ export default class NoData extends Component {
       }
     )
     return (
-      <View className='no-data-wrapper'>
+      <View className='no-data-wrapper' onClick={this.stopPropagation}>
         <View className='main'>
           <Image
             className={imageClassName}
