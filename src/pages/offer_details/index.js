@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
- * @LastEditors: liuYang
- * @LastEditTime: 2019-11-13 13:22:49
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-11-19 11:40:31
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -229,7 +229,7 @@ class OfferDetails extends Component {
     const cancelOfferClassName = classNames({
       'disabled-text': status === 30 || status === 40
     })
-    const buttonsList = buttons.map((item) => (
+    const buttonsList = buttons && buttons.map((item) => (
       <View className={item.key} key={item} onClick={() => this.buttonsFun(item.key)}>{item.name}</View>
     ))
     return (
