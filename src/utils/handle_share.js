@@ -3,7 +3,7 @@
  * @description: 处理进入小程序的分享
  * @Date: 2019-11-06 12:25:04
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-12 09:53:11
+ * @LastEditTime: 2019-11-20 12:52:22
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -80,9 +80,9 @@ export const handleShareInOrderDetails = (pageParams, userInfo) => {
 export const handleRegisterShare = ({ pageParams, userInfo, wxUserInfo, that }) => {
   console.log(pageParams, userInfo)
   if (pageParams.share_type === '1') {
-    if (+userInfo.id === +pageParams.c_id) {
+    if (+userInfo.userId === +pageParams.c_id) {
       redirectToOrderDetails(pageParams)  // 是客户本身  
-    } else if (+userInfo.id !== +pageParams.c_id) {
+    } else if (+userInfo.userId !== +pageParams.c_id) {
       // 不是客户本人
       Taro.switchTab({
         url: '/pages/index/index'
