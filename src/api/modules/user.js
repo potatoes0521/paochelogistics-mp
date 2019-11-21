@@ -3,7 +3,7 @@
  * @description: 用户中心
  * @Date: 2019-09-26 11:23:16
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-12 16:07:44
+ * @LastEditTime: 2019-11-21 09:54:57
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,7 +16,7 @@ export default {
   },
   // openID登录
   loginUseOpenID(data, that) {
-    return requestHandle.post('user/login', data, that)
+    return requestHandle.post('user/login', data, that, '加载中...')
   },
   // 注册
   register(data, that) {
