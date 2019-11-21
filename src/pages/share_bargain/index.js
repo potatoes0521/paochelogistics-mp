@@ -3,7 +3,7 @@
  * @description: 分享砍价
  * @Date: 2019-11-05 13:24:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-13 14:58:53
+ * @LastEditTime: 2019-11-21 15:12:18
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -30,10 +30,11 @@ import {
   getUserInfo,
   requestBargain
 } from '@utils/get_user_info.js'
+import { defaultResourceImgURL , defaultResourceConfigURL } from '@config/request_config.js'
 // eslint-disable-next-line no-unused-vars
 import BargainBox from '@c/bargain/index.js'
 import noBargainImage from '@img/bargain/no_bargain.png'
-import { defaultResourceConfigURL } from '@config/request_config.js'
+
 import classNames from 'classnames'
 import './index.styl'
 
@@ -321,7 +322,7 @@ class ShareBargain extends Component {
     }
     let path = `/pages/share_bargain/index?${str}`
     let title = `我要运车,需要大侠助我一臂之力!!!`
-    let imageUrl = `https://resource.paoche56.com/paochelogistics/mp_img/share_to_bargain.png`
+    let imageUrl = `${defaultResourceImgURL}share_to_bargain.png`
     return {
       title: title,
       path: path,

@@ -3,7 +3,7 @@
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-13 13:24:02
+ * @LastEditTime: 2019-11-21 15:11:38
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,6 +13,7 @@ import {
   Block
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
+import { defaultResourceImgURL } from '@config/request_config.js'
 import Tabs from '@c/tabs/index.js'
 import OrderItem from './components/order_item/index.js'
 // eslint-disable-next-line import/first
@@ -135,7 +136,7 @@ class Order extends Component {
    * @return void
    */
   onShareAppMessage(event) {
-    let imageUrl = `https://resource.paoche56.com/paochelogistics/mp_img/share_mp.png`
+    let imageUrl = `${defaultResourceImgURL}share_mp.png`
     let path = `/pages/index/index`
     let title = `欢迎您进入跑车物流~`
     if (event.from === 'button') {
@@ -146,12 +147,12 @@ class Order extends Component {
       if (type === 'inviteCustomer') { // 分享给客户
         path = `/pages/order_details/index?share_type=1&order_code=${item.orderCode}&c_id=${item.userId}`
         title = `${offerMsg.sendCityName}发往${offerMsg.receiveCityName}的${offerMsg.carAmount}台${offerMsg.carInfo}已经发车了`
-        imageUrl = `https://resource.paoche56.com/paochelogistics/mp_img/share_to_c.png`
+        imageUrl = `${defaultResourceImgURL}share_to_c.png`
       }
       if (type === 'shareOrder') { // 分享给客户
         path = `/pages/share_bargain/index?share_type=2&order_code=${offerMsg.orderCode}&c_id=${offerMsg.userId}`
         title = `我要运车,需要大侠助我一臂之力!!!`
-        imageUrl = `https://resource.paoche56.com/paochelogistics/mp_img/share_to_bargain.png`
+        imageUrl = `${defaultResourceImgURL}share_to_bargain.png`
       }
     }
     return {

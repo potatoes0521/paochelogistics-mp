@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-13 13:21:58
+ * @LastEditTime: 2019-11-21 15:10:57
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -29,6 +29,7 @@ import {
   timestampOfDay,
   getDateTime
 } from '@utils/timer_handle.js'
+import { defaultResourceImgURL } from '@config/request_config.js'
 // eslint-disable-next-line import/first
 import api from '@api/index.js'
 import login from '@utils/login.js'
@@ -436,7 +437,7 @@ class Index extends Component {
   onShareAppMessage() {
     let path = `/pages/index/index`
     let title = `欢迎您进入跑车物流~`
-    const imageUrl = `https://resource.paoche56.com/paochelogistics/mp_img/share_mp.png`
+    const imageUrl = `${defaultResourceImgURL}share_mp.png`
     return {
       title: title,
       path: path,
