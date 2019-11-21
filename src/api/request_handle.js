@@ -3,7 +3,7 @@
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-15 11:28:39
+ * @LastEditTime: 2019-11-21 09:46:40
  */
 
 // 默认请求连接
@@ -55,7 +55,7 @@ export default {
       'systemId': 2 // 1 跑车帮   2 跑车物流
     })
     console.log(data, '接口是' + url)
-    if (method === 'POST') {
+    if (method === 'POST' && url.indexOf('login' === -1)) {
       Taro.showLoading({
         title: loadingTitle,
         mask: true
