@@ -3,7 +3,7 @@
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
  * @LastEditors: guorui
- * @LastEditTime: 2019-11-19 11:40:31
+ * @LastEditTime: 2019-11-28 17:52:45
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -30,6 +30,7 @@ class OfferDetails extends Component {
       status: 10, //询价单状态  10 未报价  20 已报价  30 已失效  40 已取消
       statusDesc: '', //未报价
       quotedPriceDesc: 0, //报价价格
+      assessedPriceDesc: 0, //驿站估价
       dueTimeDesc: '', //有效期
       sendTimeDesc: '', //发车时间
       sendCityName: '', //发车城市名称
@@ -78,6 +79,7 @@ class OfferDetails extends Component {
           statusDesc: res.statusDesc,
           status: res.status,
           quotedPriceDesc: res.quotedPriceDesc,
+          assessedPriceDesc: res.assessedPriceDesc,
           dueTimeDesc: res.dueTimeDesc,
           sendTimeDesc: res.sendTimeDesc,
           sendCityName: res.sendCityName,
@@ -211,6 +213,7 @@ class OfferDetails extends Component {
   render() {
     let {
       quotedPriceDesc,
+      assessedPriceDesc,
       dueTimeDesc,
       sendTimeDesc,
       sendCityName,
@@ -226,6 +229,7 @@ class OfferDetails extends Component {
       usedType,
       buttons
     } = this.state
+    let { userInfo } = this.props
     const cancelOfferClassName = classNames({
       'disabled-text': status === 30 || status === 40
     })
@@ -237,12 +241,12 @@ class OfferDetails extends Component {
         <NoTitleCard>
           <View className={cancelOfferClassName}>
             {
-              (status === 30) ?
+              status === 30 ?
                 <View className='iconfont iconxunjiayishixiao icon-invalid-style'></View>
                 : null
             }
             {
-              (status === 40) ?
+              status === 40 ?
                 <View className='iconfont iconxunjiayiquxiao icon-invalid-style'></View>
                 : null
             }
@@ -261,7 +265,7 @@ class OfferDetails extends Component {
               }
             </View>
             {
-              (quotedPriceDesc) ?
+              quotedPriceDesc ?
                 <View className='details-form-item'>
                   <View className='details-form-label'>报价金额:</View>
                   <View className='details-form-content font-color'>￥{quotedPriceDesc || ''} /台</View>
@@ -269,7 +273,15 @@ class OfferDetails extends Component {
                 : null
             }
             {
-              (dueTimeDesc) ?
+              userInfo.userType === 0 && assessedPriceDesc ?
+                <View className='details-form-item'>
+                  <View className='details-form-label'>驿站估价:</View>
+                  <View className='details-form-content font-color'>{assessedPriceDesc || ''} /元</View>
+                </View>
+                : null
+            }
+            {
+              dueTimeDesc ?
                 <View className='details-form-item'>
                   <View className='details-form-label'>报价有效期至:</View>
                   <View className='details-form-content font-color'>{dueTimeDesc || ''}</View>
