@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 订单item
  * @Date: 2019-09-23 14:42:25
- * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 18:52:26
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-11-28 13:58:27
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -39,7 +39,7 @@ export default class OrderItem extends Component {
     switch (event.target.dataset.key) {
       case 'logisticsDetail':
         Taro.navigateTo({
-          url: `/pages/transport_state/index?order_id=${item.orderId}`
+          url: `/pages/transport_state/index?order_id=${item.orderId}&order_code=${item.orderCode}`
         })
         break;
       case 'payOrder':

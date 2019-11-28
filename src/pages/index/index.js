@@ -3,8 +3,8 @@
  * @description: 首页
  * 
  * @Date: 2019-09-17 11:53:57
- * @LastEditors: liuYang
- * @LastEditTime: 2019-11-21 15:10:57
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-11-28 17:14:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -19,6 +19,7 @@ import {
 import { connect } from '@tarojs/redux'
 import classNames from 'classnames'
 import { convertingGPS } from '@utils/location.js'
+import { handleMoney } from '@utils/patter.js'
 import {
   getUserLocation,
   getSetting,
@@ -73,6 +74,7 @@ class Index extends Component {
       homeDelivery: 0, // 上门送车
       sendTimerInit: '',
       locationModal: false,
+      assessedPrice: '' //驿站估价
       // eslint-disable-next-line react/no-unused-state
       // disabled: true
     }
@@ -155,6 +157,7 @@ class Index extends Component {
       sendAddress: '', // 发车详细地址
       storePickup: 0, // 上门提车
       homeDelivery: 0, // 上门送车
+      assessedPrice: '' //驿站估价
     })
     this.serviceList.forEach(item => {
       item.checked = false
@@ -287,6 +290,18 @@ class Index extends Component {
     })
   }
   /**
+   * 驿站人员输入估算价格
+   * @param {Type} e 参数描述
+   * @return void
+   */
+  inputAssessedPrice(e) {
+    let value = e.detail.value
+    value = handleMoney(value)
+    this.setState({
+      assessedPrice: value
+    })
+  }
+  /**
    * 输入车辆信息
    * @param {Object} e event参数
    * @return void
@@ -324,6 +339,7 @@ class Index extends Component {
       sendAddress, // 发车详细地址
       storePickup, // 上门提车
       homeDelivery, // 上门送车
+      assessedPrice, //驿站估价
     } = this.state
     if (!sendTime) {
       this.toast('请选择发车时间')
@@ -349,6 +365,14 @@ class Index extends Component {
       this.toast('请输入车辆信息')
       return
     }
+    if (!Number(assessedPrice)) {
+      this.toast('请输入正确的金额格式')
+      return
+    }
+    if (+assessedPrice <= 0) {
+      this.toast('估算金额不能小于或等于0')
+      return
+    }
     let userId = this.props.userInfo.userId
     if (!userId) {
       showModalAndRegister()
@@ -367,6 +391,7 @@ class Index extends Component {
       sendAddress, // 收车详细地址
       storePickup, // 上门提车
       homeDelivery, // 上门送车
+      assessedPrice: assessedPrice * 100, //驿站估价
     }
     api.offer.submitOffer(sendData, this).then(() => {
       this.initData()
@@ -461,6 +486,7 @@ class Index extends Component {
       // homeDelivery, // 上门送车
       sendTimerInit,
       locationModal,
+      assessedPrice,
       // disabled
     } = this.state
     let { userInfo } = this.props
@@ -619,6 +645,29 @@ class Index extends Component {
               </View>
             </View>
           </View>
+          {
+            userInfo.userType === 0 ?
+              <View className='from-item'>
+                <View className='label-wrapper'>
+                  <View className='form-required'>
+                    <View className='required'></View>
+                    <View className='from-label'>驿站估价</View>
+                  </View>
+                  <View className='from-right text-right'>
+                    <Input
+                      className='input'
+                      placeholder='请驿站人员输入估算价格'
+                      placeholderClass='input-placeholder'
+                      maxLength='20'
+                      value={assessedPrice}
+                      onInput={this.inputAssessedPrice}
+                    ></Input>
+                    <Text className='margin-left'>元</Text>
+                  </View>
+                </View>
+              </View>
+              : null
+          }
         </NoTitleCard>
         {/* disabled={disabled}  */}
         {

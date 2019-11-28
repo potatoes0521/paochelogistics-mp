@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-09-26 11:23:34
- * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 19:30:03
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-11-28 16:26:19
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -37,5 +37,9 @@ export default {
   // 分享砍价接口
   bargainPrice(data, that) {
     return requestHandle.post(`order/bargainprice`, data, that);
+  },
+  // 获取司机信息
+  getDriverDetail(data, that) {
+    return requestHandle.get(`order/getdriver/${data.orderId}`, data, that);
   },
 }

@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 运输状态
  * @Date: 2019-09-24 10:51:52
- * @LastEditors: liuYang
- * @LastEditTime: 2019-10-17 16:39:46
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-11-28 17:33:19
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -11,7 +11,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import api from '@api/index.js'
-// import DriverItem from './components/driver_item/index.js'
+import DriverItem from './components/driver_item/index.js'
 import TimeLine from './components/time_line/index.js'
 import './index.styl'
 
@@ -19,7 +19,8 @@ class TransportState extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      wayCityList: []
+      wayCityList: [],
+      driverInfo: {}
     }
     this.pageParams = {}
   }
@@ -27,6 +28,7 @@ class TransportState extends Component {
   componentWillMount() { 
     this.pageParams = this.$router.params
     this.getOrderTransportList()
+    this.getDriverDetail()
   }
   /**
    * 获取订单运输状态
@@ -44,27 +46,38 @@ class TransportState extends Component {
       }
     })
   }
+  /**
+   * 获取司机信息
+   * @return void
+   */
+  getDriverDetail() {
+    let sendData = {
+      orderId: this.pageParams.order_id
+    }
+    api.order.getDriverDetail(sendData, this).then(res => {
+      console.log(res, "司机")
+      if (res) {
+        this.setState({
+          driverInfo: res
+        })
+      }
+    })
+  }
 
   render() { 
-    // const item = {
-    //   name: '张海涛',
-    //   phone: '186****7658',
-    //   idCard: '176345783267459876'
-    // }
-    let {wayCityList} = this.state
-    // const list = ['司机']
-    // const driverList = list.map((name) => (
-    //   <DriverItem
-    //     item={item}
-    //     title={name}
-    //     key={name}
-    //   ></DriverItem>
-    // ))
+    let {
+      wayCityList,
+      driverInfo
+    } = this.state
     return (
       <View className='page-wrapper'>
-        {/* {
-          driverList
-        } */}
+        {
+          JSON.stringify(driverInfo) !== '{}' ?
+            <DriverItem
+              item={driverInfo}
+            ></DriverItem>
+            : null
+        }
         <TimeLine
           timeArray={wayCityList}
         ></TimeLine>

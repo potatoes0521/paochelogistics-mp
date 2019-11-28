@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 司机信息面板
  * @Date: 2019-09-24 13:45:15
- * @LastEditors: liuYang
- * @LastEditTime: 2019-09-24 14:11:05
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-11-28 14:01:58
  * @mustParam: 必传参数
  *    title  String  左边显示什么
  *    item  Object  司机的基本信息
@@ -29,9 +29,9 @@ export default class DriverItem extends Component {
       <View className='driver-wrapper'>
         <View className='driver-item'>
           <View className='driver-title'>{title}:</View>
-          <View className='driver-name driver'>{item.name}</View>
+          <View className='driver-name driver'>{item.realName}</View>
         </View>
-        <View className='driver'>{item.phone}</View>
+        <View className='driver'>{item.mobile}</View>
         <View className='driver'>{item.idCard}</View>
       </View>
     )
@@ -40,7 +40,7 @@ export default class DriverItem extends Component {
 
 DriverItem.defaultProps = {
   item: {},
-  title: '司机'
+  title: '提车司机'
 }
 
 DriverItem.propTypes = {
