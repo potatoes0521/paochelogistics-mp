@@ -3,8 +3,8 @@
  * @description: 首页
  * 
  * @Date: 2019-09-17 11:53:57
- * @LastEditors: guorui
- * @LastEditTime: 2019-11-28 17:14:40
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-11-29 10:00:01
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -365,14 +365,6 @@ class Index extends Component {
       this.toast('请输入车辆信息')
       return
     }
-    if (!Number(assessedPrice)) {
-      this.toast('请输入正确的金额格式')
-      return
-    }
-    if (+assessedPrice <= 0) {
-      this.toast('估算金额不能小于或等于0')
-      return
-    }
     let userId = this.props.userInfo.userId
     if (!userId) {
       showModalAndRegister()
@@ -660,6 +652,7 @@ class Index extends Component {
                       placeholderClass='input-placeholder'
                       maxLength='20'
                       value={assessedPrice}
+                      type='digit'
                       onInput={this.inputAssessedPrice}
                     ></Input>
                     <Text className='margin-left'>元</Text>
