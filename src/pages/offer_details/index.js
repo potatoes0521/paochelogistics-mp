@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
- * @LastEditors: guorui
- * @LastEditTime: 2019-11-28 17:52:45
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-11-29 10:05:26
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -334,6 +334,10 @@ class OfferDetails extends Component {
               <View className='details-form-label'>台数:</View>
               <View className='details-form-content'>{carAmount || ''}台</View>
             </View>
+            <View className='details-form-item'>
+              <View className='details-form-label'>询价时间:</View>
+              <View className='details-form-content'>{inquiryTimeDesc || ''}</View>
+            </View>
             {
               (quotedTimeDesc && status !== 30) ?
                 <View className='details-form-item'>
@@ -342,10 +346,6 @@ class OfferDetails extends Component {
                 </View>
                 : null
             }
-            <View className='details-form-item'>
-              <View className='details-form-label'>询价时间:</View>
-              <View className='details-form-content'>{inquiryTimeDesc || ''}</View>
-            </View>
           </View>
         </NoTitleCard>
         <View className='buttons-style'>
