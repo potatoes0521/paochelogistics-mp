@@ -6,7 +6,7 @@
  * 
  * @Date: 2019-08-30 15:53:51
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-13 13:20:26
+ * @LastEditTime: 2019-12-02 09:41:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -20,7 +20,7 @@ import {
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import classNames from 'classnames'
-import _lodash from 'lodash'
+import _flattenDeep from 'lodash/flattenDeep'
 import api from '@api/index.js'
 import Storage from '@utils/storage.js'
 import './index.styl'
@@ -56,7 +56,7 @@ class ChooseCity extends Component {
         this.allCityList = allCity.map(item => {
           return item.list
         })
-        this.allCityList = _lodash.flattenDeep(this.allCityList)
+        this.allCityList = _flattenDeep(this.allCityList)
         this.setState({
           hotCity,
           allCity
@@ -79,7 +79,7 @@ class ChooseCity extends Component {
         this.allCityList = allCity.map(item => {
           return item.list
         })
-        this.allCityList = _lodash.flattenDeep(this.allCityList)
+        this.allCityList = _flattenDeep(this.allCityList)
         this.setState({
           hotCity,
           allCity

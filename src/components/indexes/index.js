@@ -3,7 +3,7 @@
  * @description: 城市索引选择器
  * @Date: 2019-09-01 14:57:42
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-08 18:07:31
+ * @LastEditTime: 2019-12-02 09:42:21
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  *  maxCheck: PropTypes.number  // 最多多选几个
@@ -29,7 +29,7 @@ import {
 } from '@tarojs/components'
 import classNames from 'classnames'
 import { AtToast } from 'taro-ui'
-import _lodash from 'lodash'
+import _flattenDeep from 'lodash/flattenDeep'
 import utils from './utils.js'
 // eslint-disable-next-line import/first
 import imageDuiHao from '@img/indexes/duigou.png'
@@ -108,7 +108,7 @@ export default class Indexes extends Component {
           this.allCityList = list.map(item => {
             return item.list
           })
-          this.allCityList = _lodash.flattenDeep(this.allCityList)
+          this.allCityList = _flattenDeep(this.allCityList)
         }
       })
   }
