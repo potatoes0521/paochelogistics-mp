@@ -1,0 +1,53 @@
+/*
+ * @Author: guorui
+ * @description: 客户信息
+ * @Date: 2019-12-06 09:21:26
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-12-06 09:37:17
+ * @mustParam: 必传参数
+ * @optionalParam: 选传参数
+ */
+import Taro, { Component } from '@tarojs/taro'
+import { View } from '@tarojs/components'
+import { connect } from '@tarojs/redux'
+import PropTypes from 'prop-types'
+import './index.styl'
+
+class CustomerInfoComponent extends Component {
+  constructor(props) {
+    super(props)
+    this.state = { }
+  }
+
+  render() {
+    let { item }  = this.props
+    return (
+      <View className='details-form-wrapper'>
+        <View className='details-form-item'>
+          <View className='details-form-label'>所属客户:</View>
+          <View className='details-form-content'>{item.realName || ''}</View>
+        </View>
+        <View className='details-form-item'>
+          <View className='details-form-label'>联系方式:</View>
+          <View className='details-form-content'>{item.orderCarriagePersonVo && item.orderCarriagePersonVo.sendMobile || ''}</View>
+        </View>
+      </View>
+    )
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    userInfo: state.user_msg.userInfo
+  }
+}
+
+CustomerInfoComponent.defaultProps = {
+  item: {}
+}
+
+CustomerInfoComponent.propTypes = {
+  item: PropTypes.object
+}
+
+export default connect(mapStateToProps)(CustomerInfoComponent)
