@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
- * @LastEditors: liuYang
- * @LastEditTime: 2019-11-21 15:10:15
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-12-06 11:07:57
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -22,12 +22,15 @@ import ReceiveCityComponent from './components/receive_city/index.js'
 import ServiceDetailsComponent from './components/service_details/index.js'
 import PriceDetailsComponent from './components/price_details/index.js'
 import FooterDetailsComponent from './components/footer_details/index.js'
+import CustomerInfoComponent from './components/customer_info/index.js'
 // eslint-disable-next-line import/first
 import BargainBox from '@c/bargain/index.js' // 砍价过期 弹框 
 // eslint-disable-next-line import/first
 import api from '@api/index.js'
 // eslint-disable-next-line import/first
 import login from '@utils/login.js'
+// eslint-disable-next-line import/first
+import classNames from 'classnames'
 // eslint-disable-next-line import/first
 import { handleShareInOrderDetails } from '@utils/handle_share.js'
 // eslint-disable-next-line import/first
@@ -47,6 +50,7 @@ class OrderDetails extends Component {
       tipContent: '',
       fail: false,
       showTips: false, // 等数据请求到了再显示
+      statusDescs: [], //订单状态
       // canBargain: false
     }
     this.pageParams = {}
@@ -205,8 +209,21 @@ class OrderDetails extends Component {
       tipContent,
       fail,
       showTips,
+      statusDescs,
       // canBargain
     } = this.state
+    const unpaid = statusDescs && statusDescs.some(item => item.key === 'unpaidOrder')
+    const waiting = statusDescs && statusDescs.some(item => item.key === 'waitingPickUp')
+    const finish = statusDescs && statusDescs.some(item => item.key === 'finishOrder')
+    const cancel = statusDescs && statusDescs.some(item => item.key === 'cancelOrder')
+    const iconClassName = classNames(
+      'iconfont pay-icon', {
+        'icondaizhifu1': unpaid,
+        'icondaizhifu': waiting,
+        'iconyiwancheng': finish,
+        'iconyiquxiao': cancel
+      }
+    )
     return (
       <View className='page-wrapper'>
         {
@@ -243,8 +260,16 @@ class OrderDetails extends Component {
             ></BargainBox>
             : null
         }
+        <View className='pay-tips-wrapper'>
+          <View className='pay-info'>
+            <Text className={iconClassName}></Text>
+            <Text className='pay-text'>{statusDescs && statusDescs[0].name}</Text>
+          </View>
+        </View>
         <View className='page-main'>
           <NoTitleCard>
+            <CustomerInfoComponent item={orderDetailsInfo}></CustomerInfoComponent>
+            <View className='dividing-line'></View>
             <SendCityComponent item={orderDetailsInfo}></SendCityComponent>
             <View className='dividing-line'></View>
             <ReceiveCityComponent item={orderDetailsInfo}></ReceiveCityComponent>

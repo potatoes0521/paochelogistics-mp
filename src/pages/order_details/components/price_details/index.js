@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 订单详情中发车城市、收车城市的组件
  * @Date: 2019-09-20 09:58:08
- * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 18:09:07
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-12-06 09:31:55
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -69,6 +69,10 @@ export default class PriceDetailsComponent extends Component {
         }
         <View className='details-form-item'>
           <View className='details-form-label'>应付金额:</View>
+          <View className='details-form-price'>￥{item.payPriceDesc || ''}</View>
+        </View>
+        <View className='details-form-item'>
+          <View className='details-form-label'>支付方式:</View>
           <View className='details-form-price'>￥{item.payPriceDesc || ''}</View>
         </View>
       </View>
