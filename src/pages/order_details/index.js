@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
- * @LastEditors: guorui
- * @LastEditTime: 2019-12-06 16:56:43
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-12-06 17:58:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -64,9 +64,7 @@ class OrderDetails extends Component {
     console.log(this.pageParams)
     if (this.pageParams.share_type) {
       await login.getCode(this)
-      console.log('登录休息鞋休息鞋先')
       const next = await handleShareInOrderDetails(this.pageParams, this.props.userInfo)
-      console.log('登录休息鞋休息鞋先next', next)
       if (!next) return
       this.getOrderDetails()
     } else {
@@ -144,7 +142,7 @@ class OrderDetails extends Component {
       let { type } = event.target.dataset
       // share_type = 1 发送给客户  不管谁点进来  去订单详情
       // c_id 是customerID的缩写  主要判断是不是这个用户的单 如果不是就让他进了首页
-      if (type === 'inviteCustomer') { // 分享给客户
+      if (type === 'inviteCustomer' || type === 'otherOnePayOrder') { // 分享给客户
         path = `/pages/order_details/index?share_type=1&order_code=${orderDetailsInfo.orderCode}&c_id=${orderDetailsInfo.userId}`
         title = `${inquiryOrderVO.sendCityName}发往${inquiryOrderVO.receiveCityName}的${inquiryOrderVO.carAmount}台${inquiryOrderVO.carInfo}已经发车了`
         imageUrl = `${defaultResourceImgURL}share_to_c.png`
