@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-06 11:17:37
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-06 11:20:03
+ * @LastEditTime: 2019-12-06 11:24:30
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -23,7 +23,6 @@ import { handleMoney } from '@utils/patter.js'
 import {
   getUserLocation,
   getSetting,
-  showModalAndRegister
 } from '@utils/common.js'
 import {
   getTimeDate,
@@ -42,7 +41,7 @@ import CheckBoxGroup from '@c/checkbox_group/index.js'
 // eslint-disable-next-line import/first
 import InputNumber from '@c/input_number/index.js'
 // eslint-disable-next-line import/first
-import LocationModal from './components/location_modal/index.js'
+import LocationModal from '../index/components/location_modal/index.js'
 // eslint-disable-next-line import/first
 import { serviceList, carNatureList } from '@config/text_config.js'
 // eslint-disable-next-line import/first
@@ -341,11 +340,6 @@ class Index extends Component {
       this.toast('请输入车辆信息')
       return
     }
-    let userId = this.props.userInfo.userId
-    if (!userId) {
-      showModalAndRegister()
-      return
-    }
     let sendData = {
       carAmount, // 台数
       usedType, // 车辆性质
@@ -422,10 +416,6 @@ class Index extends Component {
       })
     )
     this.submitOffer()
-  }
-  navigateToRegister(e) { 
-    e.stopPropagation()
-    showModalAndRegister()
   }
   onShareAppMessage() {
     let path = `/pages/index/index`
@@ -651,11 +641,6 @@ class Index extends Component {
               onClick={this.modalCallBack.bind(this)}
             ></LocationModal>
             : null
-        }
-        {
-          userInfo.userId ? 
-            null :
-            <View className='showRegister' onClick={this.navigateToRegister}></View>
         }
       </View>
     )
