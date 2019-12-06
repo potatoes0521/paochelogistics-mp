@@ -43,6 +43,7 @@ class _App extends Component {
       'pages/order_details/index',
       'pages/transport_state/index',
       'pages/offer_details/index',
+      'pages/push_offer/index',
       'pages/place_order/index',
       'pages/about/index',
       'pages/mine_info/index',
