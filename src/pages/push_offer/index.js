@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-06 11:17:37
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-06 11:24:30
+ * @LastEditTime: 2019-12-06 16:22:56
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -72,17 +72,13 @@ class Index extends Component {
       // eslint-disable-next-line react/no-unused-state
       // disabled: true
     }
-    this.initCity = {}
     this.pageParams = {}
     this.serviceList = serviceList
   }
   
   
   componentDidMount() { 
-    this.pageParams = this.$router.params
-    console.log('参数:' ,this.pageParams)
-    this.initData()
-    this.handleLocation()
+    this.handlePageParams(this.$router.params)
   }
   componentDidShow() { 
     if (this.state.locationModal) {
@@ -91,6 +87,20 @@ class Index extends Component {
       })
     }
     // this.handleDisabled()
+  }
+  /**
+   * 处理页面参数
+   * @param {Object} params 页面参数
+   * @return void
+   */
+  handlePageParams(params) {
+    let obj = {}
+    for (let i in params) {
+      obj[i] = decodeURIComponent(params[i])
+    }
+    this.pageParams = Object.assign({}, obj)
+    console.log('参数:', this.pageParams)
+    this.initData()
   }
   /**
    * 检查发车城市和收车城市选中状态
@@ -124,11 +134,11 @@ class Index extends Component {
       carAmount: 1, // 台数
       usedType: 1, // 车辆性质
       carInfo: '', // 车辆信息
-      receiveCityId: 0, // 收车城市ID
-      receiveCityName: '',
+      receiveCityId: this.pageParams.receiveCityId || '', // 收车城市ID
+      receiveCityName: this.pageParams.receiveCityName || '',
       receiveAddress: '', // 收车详细地址
-      sendCityId: this.initCity.cityId || '', // 发车地址ID
-      sendCityName: this.initCity.cityName || '',
+      sendCityId: this.pageParams.sendCityId || '', // 发车地址ID
+      sendCityName: this.pageParams.sendCityName || '',
       sendAddress: '', // 发车详细地址
       storePickup: 0, // 上门提车
       homeDelivery: 0, // 上门送车
@@ -174,49 +184,6 @@ class Index extends Component {
     }
     this.setState({
       sendTime: chooseTime
-    })
-  }
-  /**
-   * 获取用户地理位置信息
-   * @return void
-   */
-  handleLocation() {
-    getUserLocation().then((res) => {
-      if (!this.state.locationModal) {
-        this.setState({
-          locationModal: false
-        })
-      }
-      this.handleConvertingGPS(res.latitude, res.longitude)
-    }).catch((err) => {
-      if (err.errMsg && err.errMsg.indexOf('fail auth deny') != -1) {
-        this.handleGetSetting()
-      }
-    })
-  }
-  /**
-   * 使用腾讯地图SDK把坐标转换成地址
-   * @param {Number} latitude 纬度
-   * @param {Number} longitude 经度
-   * @return void
-   */
-  handleConvertingGPS(latitude, longitude) {
-    convertingGPS(latitude, longitude, 'ad_info').then(res => {
-      this.cityNameChangeCityID(res.city)
-      // 然后去处理一下id
-    })
-  }
-  cityNameChangeCityID(cityName) { 
-    let sendData = {
-      locationName: cityName
-    }
-    api.city.cityNameChangeCityID(sendData, this).then(res => {
-      this.initCity.cityName = cityName
-      this.initCity.cityId = res.cityId
-      this.setState({
-        sendCityName: cityName,
-        sendCityId: res.cityId
-      })
     })
   }
   /**
@@ -407,6 +374,10 @@ class Index extends Component {
       homeDelivery: props[1].checked ? 1 : 0
     })
   }
+  /**
+   * 获取用户信息
+   * @return void
+   */
   getUserInfo(e) { 
     let { userInfo } = e.target
     Actions.changeUserInfo(

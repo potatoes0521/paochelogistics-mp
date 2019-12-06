@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-06 16:07:01
+ * @LastEditTime: 2019-12-06 16:24:38
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -157,6 +157,11 @@ class Index extends Component {
       // 然后去处理一下id
     })
   }
+  /**
+   * 城市名字换城市ID
+   * @param {String} cityName 城市名字
+   * @return void
+   */
   cityNameChangeCityID(cityName) { 
     let sendData = {
       locationName: cityName
@@ -202,6 +207,10 @@ class Index extends Component {
         })
       })
   }
+  /**
+   * 获取推荐列表
+   * @return void
+   */
   getRecommendList() {
     let sendData = {}
     api.index.getRecommendList(sendData, this)
@@ -211,6 +220,11 @@ class Index extends Component {
         })
       })
   }
+  /**
+   * 跳转到webview界面
+   * @param {Object} item 参数
+   * @return void
+   */
   navigatorToWebView(item) {
     let { locationUrl } = item
     if (!locationUrl) return
@@ -224,6 +238,10 @@ class Index extends Component {
       locationModal: false
     })
   }
+  /**
+   * 提交询价 跳转到询价操作页面
+   * @return void
+   */
   submitOffer() { 
     let {
       receiveCityId,
@@ -246,6 +264,13 @@ class Index extends Component {
       sendCityId,
     }
     console.log(sendData)
+    let str = ''
+    for (let i in sendData) {
+      str += i + '=' + encodeURIComponent(sendData[i]) + '&'
+    }
+    Taro.navigateTo({
+      url: `/pages/push_offer/index?${str}`
+    })
   }
   toast(errMsg) {
     Taro.showToast({
@@ -274,7 +299,6 @@ class Index extends Component {
         return
     }
   }
-  
   getUserInfo(e) { 
     let { userInfo } = e.target
     Actions.changeUserInfo(
@@ -285,6 +309,10 @@ class Index extends Component {
     )
     this.submitOffer()
   }
+  /**
+   * 跳转到注册
+   * @return void
+   */
   navigateToRegister(e) { 
     e.stopPropagation()
     showModalAndRegister()
