@@ -3,7 +3,7 @@
  * @description: 订单item
  * @Date: 2019-09-23 14:42:25
  * @LastEditors: guorui
- * @LastEditTime: 2019-11-28 13:58:27
+ * @LastEditTime: 2019-12-06 16:24:47
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -63,6 +63,20 @@ export default class OrderItem extends Component {
         'order-over': item.isActive !== 1
       }
     )
+    const fontClassName = classNames(
+      'price-wrapper',
+      {
+        'font-style': item.status === 40 || item.status === 30
+      }
+    )
+    const priceClassName = classNames(
+      'price-wrapper',
+      'price-wrapper-lang',
+      {
+        'price-style': item.status === 40,
+        'font-style': item.status === 30
+      }
+    )
     const buttonsList = item.buttons && item.buttons.map((itemList) => {
       if (itemList.key == 'inviteCustomer') {
         return (
@@ -104,7 +118,7 @@ export default class OrderItem extends Component {
                 }
               </Text> */}
             </View>
-            <View className='price-wrapper price-state'>{ item.statusDesc || '' }</View>
+            <View className={fontClassName}>{ item.statusDesc || '' }</View>
           </View>
           <View className='list-item list-item-msg'>
             <View className='order-msg'>
@@ -116,7 +130,7 @@ export default class OrderItem extends Component {
                 台
               </Text>
             </View>
-            <View className='price-wrapper price-wrapper-lang'>¥{ item.payPrice ? item.payPriceDesc : '' }</View>
+            <View className={priceClassName}>¥{ item.payPrice ? item.payPriceDesc : '' }</View>
           </View>
         </View>
         <View className='btn-group'>

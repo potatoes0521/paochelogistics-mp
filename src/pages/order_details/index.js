@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-03 15:05:09
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-12-06 16:56:43
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -22,12 +22,15 @@ import ReceiveCityComponent from './components/receive_city/index.js'
 import ServiceDetailsComponent from './components/service_details/index.js'
 import PriceDetailsComponent from './components/price_details/index.js'
 import FooterDetailsComponent from './components/footer_details/index.js'
+import CustomerInfoComponent from './components/customer_info/index.js'
 // eslint-disable-next-line import/first
 import BargainBox from '@c/bargain/index.js' // 砍价过期 弹框 
 // eslint-disable-next-line import/first
 import api from '@api/index.js'
 // eslint-disable-next-line import/first
 import login from '@utils/login.js'
+// eslint-disable-next-line import/first
+import classNames from 'classnames'
 // eslint-disable-next-line import/first
 import { handleShareInOrderDetails } from '@utils/handle_share.js'
 // eslint-disable-next-line import/first
@@ -207,6 +210,18 @@ class OrderDetails extends Component {
       showTips,
       // canBargain
     } = this.state
+    const unpaid = orderDetailsInfo.statusDescs && orderDetailsInfo.statusDescs.some(item => item.key === 'unpaidOrder')
+    const waiting = orderDetailsInfo.statusDescs && orderDetailsInfo.statusDescs.some(item => item.key === 'waitingPickUp')
+    const finish = orderDetailsInfo.statusDescs && orderDetailsInfo.statusDescs.some(item => item.key === 'finishOrder')
+    const cancel = orderDetailsInfo.statusDescs && orderDetailsInfo.statusDescs.some(item => item.key === 'cancelOrder')
+    const iconClassName = classNames(
+      'iconfont pay-icon', {
+        'icondaizhifu1': unpaid,
+        'icondaizhifu': waiting,
+        'iconyiwancheng': finish,
+        'iconyiquxiao': cancel
+      }
+    )
     return (
       <View className='page-wrapper'>
         {
@@ -244,7 +259,15 @@ class OrderDetails extends Component {
             : null
         }
         <View className='page-main'>
+          <View className='pay-tips-wrapper'>
+            <View className='pay-info'>
+              <Text className={iconClassName}></Text>
+              <Text className='pay-text'>{orderDetailsInfo.statusDescs && orderDetailsInfo.statusDescs[0].name}</Text>
+            </View>
+          </View>
           <NoTitleCard>
+            <CustomerInfoComponent item={orderDetailsInfo}></CustomerInfoComponent>
+            <View className='dividing-line'></View>
             <SendCityComponent item={orderDetailsInfo}></SendCityComponent>
             <View className='dividing-line'></View>
             <ReceiveCityComponent item={orderDetailsInfo}></ReceiveCityComponent>
@@ -258,9 +281,13 @@ class OrderDetails extends Component {
             ></PriceDetailsComponent>
           </NoTitleCard>
         </View>
-        <View className='page-footer'>
-          <FooterDetailsComponent item={orderDetailsInfo}></FooterDetailsComponent>
-        </View>
+        {
+          orderDetailsInfo.buttons && orderDetailsInfo.buttons.length ?
+            <View className='page-footer'>
+              <FooterDetailsComponent item={orderDetailsInfo}></FooterDetailsComponent>
+            </View>
+            : null
+        }
       </View>
     )
   }

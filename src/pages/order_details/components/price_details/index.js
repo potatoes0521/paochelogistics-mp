@@ -1,9 +1,9 @@
 /*
  * @Author: guorui
- * @description: 订单详情中发车城市、收车城市的组件
+ * @description: 订单详情报价、 金额、 支付方式 
  * @Date: 2019-09-20 09:58:08
- * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 18:09:07
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-12-06 14:00:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -15,6 +15,7 @@ import {
   Text
 } from '@tarojs/components'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import '../../../../assets/icon_font/icon.scss'
 import './index.styl'
 
@@ -31,6 +32,12 @@ export default class PriceDetailsComponent extends Component {
       item,
       fail
     } = this.props
+    const payTypeClassName = classNames(
+      'number',
+      {
+        'fail-price': item.payType === '--'
+      }
+    ) 
     return (
       <View className='details-form-wrapper'>
         <View className='details-form-item'>
@@ -70,6 +77,10 @@ export default class PriceDetailsComponent extends Component {
         <View className='details-form-item'>
           <View className='details-form-label'>应付金额:</View>
           <View className='details-form-price'>￥{item.payPriceDesc || ''}</View>
+        </View>
+        <View className='details-form-item'>
+          <View className='details-form-label'>支付方式:</View>
+          <View className={payTypeClassName}>{item.payType || ''}</View>
         </View>
       </View>
     )
