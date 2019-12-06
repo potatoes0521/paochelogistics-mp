@@ -57,7 +57,8 @@ class _App extends Component {
       'pages/pay_success/index',
       'pages/choose_item/index',
       'pages/remark/index',
-      'pages/share_bargain/index'
+      'pages/share_bargain/index',
+      'pages/webview/index'
     ],
     window: {
       backgroundTextStyle: 'light',

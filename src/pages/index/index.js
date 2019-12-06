@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-06 16:04:36
+ * @LastEditTime: 2019-12-06 16:07:01
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -210,6 +210,14 @@ class Index extends Component {
           recommendList: res
         })
       })
+  }
+  navigatorToWebView(item) {
+    let { locationUrl } = item
+    if (!locationUrl) return
+    locationUrl = encodeURIComponent(locationUrl)
+    Taro.navigateTo({
+      url: `/pages/webview/index?url=${locationUrl}`
+    })
   }
   modalCallBack() {
     this.setState({
