@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: guorui
- * @LastEditTime: 2019-12-06 16:56:43
+ * @LastEditTime: 2019-12-06 17:47:15
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -29,8 +29,6 @@ import BargainBox from '@c/bargain/index.js' // 砍价过期 弹框
 import api from '@api/index.js'
 // eslint-disable-next-line import/first
 import login from '@utils/login.js'
-// eslint-disable-next-line import/first
-import classNames from 'classnames'
 // eslint-disable-next-line import/first
 import { handleShareInOrderDetails } from '@utils/handle_share.js'
 // eslint-disable-next-line import/first
@@ -210,18 +208,6 @@ class OrderDetails extends Component {
       showTips,
       // canBargain
     } = this.state
-    const unpaid = orderDetailsInfo.statusDescs && orderDetailsInfo.statusDescs.some(item => item.key === 'unpaidOrder')
-    const waiting = orderDetailsInfo.statusDescs && orderDetailsInfo.statusDescs.some(item => item.key === 'waitingPickUp')
-    const finish = orderDetailsInfo.statusDescs && orderDetailsInfo.statusDescs.some(item => item.key === 'finishOrder')
-    const cancel = orderDetailsInfo.statusDescs && orderDetailsInfo.statusDescs.some(item => item.key === 'cancelOrder')
-    const iconClassName = classNames(
-      'iconfont pay-icon', {
-        'icondaizhifu1': unpaid,
-        'icondaizhifu': waiting,
-        'iconyiwancheng': finish,
-        'iconyiquxiao': cancel
-      }
-    )
     return (
       <View className='page-wrapper'>
         {
@@ -260,10 +246,7 @@ class OrderDetails extends Component {
         }
         <View className='page-main'>
           <View className='pay-tips-wrapper'>
-            <View className='pay-info'>
-              <Text className={iconClassName}></Text>
-              <Text className='pay-text'>{orderDetailsInfo.statusDescs && orderDetailsInfo.statusDescs[0].name}</Text>
-            </View>
+            <Text className='pay-text'>{ orderDetailsInfo.statusDesc || '' }</Text>
           </View>
           <NoTitleCard>
             <CustomerInfoComponent item={orderDetailsInfo}></CustomerInfoComponent>
