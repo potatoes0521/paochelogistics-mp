@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-06 11:17:37
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-06 16:22:56
+ * @LastEditTime: 2019-12-06 16:26:32
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -18,12 +18,7 @@ import {
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import classNames from 'classnames'
-import { convertingGPS } from '@utils/location.js'
 import { handleMoney } from '@utils/patter.js'
-import {
-  getUserLocation,
-  getSetting,
-} from '@utils/common.js'
 import {
   getTimeDate,
   timestampOfDay,
@@ -40,8 +35,6 @@ import RadioGroups from '@c/radio_group/index.js'
 import CheckBoxGroup from '@c/checkbox_group/index.js'
 // eslint-disable-next-line import/first
 import InputNumber from '@c/input_number/index.js'
-// eslint-disable-next-line import/first
-import LocationModal from '../index/components/location_modal/index.js'
 // eslint-disable-next-line import/first
 import { serviceList, carNatureList } from '@config/text_config.js'
 // eslint-disable-next-line import/first
@@ -67,7 +60,6 @@ class Index extends Component {
       storePickup: 0,  // 上门提车
       homeDelivery: 0, // 上门送车
       sendTimerInit: '',
-      locationModal: false,
       assessedPrice: '' //驿站估价
       // eslint-disable-next-line react/no-unused-state
       // disabled: true
@@ -79,14 +71,6 @@ class Index extends Component {
   
   componentDidMount() { 
     this.handlePageParams(this.$router.params)
-  }
-  componentDidShow() { 
-    if (this.state.locationModal) {
-      this.setState({
-        locationModal: true
-      })
-    }
-    // this.handleDisabled()
   }
   /**
    * 处理页面参数
@@ -184,31 +168,6 @@ class Index extends Component {
     }
     this.setState({
       sendTime: chooseTime
-    })
-  }
-  /**
-   * 获取用户设置信息
-   * @return void
-   */
-  handleGetSetting() {
-    getSetting().then(res => {
-      if (!res.authSetting['scope.userLocation']) {
-        this.setState({
-          locationModal: true
-        })
-      } else {
-        this.setState({
-          locationModal: false
-        })
-      }
-    }).catch((err) => {
-      console.log(err, ' get setting ')
-    })
-  }
-
-  modalCallBack() {
-    this.setState({
-      locationModal: false
     })
   }
   /**
@@ -414,7 +373,6 @@ class Index extends Component {
       // storePickup, // 上门提车
       // homeDelivery, // 上门送车
       sendTimerInit,
-      locationModal,
       assessedPrice,
       // disabled
     } = this.state
@@ -605,13 +563,6 @@ class Index extends Component {
             <Button type='button' openType='getUserInfo' lang='zh_CN' onGetUserInfo={this.getUserInfo} className='submit-btn'>立即询价</Button>
             :
             <Button type='button' className='submit-btn' onClick={this.submitOffer}>立即询价</Button>
-        }
-        {
-          locationModal ? 
-            <LocationModal
-              onClick={this.modalCallBack.bind(this)}
-            ></LocationModal>
-            : null
         }
       </View>
     )
