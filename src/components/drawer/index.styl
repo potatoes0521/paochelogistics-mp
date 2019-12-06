@@ -1,0 +1,55 @@
+.drawer
+  position relative
+  z-index 900
+
+.drawer-mask 
+  position fixed
+  left 0
+  right 0
+  top 0
+  bottom 0
+  background-color rgba(0, 0, 0, 0.4)
+  opacity 0
+  -webkit-transition opacity 300ms cubic-bezier(0.36, 0.66, 0.04, 1)
+  -o-transition opacity 300ms cubic-bezier(0.36, 0.66, 0.04, 1)
+  transition opacity 300ms cubic-bezier(0.36, 0.66, 0.04, 1) 
+
+.drawer-content 
+  position fixed
+  top 0
+  bottom 0
+  width 570px
+  text-align left
+  background-color #FFF
+  opacity 0
+  overflow-y auto
+  -webkit-overflow-scrolling touch
+  z-index 1 
+
+.drawer-left .drawer-content 
+  left 0
+  transform translateX(-100%) 
+
+.drawer-right .drawer-content
+  right 0
+  transform translateX(100%)
+
+.drawer-show .drawer-content
+  opacity 1
+  transform translateX(0%) 
+
+// @-webkit-keyframes anim-show
+//   100% 
+//     opacity 1 
+
+@keyframes anim-show
+  100%
+    opacity 1 
+
+// @-webkit-keyframes anim-hide
+//   100%
+//     opacity 0 
+
+@keyframes anim-hide
+  100%
+    opacity 0

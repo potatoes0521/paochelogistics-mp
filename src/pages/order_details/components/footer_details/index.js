@@ -3,7 +3,7 @@
  * @description: 订单详情--底部详情 订单状态status 10 待支付 20 待交车 30 已取消 40 已完成
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 18:52:56
+ * @LastEditTime: 2019-12-06 17:56:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -73,6 +73,8 @@ class FooterDetailsComponent extends Component {
       case 'payOrder':
         this.paymentButton()
         break;
+      // case 'otherOnePayOrder': // 请别人代付
+      //   break;
       // case 'shareOrder':
       //   this.shareBargain()
       //   break;
@@ -89,7 +91,18 @@ class FooterDetailsComponent extends Component {
         return (
           <Button
             openType='share'
-            data-type='inviteCustomer'
+            data-type='c'
+            data-item={item}
+            className={itemList.key}
+            key={key}
+          >{itemList.name}</Button>
+        )
+      } else if (itemList.key == 'otherOnePayOrder') {
+        // 请别人代付
+        return (
+          <Button
+            openType='share'
+            data-type='otherOnePayOrder'
             data-item={item}
             className={itemList.key}
             key={key}
@@ -118,42 +131,6 @@ class FooterDetailsComponent extends Component {
               buttonsList
             }
           </View>
-          {/* <View className='status-wrapper'>
-            {
-              (item.logisticsDetailsDesc) ?
-                <View className='share-wrapper'>
-                  <View className='collect-button buttons' onClick={this.transportStatus}>查看运输状态</View>
-                </View>
-                : null
-            }
-            {
-              (userInfo.userType === 0) ?
-                <View className='share-wrapper'>
-                  <View className='customer-button buttons' onClick={this.shareCustomer}>分享给客户</View>
-                </View>
-                :
-                null
-            }
-            {
-              (item.status === 10 && userInfo.userType !== 0) ?
-                <View className={payButtonClassName} onClick={this.paymentButton}>立即支付
-                  {
-                    (item.promotionsPrice) ?
-                      <Text className='reduce-price'>(立减{item.promotionsPrice}元)</Text>
-                      : null
-                  }
-                </View>
-                : null
-            }
-            {
-              (item.shareOutDesc && userInfo.userType !== 0) ?
-                <View className='share-wrapper'>
-                  <Button className='share-button buttons' onClick={this.shareBargain} openType='share'>分享砍价</Button>
-                </View>
-                : null
-            }
-            
-          </View> */}
         </OrderFooterCard>
       </View>
     )
