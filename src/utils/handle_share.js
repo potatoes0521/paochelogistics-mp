@@ -3,7 +3,7 @@
  * @description: 处理进入小程序的分享
  * @Date: 2019-11-06 12:25:04
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-06 17:50:42
+ * @LastEditTime: 2019-12-06 18:11:11
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -44,7 +44,7 @@ export const handleShare = (pageParams, userInfo) => {
 */
 export const handleShareInOrderDetails = (pageParams, userInfo) => {
   if (!pageParams.share_type) return // 没有页面参数返回
-  if (pageParams.share_type === '1' || pageParams.share_type === '2') {
+  if (pageParams.share_type === '1' || pageParams.share_type === '2' || pageParams.share_type === '3') {
     console.log(pageParams)
     // if (+userInfo.userId === +pageParams.c_id) { // 当前用户是订单客户
     //   console.log(pageParams, "当前用户")
