@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
- * @LastEditors: guorui
- * @LastEditTime: 2019-12-06 17:47:15
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-12-06 18:12:55
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -62,11 +62,13 @@ class OrderDetails extends Component {
     console.log(this.pageParams)
     if (this.pageParams.share_type) {
       await login.getCode(this)
-      console.log('登录休息鞋休息鞋先')
       const next = await handleShareInOrderDetails(this.pageParams, this.props.userInfo)
-      console.log('登录休息鞋休息鞋先next', next)
       if (!next) return
-      this.getOrderDetails()
+      if (this.pageParams.share_type !== '3') {
+        this.getOrderDetails()
+      } else {
+        // 代付详情
+      }
     } else {
       this.getOrderDetails()
     }
@@ -137,27 +139,35 @@ class OrderDetails extends Component {
     let path = `/pages/index/index`
     let title = `欢迎您进入跑车物流~`
     let imageUrl = `${defaultResourceImgURL}share_mp.png`
+    const shareMsg = `order_code=${orderDetailsInfo.orderCode}&c_id=${orderDetailsInfo.userId}`
+    const shareTitle = `${inquiryOrderVO.sendCityName}发往${inquiryOrderVO.receiveCityName}的${inquiryOrderVO.carAmount}台${inquiryOrderVO.carInfo}已经发车了`
     if (event.from === 'button') {
       // 来自页面内转发按钮
       let { type } = event.target.dataset
       // share_type = 1 发送给客户  不管谁点进来  去订单详情
       // c_id 是customerID的缩写  主要判断是不是这个用户的单 如果不是就让他进了首页
       if (type === 'inviteCustomer') { // 分享给客户
-        path = `/pages/order_details/index?share_type=1&order_code=${orderDetailsInfo.orderCode}&c_id=${orderDetailsInfo.userId}`
-        title = `${inquiryOrderVO.sendCityName}发往${inquiryOrderVO.receiveCityName}的${inquiryOrderVO.carAmount}台${inquiryOrderVO.carInfo}已经发车了`
+        path = `/pages/order_details/index?share_type=1&${shareMsg}`
+        title = `${shareTitle}`
         imageUrl = `${defaultResourceImgURL}share_to_c.png`
       }
       // share_type = 2 分享砍价  本人去订单详情  其他人去砍价
       if (type === 'shareOrder') { // 分享给客户
-        path = `/pages/share_bargain/index?share_type=2&order_code=${orderDetailsInfo.orderCode}&c_id=${orderDetailsInfo.userId}`
+        path = `/pages/share_bargain/index?share_type=2&${shareMsg}`
         title = `我要运车,需要大侠助我一臂之力!!`
         imageUrl = `${defaultResourceImgURL}share_to_bargain.png`
+      }
+      // share_type = 3 找人代付
+      if (type === 'otherOnePayOrder') { // 分享给客户
+        path = `/pages/order_details/index?share_type=3&${shareMsg}`
+        title = `${shareTitle}`
+        imageUrl = `${defaultResourceImgURL}share_to_c.png`
       }
     }
     if (event.from === 'menu') {
       // if (userInfo.userType === 0) { // 分享给客户
-        path = `/pages/order_details/index?share_type=1&order_code=${orderDetailsInfo.orderCode}&c_id=${orderDetailsInfo.userId}`
-        title = `${inquiryOrderVO.sendCityName}发往${inquiryOrderVO.receiveCityName}的${inquiryOrderVO.carAmount}台${inquiryOrderVO.carInfo}已经发车了`
+        path = `/pages/order_details/index?share_type=1&${shareMsg}`
+        title = `${shareTitle}`
         imageUrl = `${defaultResourceImgURL}share_to_c.png`
       // }
       // share_type = 2 分享砍价  本人去订单详情  其他人去砍价

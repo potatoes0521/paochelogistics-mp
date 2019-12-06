@@ -3,7 +3,7 @@
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-21 15:11:38
+ * @LastEditTime: 2019-12-06 17:34:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,14 +14,19 @@ import {
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import { defaultResourceImgURL } from '@config/request_config.js'
-import Tabs from '@c/tabs/index.js'
+import TabsCanSelect from '@c/tabs_select/index.js'
 import OrderItem from './components/order_item/index.js'
+// eslint-disable-next-line import/first
+import Screen from '@c/screen/index.js'
+// eslint-disable-next-line import/first
+import Drawer from '@c/drawer/index.js'
 // eslint-disable-next-line import/first
 import NoData from '@c/no_data/index.js'
 // eslint-disable-next-line import/first
 import { orderTabs } from '@config/text_config.js'
 // eslint-disable-next-line import/first
 import api from '@api/index.js'
+
 import './index.styl'
 
 class Order extends Component {
@@ -29,17 +34,26 @@ class Order extends Component {
     super(props)
     this.state = {
       current: 0,
-      orderList: [] // 全部
+      orderList: [], // 全部
+      searchDrawerShow: false, // 控制左滑的抽屉显示
+      sendCityId: '',
+      sendCityName: '',
+      receiveCityId: '',
+      receiveCityName: ''
     }
     this.orderPage = 1
     this.orderFlag = false
     this.status = 10
+    this.sendCityId = ''
+    this.sendCityName = ''
+    this.receiveCityId = ''
+    this.receiveCityName = ''
   }
   
   componentDidMount() {
     let { userInfo } = this.props
     if (userInfo.userId) {
-      this.getOrderList(this.status, this.orderPage)
+      this.getOrderList({})
     }
   }
   /**
@@ -49,11 +63,19 @@ class Order extends Component {
    * @param {Number} pageSize=10 条数
    * @return void
    */
-  getOrderList(status = '', pageNum = 1, pageSize = 10) {
+  getOrderList({
+    status = this.status,
+    pageNum = this.orderPage,
+    pageSize = 10,
+    sendCityId = this.sendCityId,
+    receiveCityId = this.receiveCityId
+  }) {
     let sendData = {
       status,
       pageNum,
-      pageSize
+      pageSize,
+      sendCityId,
+      receiveCityId
     }
     api.order.getOrderList(sendData, this).then(res => {
       if (res && res.length < pageSize) {
@@ -74,19 +96,30 @@ class Order extends Component {
   }
   /**
    * 处理tabs点击事件
+   * @param {String} type 点的是tab还是筛选
    * @param {Number} value 参数描述
    * @return void
    */
-  handleClick(value) {
-    this.orderPage = 1
-    this.orderFlag = false
-    this.setState({
-      current: value,
-      orderList: []
-    }, () => {
-      this.handleRequest()
-    })
+  handleTabsClick(type, value) {
+    if (type === 'tabs') {
+      this.orderPage = 1
+      this.orderFlag = false
+      this.setState({
+        current: value,
+        orderList: []
+      }, () => {
+        this.handleRequest()
+      })
+    } else {
+      let {
+        searchDrawerShow
+      } = this.state
+      this.setState({
+        searchDrawerShow: !searchDrawerShow
+      })
+    }
   }
+
   handleRequest() { 
     //  10 待支付 20 已支付 30 已取消
     let { current } = this.state
@@ -98,7 +131,53 @@ class Order extends Component {
     } else if (current === 2) {
       this.status = ''
     }
-    this.getOrderList(this.status, this.orderPage)
+    this.getOrderList({})
+  }
+  /**
+   * 抽屉关闭函数
+   * @return void
+   */
+  drawerClose() {
+    this.setState({
+      searchDrawerShow: false
+    })
+  }
+  handleSelectClick(type) {
+    this.offerFlag = true
+    this.offerPage = 1
+    if (type === 'submit') {
+      // 提交
+      this.sendCityId = this.state.sendCityId
+      this.sendCityName = this.state.sendCityName
+      this.receiveCityId = this.state.receiveCityId
+      this.receiveCityName = this.state.receiveCityName
+      this.getOrderList({
+        pageNum: this.offerPage,
+        sendCityId: this.sendCityId,
+        receiveCityId: this.receiveCityId,
+      })
+    } else {
+      // 重置
+      this.sendCityId = ''
+      this.sendCityName = ''
+      this.receiveCityId = ''
+      this.receiveCityName = ''
+      this.setState({
+        sendCityId: '',
+        sendCityName: '',
+        receiveCityId: '',
+        receiveCityName: ''
+      }, () => {
+        this.getOrderList({
+          pageNum: this.offerPage,
+          sendCityId: this.sendCityId,
+          receiveCityId: this.receiveCityId
+        })
+      })
+    }
+    this.setState({
+      searchDrawerShow: false
+    })
   }
   /**
    * 下拉刷新
@@ -170,7 +249,10 @@ class Order extends Component {
   render() {
     let {
       current,
-      orderList
+      orderList,
+      searchDrawerShow,
+      sendCityName,
+      receiveCityName
     } = this.state
     let { userInfo } =  this.props
     const orderItemList = orderList.map(item => {
@@ -189,11 +271,12 @@ class Order extends Component {
           userInfo.userId ? 
             <Block>
               <View className='tabs-wrapper'>
-                <Tabs
+                <TabsCanSelect
                   activeIndex={current}
                   options={orderTabs}
-                  onClick={this.handleClick.bind(this)}
-                ></Tabs>
+                  onClick={this.handleTabsClick.bind(this)}
+                >
+                </TabsCanSelect>
               </View>
               <View className='swiper-wrapper'>
                 {
@@ -203,6 +286,18 @@ class Order extends Component {
                     <NoData pageType='order'></NoData>
                 }
               </View>
+              <Drawer
+                show={searchDrawerShow}
+                mask
+                right
+                onClose={this.drawerClose.bind(this)}
+              >
+                <Screen
+                  sendCityName={sendCityName}
+                  receiveCityName={receiveCityName}
+                  onClick={this.handleSelectClick.bind(this)}
+                ></Screen>
+              </Drawer>
             </Block>
             :
             <NoData pageType='login'></NoData>
