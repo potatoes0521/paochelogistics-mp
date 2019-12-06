@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: guorui
- * @LastEditTime: 2019-12-06 11:07:57
+ * @LastEditTime: 2019-12-06 15:02:26
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -88,8 +88,10 @@ class OrderDetails extends Component {
     }
     api.order.getOrderDetails(sendData, this)
       .then(res => {
+        console.log(res, 'res')
         this.setState({
           orderDetailsInfo: res,
+          statusDescs: res.statusDescs,
           tipContent: res.tipContent,
           // canBargain: res.canBargain
         })
@@ -260,13 +262,13 @@ class OrderDetails extends Component {
             ></BargainBox>
             : null
         }
-        <View className='pay-tips-wrapper'>
-          <View className='pay-info'>
-            <Text className={iconClassName}></Text>
-            <Text className='pay-text'>{statusDescs && statusDescs[0].name}</Text>
-          </View>
-        </View>
         <View className='page-main'>
+          <View className='pay-tips-wrapper'>
+            <View className='pay-info'>
+              <Text className={iconClassName}></Text>
+              <Text className='pay-text'>{statusDescs && statusDescs[0].name}</Text>
+            </View>
+          </View>
           <NoTitleCard>
             <CustomerInfoComponent item={orderDetailsInfo}></CustomerInfoComponent>
             <View className='dividing-line'></View>
