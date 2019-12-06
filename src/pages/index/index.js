@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-06 11:33:15
+ * @LastEditTime: 2019-12-06 16:04:36
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,7 +12,10 @@ import Taro, { Component } from '@tarojs/taro'
 import {
   View,
   Text,
-  Button
+  Button,
+  Swiper,
+  SwiperItem,
+  Image
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import classNames from 'classnames'
@@ -48,6 +51,8 @@ class Index extends Component {
       sendCityId: 0,      // 发车地址ID
       sendCityName: '',
       locationModal: false,
+      bannerList: [],
+      recommendList: []
     }
     this.initCity = {}
     this.pageParams = {}
@@ -63,6 +68,8 @@ class Index extends Component {
     if (this.pageParams.share_type) {
       this.handleShare()
     }
+    this.getBannerList()
+    this.getRecommendList()
     this.handleLocation()
     this.handleWXUserInfo()
   }
@@ -182,7 +189,28 @@ class Index extends Component {
       console.log(err, ' get setting ')
     })
   }
-
+  /**
+   * 获取banner数据
+   * @return void
+   */
+  getBannerList() {
+    let sendData = {}
+    api.index.getBannerList(sendData, this)
+      .then(res => {
+        this.setState({
+          bannerList: res
+        })
+      })
+  }
+  getRecommendList() {
+    let sendData = {}
+    api.index.getRecommendList(sendData, this)
+      .then(res => {
+        this.setState({
+          recommendList: res
+        })
+      })
+  }
   modalCallBack() {
     this.setState({
       locationModal: false
@@ -201,11 +229,6 @@ class Index extends Component {
     }
     if (!receiveCityName) {
       this.toast('请选择收车城市')
-      return
-    }
-    let userId = this.props.userInfo.userId
-    if (!userId) {
-      showModalAndRegister()
       return
     }
     let sendData = {
@@ -276,58 +299,121 @@ class Index extends Component {
       receiveCityName,
       sendCityName,
       locationModal,
+      bannerList,
+      recommendList
     } = this.state
     let { userInfo } = this.props
-    return (
-      <View className='index-wrapper'>
-          {/* 发车地址 */}
-          <View className='from-item'>
-            <View className='label-wrapper' onClick={()=>this.chooseCity('choose_start_city')}>
-              <View className='form-required'>
-                <View className='required'>*</View>
-                <View className='from-label'>发车地点</View>
-              </View>
-              <View className='from-right'>
-                <Text
-                  className={classNames({
-                    'from-disabled-text': !sendCityName
-                  })}
-                >
-                  {
-                    sendCityName ? sendCityName : '请选择发车城市'
-                  }
-                </Text>
-                <Text className='iconfont iconxiangyouxuanzejiantoux icon-right-style'></Text>
-              </View>
-            </View>
-        </View>
-        {/* 收车地址 */}
-        <View className='from-item'>
-          <View className='label-wrapper' onClick={()=>this.chooseCity('choose_target_city')}>
-            <View className='form-required'>
-              <View className='required'>*</View>
-              <View className='from-label'>收车地点</View>
-            </View>
-            <View className='from-right'>
-              <Text
-                className={classNames({
-                  'from-disabled-text': !receiveCityName.length
-                })}
-              >
-                {
-                  receiveCityName ? receiveCityName : '请选择收车城市'
-                }
-              </Text>
-              <Text className='iconfont iconxiangyouxuanzejiantoux icon-right-style'></Text>
-            </View>
+    const bannerListRender = bannerList.map(item => {
+      const key = item.id
+      return (
+        <SwiperItem key={key}>
+          <View className='banner-item'>
+            <Image
+              className='banner-image'
+              src={item.img}
+              onClick={this.navigatorToWebView.bind(this, item)}
+            ></Image>
+          </View>
+        </SwiperItem>
+      )
+    })
+    const recommendListRender = recommendList.map(item => {
+      const key = item.hotlineId
+      return (
+        <View key={key} className='recommend-item'>
+          <View className='recommend-city'>
+            <Text>{item.sendCityName}</Text>
+            <Text className='iconfont iconjiantou_qiehuanyou icon-right-tou'></Text>
+            <Text>{item.receiveCityName}</Text>
+          </View>
+          <View className='predict'>
+            <Text>预估</Text>
+            <Text className='weight-text'>
+              ¥{item.linePrice}/台
+            </Text>
           </View>
         </View>
+      )
+    })
+    return (
+      <View className='index-wrapper'>
         {
-          !userInfo.nickName ? 
-            <Button type='button' openType='getUserInfo' lang='zh_CN' onGetUserInfo={this.getUserInfo} className='submit-btn'>立即询价</Button>
-            :
-            <Button type='button' className='submit-btn' onClick={this.submitOffer}>立即询价</Button>
+          bannerList.length && (
+            <View className='swiper-wrapper'>
+              <Swiper
+                className='swiper'
+                autoplay
+                indicatorDots
+                circular
+                indicatorActiveColor='#ffffff'
+                interval='3000'
+              >
+                {
+                  bannerListRender
+                }
+              </Swiper>
+            </View>
+          )
         }
+        <View className='offer-wrapper'>
+          <View className='offer-form'>
+            <View className='offer-form-top'>
+              {/* 发车地址 */}
+              <View className='from-item'>
+                <View className='label-wrapper' onClick={()=>this.chooseCity('choose_start_city')}>
+                  <View className='form-required'>
+                    <View className='required'>*</View>
+                    <View className='from-label'>发车地点</View>
+                  </View>
+                  <View className='from-right'>
+                    <Text
+                      className={classNames({
+                        'from-disabled-text': !sendCityName
+                      })}
+                    >
+                      {
+                        sendCityName ? sendCityName : '请选择发车城市'
+                      }
+                    </Text>
+                    <Text className='iconfont iconxiangyouxuanzejiantoux icon-right-style'></Text>
+                  </View>
+                </View>
+              </View>
+              {/* 收车地址 */}
+              <View className='from-item'>
+                <View className='label-wrapper' onClick={()=>this.chooseCity('choose_target_city')}>
+                <View className='form-required'>
+                  <View className='required'>*</View>
+                  <View className='from-label'>收车地点</View>
+                </View>
+                <View className='from-right'>
+                  <Text
+                    className={classNames({
+                      'from-disabled-text': !receiveCityName.length
+                    })}
+                  >
+                    {
+                      receiveCityName ? receiveCityName : '请选择收车城市'
+                    }
+                  </Text>
+                  <Text className='iconfont iconxiangyouxuanzejiantoux icon-right-style'></Text>
+                </View>
+              </View>
+              </View>
+            </View>
+            {
+              !userInfo.nickName ? 
+                <Button type='button' openType='getUserInfo' lang='zh_CN' onGetUserInfo={this.getUserInfo} className='submit-btn'>立即询价</Button>
+                :
+                <Button type='button' className='submit-btn' onClick={this.submitOffer}>立即询价</Button>
+            }
+          </View>
+        </View>
+        <View className='recommend-list'>
+          {
+            recommendListRender
+          }
+        </View>
         {
           locationModal ? 
             <LocationModal
