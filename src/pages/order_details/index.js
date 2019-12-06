@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-21 15:10:15
+ * @LastEditTime: 2019-12-03 15:05:09
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -130,7 +130,7 @@ class OrderDetails extends Component {
    * @return void
    */
   onShareAppMessage(event) {
-    let { userInfo } = this.props
+    // let { userInfo } = this.props
     let { orderDetailsInfo } = this.state
     let { inquiryOrderVO } = orderDetailsInfo
     let path = `/pages/index/index`
@@ -154,17 +154,17 @@ class OrderDetails extends Component {
       }
     }
     if (event.from === 'menu') {
-      if (userInfo.userType === 0) { // 分享给客户
+      // if (userInfo.userType === 0) { // 分享给客户
         path = `/pages/order_details/index?share_type=1&order_code=${orderDetailsInfo.orderCode}&c_id=${orderDetailsInfo.userId}`
         title = `${inquiryOrderVO.sendCityName}发往${inquiryOrderVO.receiveCityName}的${inquiryOrderVO.carAmount}台${inquiryOrderVO.carInfo}已经发车了`
         imageUrl = `${defaultResourceImgURL}share_to_c.png`
-      }
+      // }
       // share_type = 2 分享砍价  本人去订单详情  其他人去砍价
-      if (userInfo.userType === 2 || userInfo.userType === 1) { // 分享给客户
-        path = `/pages/share_bargain/index?share_type=2&order_code=${orderDetailsInfo.orderCode}&c_id=${orderDetailsInfo.userId}`
-        title = `我要运车,需要大侠助我一臂之力!!!`
-        imageUrl = `${defaultResourceImgURL}share_to_bargain.png`
-      }
+      // if (userInfo.userType === 2 || userInfo.userType === 1) { // 分享给客户
+      //   path = `/pages/share_bargain/index?share_type=2&order_code=${orderDetailsInfo.orderCode}&c_id=${orderDetailsInfo.userId}`
+      //   title = `我要运车,需要大侠助我一臂之力!!!`
+      //   imageUrl = `${defaultResourceImgURL}share_to_bargain.png`
+      // }
     }
     return {
       title,

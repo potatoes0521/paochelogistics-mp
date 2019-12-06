@@ -3,7 +3,7 @@
  * @description: 分享砍价
  * @Date: 2019-11-05 13:24:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-21 15:12:18
+ * @LastEditTime: 2019-12-03 18:08:27
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -83,9 +83,11 @@ class ShareBargain extends Component {
         url: `/pages/order_details/index?${str}`
       })
     }
-    this.getBargainDetails()
     this.getSwiperHeight()
     this.getStrategy()
+    setTimeout(() => {
+      this.getBargainDetails()
+    }, 100)
   }
   
   componentWillUnmount() {
