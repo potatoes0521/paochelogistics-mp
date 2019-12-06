@@ -6,7 +6,7 @@
  * 
  * @Date: 2019-08-30 15:53:51
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-02 09:41:58
+ * @LastEditTime: 2019-12-06 16:09:50
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -190,18 +190,24 @@ class ChooseCity extends Component {
       filterCityList
     } = this.state
     
-    const hotCityList = hotCity.map(city => (
-      <View className='hot-item' dataCity={city} key={city.cityId}>
-        <View className='hot-item-btn' dataCity={city}>{city.cityName}</View>
-      </View>
-    ))
+    const hotCityList = hotCity.map(city => {
+      const key = city.cityId
+      return (
+        <View className='hot-item' dataCity={city} key={key}>
+          <View className='hot-item-btn' dataCity={city}>{city.cityName}</View>
+        </View>
+      )
+    })
     
-    const filterList = filterCityList.map(city => (
-      <View className='search-item' dataCity={city} key={city.cityId}>
-        <View className='search-item-name'>{city.cityName}</View>
-        <Text className='iconfont iconxiangyouxuanzejiantoux icon-style-right'></Text>
-      </View>
-    ))
+    const filterList = filterCityList.map(city => {
+      const key = city.cityId
+      return (
+        <View className='search-item' dataCity={city} key={key}>
+          <View className='search-item-name'>{city.cityName}</View>
+          <Text className='iconfont iconxiangyouxuanzejiantoux icon-style-right'></Text>
+        </View>
+      )
+    })
     
     const allWrapperClassName = classNames({
       'choose-city-wrapper': true,
