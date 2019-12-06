@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-14 18:28:29
+ * @LastEditTime: 2019-12-06 16:52:49
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -17,12 +17,10 @@ import {
   Block
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
-// import NoTitleCard from '@c/no_title_card/index.js'
 // eslint-disable-next-line import/first
 import api from '@api/index.js'
 import Storage from '@utils/storage.js'
 
-// import '@assets/icon_font/icon.scss'
 import './index.styl'
 
 class PlaceOrder extends Component {
@@ -58,7 +56,15 @@ class PlaceOrder extends Component {
   componentDidMount() {
     this.pageParams = this.$router.params || {}
     this.getOfferDetails()
-    this.testFunction()
+    this.getInputText()
+  }
+
+  getInputText() {
+    Storage.getStorage(`order_input_${this.pageParams.offer_id}`).then(res => {
+      if (res) { 
+        this.setState(res)
+      }
+    })
   }
 
   /**
@@ -67,7 +73,7 @@ class PlaceOrder extends Component {
    */
   getOfferDetails() {
     if (!this.pageParams.offer_id) {
-      Taro.navigateBack()
+      this.toast('请传入必传参数')
       return;
     }
     let sendData = {
@@ -97,7 +103,8 @@ class PlaceOrder extends Component {
    * 函数功能描述 判断联系人、联系方式、身份证号、车架号是否为空，验证按钮的高亮显示
    * @return void
    */
-  testFunction() {
+  saveInputOrTest() {
+    Storage.setStorage(`order_input_${this.pageParams.offer_id}`, this.state)
     // let {
     //   sendPerson,
     //   sendMobile,
@@ -128,7 +135,7 @@ class PlaceOrder extends Component {
     this.setState({
       sendPerson: value
     },() => {
-      this.testFunction()
+      this.saveInputOrTest()
     })
   }
 
@@ -142,7 +149,7 @@ class PlaceOrder extends Component {
     this.setState({
       receivePerson: value
     }, () => {
-      this.testFunction()
+      this.saveInputOrTest()
     })
   }
 
@@ -156,7 +163,7 @@ class PlaceOrder extends Component {
     this.setState({
       sendMobile: value
     }, () => {
-      this.testFunction()
+      this.saveInputOrTest()
     })
   }
   
@@ -170,7 +177,7 @@ class PlaceOrder extends Component {
     this.setState({
       receiveMobile: value
     }, () => {
-      this.testFunction()
+      this.saveInputOrTest()
     })
   }
 
@@ -184,7 +191,7 @@ class PlaceOrder extends Component {
     this.setState({
       sendCardNo: value
     }, () => {
-      this.testFunction()
+      this.saveInputOrTest()
     })
   }
   
@@ -198,7 +205,7 @@ class PlaceOrder extends Component {
     this.setState({
       receiveCardNo: value
     }, () => {
-      this.testFunction()
+      this.saveInputOrTest()
     })
   }
  
@@ -306,6 +313,7 @@ class PlaceOrder extends Component {
           title: '下单成功',
           icon: 'success'
         })
+        Storage.removeStorage(`order_input_${this.pageParams.offer_id}`)
         Taro.redirectTo({
           url: `/pages/order_details/index?order_code=${res.orderCode}`
         })
