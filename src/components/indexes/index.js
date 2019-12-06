@@ -3,7 +3,7 @@
  * @description: 城市索引选择器
  * @Date: 2019-09-01 14:57:42
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-02 09:42:21
+ * @LastEditTime: 2019-12-06 16:12:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  *  maxCheck: PropTypes.number  // 最多多选几个
@@ -322,52 +322,56 @@ export default class Indexes extends Component {
     })
 
     // 主要内容
-    const indexesList = _list.map(dataList => (
-      <View
-        id={`indexes-list-${dataList.initial}`}
-        className='indexes-list'
-        key={dataList.initial}
-      >
-        <View className='indexes-list-title'>
-          {dataList.initial}
-        </View>
-        <View className='indexes-list-wrapper'>
-          {
-            dataList.list && dataList.list.map(item => {
-              {JSON.stringify(item)}
-              const checkBoxClass = classNames({
-                'check-box': true,
-                'box-checked': item.checked
-                // 'box-disabled': disbaled
+    const indexesList = _list.map(dataList => {
+      const key = dataList.initial
+      return (
+        <View
+          id={`indexes-list-${dataList.initial}`}
+          className='indexes-list'
+          key={key}
+        >
+          <View className='indexes-list-title'>
+            {dataList.initial}
+          </View>
+          <View className='indexes-list-wrapper'>
+            {
+              dataList.list && dataList.list.map(item => {
+                {JSON.stringify(item)}
+                const checkBoxClass = classNames({
+                  'check-box': true,
+                  'box-checked': item.checked
+                  // 'box-disabled': disbaled
+                })
+                const keyCityId = item.cityId
+                return (
+                  <View
+                    className='indexes-list-item'
+                    key={keyCityId}
+                    onClick={this.handleClick.bind(this, item)}
+                  >
+                    {
+                      checkBox ?
+                        <View className={checkBoxClass}>
+                          {
+                            item.checked ?
+                              <View className='checked-duigou-img'>
+                                {/* <View className='iconfont iconduigoux'></View> */}
+                                <Image src={imageDuiHao}></Image>
+                              </View>
+                              : null
+                          }
+                        </View>
+                        : null
+                    }
+                    <View>{item.cityName}</View>
+                  </View>
+                )
               })
-              return (
-                <View
-                  className='indexes-list-item'
-                  key={item.cityId}
-                  onClick={this.handleClick.bind(this, item)}
-                >
-                  {
-                    checkBox ?
-                      <View className={checkBoxClass}>
-                        {
-                          item.checked ?
-                            <View className='checked-duigou-img'>
-                              {/* <View className='iconfont iconduigoux'></View> */}
-                              <Image src={imageDuiHao}></Image>
-                            </View>
-                            : null
-                        }
-                      </View>
-                      : null
-                  }
-                  <View>{item.cityName}</View>
-                </View>
-              )
-            })
-          }
+            }
+          </View>
         </View>
-      </View>
-    ))
+      )
+    })
 
     return (
       <View className={rootCls} style={customStyle}>

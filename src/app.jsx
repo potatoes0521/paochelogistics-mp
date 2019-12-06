@@ -43,6 +43,7 @@ class _App extends Component {
       'pages/order_details/index',
       'pages/transport_state/index',
       'pages/offer_details/index',
+      'pages/push_offer/index',
       'pages/place_order/index',
       'pages/about/index',
       'pages/mine_info/index',
@@ -56,7 +57,8 @@ class _App extends Component {
       'pages/pay_success/index',
       'pages/choose_item/index',
       'pages/remark/index',
-      'pages/share_bargain/index'
+      'pages/share_bargain/index',
+      'pages/webview/index'
     ],
     window: {
       backgroundTextStyle: 'light',

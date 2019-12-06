@@ -1,130 +1,8 @@
 @import '../../assets/css/theme.styl'
+@import '../push_offer/index.styl'
 
 .index-wrapper
   padding-top 16px
-
-.card-wrapper
-  padding-top 0 !important
-  padding-bottom 0 !important
-
-.from-item
-  width 100%
-  padding 32px 0
-  box-sizing border-box
-  border-bottom 2px solid #f5f5f5
-
-.label-wrapper
-  width 100%
-  display flex
-  align-items center
-  justify-content space-between
-
-.form-required
-  display flex
-  align-items center
-  width 180px
-
-.required
-  color $price-color
-  font-size 32px
-  margin-right 16px
-  width 18px
-  text-align center
-
-.icon-right-style
-  font-size 28px
-  color $font-disabled-color
-  margin-left 10px
-
-.from-label
-  font-size 32px
-  color $font-color
-  line-height 40px
-  font-weight 600
-
-.from-right
-  font-size 28px
-  color $font-color
-  line-height 40px
-  flex 1
-  display flex
-  align-items center
-  justify-content flex-end
-
-.time-picker
-  width 100%
-  text-align right
-  
-.from-item .label-wrapper .from-right .time-picker .from-disabled-text,
-.from-item .label-wrapper .from-right .from-disabled-text
-  color $font-h-color !important
-
-.from-radio .radio-option
-  margin-left 20px
-
-.label-hide
-  margin-top 12px
-  margin-left 34px
-
-.input
-  width 100%
-  font-size 28px
-  line-height 40px
-  height 40px
-  color $font-color
-  border none
-
-.input-placeholder
-  color $font-h-color
-
-.textarea
-  padding 0 
-  margin 0
-
-.close
-  width 100%
-  box-sizing border-box
-  padding 32px 0
-  color $theme-color
-  font-size 28px
-
-.hide-supplement-wrapper
-  padding-bottom 48px
-
-.supplement-item
-  width 100%
-  height 40px
-  display flex
-  align-items center
-  margin-bottom 18px
-.text
-  height 40px
-  font-size 28px
-  color $font-color
-
-.margin-text
-  margin-right 20px
-
-.submit-btn
-  width 702px
-  height 80px
-  font-size 32px
-  color #ffffff
-  border-radius 8px
-  background-color $theme-color
-  margin 0 auto
-  margin-top 48px
-  margin-bottom 58px
-  display flex
-  align-items center
-  justify-content center
-
-button[disabled]
-  background-color $button-disabled-color !important
-  color rgba(255,255,255,0.8) !important
-
-button::after
-  border none
 
 .showRegister
   width 100%
@@ -141,4 +19,102 @@ button::after
   text-align right
 
 .margin-left
+  margin-left 8px
+
+page
+  width 100%
+  background-color #ffffff !important
+.page-wrapper
+  width 100%
+
+.swiper-wrapper
+  width 100%
+  height 300px
+
+.swiper
+  width 100%
+  height 100%
+
+.banner-item
+  width 100%
+  height 100%
+
+.swiper .wx-swiper-dot
+  width 16px
+  height 6px
+  border-radius 10px
+  background rgba(255,255,255,0.5)
+  overflow hidden
+
+.swiper .wx-swiper-dot-active
+  width 32px !important
+  height 6px
+  border-radius 10px
+  overflow hidden
+
+.banner-image
+  width 100%
+  height 100%
+
+.offer-wrapper
+  width 100%
+  height 392px
+  background-color #f7f7f7
+  box-sizing border-box
+  padding 24px
+
+.offer-form
+  background-color #ffffff
+  border-radius 8px
+  height 344px
+  overflow hidden
+  box-shadow 0px 4px 30px 0px rgba(0,0,0,0.15)
+  display flex
+  flex-direction column
+  justify-content space-between
+
+.offer-form-top
+  width 100%
+  box-sizing border-box
+  padding 0 32px
+
+.submit-btn
+  border-radius 0
+  margin 0
+  height 80px
+
+.recommend-list
+  width 100%
+  padding 12px 48px
+  box-sizing border-box
+
+.recommend-item
+  padding 12px 0
+  display flex
+  align-items center
+  justify-content space-between
+
+.recommend-city
+  font-size 32px
+  font-weight 700
+  color $font-color
+
+.icon-right-tou
+  font-size 32px
+  margin 0 16px
+
+.predict
+  background-color #FFE9E0
+  border-radius 8px
+  width 220px
+  height 48px
+  display flex
+  align-items center
+  justify-content center
+  font-size 24px
+  color $price-color
+
+.weight-text
+  font-weight 700
+  font-size 28px
   margin-left 8px
