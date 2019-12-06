@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: guorui
- * @LastEditTime: 2019-12-06 15:02:26
+ * @LastEditTime: 2019-12-06 16:09:57
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -50,7 +50,6 @@ class OrderDetails extends Component {
       tipContent: '',
       fail: false,
       showTips: false, // 等数据请求到了再显示
-      statusDescs: [], //订单状态
       // canBargain: false
     }
     this.pageParams = {}
@@ -88,10 +87,8 @@ class OrderDetails extends Component {
     }
     api.order.getOrderDetails(sendData, this)
       .then(res => {
-        console.log(res, 'res')
         this.setState({
           orderDetailsInfo: res,
-          statusDescs: res.statusDescs,
           tipContent: res.tipContent,
           // canBargain: res.canBargain
         })
@@ -211,13 +208,12 @@ class OrderDetails extends Component {
       tipContent,
       fail,
       showTips,
-      statusDescs,
       // canBargain
     } = this.state
-    const unpaid = statusDescs && statusDescs.some(item => item.key === 'unpaidOrder')
-    const waiting = statusDescs && statusDescs.some(item => item.key === 'waitingPickUp')
-    const finish = statusDescs && statusDescs.some(item => item.key === 'finishOrder')
-    const cancel = statusDescs && statusDescs.some(item => item.key === 'cancelOrder')
+    const unpaid = orderDetailsInfo.statusDescs && orderDetailsInfo.statusDescs.some(item => item.key === 'unpaidOrder')
+    const waiting = orderDetailsInfo.statusDescs && orderDetailsInfo.statusDescs.some(item => item.key === 'waitingPickUp')
+    const finish = orderDetailsInfo.statusDescs && orderDetailsInfo.statusDescs.some(item => item.key === 'finishOrder')
+    const cancel = orderDetailsInfo.statusDescs && orderDetailsInfo.statusDescs.some(item => item.key === 'cancelOrder')
     const iconClassName = classNames(
       'iconfont pay-icon', {
         'icondaizhifu1': unpaid,
@@ -266,7 +262,7 @@ class OrderDetails extends Component {
           <View className='pay-tips-wrapper'>
             <View className='pay-info'>
               <Text className={iconClassName}></Text>
-              <Text className='pay-text'>{statusDescs && statusDescs[0].name}</Text>
+              <Text className='pay-text'>{orderDetailsInfo.statusDescs && orderDetailsInfo.statusDescs[0].name}</Text>
             </View>
           </View>
           <NoTitleCard>
@@ -285,9 +281,13 @@ class OrderDetails extends Component {
             ></PriceDetailsComponent>
           </NoTitleCard>
         </View>
-        <View className='page-footer'>
-          <FooterDetailsComponent item={orderDetailsInfo}></FooterDetailsComponent>
-        </View>
+        {
+          orderDetailsInfo.buttons && orderDetailsInfo.buttons.length ?
+            <View className='page-footer'>
+              <FooterDetailsComponent item={orderDetailsInfo}></FooterDetailsComponent>
+            </View>
+            : null
+        }
       </View>
     )
   }
