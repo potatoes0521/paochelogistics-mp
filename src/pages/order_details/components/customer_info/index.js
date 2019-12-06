@@ -3,12 +3,12 @@
  * @description: 客户信息
  * @Date: 2019-12-06 09:21:26
  * @LastEditors: guorui
- * @LastEditTime: 2019-12-06 13:47:47
+ * @LastEditTime: 2019-12-06 18:10:42
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import Taro, { Component } from '@tarojs/taro'
-import { View } from '@tarojs/components'
+import { View, Text } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import PropTypes from 'prop-types'
 import './index.styl'
@@ -17,6 +17,19 @@ class CustomerInfoComponent extends Component {
   constructor(props) {
     super(props)
     this.state = { }
+  }
+
+  copy(item) {
+    Taro.setClipboardData({
+      data: item.orderCode,
+      success() {
+        Taro.getClipboardData({
+          success() {
+            console.log('复制成功')
+          }
+        })
+      }
+    })
   }
 
   render() {
@@ -30,6 +43,13 @@ class CustomerInfoComponent extends Component {
         <View className='details-form-item'>
           <View className='details-form-label'>联系方式:</View>
           <View className='details-form-content'>{item.customerMobile || ''}</View>
+        </View>
+        <View className='details-form-item'>
+          <View className='details-form-label'>订单号:</View>
+          <View className='details-form-content'>
+            <Text selectable>{item.orderCode || ''}</Text>
+            <Text onClick={this.copy.bind(this, item)}>复制</Text>
+          </View>
         </View>
       </View>
     )
