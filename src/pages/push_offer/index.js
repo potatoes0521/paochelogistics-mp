@@ -1,23 +1,50 @@
+/*
+ * @Author: liuYang
+ * @description: 请填写描述信息
+ * @Date: 2019-12-06 11:17:37
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-12-06 11:20:03
+ * @mustParam: 必传参数
+ * @optionalParam: 选传参数
+ */
+
 import Taro, { Component } from '@tarojs/taro'
 import {
   View,
   Input,
   Text,
+  Picker,
   Button
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import classNames from 'classnames'
 import { convertingGPS } from '@utils/location.js'
+import { handleMoney } from '@utils/patter.js'
 import {
   getUserLocation,
   getSetting,
   showModalAndRegister
 } from '@utils/common.js'
+import {
+  getTimeDate,
+  timestampOfDay,
+  getDateTime
+} from '@utils/timer_handle.js'
 import { defaultResourceImgURL } from '@config/request_config.js'
 // eslint-disable-next-line import/first
 import api from '@api/index.js'
 // eslint-disable-next-line import/first
-import LocationModal from '../index/components/location_modal/index.js'
+import NoTitleCard from '@c/no_title_card/index.js'
+// eslint-disable-next-line import/first
+import RadioGroups from '@c/radio_group/index.js'
+// eslint-disable-next-line import/first
+import CheckBoxGroup from '@c/checkbox_group/index.js'
+// eslint-disable-next-line import/first
+import InputNumber from '@c/input_number/index.js'
+// eslint-disable-next-line import/first
+import LocationModal from './components/location_modal/index.js'
+// eslint-disable-next-line import/first
+import { serviceList, carNatureList } from '@config/text_config.js'
 // eslint-disable-next-line import/first
 import Actions from '@store/actions/index.js'
 
@@ -28,20 +55,33 @@ class Index extends Component {
   constructor(props) { 
     super(props)
     this.state = {
+      carAmount: 1,   // 台数
+      usedType: 1,   // 车辆性质
+      carInfo: '',    // 车辆信息
+      sendTime: '',    // 发车时间
       receiveCityId: 0, // 收车城市ID
       receiveCityName: '',
+      receiveAddress: '', // 收车详细地址
       sendCityId: 0,      // 发车地址ID
       sendCityName: '',
+      sendAddress: '', // 发车详细地址
+      storePickup: 0,  // 上门提车
+      homeDelivery: 0, // 上门送车
+      sendTimerInit: '',
       locationModal: false,
+      assessedPrice: '' //驿站估价
+      // eslint-disable-next-line react/no-unused-state
       // disabled: true
     }
     this.initCity = {}
     this.pageParams = {}
+    this.serviceList = serviceList
   }
   
   
-  async componentDidMount() { 
+  componentDidMount() { 
     this.pageParams = this.$router.params
+    console.log('参数:' ,this.pageParams)
     this.initData()
     this.handleLocation()
   }
@@ -78,14 +118,63 @@ class Index extends Component {
    * @return void
    */
   initData() { 
+    let pickerDate = getDateTime(timestampOfDay())
     this.setState({
+      sendTime: pickerDate.split(' ')[0],
+      sendTimerInit: pickerDate,
+      carAmount: 1, // 台数
+      usedType: 1, // 车辆性质
+      carInfo: '', // 车辆信息
       receiveCityId: 0, // 收车城市ID
       receiveCityName: '',
+      receiveAddress: '', // 收车详细地址
       sendCityId: this.initCity.cityId || '', // 发车地址ID
       sendCityName: this.initCity.cityName || '',
+      sendAddress: '', // 发车详细地址
+      storePickup: 0, // 上门提车
+      homeDelivery: 0, // 上门送车
+      assessedPrice: '' //驿站估价
     })
     this.serviceList.forEach(item => {
       item.checked = false
+    })
+  }
+  /**
+   * 单选 选择车辆性质
+   * @param {Object} e event对象
+   * @return void
+   */
+  chooseRadio(e) {
+    this.setState({
+      // eslint-disable-next-line react/no-unused-state
+      usedType: e.id
+    })
+  }
+  /**
+   * inputNumber组件值改变
+   * @param {Number} e 输入框值
+   * @return void
+   */
+  valueChange(e) {
+    this.setState({
+      carAmount: e
+    })
+  }
+  /**
+   * 发车时间
+   * @param {Object} e event对象
+   * @return void
+   */
+  onStartingTimeDateChange(e) {
+    let chooseTime = e.detail.value
+    let nowTimer = getTimeDate(timestampOfDay())
+    let chooseTimer = getTimeDate(chooseTime)
+    if (nowTimer > chooseTimer) {
+      this.toast('请选择正确的发车时间')
+      return
+    }
+    this.setState({
+      sendTime: chooseTime
     })
   }
   /**
@@ -115,6 +204,7 @@ class Index extends Component {
   handleConvertingGPS(latitude, longitude) {
     convertingGPS(latitude, longitude, 'ad_info').then(res => {
       this.cityNameChangeCityID(res.city)
+      // 然后去处理一下id
     })
   }
   cityNameChangeCityID(cityName) { 
@@ -155,14 +245,82 @@ class Index extends Component {
       locationModal: false
     })
   }
-  
+  /**
+   * 输入发车详细地址
+   * @param {Object} e event参数
+   * @return void
+   */
+  inputSendAddress(e) {
+    this.setState({
+      sendAddress: e.target.value
+    })
+  }
+  /**
+   * 输入收车详细地址
+   * @param {Object} e event参数
+   * @return void
+   */
+  inputReceiveAddress(e) {
+    this.setState({
+      receiveAddress: e.target.value
+    })
+  }
+  /**
+   * 驿站人员输入估算价格
+   * @param {Type} e 参数描述
+   * @return void
+   */
+  inputAssessedPrice(e) {
+    let value = e.detail.value
+    value = handleMoney(value)
+    this.setState({
+      assessedPrice: value
+    })
+  }
+  /**
+   * 输入车辆信息
+   * @param {Object} e event参数
+   * @return void
+   */
+  inputCarInfo(e) {
+    let { value } = e.detail
+    // let {
+    //   receiveCityName,
+    //   sendCityName
+    // } = this.state
+    // if (sendCityName && receiveCityName && value) {
+    //   this.setState({
+    //     disabled: false
+    //   })
+    // } else {
+    //   this.setState({
+    //     disabled: true
+    //   })
+    // }
+    this.setState({
+      carInfo: value
+    })
+  }
   submitOffer() { 
     let {
+      carAmount, // 台数
+      usedType, // 车辆性质
+      carInfo, // 车辆信息
+      sendTime, // 发车时间
       receiveCityId,
       receiveCityName,
+      receiveAddress, // 收车详细地址
       sendCityName,
       sendCityId,
+      sendAddress, // 发车详细地址
+      storePickup, // 上门提车
+      homeDelivery, // 上门送车
+      assessedPrice, //驿站估价
     } = this.state
+    if (!sendTime) {
+      this.toast('请选择发车时间')
+      return
+    }
     if (!sendCityName) {
       this.toast('请选择发车城市')
       return
@@ -171,18 +329,50 @@ class Index extends Component {
       this.toast('请选择收车城市')
       return
     }
+    if (storePickup && !sendAddress) {
+      this.toast('请输入详细发车地址')
+      return
+    }
+    if (homeDelivery && !receiveAddress) {
+      this.toast('请输入详细收车地址')
+      return
+    }
+    if (!carInfo) {
+      this.toast('请输入车辆信息')
+      return
+    }
     let userId = this.props.userInfo.userId
     if (!userId) {
       showModalAndRegister()
       return
     }
     let sendData = {
+      carAmount, // 台数
+      usedType, // 车辆性质
+      carInfo, // 车辆信息
+      sendTime, // 发车时间
       receiveCityId,
       receiveCityName,
+      receiveAddress, // 收车详细地址
       sendCityName,
       sendCityId,
+      sendAddress, // 收车详细地址
+      storePickup, // 上门提车
+      homeDelivery, // 上门送车
+      assessedPrice: assessedPrice * 100, //驿站估价
     }
-    console.log(sendData)
+    api.offer.submitOffer(sendData, this).then(() => {
+      this.initData()
+      Taro.showToast({
+        title: '询价单已提交',
+        icon: 'success'
+      })
+      setTimeout(() => {
+        Taro.switchTab({
+          url: '/pages/offer/index'
+        })
+      }, 1500)
+    })
   }
   toast(errMsg) {
     Taro.showToast({
@@ -210,6 +400,18 @@ class Index extends Component {
       default:
         return
     }
+  }
+  /**
+   * 选择服务类型
+   * @param {Array} props 多选组合的值
+   * @return void
+   */
+  handleChooseServiceType(props) {
+    this.serviceList = props
+    this.setState({
+      storePickup: props[0].checked ? 1 : 0,
+      homeDelivery: props[1].checked ? 1 : 0
+    })
   }
   getUserInfo(e) { 
     let { userInfo } = e.target
@@ -240,16 +442,54 @@ class Index extends Component {
   }
   render() {
     let {
+      carAmount, // 台数
+      usedType, // 车辆性质
+      carInfo, // 车辆信息
+      sendTime, // 发车时间
       receiveCityName,
       receiveAddress, // 收车详细地址
       sendCityName,
       sendAddress, // 发车详细地址
+      // storePickup, // 上门提车
+      // homeDelivery, // 上门送车
+      sendTimerInit,
       locationModal,
+      assessedPrice,
+      // disabled
     } = this.state
     let { userInfo } = this.props
     return (
       <View className='index-wrapper'>
-          {/* 发车点 */}
+        <NoTitleCard>
+          <View className='from-item'>
+            <View className='label-wrapper'>
+              <View className='form-required'>
+                <View className='required'>*</View>
+                <View className='from-label'>发车时间</View>
+              </View>
+              <View className='from-right'>
+                <Picker
+                  className='time-picker'
+                  mode='date'
+                  onChange={this.onStartingTimeDateChange}
+                  start={sendTimerInit}
+                >
+                    <Text
+                      className={classNames({
+                        'from-disabled-text': !sendTime
+                      })}
+                    >
+                      {
+                        sendTime ? sendTime : '请选择发车时间'
+                      }
+                    </Text>
+                </Picker>
+                {
+                  sendTime ? null : <Text className='iconfont iconxiangyouxuanzejiantoux icon-right-style'></Text>
+                }
+              </View>
+            </View>
+          </View>
           <View className='from-item'>
             <View className='label-wrapper' onClick={()=>this.chooseCity('choose_start_city')}>
               <View className='form-required'>
@@ -280,7 +520,6 @@ class Index extends Component {
               ></Input>
             </View>
           </View>
-          {/* 收车点 */}
           <View className='from-item'>
             <View className='label-wrapper' onClick={()=>this.chooseCity('choose_target_city')}>
               <View className='form-required'>
@@ -311,7 +550,94 @@ class Index extends Component {
               ></Input>
             </View>
           </View>
-          {/*  */}
+          <View className='from-item'>
+            <View className='label-wrapper'>
+              <View className='form-required'>
+                <View className='required'></View>
+                <View className='from-label'>服务</View>
+              </View>
+              <View className='from-right'>
+                <CheckBoxGroup
+                  options={this.serviceList}
+                  onClick={this.handleChooseServiceType.bind(this)}
+                ></CheckBoxGroup>
+              </View>
+            </View>
+          </View>
+          <View className='from-item'>
+            <View className='label-wrapper'>
+              <View className='form-required'>
+                <View className='required'>*</View>
+                <View className='from-label'>车辆信息</View>
+              </View>
+              <View className='from-right'></View>
+            </View>
+            <View className='label-hide'>
+              <Input
+                className='input'
+                placeholder='请输入车辆信息,如大众迈腾'
+                placeholderClass='input-placeholder'
+                maxLength='20'
+                value={carInfo}
+                onInput={this.inputCarInfo}
+              ></Input>
+            </View>
+          </View>
+          <View className='from-item'>
+            <View className='label-wrapper'>
+              <View className='form-required'>
+                <View className='required'>*</View>
+                <View className='from-label'>台数</View>
+              </View>
+              <View className='from-right'>
+                <InputNumber
+                  min={1}
+                  value={carAmount}
+                  onChange={this.valueChange.bind(this)}
+                ></InputNumber>
+              </View>
+            </View>
+          </View>
+          <View className='from-item'>
+            <View className='label-wrapper'>
+              <View className='form-required'>
+                <View className='required'>*</View>
+                <View className='from-label'>车辆性质</View>
+              </View>
+              <View className='from-right from-radio'>
+                <RadioGroups
+                  options={carNatureList}
+                  activeIndex={usedType}
+                  onClick={this.chooseRadio.bind(this)}
+                ></RadioGroups>
+              </View>
+            </View>
+          </View>
+          {
+            userInfo.userType === 0 ?
+              <View className='from-item'>
+                <View className='label-wrapper'>
+                  <View className='form-required'>
+                    <View className='required'></View>
+                    <View className='from-label'>驿站估价</View>
+                  </View>
+                  <View className='from-right text-right'>
+                    <Input
+                      className='input'
+                      placeholder='请驿站人员输入估算价格'
+                      placeholderClass='input-placeholder'
+                      maxLength='20'
+                      value={assessedPrice}
+                      type='digit'
+                      onInput={this.inputAssessedPrice}
+                    ></Input>
+                    <Text className='margin-left'>元</Text>
+                  </View>
+                </View>
+              </View>
+              : null
+          }
+        </NoTitleCard>
         {/* disabled={disabled}  */}
         {
           !userInfo.nickName ? 
