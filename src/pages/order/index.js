@@ -3,7 +3,7 @@
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-09 15:42:07
+ * @LastEditTime: 2019-12-09 15:52:38
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -157,8 +157,8 @@ class Order extends Component {
    * @return void
    */
   handleSelectClick(type, params) {
-    this.orderPage = true
-    this.orderFlag = 1
+    this.orderPage = 1
+    this.orderFlag = true
     if (type === 'submit') {
       // 提交
       let {
@@ -168,7 +168,7 @@ class Order extends Component {
       let {
         createTimeStart,
         createTimeEnd
-      } = this.params
+      } = params
       this.createTimeStart = createTimeStart
       this.createTimeEnd = createTimeEnd
       this.sendCityId = sendCityId
