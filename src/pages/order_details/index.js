@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-06 18:12:55
+ * @LastEditTime: 2019-12-09 09:44:28
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -79,7 +79,10 @@ class OrderDetails extends Component {
    */
   getOrderDetails() {
     if (!this.pageParams.order_code) {
-      Taro.navigateBack()
+      Taro.showToast({
+        icon: 'none',
+        title: 'order_code is null'
+      })
       return;
     }
     let sendData = {
