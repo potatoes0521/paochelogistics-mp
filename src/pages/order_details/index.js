@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-09 09:44:28
+ * @LastEditTime: 2019-12-09 14:14:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -68,6 +68,7 @@ class OrderDetails extends Component {
         this.getOrderDetails()
       } else {
         // 代付详情
+        this.getOrderHelpPayment()
       }
     } else {
       this.getOrderDetails()
@@ -90,21 +91,49 @@ class OrderDetails extends Component {
     }
     api.order.getOrderDetails(sendData, this)
       .then(res => {
-        this.setState({
-          orderDetailsInfo: res,
-          tipContent: res.tipContent,
-          // canBargain: res.canBargain
-        })
-        const nowTimer = new Date().getTime()
-        console.log('现在的时间戳' + nowTimer, '到期的时间戳' + res.discountDueTime, nowTimer - res.discountDueTime, nowTimer > res.discountDueTime)
-        if (nowTimer > res.discountDueTime) {
-          this.setState({
-            fail: true,
-            // showBargainBox: true
-          })
-        }
-        this.countDown(res.discountDueTime)
+        this.handleResponse(res)
       })
+  }
+  /**
+   * 获取代付订单详情
+   * @return void
+   */
+  getOrderHelpPayment() {
+    if (!this.pageParams.order_code) {
+      Taro.showToast({
+        icon: 'none',
+        title: 'order_code is null'
+      })
+      return;
+    }
+    let sendData = {
+      orderCode: this.pageParams.order_code
+    }
+    api.order.getOrderHelpPaymentDetails(sendData, this)
+      .then(res => {
+        this.handleResponse(res)
+      })
+  }
+  /**
+   * 处理返回值
+   * @param {Object} res 订单详情数据
+   * @return void
+   */
+  handleResponse(res) { 
+    this.setState({
+      orderDetailsInfo: res,
+      tipContent: res.tipContent,
+      // canBargain: res.canBargain
+    })
+    const nowTimer = new Date().getTime()
+    console.log('现在的时间戳' + nowTimer, '到期的时间戳' + res.discountDueTime, nowTimer - res.discountDueTime, nowTimer > res.discountDueTime)
+    if (nowTimer > res.discountDueTime) {
+      this.setState({
+        fail: true,
+        // showBargainBox: true
+      })
+    }
+    this.countDown(res.discountDueTime)
   }
   /**
    * 倒计时函数

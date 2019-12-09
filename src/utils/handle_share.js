@@ -3,7 +3,7 @@
  * @description: 处理进入小程序的分享
  * @Date: 2019-11-06 12:25:04
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-06 18:11:11
+ * @LastEditTime: 2019-12-09 14:05:34
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -44,14 +44,13 @@ export const handleShare = (pageParams, userInfo) => {
 */
 export const handleShareInOrderDetails = (pageParams, userInfo) => {
   if (!pageParams.share_type) return // 没有页面参数返回
-  if (pageParams.share_type === '1' || pageParams.share_type === '2' || pageParams.share_type === '3') {
-    console.log(pageParams)
-    // if (+userInfo.userId === +pageParams.c_id) { // 当前用户是订单客户
-    //   console.log(pageParams, "当前用户")
-    //   return Promise.resolve(true)
-    // } else
-    if (!userInfo.userId) { // 如果没有注册去注册
-      console.log(pageParams, "未注册")
+  console.log(pageParams, '分享的参数')
+  if (pageParams.share_type === '1' || pageParams.share_type === '2') {
+    if (+userInfo.userId === +pageParams.c_id) { // 当前用户是订单客户
+      console.log("当前用户")
+      return Promise.resolve(true)
+    } else if (!userInfo.userId) { // 如果没有注册去注册
+      console.log("未注册")
       let str = ''
       for (let i in pageParams) {
         str += i + '=' + pageParams[i] + '&'
@@ -60,14 +59,15 @@ export const handleShareInOrderDetails = (pageParams, userInfo) => {
         url: `/pages/register/index?${str}`
       })
       return Promise.resolve(false)
+    } else if (+userInfo.userId !== +pageParams.c_id) { // 不是本人的订单就去首页
+      console.log("去首页")
+      Taro.switchTab({
+        url: '/pages/index/index'
+      })
+      return Promise.resolve(false)
     }
-    // else if (+userInfo.userId !== +pageParams.c_id) { // 不是本人的订单就去首页
-    //   console.log(pageParams, "去首页")
-    //   Taro.switchTab({
-    //     url: '/pages/index/index'
-    //   })
-    //   return Promise.resolve(false)
-    // }
+  // 如果是代付
+  } else if (pageParams.share_type === '3') {
     return Promise.resolve(true)
   }
 }
@@ -91,6 +91,7 @@ export const handleRegisterShare = ({ pageParams, userInfo, wxUserInfo, that }) 
       })
     }
   } else if (pageParams.share_type === '2') {
+    // 分享砍价
     let pages = Taro.getCurrentPages(); //  获取页面栈
     let prevPage = pages[pages.length - 2]; // 上一个页面
     prevPage.$component.setState({
@@ -107,7 +108,7 @@ export const handleRegisterShare = ({ pageParams, userInfo, wxUserInfo, that }) 
         }
       })
     })
-  }else {
+  } else {
     Taro.navigateBack()
   }
 }
