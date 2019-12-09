@@ -3,7 +3,7 @@
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-06 17:34:16
+ * @LastEditTime: 2019-12-09 10:14:52
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -295,6 +295,7 @@ class Order extends Component {
                 <Screen
                   sendCityName={sendCityName}
                   receiveCityName={receiveCityName}
+                  showType={['cities', 'times']}
                   onClick={this.handleSelectClick.bind(this)}
                 ></Screen>
               </Drawer>
