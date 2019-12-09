@@ -3,7 +3,7 @@
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-09 15:19:42
+ * @LastEditTime: 2019-12-09 15:42:07
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -44,6 +44,10 @@ class Order extends Component {
     this.orderPage = 1
     this.orderFlag = false
     this.status = 10
+    this.sendCityId = ''
+    this.receiveCityId = ''
+    this.createTimeStart = ''
+    this.createTimeEnd = ''
   }
   
   componentDidMount() {
@@ -67,10 +71,10 @@ class Order extends Component {
     status = this.status,
     pageNum = this.orderPage,
     pageSize = 10,
-    sendCityId = '',
-    receiveCityId = '',
-    createTimeStart = '',
-    createTimeEnd = ''
+    sendCityId = this.sendCityId,
+    receiveCityId = this.receiveCityId,
+    createTimeStart = this.createTimeStart,
+    createTimeEnd = this.createTimeEnd
   }) {
     let sendData = {
       status,
@@ -146,20 +150,36 @@ class Order extends Component {
       searchDrawerShow: false
     })
   }
+  /**
+   * 抽屉组件点击提交或者重置按钮
+   * @param {String} type 类型 submit 是提交
+   * @param {Object} params 参数
+   * @return void
+   */
   handleSelectClick(type, params) {
-    this.offerFlag = true
-    this.offerPage = 1
+    this.orderPage = true
+    this.orderFlag = 1
     if (type === 'submit') {
+      // 提交
       let {
         sendCityId,
         receiveCityId,
       } = this.state
-      params.sendCityId = sendCityId
-      params.receiveCityId = receiveCityId
-      // 提交
+      let {
+        createTimeStart,
+        createTimeEnd
+      } = this.params
+      this.createTimeStart = createTimeStart
+      this.createTimeEnd = createTimeEnd
+      this.sendCityId = sendCityId
+      this.receiveCityId = receiveCityId
       this.getOrderList(params)
     } else {
       // 重置
+      this.createTimeStart = ''
+      this.createTimeEnd = ''
+      this.sendCityId = ''
+      this.receiveCityId = ''
       this.setState(params, () => {
         this.getOrderList({})
       })
