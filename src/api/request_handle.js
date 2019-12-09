@@ -3,7 +3,7 @@
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-09 15:13:34
+ * @LastEditTime: 2019-12-09 15:48:38
  */
 
 // 默认请求连接
@@ -33,11 +33,15 @@ export default {
     let loadingTimer = null
     const { userInfo } = that.props || {};
     if (userInfo.nickName && userInfo.userPhoto) {
-      console.log(userInfo.nickName)
       data = Object.assign({}, {
         nickName: encodeURIComponent(userInfo.nickName),
         userPhoto: userInfo.userPhoto
       }, data)
+    }
+    for (let i in data) { 
+      if (data[i] === '') { 
+        delete data[i]
+      }
     }
     const sign = createSignData(data, sign_id)[1]
     const headerUserLogin = JSON.stringify({
