@@ -3,7 +3,7 @@
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-09 10:14:52
+ * @LastEditTime: 2019-12-09 15:19:42
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -44,10 +44,6 @@ class Order extends Component {
     this.orderPage = 1
     this.orderFlag = false
     this.status = 10
-    this.sendCityId = ''
-    this.sendCityName = ''
-    this.receiveCityId = ''
-    this.receiveCityName = ''
   }
   
   componentDidMount() {
@@ -61,21 +57,29 @@ class Order extends Component {
    * @param {Number} status='' 订单状态 10 待支付 20 已支付 30 已取消
    * @param {Number} pageNum=1 页数
    * @param {Number} pageSize=10 条数
+   * @param {String} sendCityId='' 收车城市id
+   * @param {String} receiveCityId='' 发车城市id
+   * @param {String} createTimeStart='' 开始时间
+   * @param {String} createTimeEnd='' 结束时间
    * @return void
    */
   getOrderList({
     status = this.status,
     pageNum = this.orderPage,
     pageSize = 10,
-    sendCityId = this.sendCityId,
-    receiveCityId = this.receiveCityId
+    sendCityId = '',
+    receiveCityId = '',
+    createTimeStart = '',
+    createTimeEnd = ''
   }) {
     let sendData = {
       status,
       pageNum,
       pageSize,
       sendCityId,
-      receiveCityId
+      receiveCityId,
+      createTimeStart,
+      createTimeEnd
     }
     api.order.getOrderList(sendData, this).then(res => {
       if (res && res.length < pageSize) {
@@ -142,37 +146,22 @@ class Order extends Component {
       searchDrawerShow: false
     })
   }
-  handleSelectClick(type) {
+  handleSelectClick(type, params) {
     this.offerFlag = true
     this.offerPage = 1
     if (type === 'submit') {
+      let {
+        sendCityId,
+        receiveCityId,
+      } = this.state
+      params.sendCityId = sendCityId
+      params.receiveCityId = receiveCityId
       // 提交
-      this.sendCityId = this.state.sendCityId
-      this.sendCityName = this.state.sendCityName
-      this.receiveCityId = this.state.receiveCityId
-      this.receiveCityName = this.state.receiveCityName
-      this.getOrderList({
-        pageNum: this.offerPage,
-        sendCityId: this.sendCityId,
-        receiveCityId: this.receiveCityId,
-      })
+      this.getOrderList(params)
     } else {
       // 重置
-      this.sendCityId = ''
-      this.sendCityName = ''
-      this.receiveCityId = ''
-      this.receiveCityName = ''
-      this.setState({
-        sendCityId: '',
-        sendCityName: '',
-        receiveCityId: '',
-        receiveCityName: ''
-      }, () => {
-        this.getOrderList({
-          pageNum: this.offerPage,
-          sendCityId: this.sendCityId,
-          receiveCityId: this.receiveCityId
-        })
+      this.setState(params, () => {
+        this.getOrderList({})
       })
     }
     this.setState({

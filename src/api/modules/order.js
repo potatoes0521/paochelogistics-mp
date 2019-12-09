@@ -14,6 +14,10 @@ export default {
   getOrderDetails(data, that) {
     return requestHandle.get(`order/detailbycode?orderCode=${data.orderCode}`, data, that);
   },
+  // 获取代付订单详情
+  getOrderHelpPaymentDetails(data, that) {
+    return requestHandle.get(`order/detailbycode?orderCode=${data.orderCode}`, data, that);
+  },
   // 获取订单列表
   getOrderList(data, that) {
     return requestHandle.get(`order/list`, data, that);
