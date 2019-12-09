@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 订单item
  * @Date: 2019-09-23 14:42:25
- * @LastEditors: guorui
- * @LastEditTime: 2019-12-06 16:24:47
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-12-09 11:11:12
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -11,7 +11,8 @@ import Taro, { Component } from '@tarojs/taro'
 import {
   View,
   Text,
-  Button
+  Button,
+  Block
 } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
@@ -51,6 +52,11 @@ export default class OrderItem extends Component {
         return
     }
   }
+  deleteOrder(e) { 
+    e.stopPropagation()
+    let { item } = this.props
+    console.log(item , 'delete')
+  }
   render() {
     let {
       item,
@@ -71,7 +77,6 @@ export default class OrderItem extends Component {
     )
     const priceClassName = classNames(
       'price-wrapper',
-      'price-wrapper-lang',
       {
         'price-style': item.status === 40,
         'font-style': item.status === 30
@@ -106,19 +111,18 @@ export default class OrderItem extends Component {
                   offerMsg.receiveCityName || ''
                 }
               </Text>
-              {/* <Text className='service-type'>
-                {
-                  offerMsg.storePickup ? '上门提车' : ''
-                }
-                {
-                  offerMsg.storePickup && offerMsg.homeDelivery ? '，' : ''
-                }
-                {
-                  offerMsg.homeDelivery ? '上门送车' : ''
-                }
-              </Text> */}
             </View>
-            <View className={fontClassName}>{ item.statusDesc || '' }</View>
+            <View className={fontClassName} onClick={this.deleteOrder}>
+              <Text>{item.statusDesc || ''}</Text>
+              {
+                item.status === 40 || item.status === 30 ?
+                  <Block>
+                    <Text className='line'></Text>
+                    <Text className='iconfont iconshanchu delete-icon'></Text>
+                  </Block>
+                  : null
+              }
+            </View>
           </View>
           <View className='list-item list-item-msg'>
             <View className='order-msg'>
@@ -137,25 +141,6 @@ export default class OrderItem extends Component {
           {
             buttonsList
           }
-          {/* <View className='btn cancel-order'>取消订单</View> */}
-          {/* <View
-            className='btn cancel-order'
-            onClick={this.navigatorTo.bind(this, 'transport_state')}
-          >运输状态</View>
-          {
-            userInfo.userType !== 0 && item.status === 10? 
-              <View className='btn pay-btn' onClick={this.navigatorTo.bind(this, 'pay_details')}>
-                立即支付
-                {
-                  item.promotionsPrice ? 
-                    <Text
-                      className='small-text'
-                    >(立减{item.promotionsPrice}元)</Text>
-                    : null 
-                }
-              </View>
-              : null
-          } */}
         </View>
       </View>
     )
