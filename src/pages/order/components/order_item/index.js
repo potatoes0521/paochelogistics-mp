@@ -3,7 +3,7 @@
  * @description: 订单item
  * @Date: 2019-09-23 14:42:25
  * @LastEditors: guorui
- * @LastEditTime: 2019-12-06 16:24:47
+ * @LastEditTime: 2019-12-09 10:14:38
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -73,8 +73,7 @@ export default class OrderItem extends Component {
       'price-wrapper',
       'price-wrapper-lang',
       {
-        'price-style': item.status === 40,
-        'font-style': item.status === 30
+        'price-style': item.status === 40 || item.status === 30
       }
     )
     const buttonsList = item.buttons && item.buttons.map((itemList) => {

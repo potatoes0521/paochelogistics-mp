@@ -3,7 +3,7 @@
  * @description: 客户信息
  * @Date: 2019-12-06 09:21:26
  * @LastEditors: guorui
- * @LastEditTime: 2019-12-06 18:10:42
+ * @LastEditTime: 2019-12-09 14:04:20
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -45,10 +45,10 @@ class CustomerInfoComponent extends Component {
           <View className='details-form-content'>{item.customerMobile || ''}</View>
         </View>
         <View className='details-form-item'>
-          <View className='details-form-label'>订单号:</View>
+          <View className='details-form-label'>订单编号:</View>
           <View className='details-form-content'>
             <Text selectable>{item.orderCode || ''}</Text>
-            <Text onClick={this.copy.bind(this, item)}>复制</Text>
+            <Text onClick={this.copy.bind(this, item)} className='copy-btn'>复制</Text>
           </View>
         </View>
       </View>
