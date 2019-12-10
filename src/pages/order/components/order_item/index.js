@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 订单item
  * @Date: 2019-09-23 14:42:25
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-09 16:53:04
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-12-10 15:47:31
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,12 +16,14 @@ import {
 } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
+import api from '@api/index.js'
 import '../../../../assets/icon_font/icon.scss'
 import './index.styl'
 
 export default class OrderItem extends Component {
   constructor(props) {
     super(props)
+    this.state = { }
   }
 
   navigatorTo(pageName, e) {
@@ -33,9 +35,7 @@ export default class OrderItem extends Component {
   }
 
   buttonsFun(event) {
-    let {
-      item
-    } = this.props
+    let { item } = this.props
     event.stopPropagation()
     switch (event.target.dataset.key) {
       case 'logisticsDetail':
@@ -54,9 +54,22 @@ export default class OrderItem extends Component {
   }
   deleteOrder(e) { 
     e.stopPropagation()
-    let { item } = this.props
-    console.log(item , 'delete')
+    this.props.onClick(...arguments)
   }
+
+  submitDeleteOrder() {
+    let { item } = this.props
+    let sendData = {
+      orderCode: item.orderCode
+    }
+    api.order.deleteOrder(sendData, this).then(() => {
+      Taro.showToast({
+        title: '订单删除成功',
+        icon: 'none'
+      })
+    })
+  }
+
   render() {
     let {
       item,
@@ -111,7 +124,7 @@ export default class OrderItem extends Component {
                 }
               </Text>
             </View>
-            <View className={fontClassName} onClick={this.deleteOrder}>
+            <View className={fontClassName} onClick={this.deleteOrder.bind(this)}>
               <Text>{item.statusDesc || ''}</Text>
               {
                 item.status === 40 || item.status === 30 ?

@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-09 15:52:38
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-12-10 15:46:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -20,6 +20,8 @@ import OrderItem from './components/order_item/index.js'
 import Screen from '@c/screen/index.js'
 // eslint-disable-next-line import/first
 import Drawer from '@c/drawer/index.js'
+// eslint-disable-next-line import/first
+import TipsCard from '@c/tips_card/index.js'
 // eslint-disable-next-line import/first
 import NoData from '@c/no_data/index.js'
 // eslint-disable-next-line import/first
@@ -39,7 +41,8 @@ class Order extends Component {
       sendCityId: '',
       sendCityName: '',
       receiveCityId: '',
-      receiveCityName: ''
+      receiveCityName: '',
+      showTipsCard: false
     }
     this.orderPage = 1
     this.orderFlag = false
@@ -189,6 +192,31 @@ class Order extends Component {
     })
   }
   /**
+   * 关闭弹窗
+   * @param {Type} type 参数描述
+   * @return void
+   */
+  closeTipsCard(type) {
+    this.setState({
+      showTipsCard: false
+    })
+    if (type === 'submit') {
+      console.log(this.OrderItem)
+      this.OrderItem.submitDeleteOrder()
+      this.getOrderList({})
+    }
+  }
+  /**
+   * 删除订单
+   * @return void
+   */
+  deleteOrder() {
+    this.setState({
+      showTipsCard: true  //控制弹窗是否显示
+    })
+  }
+  
+  /**
    * 下拉刷新
    * @return void
    */
@@ -261,7 +289,8 @@ class Order extends Component {
       orderList,
       searchDrawerShow,
       sendCityName,
-      receiveCityName
+      receiveCityName,
+      showTipsCard
     } = this.state
     let { userInfo } =  this.props
     const orderItemList = orderList.map(item => {
@@ -271,6 +300,7 @@ class Order extends Component {
           key={key}
           item={item}
           userInfo={userInfo}
+          onClick={this.deleteOrder.bind(this)}
         ></OrderItem>
       )
     })
@@ -308,6 +338,13 @@ class Order extends Component {
                   onClick={this.handleSelectClick.bind(this)}
                 ></Screen>
               </Drawer>
+              {
+                showTipsCard ?
+                  <TipsCard
+                    onClick={this.closeTipsCard.bind(this)}
+                  ></TipsCard>
+                  : null
+              }
             </Block>
             :
             <NoData pageType='login'></NoData>

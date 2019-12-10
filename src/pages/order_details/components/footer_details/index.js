@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 订单详情--底部详情 订单状态status 10 待支付 20 待交车 30 已取消 40 已完成
  * @Date: 2019-09-20 09:58:08
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-06 17:56:58
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-12-09 18:13:07
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -73,8 +73,8 @@ class FooterDetailsComponent extends Component {
       case 'payOrder':
         this.paymentButton()
         break;
-      // case 'otherOnePayOrder': // 请别人代付
-      //   break;
+      case 'otherOnePayOrder': // 请别人代付
+        break;
       // case 'shareOrder':
       //   this.shareBargain()
       //   break;
