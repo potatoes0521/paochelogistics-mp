@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 订单item
  * @Date: 2019-09-23 14:42:25
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-10 15:59:10
+ * @LastEditors: guorui
+ * @LastEditTime: 2019-12-10 17:44:43
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,7 +16,7 @@ import {
 } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
-import api from '@api/index.js'
+
 import '../../../../assets/icon_font/icon.scss'
 import './index.styl'
 
