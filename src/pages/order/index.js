@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
- * @LastEditors: guorui
- * @LastEditTime: 2019-12-10 15:46:40
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-12-10 16:01:23
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -51,6 +51,7 @@ class Order extends Component {
     this.receiveCityId = ''
     this.createTimeStart = ''
     this.createTimeEnd = ''
+    this.deleteOrderItem = {}
   }
   
   componentDidMount() {
@@ -201,18 +202,34 @@ class Order extends Component {
       showTipsCard: false
     })
     if (type === 'submit') {
-      console.log(this.OrderItem)
-      this.OrderItem.submitDeleteOrder()
-      this.getOrderList({})
+      this.submitDeleteOrder()
     }
   }
   /**
    * 删除订单
    * @return void
    */
-  deleteOrder() {
+  deleteOrder(item) {
+    this.deleteOrderItem = item
     this.setState({
       showTipsCard: true  //控制弹窗是否显示
+    })
+  }
+  /**
+   * 提交删除
+   * @return void
+   */
+  submitDeleteOrder() {
+    let sendData = {
+      orderCode: this.deleteOrderItem.orderCode
+    }
+    api.order.deleteOrder(sendData, this).then(() => {
+      Taro.showToast({
+        title: '订单删除成功',
+        icon: 'none'
+      })
+      this.deleteOrderItem = {}
+      this.getOrderList({})
     })
   }
   

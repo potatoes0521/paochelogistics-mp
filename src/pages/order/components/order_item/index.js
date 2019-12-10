@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 订单item
  * @Date: 2019-09-23 14:42:25
- * @LastEditors: guorui
- * @LastEditTime: 2019-12-10 15:47:31
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-12-10 15:59:10
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -54,20 +54,8 @@ export default class OrderItem extends Component {
   }
   deleteOrder(e) { 
     e.stopPropagation()
-    this.props.onClick(...arguments)
-  }
-
-  submitDeleteOrder() {
     let { item } = this.props
-    let sendData = {
-      orderCode: item.orderCode
-    }
-    api.order.deleteOrder(sendData, this).then(() => {
-      Taro.showToast({
-        title: '订单删除成功',
-        icon: 'none'
-      })
-    })
+    this.props.onClick(item)
   }
 
   render() {
