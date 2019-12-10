@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-06 16:24:38
+ * @LastEditTime: 2019-12-10 18:11:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -238,6 +238,16 @@ class Index extends Component {
       locationModal: false
     })
   }
+  recommendNavigator(item) { 
+    this.setState({
+      sendCityName: item.sendCityName,
+      sendCityId: item.sendCityId,
+      receiveCityName: item.receiveCityName,
+      receiveCityId: item.receiveCityId
+    }, () => {
+      this.submitOffer()
+    })
+  }
   /**
    * 提交询价 跳转到询价操作页面
    * @return void
@@ -356,7 +366,7 @@ class Index extends Component {
     const recommendListRender = recommendList.map(item => {
       const key = item.hotlineId
       return (
-        <View key={key} className='recommend-item'>
+        <View key={key} className='recommend-item' onClick={this.recommendNavigator.bind(this, item)}>
           <View className='recommend-city'>
             <Text>{item.sendCityName}</Text>
             <Text className='iconfont iconjiantou_qiehuanyou icon-right-tou'></Text>
