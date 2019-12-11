@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-09-26 11:23:34
- * @LastEditors: guorui
- * @LastEditTime: 2019-12-10 12:09:22
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-12-11 10:46:22
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,7 +16,7 @@ export default {
   },
   // 获取代付订单详情
   getOrderHelpPaymentDetails(data, that) {
-    return requestHandle.get(`order/payrolldetail/orderCode=${data.orderCode}`, data, that);
+    return requestHandle.get(`order/payrolldetail?orderCode=${data.orderCode}`, data, that);
   },
   // 获取订单列表
   getOrderList(data, that) {

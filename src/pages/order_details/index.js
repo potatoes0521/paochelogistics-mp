@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-11 10:25:33
+ * @LastEditTime: 2019-12-11 14:45:12
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,10 +12,11 @@ import Taro, { Component } from '@tarojs/taro'
 import {
   View,
   Text,
-  Block
+  Block,
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import { defaultResourceImgURL } from '@config/request_config.js'
+import classNames from 'classnames'
 import NoTitleCard from '@c/no_title_card/index.js'
 import SendCityComponent from './components/send_city/index.js'
 import ReceiveCityComponent from './components/receive_city/index.js'
@@ -23,6 +24,7 @@ import ServiceDetailsComponent from './components/service_details/index.js'
 import PriceDetailsComponent from './components/price_details/index.js'
 import FooterDetailsComponent from './components/footer_details/index.js'
 import CustomerInfoComponent from './components/customer_info/index.js'
+import HelpPayMsg from './components/help_pay/index.js'
 // eslint-disable-next-line import/first
 import BargainBox from '@c/bargain/index.js' // 砍价过期 弹框 
 // eslint-disable-next-line import/first
@@ -49,6 +51,7 @@ class OrderDetails extends Component {
       fail: false,
       showTips: false, // 等数据请求到了再显示
       // canBargain: false
+      pageParams: {}
     }
     this.pageParams = {}
     this.timer = null
@@ -60,22 +63,31 @@ class OrderDetails extends Component {
   async componentDidShow() {
     this.pageParams = this.$router.params || {}
     console.log(this.pageParams)
+    this.setState({
+      pageParams: this.pageParams
+    })
     if (this.pageParams.share_type) {
-      await login.getCode(this)
-      const next = await handleShareInOrderDetails(this.pageParams, this.props.userInfo)
-      if (!next) return
-      if (this.pageParams.share_type !== '3') {
-        this.getOrderDetails()
-      } else {
-        // 代付详情
-        this.getOrderHelpPayment()
+      let {userInfo} = this.props
+      if (userInfo && !userInfo.userId) {
+        await login.getCode(this)
+        const next = await handleShareInOrderDetails(this.pageParams, this.props.userInfo)
+        if (!next) return
       }
+      this.handleGetOrderDetails()
     } else {
       this.getOrderDetails()
     }
   }
+  handleGetOrderDetails() {
+    if (this.pageParams.share_type !== '3') {
+      this.getOrderDetails()
+    } else {
+      // 代付详情
+      this.getOrderHelpPayment()
+    }
+  }
   /**
-   * 获取订单详情--发车城市信息
+   * 获取订单详情
    * @return void
    */
   getOrderDetails() {
@@ -120,6 +132,7 @@ class OrderDetails extends Component {
    * @return void
    */
   handleResponse(res) { 
+    if (!res) return
     this.setState({
       orderDetailsInfo: res,
       tipContent: res.tipContent,
@@ -193,7 +206,8 @@ class OrderDetails extends Component {
       if (type === 'otherOnePayOrder') { // 分享给客户
         path = `/pages/order_details/index?share_type=3&${shareMsg}`
         title = `我要运车,需要大侠助我一臂之力!!`
-        imageUrl = `${defaultResourceImgURL}share_to_help_pay.png`
+        // imageUrl = `${defaultResourceImgURL}share_to_help_pay.png`
+        imageUrl = ''
       }
     }
     if (event.from === 'menu') {
@@ -204,7 +218,8 @@ class OrderDetails extends Component {
       } else {
         path = `/pages/order_details/index?share_type=3&${shareMsg}`
         title = `我要运车,需要大侠助我一臂之力!!`
-        imageUrl = `${defaultResourceImgURL}share_to_help_pay.png`
+        // imageUrl = `${defaultResourceImgURL}share_to_help_pay.png`
+        imageUrl = ''
       }
       // share_type = 2 分享砍价  本人去订单详情  其他人去砍价
       // if (userInfo.userType === 2 || userInfo.userType === 1) { // 分享给客户
@@ -252,12 +267,56 @@ class OrderDetails extends Component {
       tipContent,
       fail,
       showTips,
+      pageParams
       // canBargain
     } = this.state
+    // 1. 请求到数据没有 2. 有没有展示文案 3. 没有过期 4 订单的支付状态是 未支付 5. 不是代付
+    const showTipsView = showTips && tipContent && !fail && orderDetailsInfo.payStatus === 0 && pageParams.share_type !== '3'
+    const orderMsgClassName = classNames({
+      'order-msg': pageParams.share_type !== '3',
+      'help-order-msg': pageParams.share_type === '3',
+    })
     return (
       <View className='page-wrapper'>
+        <View className='page-main'>
+          {
+            pageParams.share_type === '3' ?
+              <HelpPayMsg orderDetailsInfo={orderDetailsInfo} />
+              :
+              <View className='pay-tips-wrapper'>
+                <Text className='pay-text'>{ orderDetailsInfo.statusDesc || '' }</Text>
+              </View>
+          }
+          <View className={orderMsgClassName}>
+            <NoTitleCard>
+              <CustomerInfoComponent item={orderDetailsInfo}></CustomerInfoComponent>
+              <View className='dividing-line'></View>
+              <SendCityComponent item={orderDetailsInfo}></SendCityComponent>
+              <View className='dividing-line'></View>
+              <ReceiveCityComponent item={orderDetailsInfo}></ReceiveCityComponent>
+              <View className='dividing-line'></View>
+              <ServiceDetailsComponent item={orderDetailsInfo}></ServiceDetailsComponent>
+              <View className='dividing-line'></View>
+              <PriceDetailsComponent
+                item={orderDetailsInfo}
+                fail={fail}
+                onClick={this.clickWhyNotUse.bind(this)}
+              ></PriceDetailsComponent>
+            </NoTitleCard>
+          </View>
+        </View>
         {
-          showTips && tipContent && !fail && orderDetailsInfo.status === 10 ?
+          orderDetailsInfo.buttons && orderDetailsInfo.buttons.length ?
+            <View className='page-footer'>
+              <FooterDetailsComponent
+                onGetOrderDetails={this.handleGetOrderDetails.bind(this)}
+                item={orderDetailsInfo}
+              ></FooterDetailsComponent>
+            </View>
+            : null
+        }
+        {
+          showTipsView ?
             <View className='bargain-tips-wrapper'>
               <View className='time-tips'>
                 <View className='tips'>优惠倒计时</View>
@@ -282,39 +341,12 @@ class OrderDetails extends Component {
             : null
         }
         {
-          fail && orderDetailsInfo.status === 10 ?
+          fail && orderDetailsInfo.payStatus === 0 ?
             <BargainBox
               show={showBargainBox}
               type='fail'
               onClick={this.bargainBoxClick.bind(this)}
             ></BargainBox>
-            : null
-        }
-        <View className='page-main'>
-          <View className='pay-tips-wrapper'>
-            <Text className='pay-text'>{ orderDetailsInfo.statusDesc || '' }</Text>
-          </View>
-          <NoTitleCard>
-            <CustomerInfoComponent item={orderDetailsInfo}></CustomerInfoComponent>
-            <View className='dividing-line'></View>
-            <SendCityComponent item={orderDetailsInfo}></SendCityComponent>
-            <View className='dividing-line'></View>
-            <ReceiveCityComponent item={orderDetailsInfo}></ReceiveCityComponent>
-            <View className='dividing-line'></View>
-            <ServiceDetailsComponent item={orderDetailsInfo}></ServiceDetailsComponent>
-            <View className='dividing-line'></View>
-            <PriceDetailsComponent
-              item={orderDetailsInfo}
-              fail={fail}
-              onClick={this.clickWhyNotUse.bind(this)}
-            ></PriceDetailsComponent>
-          </NoTitleCard>
-        </View>
-        {
-          orderDetailsInfo.buttons && orderDetailsInfo.buttons.length ?
-            <View className='page-footer'>
-              <FooterDetailsComponent item={orderDetailsInfo}></FooterDetailsComponent>
-            </View>
             : null
         }
       </View>

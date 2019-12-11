@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 订单详情--底部详情 订单状态status 10 待支付 20 待交车 30 已取消 40 已完成
  * @Date: 2019-09-20 09:58:08
- * @LastEditors: guorui
- * @LastEditTime: 2019-12-09 18:13:07
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-12-11 14:43:43
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,6 +14,7 @@ import {
   Button
 } from '@tarojs/components'
 import OrderFooterCard from '../order_footer_card/index.js'
+import HelpPayBtn from '../pay_btn/index.js'
 // eslint-disable-next-line import/first
 import { connect } from '@tarojs/redux'
 // eslint-disable-next-line import/first
@@ -61,7 +62,9 @@ class FooterDetailsComponent extends Component {
       url: `/pages/transport_state/index?order_id=${item.orderId}`
     })
   }
-
+  getOrderDetails() {
+    this.props.onGetOrderDetails()
+  }
   buttonsFun(e) {
     switch (e) {
       case 'logisticsDetail':
@@ -118,6 +121,14 @@ class FooterDetailsComponent extends Component {
             key={key}
           >{itemList.name}</Button>
         )
+      } else if (itemList.key === 'helpPayOrder') {
+        return (
+          <HelpPayBtn
+            item={itemList}
+            orderCode={item.orderCode}
+            onPayOver={this.getOrderDetails.bind(this)}
+          />
+        )
       }
       return (
         <Button className={itemList.key} key={key} onClick={() => this.buttonsFun(itemList.key)}>{itemList.name}</Button>
@@ -144,11 +155,13 @@ const mapStateToProps = (state) => {
 }
 
 FooterDetailsComponent.defaultProps = {
-  item: {}
+  item: {},
+  onGetOrderDetails: ()=>{}
 }
 
 FooterDetailsComponent.propTypes = {
-  item: PropTypes.object
+  item: PropTypes.object,
+  onGetOrderDetails: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps)(FooterDetailsComponent)
