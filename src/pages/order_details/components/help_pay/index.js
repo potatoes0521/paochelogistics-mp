@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-11 13:59:53
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-11 14:35:44
+ * @LastEditTime: 2019-12-11 14:54:29
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -43,14 +43,14 @@ export default class index extends Component {
             <Image src={orderDetailsInfo.userPhoto}></Image>
           </View>
           <View className='text'>
-            <Text className='nick-name'>{nickName}</Text>
+            <Text className='nick-name'>{nickName || ''}</Text>
             发给朋友的代付邀请
           </View>
         </View>
         <View className='tips-main'>
           <View className='money-box'>
             <View className='money-title'>{orderDetailsInfo.payStatus ? '已支付' : '需支付'}</View>
-            <View className='money'>¥{orderDetailsInfo.payPriceDesc}</View>
+            <View className='money'>¥{orderDetailsInfo.payPriceDesc || ''}</View>
           </View>
           <View className='tips'>
             <View className='title'>付款说明：</View>
