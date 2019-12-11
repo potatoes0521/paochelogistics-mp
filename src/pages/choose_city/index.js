@@ -6,7 +6,7 @@
  * 
  * @Date: 2019-08-30 15:53:51
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-11 16:24:37
+ * @LastEditTime: 2019-12-11 17:06:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -120,8 +120,7 @@ class ChooseCity extends Component {
    * @param {Object} e event对象
    * @return void
    */
-  chooseSearchCity(e) {
-    let { city } = e.target.dataset
+  chooseSearchCity(city) {
     this.onClick(city)
   }
   /**
@@ -135,7 +134,7 @@ class ChooseCity extends Component {
     clearTimeout(this.timer)
     this.timer = setTimeout(() => {
       let filterCityList = this.allCityList.filter(item => {
-        return ((item && item.cityName) && item.cityName.indexOf(value) !== -1) || ((item && item.spell) && item.spell.indexOf(value) !== -1)
+        return (item && item.cityName && item.cityName.indexOf(value) !== -1) || (item && item.spell && item.spell.indexOf(value) !== -1)
       })
       this.setState({
         filterCityList
@@ -191,8 +190,12 @@ class ChooseCity extends Component {
     const hotCityList = hotCity.map(city => {
       const key = city.cityId
       return (
-        <View className='hot-item' dataCity={city} key={key}>
-          <View className='hot-item-btn' dataCity={city}>{city.cityName}</View>
+        <View
+          className='hot-item'
+          onClick={this.chooseSearchCity.bind(this, city)}
+          key={key}
+        >
+          <View className='hot-item-btn'>{city.cityName}</View>
         </View>
       )
     })
@@ -200,7 +203,11 @@ class ChooseCity extends Component {
     const filterList = filterCityList.map(city => {
       const key = city.cityId
       return (
-        <View className='search-item' dataCity={city} key={key}>
+        <View
+          className='search-item'
+          onClick={this.chooseSearchCity.bind(this, city)}
+          key={key}
+        >
           <View className='search-item-name'>{city.cityName}</View>
           <Text className='iconfont iconxiangyouxuanzejiantoux icon-style-right'></Text>
         </View>
@@ -240,7 +247,7 @@ class ChooseCity extends Component {
         <View className={indexesWrapperClassName}>
           {
             filterCityList.length ?
-              <View className='search-wrapper' onClick={this.chooseSearchCity}>
+              <View className='search-wrapper'>
                 {filterList}
               </View>
               :
@@ -256,7 +263,7 @@ class ChooseCity extends Component {
                   hotCity.length ?
                     <View className='hot-city-wrapper'>
                       <View className='hot-title'>热门城市</View>
-                      <View className='hot-city-list' onClick={this.chooseSearchCity}>
+                      <View className='hot-city-list'>
                         {hotCityList}
                       </View>
                     </View>
