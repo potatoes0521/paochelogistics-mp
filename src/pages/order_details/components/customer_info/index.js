@@ -3,7 +3,7 @@
  * @description: 客户信息
  * @Date: 2019-12-06 09:21:26
  * @LastEditors: guorui
- * @LastEditTime: 2019-12-09 14:04:20
+ * @LastEditTime: 2019-12-11 09:19:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -38,11 +38,11 @@ class CustomerInfoComponent extends Component {
       <View className='details-form-wrapper'>
         <View className='details-form-item'>
           <View className='details-form-label'>所属客户:</View>
-          <View className='details-form-content'>{item.customerName || ''}</View>
+          <View className='details-form-content'>{item.realName || ''}</View>
         </View>
         <View className='details-form-item'>
           <View className='details-form-label'>联系方式:</View>
-          <View className='details-form-content'>{item.customerMobile || ''}</View>
+          <View className='details-form-content'>{item.mobile || ''}</View>
         </View>
         <View className='details-form-item'>
           <View className='details-form-label'>订单编号:</View>
