@@ -3,7 +3,7 @@
  * @description: 城市索引选择器
  * @Date: 2019-09-01 14:57:42
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-06 16:12:16
+ * @LastEditTime: 2019-12-11 16:34:18
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  *  maxCheck: PropTypes.number  // 最多多选几个
@@ -61,11 +61,11 @@ export default class Indexes extends Component {
     this.checkedList = []
   }
  
-  /**
-   * 组件状态更新的时候
-   * @param {Object} nextProps 改变后的数据
-   * @return void
-   */
+  // /**
+  //  * 组件状态更新的时候
+  //  * @param {Object} nextProps 改变后的数据
+  //  * @return void
+  //  */
   componentWillReceiveProps(nextProps) {
     if (nextProps.list.length !== this.props.list.length) {
       this.initData()
@@ -83,7 +83,6 @@ export default class Indexes extends Component {
       .then(rect => {
         let {
           list,
-          throughCityList,
           checkBox
         } = this.props
         const len = list.length
@@ -93,17 +92,6 @@ export default class Indexes extends Component {
         this.setState({
           _list: list
         })
-        // 途经城市
-        if (throughCityList.idList && throughCityList.idList.length) {
-          this.checkedList = throughCityList.nameList.filter(item => !!item).map((item, index) => {
-            return {
-              cityName: item,
-              cityId: throughCityList.idList[index]
-            }
-          })
-          this.checkNum = this.checkedList.length
-          this.diff(list, this.checkedList)
-        }
         if (checkBox) {
           this.allCityList = list.map(item => {
             return item.list
@@ -151,7 +139,6 @@ export default class Indexes extends Component {
       return item.cityId
     })
     this.props.onClick(throughCityNameList, throughCityIdList)
-    
   }
   /**
    * 处理选中
@@ -221,7 +208,6 @@ export default class Indexes extends Component {
   handleTouchMove = (event) => {
     event.stopPropagation()
     event.preventDefault()
-
     const {
       list
     } = this.props
@@ -422,7 +408,6 @@ Indexes.propTypes = {
   isShowToast: PropTypes.bool,
   topKey: PropTypes.string,
   list: PropTypes.array,
-  throughCityList: PropTypes.object,
   onClick: PropTypes.func
 }
 
@@ -433,6 +418,5 @@ Indexes.defaultProps = {
   topKey: 'Top',
   isShowToast: true,
   list: [],
-  throughCityList: {},
   onClick: () => { }
 }

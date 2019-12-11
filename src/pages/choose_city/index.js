@@ -6,7 +6,7 @@
  * 
  * @Date: 2019-08-30 15:53:51
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-06 16:09:50
+ * @LastEditTime: 2019-12-11 16:24:37
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -30,12 +30,12 @@ import Indexes from '@c/indexes/index.js'
 
 class ChooseCity extends Component { 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       allCity: [],
       hotCity: [],
       filterCityList: []
-    };
+    }
     this.type = ''
     this.allCityList = []
     this.timer = null
@@ -93,8 +93,8 @@ class ChooseCity extends Component {
    * @return void
    */
   onClick(item, item2) {
-    let pages = Taro.getCurrentPages(); //  获取页面栈
-    let prevPage = pages[pages.length - 2]; // 上一个页面
+    let pages = Taro.getCurrentPages() //  获取页面栈
+    let prevPage = pages[pages.length - 2] // 上一个页面
     if (this.type === 'start') {
       prevPage.$component.setState({
         sendCityName: item.cityName,
@@ -131,9 +131,7 @@ class ChooseCity extends Component {
    */
   searchCity(e) { 
     let { value } = e.target
-    if (value.length < 1) { 
-      return;
-    }
+    if (value.length < 1) return
     clearTimeout(this.timer)
     this.timer = setTimeout(() => {
       let filterCityList = this.allCityList.filter(item => {
@@ -151,8 +149,8 @@ class ChooseCity extends Component {
   cancelChecked(type = 'cancel') {
     let {editMsg} = this.props
     if (type === 'submit' && this.throughCityNameList.length) {
-      let pages = Taro.getCurrentPages(); //  获取页面栈
-      let prevPage = pages[pages.length - 2]; // 上一个页面
+      let pages = Taro.getCurrentPages() //  获取页面栈
+      let prevPage = pages[pages.length - 2] // 上一个页面
       if (JSON.stringify(editMsg) !== `{}`) {
         prevPage.$component.setState({
           throughCitys: {
