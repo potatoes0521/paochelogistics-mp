@@ -3,7 +3,7 @@
  * @description: 客户信息列表
  * @Date: 2019-09-27 15:38:07
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-14 18:43:53
+ * @LastEditTime: 2019-12-11 16:57:24
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -125,7 +125,11 @@ class CustomerInfo extends Component {
   searchConfirm() { 
     this.customerPage = 1
     this.customerFlag = false
-    this.getAllCustomerList(this.state.selectParam, this.customerPage)
+    this.setState({
+      customerListData: []
+    }, () => {
+      this.getAllCustomerList(this.state.selectParam, this.customerPage)
+    })
   }
   /**
    * 添加客户
@@ -249,7 +253,7 @@ class CustomerInfo extends Component {
               className='add-customer'
               onClick={this.addCustomer}
             >
-              <View className='iconfont icontianjiakehu icon-add-style'></View>
+              <Text className='iconfont icontianjiakehu icon-add-style'></Text>
             </View>
             : null
         }
