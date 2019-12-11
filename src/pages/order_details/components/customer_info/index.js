@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 客户信息
  * @Date: 2019-12-06 09:21:26
- * @LastEditors: guorui
- * @LastEditTime: 2019-12-11 09:19:00
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-12-11 11:09:14
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -21,14 +21,7 @@ class CustomerInfoComponent extends Component {
 
   copy(item) {
     Taro.setClipboardData({
-      data: item.orderCode,
-      success() {
-        Taro.getClipboardData({
-          success() {
-            console.log('复制成功')
-          }
-        })
-      }
+      data: item.orderCode
     })
   }
 
