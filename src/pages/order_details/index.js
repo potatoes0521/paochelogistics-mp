@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
- * @LastEditors: guorui
- * @LastEditTime: 2019-12-10 11:35:25
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-12-11 10:23:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -165,7 +165,7 @@ class OrderDetails extends Component {
    * @return void
    */
   onShareAppMessage(event) {
-    // let { userInfo } = this.props
+    let { userInfo } = this.props
     let { orderDetailsInfo } = this.state
     let { inquiryOrderVO } = orderDetailsInfo
     let path = `/pages/index/index`
@@ -193,15 +193,18 @@ class OrderDetails extends Component {
       if (type === 'otherOnePayOrder') { // 分享给客户
         path = `/pages/order_details/index?share_type=3&${shareMsg}`
         title = `${shareTitle}`
-        imageUrl = `${defaultResourceImgURL}share_to_c.png`
+        imageUrl = `${defaultResourceImgURL}share_to_help_pay.png`
       }
     }
     if (event.from === 'menu') {
-      // if (userInfo.userType === 0) { // 分享给客户
+      if (userInfo.userType === 0 && +this.pageParams.share_type !== 3) { // 分享给客户
         path = `/pages/order_details/index?share_type=1&${shareMsg}`
         title = `${shareTitle}`
         imageUrl = `${defaultResourceImgURL}share_to_c.png`
-      // }
+      } else {
+        path = `/pages/order_details/index?share_type=3&${shareMsg}`
+        imageUrl = `${defaultResourceImgURL}share_to_help_pay.png`
+      }
       // share_type = 2 分享砍价  本人去订单详情  其他人去砍价
       // if (userInfo.userType === 2 || userInfo.userType === 1) { // 分享给客户
       //   path = `/pages/share_bargain/index?share_type=2&order_code=${orderDetailsInfo.orderCode}&c_id=${orderDetailsInfo.userId}`
