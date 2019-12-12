@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-12 10:14:29
+ * @LastEditTime: 2019-12-12 10:27:39
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -391,24 +391,25 @@ class Index extends Component {
     })
     return (
       <View className='index-wrapper'>
-        {
-          bannerList.length && (
-            <View className='swiper-wrapper'>
-              <Swiper
-                className='swiper'
-                autoplay
-                indicatorDots
-                circular
-                indicatorActiveColor='#ffffff'
-                interval='3000'
-              >
-                {
-                  bannerListRender
-                }
-              </Swiper>
-            </View>
-          )
-        }
+        <View className='swiper-wrapper'>
+          <Swiper
+            className='swiper'
+            autoplay
+            indicatorDots
+            circular
+            indicatorActiveColor='#ffffff'
+            interval='3000'
+          >
+            {
+              bannerList.length ?
+                bannerListRender
+                :
+                <SwiperItem
+                  onClick={this.navigatorToWebView.bind(this, {})}
+                ></SwiperItem>
+            }
+          </Swiper>
+        </View>
         <View className='offer-wrapper'>
           <View className='offer-form'>
             <View className='offer-form-top'>
