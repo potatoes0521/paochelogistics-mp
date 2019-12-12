@@ -3,7 +3,7 @@
  * @description: 项目描述文件
  * @Date: 2019-08-14 10:25:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-12 10:19:13
+ * @LastEditTime: 2019-12-12 10:40:07
  -->
 ## 跑车帮小程序
  
@@ -183,4 +183,6 @@ taro update project
 * 5.询价单列表将未报价放在第一位  顺序为未报价/已报价/全部
 * 6.订单详情更改为使用payStatus字段判断支付状态
 * 7.获取支付信息统一更改为pay/orderpay接口
+* 8.暴露订单号 允许长按或者点击复制
+* 9.暴露订单所属客户
 
