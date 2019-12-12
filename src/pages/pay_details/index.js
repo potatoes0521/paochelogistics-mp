@@ -3,7 +3,7 @@
  * @description: 支付详情  本页面注释信息为，别人代付时显示的支付页面
  * @Date: 2019-10-08 09:30:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-13 13:24:19
+ * @LastEditTime: 2019-12-12 10:12:52
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -74,7 +74,8 @@ class PayDetails extends Component {
    */
   payMoney() { 
     let sendData = {
-      orderCode: this.pageParams.order_code
+      orderCode: this.pageParams.order_code,
+      isPaytoll: 0
     }
     api.pay.getPayParams(sendData, this).then(res => {
       this.weChatPay(res)
@@ -147,32 +148,6 @@ class PayDetails extends Component {
       <View className='page-wrapper'>
         <View className='pay-wrapper'>
           <NoTitleCard>
-            {/* <View className='details-form-wrapper'>
-              <View className='details-form-item'>
-                <View className='details-form-label'>报价:</View>
-                <View className='details-form-price'>￥{quotedPriceDesc || ''}</View>
-              </View>
-              {
-                (bargainPriceDesc) ?
-                  <View className='details-form-item'>
-                    <View className='details-form-label'>帮砍价:</View>
-                    <View className='details-form-price'>-￥{bargainPriceDesc || ''}</View>
-                  </View>
-                  : null
-              }
-              {
-                (promotionsPrice) ?
-                  <View className='details-form-item'>
-                    <View className='details-form-label'>立即支付立减:</View>
-                    <View className='details-form-price'>-￥{promotionsPrice || ''}</View>
-                  </View>
-                  : null
-              }
-              <View className='details-form-item'>
-                <View className='details-form-label'>应付金额:</View>
-                <View className='details-form-price'>￥{payPriceDesc || ''}</View>
-              </View>
-            </View> */}
             <PriceDetailsComponent
               item={item}
               fail={fail}

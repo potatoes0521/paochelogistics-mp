@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-11 13:59:53
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-11 14:54:29
+ * @LastEditTime: 2019-12-12 09:53:57
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -20,18 +20,10 @@ import './index.styl'
 
 export default class index extends Component { 
 
-  // static options = {
-    // addGlobalClass: true // 允许外部样式修改组件样式
-  // }
-
   constructor(props) {
     super(props)
     this.state={}
   }
-
-  componentDidMount() {
-  }
-
 
   render() {
     let { orderDetailsInfo } = this.props

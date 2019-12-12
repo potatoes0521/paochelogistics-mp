@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-11 10:26:46
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-11 14:45:36
+ * @LastEditTime: 2019-12-12 10:13:09
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -17,10 +17,6 @@ import './index.styl'
 
 class HelpPayBtn extends Component { 
 
-  // static options = {
-    // addGlobalClass: true // 允许外部样式修改组件样式
-  // }
-
   constructor(props) {
     super(props)
     this.state={}
@@ -33,7 +29,8 @@ class HelpPayBtn extends Component {
   payMoney() {
     let { orderCode } = this.props
     let sendData = {
-      orderCode
+      orderCode,
+      isPaytoll: 1
     }
     api.pay.getPayParams(sendData, this).then(res => {
       this.weChatPay(res)

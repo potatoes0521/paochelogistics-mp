@@ -3,7 +3,7 @@
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-09 15:48:38
+ * @LastEditTime: 2019-12-12 10:02:56
  */
 
 // 默认请求连接
@@ -153,12 +153,12 @@ export default {
           }
         },
         fail(e) {
-          Taro.hideLoading()
+          clearTimeout(loadingTimer)
           Taro.showToast({
             title: '网络连接超时',
             icon: 'none'
           })
-          reject(url + '接口出现问题', e)
+          reject(url + '接口出现问题1', e)
         }
       })
     })

@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-09-26 11:23:34
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-11 10:46:22
+ * @LastEditTime: 2019-12-12 09:45:12
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -21,14 +21,6 @@ export default {
   // 获取订单列表
   getOrderList(data, that) {
     return requestHandle.get(`order/list`, data, that);
-  },
-  // 订单立即支付
-  payOrder(data, that) {
-    return requestHandle.post(`order/pay`, data, that);
-  },
-  // 订单代付支付
-  payOrder(data, that) {
-    return requestHandle.post(`pay/orderpay`, data, that);
   },
   // 订单下单
   placeOrder(data, that) {
