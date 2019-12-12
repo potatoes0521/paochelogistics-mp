@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-10 18:11:00
+ * @LastEditTime: 2019-12-12 10:14:29
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -32,6 +32,7 @@ import login from '@utils/login.js'
 // eslint-disable-next-line import/first
 import LocationModal from './components/location_modal/index.js'
 // eslint-disable-next-line import/first
+import loadingImage from '@img/index/loading.png'
 // eslint-disable-next-line import/first
 import { handleShare } from '@utils/handle_share.js'
 // eslint-disable-next-line import/first
@@ -52,7 +53,8 @@ class Index extends Component {
       sendCityName: '',
       locationModal: false,
       bannerList: [],
-      recommendList: []
+      recommendList: [],
+      failLoading: false
     }
     this.initCity = {}
     this.pageParams = {}
@@ -219,6 +221,11 @@ class Index extends Component {
           recommendList: res
         })
       })
+      .catch(() => {
+        this.setState({
+          failLoading: true
+        })
+      })
   }
   /**
    * 跳转到webview界面
@@ -346,7 +353,8 @@ class Index extends Component {
       sendCityName,
       locationModal,
       bannerList,
-      recommendList
+      recommendList,
+      failLoading
     } = this.state
     let { userInfo } = this.props
     const bannerListRender = bannerList.map(item => {
@@ -457,7 +465,13 @@ class Index extends Component {
         </View>
         <View className='recommend-list'>
           {
-            recommendListRender
+            recommendList.length ?
+              recommendListRender
+              :
+              <View className='recommend-no-data'>
+                <Image className='no-data-image' src={loadingImage}></Image>
+                <View className='tips-text'>{failLoading ? '网络不给力' : '数据加载中'}</View>
+              </View>
           }
         </View>
         {
