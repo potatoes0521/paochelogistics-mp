@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-13 15:29:55
+ * @LastEditTime: 2019-12-13 16:45:39
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -211,7 +211,7 @@ class OrderDetails extends Component {
       // share_type = 3 找人代付
       if (type === 'otherOnePayOrder') { // 分享给客户
         path = `/pages/order_details/index?share_type=3&${shareMsg}`
-        title = `我要运车,需要大侠助我一臂之力!!`
+        title = `请帮我付款`
         // imageUrl = `${defaultResourceImgURL}share_to_help_pay.png`
         imageUrl = ''
       }
@@ -223,7 +223,7 @@ class OrderDetails extends Component {
         imageUrl = `${defaultResourceImgURL}share_to_c.png`
       } else {
         path = `/pages/order_details/index?share_type=3&${shareMsg}`
-        title = `我要运车,需要大侠助我一臂之力!!`
+        title = `请帮我付款`
         // imageUrl = `${defaultResourceImgURL}share_to_help_pay.png`
         imageUrl = ''
       }

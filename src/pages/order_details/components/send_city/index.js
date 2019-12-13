@@ -3,7 +3,7 @@
  * @description: 订单详情中发车城市的组件
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: liuYang
- * @LastEditTime: 2019-10-31 18:48:10
+ * @LastEditTime: 2019-12-13 16:38:30
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -19,7 +19,15 @@ class SendCityComponent extends Component {
     super(props)
     this.state = { }
   }
-
+  callThem() {
+    let {
+      item
+    } = this.props
+    if (!item.orderCarriagePersonVo) return
+    Taro.makePhoneCall({
+      phoneNumber: item.orderCarriagePersonVo.sendMobile
+    })
+  }
   render() {
     let { item }  = this.props
     return (
@@ -40,7 +48,7 @@ class SendCityComponent extends Component {
           <View className='details-form-label'>联系人:</View>
           <View className='details-form-content'>{item.orderCarriagePersonVo && item.orderCarriagePersonVo.sendPerson || ''}</View>
         </View>
-        <View className='details-form-item'>
+        <View className='details-form-item' onClick={this.callThem}>
           <View className='details-form-label'>联系方式:</View>
           <View className='details-form-content'>{item.orderCarriagePersonVo && item.orderCarriagePersonVo.sendMobile || ''}</View>
         </View>

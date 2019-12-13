@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-11 13:59:53
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-12 09:53:57
+ * @LastEditTime: 2019-12-13 16:40:50
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -36,7 +36,7 @@ export default class index extends Component {
           </View>
           <View className='text'>
             <Text className='nick-name'>{nickName || ''}</Text>
-            发给朋友的代付邀请
+            来自朋友的代付邀请
           </View>
         </View>
         <View className='tips-main'>
