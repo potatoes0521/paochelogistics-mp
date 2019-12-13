@@ -3,7 +3,7 @@
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-12 10:30:57
+ * @LastEditTime: 2019-12-13 14:20:03
  */
 
 // 默认请求连接
@@ -99,24 +99,28 @@ export default {
               icon: 'none',
               duration: 2000
             })
+            reject(url + '接口出现问题', '404')
           } else if (res.statusCode === HTTP_STATUS.CLIENT_ERROR) {
             Taro.showToast({
               title: '参数缺失',
               icon: 'none',
               duration: 2000
             })
+            reject(url + '接口出现问题', '参数缺失')
           } else if (res.statusCode === HTTP_STATUS.BAD_GATEWAY) {
             Taro.showToast({
               title: '服务端出现了问题',
               icon: 'none',
               duration: 2000
             })
+            reject(url + '接口出现问题', '500')
           } else if (res.statusCode === HTTP_STATUS.FORBIDDEN) {
             Taro.showToast({
               title: '无权限访问',
               icon: 'none',
               duration: 2000
             })
+            reject(url + '接口出现问题', '403')
           } else if (res.statusCode === HTTP_STATUS.SUCCESS) {
             if (res.data) {
               let resData = res.data
@@ -158,7 +162,7 @@ export default {
             title: '网络连接超时',
             icon: 'none'
           })
-          reject(url + '接口出现问题1', e)
+          reject(url + '接口出现问题', e)
         }
       })
     })
