@@ -3,7 +3,7 @@
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-13 14:20:03
+ * @LastEditTime: 2019-12-13 14:37:11
  */
 
 // 默认请求连接
@@ -59,14 +59,16 @@ export default {
       'systemId': 2 // 1 跑车帮   2 跑车物流
     })
     console.log(data, '接口是' + url)
-    const login = url.indexOf('login')
-    const phoneCode = url.indexOf('verification')
-    if (method === 'POST' && login === -1 && phoneCode === -1) {
+    const phoneCode = url.indexOf('verification') === -1
+    const login = url.indexOf('login') === -1
+    const changeOpenId = url.indexOf('getwechatopenid') === -1
+    const recommend = url.indexOf('recommend') === -1
+    if (method === 'POST' && login && phoneCode) {
       Taro.showLoading({
         title: loadingTitle,
         mask: true
       })
-    } else {
+    } else if (changeOpenId && recommend) {
       loadingTimer = setTimeout(() => {
         Taro.showLoading({
           title: loadingTitle,

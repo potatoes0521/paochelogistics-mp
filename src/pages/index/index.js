@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-12 10:27:39
+ * @LastEditTime: 2019-12-13 14:38:48
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -205,7 +205,7 @@ class Index extends Component {
     api.index.getBannerList(sendData, this)
       .then(res => {
         this.setState({
-          bannerList: res
+          bannerList: res || []
         })
       })
   }
@@ -218,7 +218,7 @@ class Index extends Component {
     api.index.getRecommendList(sendData, this)
       .then(res => {
         this.setState({
-          recommendList: res
+          recommendList: res || []
         })
       })
       .catch(() => {
