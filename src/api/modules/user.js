@@ -3,7 +3,7 @@
  * @description: 用户中心
  * @Date: 2019-09-26 11:23:16
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-21 09:54:57
+ * @LastEditTime: 2019-12-13 16:06:51
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,11 +12,11 @@ import requestHandle from '../request_handle.js';
 export default {
   // code换openID
   codeExchangeOpenID(data, that) {
-    return requestHandle.get(`user/getwechatopenid`, data, that);
+    return requestHandle.get(`user/getwechatopenid`, data, that, false);
   },
   // openID登录
   loginUseOpenID(data, that) {
-    return requestHandle.post('user/login', data, that, '加载中...')
+    return requestHandle.post('user/login', data, that, false)
   },
   // 注册
   register(data, that) {
@@ -32,7 +32,7 @@ export default {
   },
   // 获取手机验证码
   getVerificationCode(data, that) {
-    return requestHandle.post('code/sendverificationcode', data, that);
+    return requestHandle.post('code/sendverificationcode', data, that, '短信发送中...');
   },
   // 根据ID获取更多用户信息
   getUserInfo(data, that) {
