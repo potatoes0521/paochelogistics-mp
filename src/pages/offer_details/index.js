@@ -3,7 +3,7 @@
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-29 10:05:26
+ * @LastEditTime: 2019-12-13 15:08:59
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -353,43 +353,6 @@ class OfferDetails extends Component {
             buttonsList
           }
         </View>
-        {/* {
-          (status !== 40) ?
-            <View>
-              {
-                (buttons && buttons.includes('cancel-inquiry')) || (buttons && buttons.includes('urge-inquiry')) ?
-                  <View className='offer-button'>
-                    {
-                      buttons && buttons.includes('cancel-inquiry') ?
-                        <View className='cancel-offer' onClick={this.cancelOffer}>取消询价</View>
-                        : null
-                    }
-                    {
-                      buttons && buttons.includes('urge-inquiry') ?
-                        <View className='prompt-quotation' onClick={this.promptOffer}>催报价</View>
-                        : null
-                    }
-                  </View>
-                  : null
-              }
-              {
-                buttons && buttons.includes('submit-order') ?
-                  <View className='place-order' onClick={this.submitOfferOrder}>立即下单</View>
-                  : null
-              }
-              {
-                buttons && buttons.includes('again-inquiry') ?
-                  <View className='place-order' onClick={this.reinquiryOrder}>再次询价</View>
-                  : null
-              }
-              {
-                buttons && buttons.includes('view-order') ?
-                  <View className='place-order' onClick={this.viewOrder}>查看订单</View>
-                  : null
-              }
-            </View>
-            : null 
-        } */}
       </View>
     )
   }
