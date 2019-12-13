@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 订单item
  * @Date: 2019-09-23 14:42:25
- * @LastEditors: guorui
- * @LastEditTime: 2019-12-10 17:44:43
+ * @LastEditors: liuYang
+ * @LastEditTime: 2019-12-13 16:16:01
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -97,6 +97,7 @@ export default class OrderItem extends Component {
         className={allWrapperClassName}
         onClick={this.navigatorTo.bind(this, 'order_details')}
       >
+        <View className='item-title'>{ item.createTimeDesc || '' }</View>
         <View className='msg-wrapper'>
           <View className='list-item'>
             <View className='item-city'>

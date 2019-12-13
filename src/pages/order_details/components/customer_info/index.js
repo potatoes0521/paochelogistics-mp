@@ -3,7 +3,7 @@
  * @description: 客户信息
  * @Date: 2019-12-06 09:21:26
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-11 11:09:14
+ * @LastEditTime: 2019-12-13 16:19:25
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -24,7 +24,12 @@ class CustomerInfoComponent extends Component {
       data: item.orderCode
     })
   }
-
+  callThem() { 
+    let { item }  = this.props
+    Taro.makePhoneCall({
+      phoneNumber: item.mobile
+    })
+  }
   render() {
     let { item }  = this.props
     return (
@@ -33,7 +38,7 @@ class CustomerInfoComponent extends Component {
           <View className='details-form-label'>所属客户:</View>
           <View className='details-form-content'>{item.realName || ''}</View>
         </View>
-        <View className='details-form-item'>
+        <View className='details-form-item' onClick={this.callThem}>
           <View className='details-form-label'>联系方式:</View>
           <View className='details-form-content'>{item.mobile || ''}</View>
         </View>
@@ -42,6 +47,12 @@ class CustomerInfoComponent extends Component {
           <View className='details-form-content'>
             <Text selectable>{item.orderCode || ''}</Text>
             <Text onClick={this.copy.bind(this, item)} className='copy-btn'>复制</Text>
+          </View>
+        </View>
+        <View className='details-form-item'>
+          <View className='details-form-label'>下单时间:</View>
+          <View className='details-form-content'>
+            <Text selectable>{ item.createTimeDesc || '' }</Text>
           </View>
         </View>
       </View>
