@@ -3,7 +3,7 @@
  * @description: 数字输入框
  * @Date: 2019-08-30 10:23:19
  * @LastEditors: liuYang
- * @LastEditTime: 2019-09-27 15:07:35
+ * @LastEditTime: 2019-12-13 14:48:12
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  * 
@@ -39,7 +39,7 @@ function addNum(num1, num2) {
 
 // 格式化数字，处理01变成1,并且不处理1. 这种情况
 function parseValue(num) {
-  if (num === '') return '0'
+  if (num === '') return ''
 
   const numStr = _toString(num)
   if (numStr.indexOf('0') === 0
@@ -176,7 +176,7 @@ class InputNumber extends Component {
 InputNumber.defaultProps = {
   disabled: false,
   value: 1,
-  min: 1,
+  min: "",
   max: 999,
   step: 1,
   onChange: () => { },
@@ -189,7 +189,10 @@ InputNumber.propTypes = {
     PropTypes.string
   ]),
   disabled: PropTypes.bool,
-  min: PropTypes.number,
+  min: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string
+  ]),
   max: PropTypes.number,
   step: PropTypes.number,
   onChange: PropTypes.func,

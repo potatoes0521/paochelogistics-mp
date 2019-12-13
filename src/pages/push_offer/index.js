@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-06 11:17:37
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-06 16:26:32
+ * @LastEditTime: 2019-12-13 14:45:44
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -266,6 +266,10 @@ class Index extends Component {
       this.toast('请输入车辆信息')
       return
     }
+    if (!carAmount) {
+      this.toast('请输入车辆台数')
+      return
+    }
     let sendData = {
       carAmount, // 台数
       usedType, // 车辆性质
@@ -510,7 +514,6 @@ class Index extends Component {
               </View>
               <View className='from-right'>
                 <InputNumber
-                  min={1}
                   value={carAmount}
                   onChange={this.valueChange.bind(this)}
                 ></InputNumber>
