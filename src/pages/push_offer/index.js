@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-06 11:17:37
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-13 14:45:44
+ * @LastEditTime: 2019-12-13 16:49:06
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -362,7 +362,7 @@ class Index extends Component {
     }
   }
   config = {
-    navigationBarTitleText: '跑车物流'
+    navigationBarTitleText: '询价'
   }
   render() {
     let {

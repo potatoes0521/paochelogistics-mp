@@ -3,7 +3,7 @@
  * @description: 订单详情报价、 金额、 支付方式 
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-13 14:15:00
+ * @LastEditTime: 2019-12-13 17:16:39
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -82,10 +82,20 @@ export default class PriceDetailsComponent extends Component {
         {
           (item.share_type !== '3' && !hidePayType) ?
             (
-              <View className='details-form-item'>
-                <View className='details-form-label'>支付方式:</View>
-                <View className={payTypeClassName}>{item.payType || ''}</View>
-              </View>
+              <Block>
+                <View className='details-form-item'>
+                  <View className='details-form-label'>支付方式:</View>
+                  <View className={payTypeClassName}>{item.payType || ''}</View>
+                </View>
+                {
+                  item.payStatus && (
+                    <View className='details-form-item'>
+                      <View className='details-form-label'>支付时间:</View>
+                      <View className='details-form-content'>{item.payTimeDesc || ''}</View>
+                    </View>
+                  )
+                }
+              </Block>
             )
             : null
         }
