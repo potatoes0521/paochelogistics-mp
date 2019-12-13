@@ -3,7 +3,7 @@
  * @description: 订单详情报价、 金额、 支付方式 
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-11 15:04:41
+ * @LastEditTime: 2019-12-13 14:15:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -30,7 +30,8 @@ export default class PriceDetailsComponent extends Component {
   render() { 
     let {
       item,
-      fail
+      fail,
+      hidePayType
     } = this.props
     const payTypeClassName = classNames(
       'number',
@@ -79,12 +80,14 @@ export default class PriceDetailsComponent extends Component {
           <View className='details-form-price'>￥{item.payPriceDesc || ''}</View>
         </View>
         {
-          item.share_type !== '3' && (
-            <View className='details-form-item'>
-              <View className='details-form-label'>支付方式:</View>
-              <View className={payTypeClassName}>{item.payType || ''}</View>
-            </View>
-          )
+          (item.share_type !== '3' && !hidePayType) ?
+            (
+              <View className='details-form-item'>
+                <View className='details-form-label'>支付方式:</View>
+                <View className={payTypeClassName}>{item.payType || ''}</View>
+              </View>
+            )
+            : null
         }
       </View>
     )
@@ -95,11 +98,13 @@ export default class PriceDetailsComponent extends Component {
 PriceDetailsComponent.defaultProps = {
   item: {},
   fail: false,
+  hidePayType: false,
   onClick: () => {},
 }
 
 PriceDetailsComponent.propTypes = {
   item: PropTypes.object,
   fail: PropTypes.bool,
+  hidePayType: PropTypes.bool,
   onClick: PropTypes.func,
 }
