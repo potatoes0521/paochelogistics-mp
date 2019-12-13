@@ -3,7 +3,7 @@
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-10 16:01:23
+ * @LastEditTime: 2019-12-13 15:33:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -28,6 +28,7 @@ import NoData from '@c/no_data/index.js'
 import { orderTabs } from '@config/text_config.js'
 // eslint-disable-next-line import/first
 import api from '@api/index.js'
+import { handleOrderButtons } from '../../config/button_config.js'
 
 import './index.styl'
 
@@ -93,6 +94,9 @@ class Order extends Component {
       if (res && res.length < pageSize) {
         this.orderFlag = true
       }
+      res.forEach(item => {
+        item.buttons = handleOrderButtons(item.buttons)
+      });
       let { orderList } = this.state
       this.orderPage += 1
       if (pageNum === 1) {

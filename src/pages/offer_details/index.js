@@ -3,7 +3,7 @@
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-13 15:08:59
+ * @LastEditTime: 2019-12-13 15:40:18
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -18,6 +18,8 @@ import '../order_details/components/send_city/index.styl'
 import Storage from '@utils/storage.js'
 // eslint-disable-next-line import/first
 import api from '@api/index.js'
+import { handleOfferButtons } from '../../config/button_config.js'
+
 import './index.styl'
 import '../../assets/icon_font/icon.scss'
 
@@ -92,7 +94,7 @@ class OfferDetails extends Component {
           quotedTimeDesc: res.quotedTimeDesc,
           usedType: res.usedType,
           isActive: res.isActive,
-          buttons: res.buttons,
+          buttons: handleOfferButtons(res.buttons),
           orderCode: res.orderCode
         })
         Storage.setStorage('offer_info', res)

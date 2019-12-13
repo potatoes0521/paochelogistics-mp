@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-11 15:37:43
+ * @LastEditTime: 2019-12-13 15:29:55
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -33,6 +33,7 @@ import api from '@api/index.js'
 import login from '@utils/login.js'
 // eslint-disable-next-line import/first
 import { handleShareInOrderDetails } from '@utils/handle_share.js'
+import {handleOrderButtons} from '../../config/button_config.js'
 // eslint-disable-next-line import/first
 import { interValCountDown } from '@utils/timer_handle.js'
 import './index.styl'
@@ -135,6 +136,8 @@ class OrderDetails extends Component {
   handleResponse(res) { 
     if (!res) return
     const obj = Object.assign({}, res, this.pageParams)
+    const button = handleOrderButtons(obj.buttons)
+    obj.buttons = button
     this.setState({
       orderDetailsInfo: obj,
       tipContent: res.tipContent,
