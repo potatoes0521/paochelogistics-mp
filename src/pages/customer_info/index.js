@@ -3,7 +3,7 @@
  * @description: 客户信息列表
  * @Date: 2019-09-27 15:38:07
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-11 16:57:24
+ * @LastEditTime: 2019-12-13 13:54:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -52,7 +52,7 @@ class CustomerInfo extends Component {
    * @param {Number} pageSize 条数
    * @return void
    */
-  getAllCustomerList(selectParam = '', pageNum = 1, pageSize = 10) {
+  getAllCustomerList(selectParam = this.state.selectParam, pageNum = 1, pageSize = 10) {
     let sendData = {
       userId:this.props.userInfo.userId,
       selectParam,
