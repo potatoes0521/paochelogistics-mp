@@ -1,9 +1,9 @@
 /*
  * @Author: liuYang
- * @description: 订单详情的按钮
+ * @description: 按钮组的显示控制
  * @Date: 2019-12-13 15:09:48
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-13 15:41:18
+ * @LastEditTime: 2019-12-13 15:44:11
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
