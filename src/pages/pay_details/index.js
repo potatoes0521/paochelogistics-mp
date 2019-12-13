@@ -3,7 +3,7 @@
  * @description: 支付详情  本页面注释信息为，别人代付时显示的支付页面
  * @Date: 2019-10-08 09:30:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-12 10:12:52
+ * @LastEditTime: 2019-12-13 14:11:01
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -28,7 +28,8 @@ class PayDetails extends Component {
       promotionsPrice: 0, //支付立减
       payPriceDesc: 0, //应付金额
       fail: false,
-      showBargainBox: false
+      showBargainBox: false,
+      payType: '--'
      }
     this.pageParams = {}
   }
@@ -57,7 +58,8 @@ class PayDetails extends Component {
         quotedPriceDesc: res.inquiryOrderVO.quotedPriceDesc,
         bargainPriceDesc: res.bargainPriceDesc,
         promotionsPrice: res.promotionsPrice,
-        payPriceDesc: res.payPriceDesc
+        payPriceDesc: res.payPriceDesc,
+        payType: res.payType
       })
       const nowTimer = new Date().getTime()
       console.log('现在的时间戳' + nowTimer, '到期的时间戳' + res.discountDueTime, nowTimer - res.discountDueTime, nowTimer > res.discountDueTime)
@@ -136,13 +138,15 @@ class PayDetails extends Component {
       promotionsPrice,
       payPriceDesc,
       fail,
-      showBargainBox
+      showBargainBox,
+      payType
     } = this.state
     const item = {
       quotedPriceDesc,
       bargainPriceDesc,
       promotionsPrice,
-      payPriceDesc
+      payPriceDesc,
+      payType
     }
     return (
       <View className='page-wrapper'>
