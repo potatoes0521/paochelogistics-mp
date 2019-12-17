@@ -3,7 +3,7 @@
  * @description: 用户中心
  * @Date: 2019-09-26 11:23:16
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-17 10:17:07
+ * @LastEditTime: 2019-12-17 12:01:25
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -15,8 +15,12 @@ export default {
     return requestHandle.get(`user/getwechatopenid`, data, that, false);
   },
   // openID登录
-  login(data, that) {
-    return requestHandle.post('user/expresslogin', data, that, false)
+  loginUseOpenID(data, that) {
+    return requestHandle.post('user/login', data, that, false)
+  },
+  // 注册
+  register(data, that) {
+    return requestHandle.post('user/expresslogin', data, that);
   },
   // 换手机号
   codeExchangePhone(data, that) {
