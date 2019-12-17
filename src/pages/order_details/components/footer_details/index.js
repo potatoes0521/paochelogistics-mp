@@ -3,7 +3,7 @@
  * @description: 订单详情--底部详情 订单状态status 10 待支付 20 待交车 30 已取消 40 已完成
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-11 14:43:43
+ * @LastEditTime: 2019-12-17 10:52:18
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -94,7 +94,7 @@ class FooterDetailsComponent extends Component {
         return (
           <Button
             openType='share'
-            data-type='c'
+            data-type='inviteCustomer'
             data-item={item}
             className={itemList.key}
             key={key}
