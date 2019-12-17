@@ -3,7 +3,7 @@
  * @description: 注册页面
  * @Date: 2019-08-22 11:58:25
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-14 18:33:38
+ * @LastEditTime: 2019-12-17 10:20:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -36,7 +36,6 @@ class usePhoneNumberRegister extends Component {
       agreementsMainList: [],
       disabled: true,
       // eslint-disable-next-line react/no-unused-state
-      userInfoFromWX: null
     }
     this.verificationCode = '' // 验证码
     this.phoneNumber = ''       // 手机号
@@ -133,43 +132,14 @@ class usePhoneNumberRegister extends Component {
    * @return void
    */
   handleRegister(phoneNumber, verificationCode = '', wxUserInfo) {
-    this.setState({
-      // eslint-disable-next-line react/no-unused-state
-      userInfoFromWX: wxUserInfo
-    })
-    let sendData = Object.assign({}, wxUserInfo,{
+    let sendData = Object.assign({}, wxUserInfo, {
       mobile: phoneNumber,
       verificationCode,
       openId: this.props.userInfo.openId,
       userPhoto: wxUserInfo.avatarUrl,
       nickName: encodeURIComponent(wxUserInfo.nickName),
     })
-    api.user.register(sendData, this).then(res => {
-      let resData = Object.assign(
-        {},
-        wxUserInfo,
-        res.userInfo,
-        res.userInfoExt,
-        {
-          userPhoto: wxUserInfo.avatarUrl,
-          nickName: wxUserInfo.nickName,
-        }
-      )
-      Actions.changeUserInfo(resData)
-      this.login(this.props.userInfo.openId, wxUserInfo)
-    })
-  }
-  /**
-   * 使用openID登录
-   * @param {String} openid
-   * @return void
-   */
-  login(openId = this.props.userInfo.openId, wxUserInfo) {
-    let sendData = {
-      token: this.props.userInfo.token,
-      openId
-    }
-    api.user.loginUseOpenID(sendData, this).then(res => {
+    api.user.login(sendData, this).then(res => {
       if (res) {
         let resData = Object.assign({}, res)
         if (!sendData.token || sendData.token !== resData.token) {
