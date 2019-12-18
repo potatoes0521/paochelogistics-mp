@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-13 16:08:45
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2019-12-18 11:37:47
  */
 
 // 默认请求连接
@@ -16,8 +16,6 @@
  */
 
 import Taro from '@tarojs/taro'
-// eslint-disable-next-line import/first
-import refreshToken from '@utils/refresh_token.js'
 import {
   HTTP_STATUS,
   defaultApiURL
@@ -134,8 +132,10 @@ export default {
                 }
               } else {
                 if (+resData.code === 200003) {
-                  console.log(refreshToken, 'refreshToken')
-                  refreshToken.refreshToken(that, url, data, method)
+                  console.log('refreshToken')
+                  Taro.reLaunch({
+                    url: '/pages/register/index'
+                  })
                 } else {
                   Taro.showToast({
                     title: resData.message,
