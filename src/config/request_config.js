@@ -7,8 +7,8 @@
  */
 
 // api地址
-export const defaultApiURL = 'http://api.paoche56.in/' // 测试环境  
-// export const defaultApiURL = 'https://api.paoche56.com/'  
+// export const defaultApiURL = 'http://api.paoche56.in/' // 测试环境  
+export const defaultApiURL = 'https://api.paoche56.com/'  
 // export const defaultApiURL = 'http://192.168.3.139:8085/'
 
 // 图片资源服务器
