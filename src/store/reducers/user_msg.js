@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-09-05 15:02:41
- * @LastEditors: liuYang
- * @LastEditTime: 2019-11-05 11:10:22
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2019-12-18 14:01:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -64,6 +64,11 @@ export default function counter(state = INITIAL_STATE, action) {
       return {
         ...state,
         userInfo: newUserInfoData
+      }
+    case CHANGEUSERINFO:
+      return {
+        ...state,
+        userInfo: {}
       }
     default:
       return state

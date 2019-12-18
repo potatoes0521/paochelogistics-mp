@@ -135,7 +135,7 @@ export default {
               } else {
                 if (+resData.code === 200003) {
                   console.log('token 无效')
-                  Actions.changeUserInfo({});
+                  Actions.loginOut({});
                   Taro.reLaunch({
                     url: '/pages/register/index?pageType=token'
                   })

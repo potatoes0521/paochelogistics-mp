@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-09-05 15:02:41
- * @LastEditors: liuYang
- * @LastEditTime: 2019-09-17 12:07:04
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2019-12-18 14:01:37
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -11,7 +11,7 @@
 import { bindActionCreators } from 'redux'
 import store from '../index.js'
 
-import { changeUserInfo } from './user_msg.js'  // 用户信息
+import { changeUserInfo, loginOut } from './user_msg.js'  // 用户信息
 import {
   changeEditData,
   clearEditData
@@ -28,6 +28,7 @@ const createAction = (actionType) => {
 export default bindActionCreators({
   createAction,
   changeUserInfo,
+  loginOut,
   changeEditData,
   clearEditData
 }, store.dispatch)

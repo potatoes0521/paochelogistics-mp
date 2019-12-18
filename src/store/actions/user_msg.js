@@ -9,7 +9,8 @@
  */
 
 import {
-  CHANGEUSERINFO
+  CHANGEUSERINFO,
+  LOGINOUT
 } from '../constants/index.js'
 /**
  * 修改用户信息
@@ -20,6 +21,13 @@ import {
 export const changeUserInfo = (data) => {
   return {
     type: CHANGEUSERINFO,
+    data
+  }
+}
+
+export const loginOut = (data) => {
+  return {
+    type: LOGINOUT,
     data
   }
 }
