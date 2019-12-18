@@ -10,6 +10,7 @@
 
 import {
   CHANGEUSERINFO,
+  LOGINOUT
 } from '../constants/index.js'
 
 // import api from '@api/index.js'
@@ -65,7 +66,7 @@ export default function counter(state = INITIAL_STATE, action) {
         ...state,
         userInfo: newUserInfoData
       }
-    case CHANGEUSERINFO:
+    case LOGINOUT:
       return {
         ...state,
         userInfo: {}
