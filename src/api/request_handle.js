@@ -21,6 +21,8 @@ import {
   defaultApiURL
 } from '../config/request_config.js'
 import createSignData from './secret.js'
+// eslint-disable-next-line import/first
+import Actions from '@store/actions/index.js'
 
 const sign_id = 'wx90c791e28c3c7d4d'
 const contentType = 'application/json;charset=UTF-8'
@@ -133,8 +135,9 @@ export default {
               } else {
                 if (+resData.code === 200003) {
                   console.log('refreshToken')
+                  Actions.changeUserInfo({});
                   Taro.reLaunch({
-                    url: '/pages/register/index'
+                    url: '/pages/register/index?pageType=token'
                   })
                 } else {
                   Taro.showToast({

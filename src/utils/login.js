@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-10-10 09:33:18
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-17 12:00:54
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2019-12-18 11:49:12
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -18,7 +18,7 @@ export default {
    * 获取code  然后去换openid
    * @return void
    */
-  getCode(that) {
+  getCode(that, notLogin = false) {
     return new Promise((resolve) => {
       Taro.getSystemInfo()
         .then(res => {
@@ -29,7 +29,7 @@ export default {
         })
       Taro.login().then(res => {
         // console.log(res,'code')
-        this.codeExchangeOpenID(res.code, that, resolve)
+        this.codeExchangeOpenID(res.code, that, resolve, notLogin)
       }).catch(err => {
         console.log(err, 'code 获取失败')
       })
@@ -40,7 +40,7 @@ export default {
    * @param {String} code wx.login获取的code
    * @return void
    */
-  codeExchangeOpenID(code, that, resolve) {
+  codeExchangeOpenID(code, that, resolve, notLogin = false) {
     let sendData = {
       code
     }
@@ -49,6 +49,7 @@ export default {
       Actions.changeUserInfo({
         openId: openId
       })
+      if (notLogin) return
       this.login(openId, that, resolve);
     }).catch(err => {
       console.log(err)

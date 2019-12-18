@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 注册页面
  * @Date: 2019-08-22 11:58:25
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-17 12:01:15
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2019-12-18 11:44:19
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -21,6 +21,8 @@ import refreshToken from '@utils/refresh_token.js'
 import Actions from '@store/actions/index.js'
 import classNames from 'classnames'
 import { handleRegisterShare } from '@utils/handle_share.js'
+import login from '@utils/login.js'
+
 import './index.styl'
 
 class usePhoneNumberRegister extends Component { 
@@ -47,6 +49,7 @@ class usePhoneNumberRegister extends Component {
   componentDidMount() { 
     this.pageParams = this.$router.params
     this.getAgreement()
+    login.getCode(this, true)
   }
   componentWillUnmount() {
     clearInterval(this.timer)
@@ -148,12 +151,18 @@ class usePhoneNumberRegister extends Component {
         Actions.changeUserInfo(resData)
         // 给redux一个反应时间
         setTimeout(() => {
-          handleRegisterShare({
-            pageParams: this.pageParams,
-            userInfo: this.props.userInfo,
-            wxUserInfo,
-            that: this
-          })
+          if (this.pageParams.pageType === 'token') {
+            Taro.switchTab({
+              url: '/pages/index/index'
+            })
+          } else {
+            handleRegisterShare({
+              pageParams: this.pageParams,
+              userInfo: this.props.userInfo,
+              wxUserInfo,
+              that: this
+            })
+          }
         }, 300)
       }
     })
