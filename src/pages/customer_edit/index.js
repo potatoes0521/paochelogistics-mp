@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 修改添加客户信息
  * @Date: 2019-09-27 15:47:35
- * @LastEditors: liuYang
- * @LastEditTime: 2019-11-14 16:47:37
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2019-12-18 13:45:28
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,6 +13,11 @@ import {
   Input,
   Text
 } from '@tarojs/components'
+import {
+  // validateIdCard,
+  realNamePatter,
+  phoneNumberPatter
+} from '@utils/patter.js'
 import Storage from '@utils/storage.js'
 import { connect } from '@tarojs/redux'
 import { defaultResourceConfigURL } from '@config/request_config.js'
@@ -134,15 +139,15 @@ class CustomerEdit extends Component {
       remarkName,
       districtId
     } = this.state
-    if (!(/^[\u4E00-\u9FA5]{2,8}$/).test(remarkName)) {
+    if (!(realNamePatter).test(remarkName)) {
       this.toast('请输入2-8位的中文姓名')
       return
     }
-    if (!(/^1[3456789]\d{9}$/.test(mobile))) {
+    if (!(phoneNumberPatter).test(mobile)) {
       this.toast('手机号格式有误')
       return
     }
-    // if (!(/^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/)/.test(idCard))) {
+    // if (!(validateIdCard).test(idCard)) {
     //   this.toast('客户身份证号格式有误')
     //   return
     // }

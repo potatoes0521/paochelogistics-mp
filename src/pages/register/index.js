@@ -14,6 +14,7 @@ import {
   Input,
   Button
 } from '@tarojs/components'
+import { phoneNumberPatter } from '@utils/patter.js'
 import { connect } from '@tarojs/redux'
 import { defaultResourceConfigURL } from '@config/request_config.js'
 import api from '@api/index.js'
@@ -62,7 +63,7 @@ class usePhoneNumberRegister extends Component {
   onPhoneInputChange(e) {
     let { value } = e.detail
     
-    if ((/^1[3456789]\d{9}$/.test(value)) && (/^\d{4,6}\b/.test(this.verificationCode))) {
+    if ((phoneNumberPatter.test(value)) && (/^\d{4,6}\b/.test(this.verificationCode))) {
       this.setState({
         disabled: false
       })
@@ -80,7 +81,7 @@ class usePhoneNumberRegister extends Component {
    */
   onVerificationCodeInputChange(e) {
     let { value } = e.detail
-    if ((/^1[3456789]\d{9}$/.test(this.phoneNumber)) && (/^\d{4,6}\b/.test(value))) {
+    if ((phoneNumberPatter.test(this.phoneNumber)) && (/^\d{4,6}\b/.test(value))) {
       this.setState({
         disabled: false
       })
@@ -96,7 +97,7 @@ class usePhoneNumberRegister extends Component {
    * @return void
    */
   submitRegister(e) { 
-    if (!(/^1[3456789]\d{9}$/.test(this.phoneNumber))) {
+    if (!(phoneNumberPatter.test(this.phoneNumber))) {
       Taro.showToast({
         title: '手机号输入格式有误',
         icon: 'none'
@@ -177,7 +178,7 @@ class usePhoneNumberRegister extends Component {
       timerFlag
     } = this.state
     if (timerFlag) return
-    if (!(/^1[3456789]\d{9}$/.test(this.phoneNumber))) {
+    if (!(phoneNumberPatter.test(this.phoneNumber))) {
       Taro.showToast({
         title: '手机号输入格式有误',
         icon: 'none'

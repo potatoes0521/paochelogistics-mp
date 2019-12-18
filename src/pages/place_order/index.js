@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-06 16:52:49
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2019-12-18 13:47:43
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,6 +16,11 @@ import {
   Button,
   Block
 } from '@tarojs/components'
+import {
+  // validateIdCard,
+  realNamePatter,
+  phoneNumberPatter
+} from '@utils/patter.js'
 import { connect } from '@tarojs/redux'
 // eslint-disable-next-line import/first
 import api from '@api/index.js'
@@ -114,7 +119,7 @@ class PlaceOrder extends Component {
     //   receiveCardNo,
     //   vins
     // } = this.state
-    // if ((/^[\u4e00-\u9fa5]{2,8}$/.test(sendPerson)) && (/^1[3456789]\d{9}$/.test(sendMobile)) && (/^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/)/.test(sendCardNo)) && (/^[\u4e00-\u9fa5]{2,8}$/.test(receivePerson)) && (/^1[3456789]\d{9}$/.test(receiveMobile)) && (/^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/)/.test(receiveCardNo)) && (/^[0-9A-Za-z,]+$/.test(vins))) {
+    // if ((/^[\u4e00-\u9fa5]{2,8}$/.test(sendPerson)) && (phoneNumberPatter.test(sendMobile)) && (/^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/)/.test(sendCardNo)) && (/^[\u4e00-\u9fa5]{2,8}$/.test(receivePerson)) && (phoneNumberPatter.test(receiveMobile)) && (/^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/)/.test(receiveCardNo)) && (/^[0-9A-Za-z,]+$/.test(vins))) {
     //   this.setState({
     //     disabled: false
     //   })
@@ -254,19 +259,19 @@ class PlaceOrder extends Component {
       this.toast('请选择代下单的客户')
       return
     }
-    if (!(/^[\u4e00-\u9fa5]{2,8}$/.test(sendPerson))) {
+    if (!(realNamePatter.test(sendPerson))) {
       this.toast('发车人名字输入格式有误')
       return
     }
-    if (!(/^[\u4e00-\u9fa5]{2,8}$/.test(receivePerson))) {
+    if (!(realNamePatter.test(receivePerson))) {
       this.toast('收车人名字输入格式有误')
       return
     }
-    if (!(/^1[3456789]\d{9}$/.test(sendMobile))) {
+    if (!(phoneNumberPatter.test(sendMobile))) {
       this.toast('发车人手机号输入格式有误')
       return
     }
-    if (!(/^1[3456789]\d{9}$/.test(receiveMobile))) {
+    if (!(phoneNumberPatter.test(receiveMobile))) {
       this.toast('收车人手机号输入格式有误')      
       return
     }
