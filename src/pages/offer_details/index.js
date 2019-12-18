@@ -2,14 +2,17 @@
  * @Author: guorui
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-13 15:40:18
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2019-12-18 12:36:37
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 
 import Taro, { Component } from '@tarojs/taro'
-import { View } from '@tarojs/components'
+import {
+  View,
+  Text
+} from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import NoTitleCard from '@c/no_title_card/index.js'
 import classNames from 'classnames'
@@ -68,7 +71,10 @@ class OfferDetails extends Component {
    */
   getOfferDetails() {
     if (!this.pageParams.offer_id) {
-      Taro.navigateBack()
+      Taro.showToast({
+        icon: 'none',
+        title: 'offer_id is null'
+      })
       return;
     }
     let sendData = {
@@ -95,7 +101,8 @@ class OfferDetails extends Component {
           usedType: res.usedType,
           isActive: res.isActive,
           buttons: handleOfferButtons(res.buttons),
-          orderCode: res.orderCode
+          orderCode: res.orderCode,
+          inquiryCode: res.inquiryCode
         })
         Storage.setStorage('offer_info', res)
       })
@@ -189,7 +196,16 @@ class OfferDetails extends Component {
       url: `/pages/order_details/index?order_code=${this.state.orderCode}`
     })
   }
-
+  /**
+   * 复制信息
+   * @param {Type} content 要复制的文字
+   * @return void
+   */
+  copy(content) {
+    Taro.setClipboardData({
+      data: content
+    })
+  }
   buttonsFun(e) {
     switch (e) {
       case 'cancelInquiry':
@@ -229,7 +245,8 @@ class OfferDetails extends Component {
       status,
       statusDesc,
       usedType,
-      buttons
+      buttons,
+      inquiryCode
     } = this.state
     let { userInfo } = this.props
     const cancelOfferClassName = classNames({
@@ -282,6 +299,13 @@ class OfferDetails extends Component {
                 </View>
                 : null
             }
+            <View className='details-form-item'>
+              <View className='details-form-label'>订单编号:</View>
+              <View className='details-form-content'>
+                <Text selectable>{inquiryCode || ''}</Text>
+                <Text onClick={this.copy.bind(this, inquiryCode)} className='copy-btn'>复制</Text>
+              </View>
+            </View>
             {
               dueTimeDesc ?
                 <View className='details-form-item'>
