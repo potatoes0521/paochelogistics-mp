@@ -3,7 +3,7 @@
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-18 12:36:37
+ * @LastEditTime : 2019-12-20 10:36:09
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -292,7 +292,7 @@ class OfferDetails extends Component {
                 : null
             }
             {
-              userInfo.userType === 0 && assessedPriceDesc ?
+              userInfo.userType === 0 && assessedPriceDesc && assessedPriceDesc !== '0.00' ?
                 <View className='details-form-item'>
                   <View className='details-form-label'>驿站估价:</View>
                   <View className='details-form-content font-color'>{assessedPriceDesc || ''} /元</View>
@@ -300,7 +300,7 @@ class OfferDetails extends Component {
                 : null
             }
             <View className='details-form-item'>
-              <View className='details-form-label'>订单编号:</View>
+              <View className='details-form-label'>询价单号:</View>
               <View className='details-form-content'>
                 <Text selectable>{inquiryCode || ''}</Text>
                 <Text onClick={this.copy.bind(this, inquiryCode)} className='copy-btn'>复制</Text>
