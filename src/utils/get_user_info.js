@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 获取授权
  * @Date: 2019-11-07 13:45:09
- * @LastEditors: liuYang
- * @LastEditTime: 2019-11-08 22:00:29
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-06 11:15:20
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -55,11 +55,13 @@ export const requestBargain = (that, newUser) => {
   return new Promise(resolve => {
     let { order_code } = that.pageParams
     let { userId } = that.props.userInfo
+    console.log('that.state', that.state.userInfoFromWX)
+    console.log('that.props', that.props.userInfo)
     let sendData = Object.assign({}, that.state.userInfoFromWX, {
-      userPhoto: that.state.userInfoFromWX.avatarUrl,
+      userPhoto: that.props.userInfo.avatarUrl,
       userId,
       orderCode: order_code,
-      nickName: encodeURIComponent(that.state.userInfoFromWX.nickName),
+      nickName: encodeURIComponent(that.props.userInfo.nickName),
       newUser
     })
     api.order.bargainPrice(sendData, that)

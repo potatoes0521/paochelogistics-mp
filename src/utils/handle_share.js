@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 处理进入小程序的分享
  * @Date: 2019-11-06 12:25:04
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-09 14:05:34
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-06 11:26:39
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -80,8 +80,9 @@ export const handleShareInOrderDetails = (pageParams, userInfo) => {
   * @return void
   */
 export const handleRegisterShare = ({ pageParams, userInfo, wxUserInfo, that }) => {
-  console.log(pageParams, userInfo)
+  console.log(pageParams, userInfo, wxUserInfo)
   if (pageParams.share_type === '1') {
+    console.log('pageParams', pageParams)
     if (+userInfo.userId === +pageParams.c_id) {
       redirectToOrderDetails(pageParams)  // 是客户本身  
     } else if (+userInfo.userId !== +pageParams.c_id) {
@@ -94,17 +95,27 @@ export const handleRegisterShare = ({ pageParams, userInfo, wxUserInfo, that }) 
     // 分享砍价
     let pages = Taro.getCurrentPages(); //  获取页面栈
     let prevPage = pages[pages.length - 2]; // 上一个页面
+    console.log('prevPage', prevPage)
     prevPage.$component.setState({
       userInfoFromWX: wxUserInfo
     }, () => {
         requestBargain(that, 1).then(res => {
-        if (res) {
+        if (res && !res.code) {
           prevPage.$component.setState({
             bargainPrice: (res / 100).toFixed(2),
             showBargainBox: true
           }, () => {
             Taro.navigateBack()
           })
+        } else {
+          Taro.showToast({
+            title: res.message,
+            icon: 'none',
+            duration: 2000
+          })
+          setTimeout(() => {
+            Taro.navigateBack()
+          }, 1900)
         }
       })
     })

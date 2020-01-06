@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 分享砍价
  * @Date: 2019-11-05 13:24:34
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-03 18:08:27
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-04 13:57:57
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -96,6 +96,7 @@ class ShareBargain extends Component {
   }
   componentDidShow() { 
     // 用户已经登录并且不是本人   主要是用来注册返回的时候触发请求
+    this.pageParams = this.$router.params
     let { userInfo } = this.props
     if (+userInfo.userId && + userInfo.userId !== +this.pageParams.c_id) {
       this.getBargainDetails()
