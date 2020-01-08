@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 订单详情报价、 金额、 支付方式 
  * @Date: 2019-09-20 09:58:08
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-13 17:16:39
+ * @LastEditors  : guorui
+ * @LastEditTime : 2020-01-08 11:29:49
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -43,8 +43,7 @@ export default class PriceDetailsComponent extends Component {
       <View className='details-form-wrapper'>
         <View className='details-form-item'>
           <View className='details-form-label'>报价:</View>
-          <View className='details-form-price'>￥{item.inquiryOrderVO && item.inquiryOrderVO.quotedPriceDesc || item.quotedPriceDesc || ''}</View>
-          {/* <Text className='number'>/台</Text> */}
+          <View className='details-form-price'>￥{item.inquiryOrderVO && item.inquiryOrderVO.quotedPriceDesc || item.quotedPriceDesc || ''}/台</View>
         </View>
         {
           (item.bargainPriceDesc) ?

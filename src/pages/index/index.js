@@ -3,8 +3,8 @@
  * @description: 首页
  * 
  * @Date: 2019-09-17 11:53:57
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-13 14:38:48
+ * @LastEditors  : guorui
+ * @LastEditTime : 2020-01-08 11:10:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -418,7 +418,7 @@ class Index extends Component {
                 <View className='label-wrapper' onClick={()=>this.chooseCity('choose_start_city')}>
                   <View className='form-required'>
                     <View className='required'>*</View>
-                    <View className='from-label'>发车地点</View>
+                    <View className='from-label'>发车城市</View>
                   </View>
                   <View className='from-right'>
                     <Text
@@ -439,7 +439,7 @@ class Index extends Component {
                 <View className='label-wrapper' onClick={()=>this.chooseCity('choose_target_city')}>
                 <View className='form-required'>
                   <View className='required'>*</View>
-                  <View className='from-label'>收车地点</View>
+                  <View className='from-label'>收车城市</View>
                 </View>
                 <View className='from-right'>
                   <Text

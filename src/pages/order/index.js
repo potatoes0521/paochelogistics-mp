@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-13 15:33:58
+ * @LastEditors  : guorui
+ * @LastEditTime : 2020-01-08 11:05:15
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -137,12 +137,14 @@ class Order extends Component {
   }
 
   handleRequest() { 
-    //  10 待支付 20 已支付 30 已取消
+    //  10 待支付 20 已支付 30 已取消 50 待提车
     let { current } = this.state
     this.status = ''
     if (current === 0) {
       this.status = 10
     } else if (current === 1) {
+      this.status = 50
+    } else if (current === 2) {
       this.status = 20
     } else if (current === 2) {
       this.status = ''

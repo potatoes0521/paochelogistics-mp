@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-09-12 11:17:44
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-09 09:46:34
+ * @LastEditors  : guorui
+ * @LastEditTime : 2020-01-08 11:04:35
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -54,11 +54,15 @@ export const orderTabs = [
     id: 0
   },
   {
-    label: '待交车',
+    label: '待提车',
     id: 1
   },
   {
-    label: '全部',
+    label: '待交车',
     id: 2
+  },
+  {
+    label: '全部',
+    id: 3
   }
 ]
