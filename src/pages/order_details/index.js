@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-13 16:45:39
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-08 11:25:33
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -185,7 +185,7 @@ class OrderDetails extends Component {
    */
   onShareAppMessage(event) {
     let { userInfo } = this.props
-    let { orderDetailsInfo } = this.state
+    let { orderDetailsInfo,pageParams } = this.state
     let { inquiryOrderVO } = orderDetailsInfo
     let path = `/pages/index/index`
     let title = `欢迎您进入跑车物流~`
@@ -212,8 +212,11 @@ class OrderDetails extends Component {
       if (type === 'otherOnePayOrder') { // 分享给客户
         path = `/pages/order_details/index?share_type=3&${shareMsg}`
         title = `请帮我付款`
-        // imageUrl = `${defaultResourceImgURL}share_to_help_pay.png`
-        imageUrl = ''
+        if (pageParams.share_type === '3') {
+          imageUrl = ''
+        } else {
+          imageUrl = `${defaultResourceImgURL}share_to_help_pay.png`
+        }
       }
     }
     if (event.from === 'menu') {
