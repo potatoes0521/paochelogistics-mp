@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-10-12 10:44:03
- * @LastEditors: liuYang
- * @LastEditTime: 2019-11-25 14:36:40
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-06 13:40:19
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -23,6 +23,7 @@ export default class CustomerItem extends Component {
           <View className='customer-msg'>
             <View className='name'>{item.remarkName || ''}</View>
             <View className='phone'>{item.mobile || ''}</View>
+            {item.usableDiscountNum ? <View className='discount'>砍价剩余{item.usableDiscountNum || ''}次</View> : null}
           </View>
           <View className='customer-company'>{item.merchantName || ''}</View>
         </View>
