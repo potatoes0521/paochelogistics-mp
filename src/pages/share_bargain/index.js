@@ -3,7 +3,7 @@
  * @description: 分享砍价
  * @Date: 2019-11-05 13:24:34
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-08 10:40:11
+ * @LastEditTime : 2020-01-08 10:54:59
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -234,16 +234,21 @@ class ShareBargain extends Component {
           this.setState({
             userInfoFromWX: wxUserInfo
           }, () => {
-            requestBargain(this, 0).then(res => {
+              requestBargain(this, 0).then(res => {
               if (res && !res.code) {
                 this.setState({
                   bargainPrice: (res / 100).toFixed(2),
                   showBargainBox: true
                 })
                 this.getBargainDetails(false)
-              } else {
+              } else if (res && res.code) {
                 Taro.showToast({
                   title: res.message,
+                  icon: 'none'
+                })
+              }else {
+                Taro.showToast({
+                  title: "您已经砍过价，不能再次砍价",
                   icon: 'none'
                 })
               }
