@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-08 11:25:33
+ * @LastEditTime : 2020-01-08 11:28:31
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -227,8 +227,11 @@ class OrderDetails extends Component {
       } else {
         path = `/pages/order_details/index?share_type=3&${shareMsg}`
         title = `请帮我付款`
-        // imageUrl = `${defaultResourceImgURL}share_to_help_pay.png`
-        imageUrl = ''
+        if (pageParams.share_type === '3') {
+          imageUrl = ''
+        } else {
+          imageUrl = `${defaultResourceImgURL}share_to_help_pay.png`
+        }
       }
       // share_type = 2 分享砍价  本人去订单详情  其他人去砍价
       // if (userInfo.userType === 2 || userInfo.userType === 1) { // 分享给客户
