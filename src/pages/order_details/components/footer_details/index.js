@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 订单详情--底部详情 订单状态status 10 待支付 20 待交车 30 已取消 40 已完成
  * @Date: 2019-09-20 09:58:08
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-17 10:52:18
+ * @LastEditors  : guorui
+ * @LastEditTime : 2020-01-08 14:14:25
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -19,6 +19,8 @@ import HelpPayBtn from '../pay_btn/index.js'
 import { connect } from '@tarojs/redux'
 // eslint-disable-next-line import/first
 import PropTypes from 'prop-types'
+// eslint-disable-next-line import/first
+import api from '@api/index.js'
 import './index.styl'
 
 class FooterDetailsComponent extends Component {
@@ -28,13 +30,35 @@ class FooterDetailsComponent extends Component {
   } 
   
   /**
-   * 立即支付
+   * 请求支付
    * @return void
    */
   paymentButton() {
     let { item } = this.props
-    Taro.navigateTo({
-      url: `/pages/pay_details/index?order_code=${item.orderCode}`
+    // Taro.navigateTo({
+    //   url: `/pages/pay_details/index?order_code=${item.orderCode}`
+    // })
+    let sendData = {
+      orderCode: item.order_code,
+      isPaytoll: 0
+    }
+    api.pay.getPayParams(sendData, this).then(res => {
+      Taro.requestPayment({
+        timeStamp: res.timeStamp,
+        nonceStr: res.nonceStr,
+        package: res.package,
+        signType: res.signType,
+        paySign: res.paySign,
+        success: (response) => {
+          if (!response) return
+          Taro.redirectTo({
+            url: `/pages/pay_success/index?order_code=${item.order_code}`
+          })
+        },
+        fail: (response) => {
+          console.log(response)
+        }
+      })
     })
   }
   

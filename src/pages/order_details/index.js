@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-08 11:28:31
+ * @LastEditors  : guorui
+ * @LastEditTime : 2020-01-08 16:11:22
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -295,10 +295,10 @@ class OrderDetails extends Component {
       'order-msg': pageParams.share_type !== '3',
       'help-order-msg': pageParams.share_type === '3',
     })
-    const isOpen = (pageParams.share_type !== '3') || (pageParams.share_type === '3' && open )
+    // const isOpen = (pageParams.share_type !== '3') || (pageParams.share_type === '3' && open)
     const iconClassName = classNames({
-      'icon-for-bottom': !isOpen,
-      'icon-for-top': isOpen,
+      'icon-for-bottom': !open,
+      'icon-for-top': open,
     })
     return (
       <View className='page-wrapper'>
@@ -324,7 +324,7 @@ class OrderDetails extends Component {
               <SendCityComponent item={orderDetailsInfo}></SendCityComponent>
               <View className='dividing-line'></View>
               {
-                isOpen && (
+                open && (
                   <Block>
                     <ReceiveCityComponent item={orderDetailsInfo}></ReceiveCityComponent>
                     <View className='dividing-line'></View>
@@ -333,37 +333,20 @@ class OrderDetails extends Component {
                   </Block>
                 )
               }
-              {
-                pageParams.share_type !== '3' && (
-                  <PriceDetailsComponent
-                    item={orderDetailsInfo}
-                    fail={fail}
-                    onClick={this.clickWhyNotUse.bind(this)}
-                  ></PriceDetailsComponent>
-                 )
-              }
-              {
-                pageParams.share_type === '3' && (
-                  <View className='open-btn' onClick={this.clickOpenBtn}>
-                    <Text>{ isOpen ? '收起' : '查看'}订单详情</Text>
-                    <View className={iconClassName}>
-                      <Text className='iconfont iconxiangyouxuanzejiantoux icon-open'></Text>
-                    </View>
-                  </View>
-                )
-              }
-            </NoTitleCard>
-            {
-              pageParams.share_type === '3' && (
-                <View className='show-price-wrapper'>
-                  <PriceDetailsComponent
-                    item={orderDetailsInfo}
-                    fail={fail}
-                    onClick={this.clickWhyNotUse.bind(this)}
-                  ></PriceDetailsComponent>
+              <View className='open-btn' onClick={this.clickOpenBtn}>
+                <Text>{ open ? '收起' : '查看'}订单详情</Text>
+                <View className={iconClassName}>
+                  <Text className='iconfont iconxiangyouxuanzejiantoux icon-open'></Text>
                 </View>
-                )
-            }
+              </View>
+            </NoTitleCard>
+            <View className='show-price-wrapper'>
+              <PriceDetailsComponent
+                item={orderDetailsInfo}
+                fail={fail}
+                onClick={this.clickWhyNotUse.bind(this)}
+              ></PriceDetailsComponent>
+            </View>
           </View>
         </View>
         {

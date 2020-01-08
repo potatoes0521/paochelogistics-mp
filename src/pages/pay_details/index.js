@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 支付详情  本页面注释信息为，别人代付时显示的支付页面
  * @Date: 2019-10-08 09:30:22
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-13 14:13:03
+ * @LastEditors  : guorui
+ * @LastEditTime : 2020-01-08 14:36:39
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -27,6 +27,7 @@ class PayDetails extends Component {
       bargainPriceDesc: 0, //帮砍价
       promotionsPrice: 0, //支付立减
       payPriceDesc: 0, //应付金额
+      carAmount: 0,
       fail: false,
       showBargainBox: false
      }
@@ -53,9 +54,11 @@ class PayDetails extends Component {
       orderCode: this.pageParams.order_code
     }
     api.order.getOrderDetails(sendData, this).then(res => {
+      console.log('pay', res)
       this.setState({
         quotedPriceDesc: res.inquiryOrderVO.quotedPriceDesc,
         bargainPriceDesc: res.bargainPriceDesc,
+        carAmount: res.inquiryOrderVO.carAmount,
         promotionsPrice: res.promotionsPrice,
         payPriceDesc: res.payPriceDesc,
       })
@@ -136,14 +139,15 @@ class PayDetails extends Component {
       promotionsPrice,
       payPriceDesc,
       fail,
-      showBargainBox
+      showBargainBox,
+      carAmount
     } = this.state
     const item = {
       quotedPriceDesc,
       bargainPriceDesc,
       promotionsPrice,
-      payPriceDesc
-      
+      payPriceDesc,
+      carAmount
     }
     return (
       <View className='page-wrapper'>
