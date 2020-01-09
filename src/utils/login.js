@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-10-10 09:33:18
- * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-18 11:49:12
+ * @LastEditors  : guorui
+ * @LastEditTime : 2020-01-09 10:58:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,6 +12,8 @@ import Actions from '@store/actions/index.js'
 import refreshToken from './refresh_token.js'
 // eslint-disable-next-line import/first
 import api from '@api/index.js'
+// eslint-disable-next-line import/first
+import Storage from '@utils/storage.js'
 
 export default {
   /**
@@ -28,7 +30,6 @@ export default {
           })
         })
       Taro.login().then(res => {
-        // console.log(res,'code')
         this.codeExchangeOpenID(res.code, that, resolve, notLogin)
       }).catch(err => {
         console.log(err, 'code 获取失败')
@@ -46,6 +47,7 @@ export default {
     }
     api.user.codeExchangeOpenID(sendData, that).then(res => {
       let openId = res.openid;
+      Storage.setStorage('openId', res.openid)
       Actions.changeUserInfo({
         openId: openId
       })
