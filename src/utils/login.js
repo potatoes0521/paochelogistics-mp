@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-10-10 09:33:18
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-10 17:49:20
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-01-10 17:56:42
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -30,7 +30,7 @@ export default {
           })
           this.login(res.openId, that, resolve);
         } else {
-          this.getCode(that, resolve)
+          this.getCode(that, false,resolve)
         }
       })
     })
@@ -67,6 +67,7 @@ export default {
       Actions.changeUserInfo({
         openId: openId
       })
+      console.log('notLogin', notLogin)
       if (notLogin) return
       this.login(openId, that, resolve);
     }).catch(err => {
@@ -86,8 +87,6 @@ export default {
     }
     api.user.loginUseOpenID(sendData, that).then(res => {
       if (res) {
-        console.log('res', res)
-        Storage.setStorage('userInfo', {token: res.token, openId: res.openid})
         delete res.userAgent
         res.nickName = decodeURIComponent(res.nickName)
         for (let i in res) {
@@ -96,6 +95,10 @@ export default {
           }
         }
         let resData = Object.assign({}, res)
+        Storage.setStorage('userInfo', {
+          token: res.token,
+          openId: openId
+        })
         if (!sendData.token || sendData.token !== resData.token) {
           refreshToken.setNewToken(resData.token)
         }
