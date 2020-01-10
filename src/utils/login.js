@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-10-10 09:33:18
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-10 17:57:18
+ * @LastEditors  : guorui
+ * @LastEditTime : 2020-01-10 18:00:26
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -30,7 +30,7 @@ export default {
           })
           this.login(res.openId, that, resolve);
         } else {
-          this.getCode(that, false,resolve)
+          this.getCode(that, false, resolve)
         }
       })
     })
