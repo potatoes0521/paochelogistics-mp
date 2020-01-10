@@ -3,7 +3,7 @@
  * @description: 注册页面
  * @Date: 2019-08-22 11:58:25
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-10 13:46:31
+ * @LastEditTime : 2020-01-10 13:58:30
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -50,7 +50,7 @@ class usePhoneNumberRegister extends Component {
   componentDidMount() { 
     this.pageParams = this.$router.params
     this.getAgreement()
-    login.getOpenId(this, true)
+    login.getOpenId(this)
   }
   componentWillUnmount() {
     clearInterval(this.timer)
