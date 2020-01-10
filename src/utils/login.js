@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-10-10 09:33:18
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-10 14:27:10
+ * @LastEditTime : 2020-01-10 17:49:20
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -22,15 +22,15 @@ export default {
    */
   getOpenId(that) {
     return new Promise((resolve) => { 
-      Storage.getStorage('openId').then(res => {
-        if (res) {
-          const openId = res
+      Storage.getStorage('userInfo').then(res => {
+        if (res && res.openId) {
           Actions.changeUserInfo({
-            openId: openId
+            openId: res.openId,
+            token: res.token
           })
-          this.login(openId, that, resolve);
+          this.login(res.openId, that, resolve);
         } else {
-          this.getCode(that)
+          this.getCode(that, resolve)
         }
       })
     })
@@ -39,8 +39,7 @@ export default {
    * 获取code  然后去换openid
    * @return void
    */
-  getCode(that, notLogin = false) {
-    return new Promise((resolve) => {
+  getCode(that, notLogin = false, resolve) {
       Taro.getSystemInfo()
         .then(res => {
           const phoneMsg = res.model + '-' + res.system + '-' + res.SDKVersion
@@ -53,7 +52,6 @@ export default {
       }).catch(err => {
         console.log(err, 'code 获取失败')
       })
-    })
   },
   /**
    * code换openid
@@ -66,7 +64,6 @@ export default {
     }
     api.user.codeExchangeOpenID(sendData, that).then(res => {
       let openId = res.openid;
-      Storage.setStorage('openId', res.openid)
       Actions.changeUserInfo({
         openId: openId
       })
@@ -89,7 +86,8 @@ export default {
     }
     api.user.loginUseOpenID(sendData, that).then(res => {
       if (res) {
-        Storage.setStorage('token', res.token)
+        console.log('res', res)
+        Storage.setStorage('userInfo', {token: res.token, openId: res.openid})
         delete res.userAgent
         res.nickName = decodeURIComponent(res.nickName)
         for (let i in res) {
