@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-10-10 09:33:18
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-10 17:56:42
+ * @LastEditTime : 2020-01-10 17:57:18
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -67,7 +67,6 @@ export default {
       Actions.changeUserInfo({
         openId: openId
       })
-      console.log('notLogin', notLogin)
       if (notLogin) return
       this.login(openId, that, resolve);
     }).catch(err => {
