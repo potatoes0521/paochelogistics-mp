@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-10 13:45:56
+ * @LastEditTime : 2020-01-10 15:21:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -369,14 +369,14 @@ class OrderDetails extends Component {
                     day > 0 ?
                       <Block>
                         <Text className='timer-box'>{day}</Text>
-                        <Text>天</Text>
+                        <Text className='tips'>天</Text>
                       </Block>
                       : null
                   }
                   <Text className='timer-box'>{hour}</Text>
-                  <Text>:</Text>
+                  <Text className='tips'>:</Text>
                   <Text className='timer-box'>{minute}</Text>
-                  <Text>:</Text>
+                  <Text className='tips'>:</Text>
                   <Text className='timer-box'>{second}</Text>
                 </View>
               </View>
