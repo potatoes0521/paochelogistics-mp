@@ -3,7 +3,7 @@
  * @description: 订单列表页
  * @Date: 2019-09-20 13:24:36
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-08 11:05:15
+ * @LastEditTime : 2020-01-10 16:41:05
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -146,7 +146,7 @@ class Order extends Component {
       this.status = 50
     } else if (current === 2) {
       this.status = 20
-    } else if (current === 2) {
+    } else if (current === 3) {
       this.status = ''
     }
     this.getOrderList({})
