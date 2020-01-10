@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-09 11:08:58
+ * @LastEditTime : 2020-01-10 13:47:06
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -39,8 +39,6 @@ import { handleShare } from '@utils/handle_share.js'
 import { getUserInfo } from '@utils/get_user_info.js'
 // eslint-disable-next-line import/first
 import Actions from '@store/actions/index.js'
-// eslint-disable-next-line import/first
-import Storage from '@utils/storage.js'
 
 import './index.styl'
 
@@ -67,8 +65,7 @@ class Index extends Component {
     this.pageParams = this.$router.params
     console.log('参数:' ,this.pageParams)
     this.initData()
-    await login.getCode(this) // 登录
-    // await this.userLogin()
+    await login.getOpenId(this) 
     // share_type 1 分享给客户 2 分享砍价
     if (this.pageParams.share_type) {
       this.handleShare()
@@ -98,15 +95,6 @@ class Index extends Component {
   handleShare() { 
     let { userInfo } = this.props
     handleShare(this.pageParams, userInfo)
-  }
-  userLogin() {
-    Storage.getStorage('openId').then(res => {
-      if (res) {
-        console.log('openId', res)
-      } else {
-        login.getCode(this)
-      }
-    })
   }
   /**
    * 检查发车城市和收车城市选中状态

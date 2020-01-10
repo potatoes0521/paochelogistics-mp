@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 分享砍价
  * @Date: 2019-11-05 13:24:34
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-08 10:54:59
+ * @LastEditors  : guorui
+ * @LastEditTime : 2020-01-10 13:46:52
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -72,7 +72,7 @@ class ShareBargain extends Component {
   async componentDidMount() {
     this.pageParams = this.$router.params
     console.log(this.pageParams)
-    await login.getCode(this) // 登录   
+    await login.getOpenId(this) // 登录   
     let { userInfo } = this.props
     if (+userInfo.userId === +this.pageParams.c_id) {
       let str = ''

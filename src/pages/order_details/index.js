@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-08 16:11:22
+ * @LastEditTime : 2020-01-10 13:45:56
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -71,7 +71,7 @@ class OrderDetails extends Component {
     if (this.pageParams.share_type) {
       let {userInfo} = this.props
       if (userInfo && !userInfo.userId) {
-        await login.getCode(this)
+        await login.getOpenId(this)
         const next = await handleShareInOrderDetails(this.pageParams, this.props.userInfo)
         if (!next) return
       }

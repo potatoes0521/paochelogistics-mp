@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-10-10 09:33:18
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-09 10:58:02
+ * @LastEditTime : 2020-01-10 13:36:30
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,6 +16,23 @@ import api from '@api/index.js'
 import Storage from '@utils/storage.js'
 
 export default {
+  /**
+   * 获取缓存的openId
+   * @return void
+   */
+  getOpenId(that) {
+    Storage.getStorage('openId').then(res => {
+      if (res) {
+        const openId = res
+        Actions.changeUserInfo({
+          openId: openId
+        })
+        this.login(openId, that);
+      } else {
+        this.getCode(that)
+      }
+    })
+  },
   /**
    * 获取code  然后去换openid
    * @return void
@@ -70,6 +87,7 @@ export default {
     }
     api.user.loginUseOpenID(sendData, that).then(res => {
       if (res) {
+        Storage.setStorage('token', res.token)
         delete res.userAgent
         res.nickName = decodeURIComponent(res.nickName)
         for (let i in res) {
