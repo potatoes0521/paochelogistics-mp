@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-10-10 09:33:18
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-10 13:36:30
+ * @LastEditTime : 2020-01-10 14:27:10
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -21,16 +21,18 @@ export default {
    * @return void
    */
   getOpenId(that) {
-    Storage.getStorage('openId').then(res => {
-      if (res) {
-        const openId = res
-        Actions.changeUserInfo({
-          openId: openId
-        })
-        this.login(openId, that);
-      } else {
-        this.getCode(that)
-      }
+    return new Promise((resolve) => { 
+      Storage.getStorage('openId').then(res => {
+        if (res) {
+          const openId = res
+          Actions.changeUserInfo({
+            openId: openId
+          })
+          this.login(openId, that, resolve);
+        } else {
+          this.getCode(that)
+        }
+      })
     })
   },
   /**
