@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-10 17:47:44
+ * @LastEditTime : 2020-01-13 16:13:05
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -39,6 +39,8 @@ import { handleShare } from '@utils/handle_share.js'
 import { getUserInfo } from '@utils/get_user_info.js'
 // eslint-disable-next-line import/first
 import Actions from '@store/actions/index.js'
+// eslint-disable-next-line import/first
+import BottomLoginTips from '@c/bottom_login_tips/index.js'
 
 import './index.styl'
 
@@ -477,6 +479,7 @@ class Index extends Component {
               </View>
           }
         </View>
+        {userInfo.userId ? null : <BottomLoginTips></BottomLoginTips>}
         {
           locationModal ? 
             <LocationModal
