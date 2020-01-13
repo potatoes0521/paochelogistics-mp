@@ -3,7 +3,7 @@
  * @description: 订单详情报价、 金额、 支付方式 
  * @Date: 2019-09-20 09:58:08
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-08 14:41:46
+ * @LastEditTime : 2020-01-13 10:40:46
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -62,7 +62,7 @@ export default class PriceDetailsComponent extends Component {
                   <Block>
                     <View
                       className='details-form-price fail-price'
-                      onClick={this.click}
+                      onClick={this.click.bind(this)}
                     >
                       <Text>-￥{item.bargainPriceDesc}(不可用)</Text>
                       <Text className='iconfont icongantanhao icon-style'></Text>

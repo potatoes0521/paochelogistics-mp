@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-10 15:21:00
+ * @LastEditTime : 2020-01-13 10:40:39
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -385,7 +385,7 @@ class OrderDetails extends Component {
           )
         }
         {
-          fail && orderDetailsInfo.payStatus === 0 ?
+          fail ?
             <BargainBox
               show={showBargainBox}
               type='fail'
