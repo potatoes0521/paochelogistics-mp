@@ -3,7 +3,7 @@
  * @description: 分享砍价
  * @Date: 2019-11-05 13:24:34
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-10 13:46:52
+ * @LastEditTime : 2020-01-14 13:37:24
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -185,6 +185,7 @@ class ShareBargain extends Component {
       tipContent,
     } = this.state
     let { userInfo } = this.props
+    console.log('submituserInfo', userInfo)
     if (progress > 0) { // 活动进行中
       if (!canBargain) {
         Taro.showToast({

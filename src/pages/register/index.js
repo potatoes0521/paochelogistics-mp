@@ -3,7 +3,7 @@
  * @description: 注册页面
  * @Date: 2019-08-22 11:58:25
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-10 17:43:43
+ * @LastEditTime : 2020-01-14 13:36:33
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -49,6 +49,7 @@ class usePhoneNumberRegister extends Component {
   
   componentDidMount() { 
     this.pageParams = this.$router.params
+    console.log('params', this.pageParams)
     this.getAgreement()
     login.getCode(this, true)
   }
