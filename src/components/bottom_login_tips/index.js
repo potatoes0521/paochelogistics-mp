@@ -3,7 +3,7 @@
  * @description: 首页底部登录
  * @Date: 2020-01-13 15:44:06
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-13 16:11:48
+ * @LastEditTime : 2020-01-14 14:31:57
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -18,10 +18,12 @@ import {
   Button
 } from '@tarojs/components'
 import '../../assets/icon_font/icon.scss'
+// eslint-disable-next-line import/first
+import { connect } from '@tarojs/redux'
 import defaultImage from '../../assets/img/register/default_icon.png'
 import './index.styl'
 
-export default class BottomLoginTips extends Component {
+class BottomLoginTips extends Component {
 
   constructor(props) {
     super(props)
@@ -35,15 +37,22 @@ export default class BottomLoginTips extends Component {
   }
 
   render() { 
+    console.log('login', this.props.userInfo)
     return (
-      <View className='bottom-login-wrapper'>
-        <View className='left'>
-          <Image src={defaultImage} className='image-style'></Image>
-          <Text className='tips-style'>登录享受定制化服务与优惠</Text>
-        </View>
-        <View className='right'>
-          <Button className='btn-style' onClick={this.navigatorToLogin.bind(this)}>马上登录</Button>
-        </View>
+      <View>
+        {
+          (this.props.userInfo.userId)
+            ? null :
+            <View className='bottom-login-wrapper'>
+              <View className='left'>
+                <Image src={defaultImage} className='image-style'></Image>
+                <Text className='tips-style'>登录享受定制化服务与优惠</Text>
+              </View>
+              <View className='right'>
+                <Button className='btn-style' onClick={this.navigatorToLogin.bind(this)}>马上登录</Button>
+              </View>
+            </View>
+        }
       </View>
     )
   }
@@ -56,3 +65,10 @@ BottomLoginTips.defaultProps = {
 BottomLoginTips.propTypes = {
   onClick: PropTypes.func,
 }
+
+const mapStateToProps = (state) => {
+  return {
+    userInfo: state.user_msg.userInfo
+  }
+}
+export default connect(mapStateToProps)(BottomLoginTips)

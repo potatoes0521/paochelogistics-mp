@@ -479,7 +479,7 @@ class Index extends Component {
               </View>
           }
         </View>
-        {userInfo.userId ? null : <BottomLoginTips></BottomLoginTips>}
+        <BottomLoginTips></BottomLoginTips>
         {
           locationModal ? 
             <LocationModal
