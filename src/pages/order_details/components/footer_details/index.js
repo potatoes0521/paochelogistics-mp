@@ -3,7 +3,7 @@
  * @description: 订单详情--底部详情 订单状态status 10 待支付 20 待交车 30 已取消 40 已完成
  * @Date: 2019-09-20 09:58:08
  * @LastEditors  : guorui
- * @LastEditTime : 2020-01-08 14:14:25
+ * @LastEditTime : 2020-01-14 12:00:47
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -21,6 +21,8 @@ import { connect } from '@tarojs/redux'
 import PropTypes from 'prop-types'
 // eslint-disable-next-line import/first
 import api from '@api/index.js'
+// eslint-disable-next-line import/first
+import classNames from 'classnames'
 import './index.styl'
 
 class FooterDetailsComponent extends Component {
@@ -112,7 +114,10 @@ class FooterDetailsComponent extends Component {
   
   render() {
     let { item } = this.props
-    const buttonsList = item.buttons && item.buttons.map((itemList) => {
+    const buttonsList = item.buttons && item.buttons.map((itemList, index) => {
+      const textClassName = classNames(itemList.key, {
+        'margin-top': index > 2
+      })
       const key = itemList.key
       if (itemList.key == 'inviteCustomer') {
         return (
@@ -120,7 +125,7 @@ class FooterDetailsComponent extends Component {
             openType='share'
             data-type='inviteCustomer'
             data-item={item}
-            className={itemList.key}
+            className={textClassName}
             key={key}
           >{itemList.name}</Button>
         )
@@ -131,7 +136,7 @@ class FooterDetailsComponent extends Component {
             openType='share'
             data-type='otherOnePayOrder'
             data-item={item}
-            className={itemList.key}
+            className={textClassName}
             key={key}
           >{itemList.name}</Button>
         )
@@ -141,7 +146,7 @@ class FooterDetailsComponent extends Component {
             openType='share'
             data-type='shareOrder'
             data-item={item}
-            className={itemList.key}
+            className={textClassName}
             key={key}
           >{itemList.name}</Button>
         )
@@ -155,7 +160,7 @@ class FooterDetailsComponent extends Component {
         )
       }
       return (
-        <Button className={itemList.key} key={key} onClick={() => this.buttonsFun(itemList.key)}>{itemList.name}</Button>
+        <Button className={textClassName} key={key} onClick={() => this.buttonsFun(itemList.key)}>{itemList.name}</Button>
       )
     })
     return (

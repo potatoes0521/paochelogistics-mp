@@ -82,14 +82,17 @@ export default class OrderItem extends Component {
         'price-style': item.status === 40 || item.status === 30
       }
     )
-    const buttonsList = item.buttons && item.buttons.map((itemList) => {
+    const buttonsList = item.buttons && item.buttons.map((itemList, index) => {
+      const textClassName = classNames(itemList.key, {
+        'margin-top': index > 2
+      })
       if (itemList.key == 'inviteCustomer') {
         return (
-          <Button openType='share' data-item={item} data-type='inviteCustomer' className={itemList.key} key={itemList} onClick={this.buttonsFun}>{itemList.name}</Button>
+          <Button openType='share' data-item={item} data-type='inviteCustomer' className={textClassName} key={itemList} onClick={this.buttonsFun}>{itemList.name}</Button>
         )
       }
       return (
-        <Button className={itemList.key} key={itemList} data-key={itemList.key} onClick={this.buttonsFun}>{itemList.name}</Button>
+        <Button className={textClassName} key={itemList} data-key={itemList.key} onClick={this.buttonsFun}>{itemList.name}</Button>
       )
     })
     return (
