@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-03 13:43:51
+ * @LastEditTime : 2020-02-03 14:20:14
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -41,7 +41,7 @@ import { getUserInfo } from '@utils/get_user_info.js'
 import Actions from '@store/actions/index.js'
 // eslint-disable-next-line import/first
 import BottomLoginTips from '@c/bottom_login_tips/index.js'
-
+import Banner from './components/banner/index.js'
 import './index.styl'
 
 class Index extends Component {
@@ -230,19 +230,7 @@ class Index extends Component {
         })
       })
   }
-  /**
-   * 跳转到webview界面
-   * @param {Object} item 参数
-   * @return void
-   */
-  navigatorToWebView(item) {
-    let { locationUrl } = item
-    if (!locationUrl) return
-    locationUrl = encodeURIComponent(locationUrl)
-    Taro.navigateTo({
-      url: `/pages/webview/index?url=${locationUrl}`
-    })
-  }
+  
   modalCallBack() {
     this.setState({
       locationModal: false
@@ -360,20 +348,7 @@ class Index extends Component {
       failLoading
     } = this.state
     let { userInfo } = this.props
-    const bannerListRender = bannerList.map(item => {
-      const key = item.id
-      return (
-        <SwiperItem key={key}>
-          <View className='banner-item'>
-            <Image
-              className='banner-image'
-              src={item.img}
-              onClick={this.navigatorToWebView.bind(this, item)}
-            ></Image>
-          </View>
-        </SwiperItem>
-      )
-    })
+    
     const recommendListRender = recommendList.map(item => {
       const key = item.hotlineId
       return (
@@ -394,25 +369,7 @@ class Index extends Component {
     })
     return (
       <View className='index-wrapper'>
-        <View className='swiper-wrapper'>
-          <Swiper
-            className='swiper'
-            autoplay
-            indicatorDots
-            circular
-            indicatorActiveColor='#ffffff'
-            interval='3000'
-          >
-            {
-              bannerList.length ?
-                bannerListRender
-                :
-                <SwiperItem
-                  onClick={this.navigatorToWebView.bind(this, {})}
-                ></SwiperItem>
-            }
-          </Swiper>
-        </View>
+        <Banner bannerList={bannerList}></Banner>
         <View className='offer-wrapper'>
           <View className='offer-form'>
             <View className='offer-form-top'>
