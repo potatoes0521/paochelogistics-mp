@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-03 14:51:19
+ * @LastEditTime : 2020-02-03 15:27:48
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,11 +12,9 @@ import Taro, { Component } from '@tarojs/taro'
 import {
   View,
   Text,
-  Button,
   Image
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
-import classNames from 'classnames'
 import { convertingGPS } from '@utils/location.js'
 import {
   getUserLocation,
@@ -40,6 +38,7 @@ import Actions from '@store/actions/index.js'
 // eslint-disable-next-line import/first
 import BottomLoginTips from '@c/bottom_login_tips/index.js'
 import Banner from './components/banner/index.js'
+import OfferForm from './components/offer_city/index.js'
 import './index.styl'
 
 class Index extends Component {
@@ -278,43 +277,14 @@ class Index extends Component {
       url: `/pages/push_offer/index?${str}`
     })
   }
+
   toast(errMsg) {
     Taro.showToast({
       title: errMsg,
       icon: 'none'
     })
   }
-  /**
-   * 跳转页面
-   * @param {String} pageName='choose_start_city' 跳转到那个页面
-   * @return void
-   */
-  chooseCity(pageName = 'choose_start_city') {
-    switch (pageName) {
-      case 'choose_start_city':
-        Taro.navigateTo({
-          url: `/pages/choose_city/index?type=start`
-        })
-        return
-      case 'choose_target_city':
-        Taro.navigateTo({
-          url: `/pages/choose_city/index?type=target`
-        })
-        return
-      default:
-        return
-    }
-  }
-  getUserInfo(e) { 
-    let { userInfo } = e.target
-    Actions.changeUserInfo(
-      Object.assign({}, userInfo, {
-        nickName: userInfo.nickName,
-        userPhoto: userInfo.avatarUrl,
-      })
-    )
-    this.submitOffer()
-  }
+  
   /**
    * 跳转到注册
    * @return void
@@ -338,8 +308,10 @@ class Index extends Component {
   }
   render() {
     let {
+      receiveCityId,
       receiveCityName,
       sendCityName,
+      sendCityId,
       locationModal,
       bannerList,
       recommendList,
@@ -367,61 +339,13 @@ class Index extends Component {
     })
     return (
       <View className='index-wrapper'>
-        <Banner bannerList={bannerList}></Banner>
-        <View className='offer-wrapper'>
-          <View className='offer-form'>
-            <View className='offer-form-top'>
-              {/* 发车地址 */}
-              <View className='from-item'>
-                <View className='label-wrapper' onClick={()=>this.chooseCity('choose_start_city')}>
-                  <View className='form-required'>
-                    <View className='required'>*</View>
-                    <View className='from-label'>发车城市</View>
-                  </View>
-                  <View className='from-right'>
-                    <Text
-                      className={classNames({
-                        'from-disabled-text': !sendCityName
-                      })}
-                    >
-                      {
-                        sendCityName ? sendCityName : '请选择发车城市'
-                      }
-                    </Text>
-                    <Text className='iconfont iconxiangyouxuanzejiantoux icon-right-style'></Text>
-                  </View>
-                </View>
-              </View>
-              {/* 收车地址 */}
-              <View className='from-item'>
-                <View className='label-wrapper' onClick={()=>this.chooseCity('choose_target_city')}>
-                <View className='form-required'>
-                  <View className='required'>*</View>
-                  <View className='from-label'>收车城市</View>
-                </View>
-                <View className='from-right'>
-                  <Text
-                    className={classNames({
-                      'from-disabled-text': !receiveCityName.length
-                    })}
-                  >
-                    {
-                      receiveCityName ? receiveCityName : '请选择收车城市'
-                    }
-                  </Text>
-                  <Text className='iconfont iconxiangyouxuanzejiantoux icon-right-style'></Text>
-                </View>
-              </View>
-              </View>
-            </View>
-            {
-              !userInfo.nickName ? 
-                <Button type='button' openType='getUserInfo' lang='zh_CN' onGetUserInfo={this.getUserInfo} className='submit-btn'>立即询价</Button>
-                :
-                <Button type='button' className='submit-btn' onClick={this.submitOffer}>立即询价</Button>
-            }
-          </View>
-        </View>
+        <Banner bannerList={bannerList} />
+        <OfferForm
+          receiveCityName={receiveCityName}
+          sendCityName={sendCityName} 
+          receiveCityId={receiveCityId}
+          sendCityId={sendCityId}
+        />
         <View className='recommend-list'>
           {
             recommendList.length ?
