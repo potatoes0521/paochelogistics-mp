@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-03 14:17:04
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-03 14:54:37
+ * @LastEditTime : 2020-02-03 15:53:33
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -41,12 +41,14 @@ export default class index extends Component {
    */
   navigatorToWebView(item) {
     let {
-      locationUrl
+      locationUrl,
+      title
     } = item
     if (!locationUrl) return
     locationUrl = encodeURIComponent(locationUrl)
+    title = encodeURIComponent(title)
     Taro.navigateTo({
-      url: `/pages/webview/index?url=${locationUrl}`
+      url: `/pages/webview/index?url=${locationUrl}&title=${title}`
     })
   }
 

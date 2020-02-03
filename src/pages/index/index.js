@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-03 15:43:48
+ * @LastEditTime : 2020-02-03 15:44:55
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -39,6 +39,7 @@ import Actions from '@store/actions/index.js'
 import BottomLoginTips from '@c/bottom_login_tips/index.js'
 import Banner from './components/banner/index.js'
 import OfferForm from './components/offer_city/index.js'
+import Tool from './components/tool/index'
 import './index.styl'
 
 class Index extends Component {
@@ -344,6 +345,7 @@ class Index extends Component {
           receiveCityId={receiveCityId}
           sendCityId={sendCityId}
         />
+        <Tool />
         <View className='recommend-list'>
           {
             recommendList.length ?
