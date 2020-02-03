@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-03 15:27:48
+ * @LastEditTime : 2020-02-03 15:36:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -72,16 +72,13 @@ class Index extends Component {
     }
     this.getBannerList()
     this.getRecommendList()
-    this.handleLocation()
     this.handleWXUserInfo()
+    this.handleLocation()
   }
   componentDidShow() { 
-    if (this.state.locationModal) {
-      this.setState({
-        locationModal: true
-      })
+    if (this.state.locationModal) { 
+      this.handleGetSetting()
     }
-    // this.handleDisabled()
   }
   async handleWXUserInfo() {
     let wxUserInfo = await getUserInfo()
@@ -135,6 +132,7 @@ class Index extends Component {
    */
   handleLocation() {
     getUserLocation().then((res) => {
+      console.log('res', res)
       if (!this.state.locationModal) {
         this.setState({
           locationModal: false
@@ -182,7 +180,9 @@ class Index extends Component {
    * @return void
    */
   handleGetSetting() {
+    console.log('asd')
     getSetting().then(res => {
+      console.log('res', res)
       if (!res.authSetting['scope.userLocation']) {
         this.setState({
           locationModal: true
@@ -191,6 +191,7 @@ class Index extends Component {
         this.setState({
           locationModal: false
         })
+        this.handleLocation();
       }
     }).catch((err) => {
       console.log(err, ' get setting ')
@@ -358,13 +359,10 @@ class Index extends Component {
           }
         </View>
         <BottomLoginTips></BottomLoginTips>
-        {
-          locationModal ? 
-            <LocationModal
-              onClick={this.modalCallBack.bind(this)}
-            ></LocationModal>
-            : null
-        }
+        <LocationModal
+          onClick={this.modalCallBack.bind(this)}
+          showModal={locationModal}
+        ></LocationModal>
         {
           userInfo.userId ? 
             null :
