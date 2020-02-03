@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-03 14:17:04
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-03 14:22:58
+ * @LastEditTime : 2020-02-03 14:54:37
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -15,7 +15,7 @@ import {
   SwiperItem,
   Image
 } from '@tarojs/components'
-import classNames from 'classnames'
+// import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
 import './index.styl'

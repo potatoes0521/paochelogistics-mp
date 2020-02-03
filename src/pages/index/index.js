@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-03 14:20:14
+ * @LastEditTime : 2020-02-03 14:51:19
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,8 +13,6 @@ import {
   View,
   Text,
   Button,
-  Swiper,
-  SwiperItem,
   Image
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
