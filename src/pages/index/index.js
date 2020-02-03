@@ -3,8 +3,8 @@
  * @description: 首页
  * 
  * @Date: 2019-09-17 11:53:57
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-13 16:13:05
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-02-03 13:43:51
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -69,7 +69,6 @@ class Index extends Component {
     
     this.initData()
     await login.getOpenId(this) 
-    console.log(11)
     // share_type 1 分享给客户 2 分享砍价
     if (this.pageParams.share_type) {
       this.handleShare()

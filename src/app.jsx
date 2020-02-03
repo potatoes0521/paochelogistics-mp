@@ -1,9 +1,9 @@
-import '@tarojs/async-await'
+// import '@tarojs/async-await'
 import Taro, { Component } from '@tarojs/taro'
 import 'taro-ui/dist/style/index.scss'
 import { Provider } from '@tarojs/redux'
 import configStore from './store/index.js'
-import './assets/js_sdk/ald-stat'
+// import './assets/js_sdk/ald-stat'
 import Index from './pages/index'
 import './assets/icon_font/icon.scss'
 import './app.styl'
@@ -14,7 +14,7 @@ class _App extends Component {
 
   componentDidMount() {
     const updateManager = Taro.getUpdateManager()
-    updateManager.onCheckForUpdate(function (res) {
+    updateManager.onCheckForUpdate(function () {
       //请求完新版本信息的回调
 
     })
@@ -23,7 +23,7 @@ class _App extends Component {
       Taro.showModal({
         title: '更新提示',
         content: '新版本已经准备好,是否重启应用?',
-        success(res) {
+        success() {
           updateManager.applyUpdate()
         }
       })
