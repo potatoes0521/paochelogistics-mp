@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-03 15:36:58
+ * @LastEditTime : 2020-02-03 15:43:48
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -132,7 +132,6 @@ class Index extends Component {
    */
   handleLocation() {
     getUserLocation().then((res) => {
-      console.log('res', res)
       if (!this.state.locationModal) {
         this.setState({
           locationModal: false
@@ -180,9 +179,7 @@ class Index extends Component {
    * @return void
    */
   handleGetSetting() {
-    console.log('asd')
     getSetting().then(res => {
-      console.log('res', res)
       if (!res.authSetting['scope.userLocation']) {
         this.setState({
           locationModal: true
