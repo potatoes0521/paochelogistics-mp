@@ -21,19 +21,9 @@ swiper-item-default()
   height 100%
   swiper-item-default()
 
-.swiper .wx-swiper-dot
-  width 16px
-  height 6px
-  border-radius 10px
-  background rgba(255,255,255,0.5)
-  overflow hidden
-
-.swiper .wx-swiper-dot-active
-  width 32px !important
-  height 6px
-  border-radius 10px
-  overflow hidden
-
 .banner-image
   width 100%
   height 100%
+
+// 因为自定组件模式下Swiper指示点的样式写在子组件会不生效 
+// 所以指示点的样式在父组件
