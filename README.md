@@ -61,7 +61,7 @@ taro update project
 * &emsp;&emsp;&emsp;img -- 图片文件
 * &emsp;&emsp;&emsp;&emsp;indexes -- 城市索引选择器相关图片
 * &emsp;&emsp;&emsp;&emsp;mine -- 我的相关图片
-* &emsp;&emsp;&emsp;&emsp;no_data -- 无数据相关图片
+* &emsp;&emsp;&emsp;&emsp;empty_data -- 无数据相关图片
 * &emsp;&emsp;&emsp;&emsp;register -- 注册相关相关图片
 * &emsp;&emsp;&emsp;&emsp;tabBar -- tabBar相关相关图片
 * &emsp;&emsp;&emsp;js -- js-sdk文件
@@ -72,7 +72,7 @@ taro update project
 * &emsp;&emsp;&emsp;checkbox_group -- 多选框
 * &emsp;&emsp;&emsp;indexes -- 城市索引选择器
 * &emsp;&emsp;&emsp;input_number -- 数字输入框
-* &emsp;&emsp;&emsp;no_data -- 无数据
+* &emsp;&emsp;&emsp;empty_data -- 无数据
 * &emsp;&emsp;&emsp;radio_group -- 单选框
 * &emsp;&emsp;&emsp;no_title_card -- 没有标题的卡片
 * &emsp;&emsp;&emsp;tabs -- 订单和询价单顶部

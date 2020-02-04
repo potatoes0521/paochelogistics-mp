@@ -3,7 +3,7 @@
  * @description: 没有订单的样式
  * @Date: 2019-09-29 15:00:46
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-04 19:56:09
+ * @LastEditTime : 2020-02-04 19:59:48
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -46,6 +46,11 @@ export default class EmptyData extends Component {
           url: '/pages/customer_edit/index'
         })
         break;
+      case 'transport':
+        Taro.navigateTo({
+          url: '/pages/transport_edit/index'
+        })
+        break;
       case 'login':
         Taro.navigateTo({
           url: '/pages/register/index'
@@ -71,6 +76,11 @@ export default class EmptyData extends Component {
         imgSrc = noOrderDataImg
         break;
       case 'customer':
+        imgSrc = noCustomerDataImg
+        text = '去添加'
+        tips = '暂无联系人'
+        break;
+      case 'transport':
         imgSrc = noCustomerDataImg
         text = '去添加'
         tips = '暂无联系人'
