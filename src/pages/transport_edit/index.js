@@ -1,6 +1,6 @@
 /*
  * @Author: liuYang
- * @description: 修改添加客户信息
+ * @description: 修改添加运力信息
  * @Date: 2019-09-27 15:47:35
  * @LastEditors  : liuYang
  * @LastEditTime : 2020-02-04 19:24:13
@@ -49,7 +49,7 @@ class TransportEdit extends Component {
     this.getMerchantType()
     if (this.pageParams.pageType === 'edit') {
       Taro.setNavigationBarTitle({
-        title: '编辑客户信息'
+        title: '编辑运力信息'
       })
       this.getTransportDetails()
     }
@@ -60,7 +60,7 @@ class TransportEdit extends Component {
   }
   
   /**
-   * 获取客户信息详情
+   * 获取运力信息详情
    * @return void
    */
   getTransportDetails() {
@@ -126,7 +126,7 @@ class TransportEdit extends Component {
     Taro.navigateBack()
   }
   /**
-   * 提交客户信息
+   * 提交运力信息
    * @return void
    */
   submit() {
@@ -148,7 +148,7 @@ class TransportEdit extends Component {
       return
     }
     // if (!(validateIdCard).test(idCard)) {
-    //   this.toast('客户身份证号格式有误')
+    //   this.toast('运力身份证号格式有误')
     //   return
     // }
     // if (!merchantName) {
@@ -239,7 +239,7 @@ class TransportEdit extends Component {
     })
   }
   config = {
-    navigationBarTitleText: '添加客户'
+    navigationBarTitleText: '添加运力'
   }
   render() { 
     let {
@@ -273,7 +273,7 @@ class TransportEdit extends Component {
               <Input
                 type='number'
                 className='input-public'
-                placeholder='请输入客户联系方式'
+                placeholder='请输入运力联系方式'
                 placeholderClass='placeholder-style'
                 value={mobile}
                 maxLength='11'
@@ -330,7 +330,7 @@ class TransportEdit extends Component {
             <View className='item-text'>
               <Input
                 className='input-public'
-                placeholder='请输入客户身份证号'
+                placeholder='请输入运力身份证号'
                 placeholderClass='placeholder-style'
                 maxLength='20'
                 type='idcard'

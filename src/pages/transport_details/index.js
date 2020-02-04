@@ -1,9 +1,9 @@
 /*
  * @Author: liuYang
- * @description: 客户信息详情
+ * @description: 运力信息详情
  * @Date: 2019-09-27 15:43:53
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-04 19:21:03
+ * @LastEditTime : 2020-02-04 20:01:12
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -27,7 +27,7 @@ class TransportDetails extends Component {
     this.getTransportDetails()
   }
   /**
-   * 获取客户信息详情
+   * 获取运力信息详情
    * @return void
    */
   getTransportDetails() {
@@ -48,7 +48,7 @@ class TransportDetails extends Component {
     })
   }
   /**
-   * 导航到客户详情
+   * 导航到运力详情
    * @return void
    */
   navigatorTo() { 
@@ -57,7 +57,7 @@ class TransportDetails extends Component {
     })
   }
   config = {
-    navigationBarTitleText: '客户信息'
+    navigationBarTitleText: '运力信息'
   }
   render() { 
     let {transportInfo} = this.state

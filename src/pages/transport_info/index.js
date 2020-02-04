@@ -1,9 +1,9 @@
 /*
  * @Author: liuYang
- * @description: 客户信息列表
+ * @description: 运力信息列表
  * @Date: 2019-09-27 15:38:07
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-04 19:42:34
+ * @LastEditTime : 2020-02-04 20:01:01
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -46,7 +46,7 @@ class TransportInfo extends Component {
     }
   }
   /**
-   * 获取客户列表
+   * 获取运力列表
    * @param {String} selectParam 根据什么查询
    * @param {Number} pageNum 页数
    * @param {Number} pageSize 条数
@@ -86,7 +86,7 @@ class TransportInfo extends Component {
     })
   }
   /**
-   * 跳转到客户详情  
+   * 跳转到运力详情  
    * @param {Object} e event对象
    * @return void
    */
@@ -132,7 +132,7 @@ class TransportInfo extends Component {
     })
   }
   /**
-   * 添加客户
+   * 添加运力
    * @return void
    */
   addTransport() {
@@ -178,7 +178,7 @@ class TransportInfo extends Component {
   }
 
   config = {
-    navigationBarTitleText: '客户信息列表'
+    navigationBarTitleText: '运力信息列表'
   }
   
   render() { 
@@ -232,7 +232,7 @@ class TransportInfo extends Component {
           </View>
         </View>
         <View className='transport-num'>
-          共<Text className='number'>{totalCount}</Text>个客户
+          共<Text className='number'>{totalCount}</Text>个运力
         </View>
         <View className='transport-wrapper'>
           <View
