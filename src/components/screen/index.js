@@ -3,8 +3,8 @@
  * @Author: liuYang
  * @description: 抽屉组件的内部的样式
  * @Date: 2019-10-29 10:25:23
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-09 15:23:47
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-02-04 11:21:07
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  * 
@@ -34,9 +34,11 @@ import PropTypes from 'prop-types'
 import { getTimeDate } from '@utils/timer_handle.js'
 
 import './index.styl'
-import '../../assets/icon_font/icon.scss'
 
 export default class Screen extends Component {
+  static options = {
+    addGlobalClass: true // 允许外部样式修改组件样式
+  }
   constructor(props) { 
     super(props)
     this.state = {

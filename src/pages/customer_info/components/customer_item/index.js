@@ -3,18 +3,20 @@
  * @description: 请填写描述信息
  * @Date: 2019-10-12 10:44:03
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-06 13:40:19
+ * @LastEditTime : 2020-02-04 11:22:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import PropTypes from 'prop-types'
-import '../../../../assets/icon_font/icon.scss'
 
 import './index.styl'
 
 export default class CustomerItem extends Component {
+  static options = {
+    addGlobalClass: true // 允许外部样式修改组件样式
+  }
   render() {
     let {item} = this.props
     return (

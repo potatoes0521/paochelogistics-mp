@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 允许搜索的
  * @Date: 2019-12-06 17:18:35
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-06 17:27:46
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-02-04 11:21:35
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -19,7 +19,6 @@ import {
 } from '@tarojs/components'
 import classNames from 'classnames'
 import './index.styl'
-import '../../assets/icon_font/icon.scss'
 
 export default class TabsCanSelect extends Component {
 

@@ -16,10 +16,12 @@ import {
 } from '@tarojs/components'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import '../../../../assets/icon_font/icon.scss'
 import './index.styl'
 
 export default class PriceDetailsComponent extends Component {
+  static options = {
+    addGlobalClass: true // 允许外部样式修改组件样式
+  }
   constructor(props) {
     super(props)
     this.state = { }

@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-09-27 11:02:36
- * @LastEditors: liuYang
- * @LastEditTime: 2019-10-09 11:26:27
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-02-04 11:20:59
  * @mustParam: 必传参数
  *    options  选项组   数组形式  必须有id 和   label
  *    在选中后会返回修改后的options数据  在父组件需要一个变量把修改后的options再传进来解决初始化的问题
@@ -13,11 +13,13 @@ import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import '../../assets/icon_font/icon.scss'
 
 import './index.styl'
 
 export default class CheckBoxGroup extends Component {
+  static options = {
+    addGlobalClass: true // 允许外部样式修改组件样式
+  }
   constructor(props) {
     super(props)
     this.state = {

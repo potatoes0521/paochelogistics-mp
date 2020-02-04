@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 运输状态时间轴
  * @Date: 2019-09-24 14:59:07
- * @LastEditors: liuYang
- * @LastEditTime: 2019-10-17 15:07:26
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-02-04 11:23:18
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,15 +14,17 @@ import {
 } from '@tarojs/components'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import '../../../../assets/icon_font/icon.scss'
 
 import './index.styl'
 
 export default class TimeLine extends Component {
+  static options = {
+    addGlobalClass: true // 允许外部样式修改组件样式
+  }
   constructor(props) {
     super(props)
     this.state = {
-      open: false
+      // open: false,
     }
   }
   render() { 
