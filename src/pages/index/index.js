@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-04 14:44:06
+ * @LastEditTime : 2020-02-04 16:31:50
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -55,7 +55,7 @@ class Index extends Component {
       bannerList: [],
       recommendList: [],
       failLoading: false,
-      toolList: [1, 2, 3, 4,5,6,7],
+      toolList: [],
     }
     this.initCity = {}
     this.pageParams = {}
@@ -207,23 +207,6 @@ class Index extends Component {
           bannerList: res || []
         })
       })
-  }
-  /**
-   * 跳转到webview界面
-   * @param {Object} item 参数
-   * @return void
-   */
-  navigatorToWebView(item) {
-    let {
-      locationUrl,
-      title
-    } = item
-    if (!locationUrl) return
-    locationUrl = encodeURIComponent(locationUrl)
-    title = encodeURIComponent(title)
-    Taro.navigateTo({
-      url: `/pages/webview/index?url=${locationUrl}&title=${title}`
-    })
   }
   /**
    * 获取推荐列表

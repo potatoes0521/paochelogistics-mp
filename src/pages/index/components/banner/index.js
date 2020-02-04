@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-03 14:17:04
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-04 13:22:14
+ * @LastEditTime : 2020-02-04 16:38:04
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -17,7 +17,7 @@ import {
 } from '@tarojs/components'
 // import classNames from 'classnames'
 import PropTypes from 'prop-types'
-
+import {navigatorToChannel} from '@utils/navigator_to_channel.js'
 import './index.styl'
 
 export default class index extends Component { 
@@ -28,7 +28,6 @@ export default class index extends Component {
 
   constructor(props) {
     super(props)
-    this.state={}
   }
 
   componentDidMount() {
@@ -40,16 +39,7 @@ export default class index extends Component {
    * @return void
    */
   navigatorToWebView(item) {
-    let {
-      locationUrl,
-      title
-    } = item
-    if (!locationUrl) return
-    locationUrl = encodeURIComponent(locationUrl)
-    title = encodeURIComponent(title)
-    Taro.navigateTo({
-      url: `/pages/webview/index?url=${locationUrl}&title=${title}`
-    })
+    navigatorToChannel(item)
   }
 
   render() {

@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-03 15:42:18
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-04 14:53:24
+ * @LastEditTime : 2020-02-04 16:31:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,13 +14,14 @@ import {
   Text,
   Swiper,
   SwiperItem,
-  Image
+  Image,
+  Block
 } from '@tarojs/components'
 import PropTypes from 'prop-types'
-
+import {navigatorToChannel} from '@utils/navigator_to_channel.js'
 import './index.styl'
 
-export default class index extends Component { 
+export default class Tool extends Component { 
 
   static options = {
     addGlobalClass: true // 允许外部样式修改组件样式
@@ -36,12 +37,7 @@ export default class index extends Component {
    * @return void
    */
   navigatorToTool(item) {
-    console.log(item)
-    if (item === 'page') { 
-      Taro.navigateTo({
-        url: '/pages/tool/index',
-      })
-    }
+    navigatorToChannel(item)
   }
   render() {
     let { toolList } = this.props
@@ -51,7 +47,6 @@ export default class index extends Component {
         newArray.push(toolList.slice(i, i + 3));
       }
     }
-    console.log('newArray', newArray)
     // 工具swiper列表
     const toolListRender = toolList.map(item => {
       const key = item.id
@@ -61,29 +56,31 @@ export default class index extends Component {
             <Image
               className='tool-swiper-image'
               src={item.img}
-              onClick={this.navigatorToWebView.bind(this, item)}
+              onClick={this.navigatorToTool.bind(this, item)}
             ></Image>
           </View>
         </SwiperItem>
       )
     })
-    const gridListRender = newArray.map(item => {
+    const gridListRender = newArray.map((item, index) => {
       const key = item
       return (
-        <View className='tool-grid-line' key={key}>
-          {
-            item.map(ite => {
-              const keys = ite
-              return (
-                <View className='tool-grid-item' key={keys}>
-                  <Image className='tool-grid-item-image' src='https://resource.paoche56.com/paochelogistics/mp_img/banner/stop_run.png'></Image>
-                  <Text className='tool-grid-item-text'>{ite}</Text>
-                </View>
-              )
-            })
-          }
-          
-        </View>
+        <Block key={key}>
+          <View className='tool-grid-line'>
+            {
+              item.map(ite => {
+                const keys = ite
+                return (
+                  <View className='tool-grid-item' onClick={this.navigatorToTool.bind(this, ite)} key={keys}>
+                    <Image className='tool-grid-item-image' src='https://resource.paoche56.com/paochelogistics/mp_img/banner/stop_run.png'></Image>
+                    <Text className='tool-grid-item-text'>{ite}</Text>
+                  </View>
+                )
+              })
+            }
+          </View>
+          {index !== newArray.length - 1 && <View className='tool-grid-item-line'></View>}
+      </Block>
       )
     })
     return (
@@ -105,7 +102,7 @@ export default class index extends Component {
                     toolListRender
                     :
                     <SwiperItem
-                      onClick={this.navigatorToWebView.bind(this, {})}
+                      onClick={this.navigatorToTool.bind(this, {})}
                     ></SwiperItem>
                 }
               </Swiper>
@@ -130,12 +127,12 @@ export default class index extends Component {
 
 }
 
-index.defaultProps = {
+Tool.defaultProps = {
   toolList: [],
   onClick: () => {}
 }
 
-index.propTypes = {
+Tool.propTypes = {
   toolList: PropTypes.array,
   onClick: PropTypes.func.isRequired
 }
