@@ -79,3 +79,37 @@ page
   text-align center
   line-height 40px
   margin-top 10px
+
+// 因为自定组件模式下Swiper指示点的样式写在子组件会不生效 
+// 所以指示点的样式在父组件
+// banner
+.swiper .wx-swiper-dot
+  width 16px
+  height 6px
+  border-radius 10px
+  background rgba(255,255,255,0.5)
+  overflow hidden
+
+.swiper .wx-swiper-dot-active
+  width 32px !important
+  height 6px
+  border-radius 10px
+  overflow hidden
+// banner结束
+
+// 因为自定组件模式下Swiper指示点的样式写在子组件会不生效 
+// 所以指示点的样式在父组件
+// 工具开始
+.tool-swiper .wx-swiper-dot
+  width 14px
+  height 6px
+  border-radius 3px
+  background #e1e1e1
+  overflow hidden
+
+.tool-swiper .wx-swiper-dot-active
+  width 20px !important
+  height 6px
+  border-radius 3px
+  overflow hidden
+// 工具结束

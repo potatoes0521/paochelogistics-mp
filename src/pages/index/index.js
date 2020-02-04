@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-03 15:44:55
+ * @LastEditTime : 2020-02-04 14:44:06
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -37,9 +37,9 @@ import { getUserInfo } from '@utils/get_user_info.js'
 import Actions from '@store/actions/index.js'
 // eslint-disable-next-line import/first
 import BottomLoginTips from '@c/bottom_login_tips/index.js'
-import Banner from './components/banner/index.js'
 import OfferForm from './components/offer_city/index.js'
 import Tool from './components/tool/index'
+import Banner from './components/banner/index'
 import './index.styl'
 
 class Index extends Component {
@@ -54,7 +54,8 @@ class Index extends Component {
       locationModal: false,
       bannerList: [],
       recommendList: [],
-      failLoading: false
+      failLoading: false,
+      toolList: [1, 2, 3, 4,5,6,7],
     }
     this.initCity = {}
     this.pageParams = {}
@@ -64,7 +65,6 @@ class Index extends Component {
   async componentDidMount() { 
     this.pageParams = this.$router.params
     console.log('参数:', this.pageParams)
-    
     this.initData()
     await login.getOpenId(this) 
     // share_type 1 分享给客户 2 分享砍价
@@ -209,6 +209,23 @@ class Index extends Component {
       })
   }
   /**
+   * 跳转到webview界面
+   * @param {Object} item 参数
+   * @return void
+   */
+  navigatorToWebView(item) {
+    let {
+      locationUrl,
+      title
+    } = item
+    if (!locationUrl) return
+    locationUrl = encodeURIComponent(locationUrl)
+    title = encodeURIComponent(title)
+    Taro.navigateTo({
+      url: `/pages/webview/index?url=${locationUrl}&title=${title}`
+    })
+  }
+  /**
    * 获取推荐列表
    * @return void
    */
@@ -314,10 +331,12 @@ class Index extends Component {
       locationModal,
       bannerList,
       recommendList,
-      failLoading
+      failLoading,
+      toolList
     } = this.state
     let { userInfo } = this.props
     
+    // 精选推荐
     const recommendListRender = recommendList.map(item => {
       const key = item.hotlineId
       return (
@@ -336,16 +355,17 @@ class Index extends Component {
         </View>
       )
     })
+
     return (
       <View className='index-wrapper'>
-        <Banner bannerList={bannerList} />
+        <Banner bannerList={bannerList}></Banner>
         <OfferForm
           receiveCityName={receiveCityName}
           sendCityName={sendCityName} 
           receiveCityId={receiveCityId}
           sendCityId={sendCityId}
         />
-        <Tool />
+        <Tool toolList={toolList}></Tool>
         <View className='recommend-list'>
           {
             recommendList.length ?
