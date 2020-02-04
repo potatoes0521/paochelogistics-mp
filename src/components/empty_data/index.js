@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 没有订单的样式
  * @Date: 2019-09-29 15:00:46
- * @LastEditors: liuYang
- * @LastEditTime: 2019-11-14 11:18:35
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-02-04 19:56:09
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,12 +14,12 @@ import {
 } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
-import noOrderDataImg from '@img/no_data/no_order.png'
-import noOfferDataImg from '@img/no_data/no_offer.png'
-import noCustomerDataImg from '@img/no_data/no_customer.png'
+import noOrderDataImg from '@img/empty_data/no_order.png'
+import noOfferDataImg from '@img/empty_data/no_offer.png'
+import noCustomerDataImg from '@img/empty_data/no_customer.png'
 import './index.styl'
 
-export default class NoData extends Component {
+export default class EmptyData extends Component {
   constructor(props) {
     super(props)
     this.state = {}
@@ -108,10 +108,10 @@ export default class NoData extends Component {
   }
 }
 
-NoData.defaultProps = {
+EmptyData.defaultProps = {
   pageType: 'offer'
 }
 
-NoData.propTypes = {
+EmptyData.propTypes = {
   pageType: PropTypes.string
 }

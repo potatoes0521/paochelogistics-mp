@@ -23,7 +23,7 @@ import Drawer from '@c/drawer/index.js'
 // eslint-disable-next-line import/first
 import TipsCard from '@c/tips_card/index.js'
 // eslint-disable-next-line import/first
-import NoData from '@c/no_data/index.js'
+import EmptyData from '@c/empty_data/index.js'
 // eslint-disable-next-line import/first
 import { orderTabs } from '@config/text_config.js'
 // eslint-disable-next-line import/first
@@ -345,7 +345,7 @@ class Order extends Component {
                   orderList.length > 0 ?
                     orderItemList
                     :
-                    <NoData pageType='order'></NoData>
+                    <EmptyData pageType='order'></EmptyData>
                 }
               </View>
               <Drawer
@@ -370,7 +370,7 @@ class Order extends Component {
               }
             </Block>
             :
-            <NoData pageType='login'></NoData>
+            <EmptyData pageType='login'></EmptyData>
         }
       </View>
     )

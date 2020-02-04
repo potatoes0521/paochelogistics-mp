@@ -16,7 +16,7 @@ import { connect } from '@tarojs/redux'
 import Tabs from '@c/tabs/index.js'
 import OfferItem from './components/offer_item/index.js'
 // eslint-disable-next-line import/first
-import NoData from '@c/no_data/index.js'
+import EmptyData from '@c/empty_data/index.js'
 // eslint-disable-next-line import/first
 import { offerTabs } from '@config/text_config.js'
 // eslint-disable-next-line import/first
@@ -162,11 +162,11 @@ class Offer extends Component {
                   offerList.length > 0 ?
                     offerItemList
                     :
-                    <NoData pageType='offer'></NoData>
+                    <EmptyData pageType='offer'></EmptyData>
                 }
               </View>
             </Block>
-            : <NoData pageType='login'></NoData>
+            : <EmptyData pageType='login'></EmptyData>
         }
       </View>
     )

@@ -19,7 +19,7 @@ import api from '@api/index.js'
 // import Storage from '@utils/storage.js'
 import CustomerItem from './components/customer_item/index.js'
 // eslint-disable-next-line import/first
-import NoData from '@c/no_data/index.js'
+import EmptyData from '@c/empty_data/index.js'
 import './index.styl'
 
 class CustomerInfo extends Component { 
@@ -243,7 +243,7 @@ class CustomerInfo extends Component {
               customerListData.length ?
                 customerList
                 : 
-                <NoData pageType='customer'></NoData>
+                <EmptyData pageType='customer'></EmptyData>
             }
           </View>
         </View>
