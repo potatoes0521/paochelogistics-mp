@@ -3,7 +3,7 @@
  * @description: 运力信息列表
  * @Date: 2019-09-27 15:38:07
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-04 20:01:01
+ * @LastEditTime : 2020-02-05 10:00:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -102,9 +102,9 @@ class TransportInfo extends Component {
         Taro.navigateBack()
       })
     } else {
-      // Storage.setStorage('transport_details', item)
+      Storage.setStorage('transport_details', item)
       Taro.navigateTo({
-        url: `/pages/transport_details/index?userId=${item.userId}`
+        url: `/pages/transport_edit/index?userId=${item.userId}`
       })
     }
   }
