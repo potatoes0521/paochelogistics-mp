@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-13 10:40:39
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-02-06 14:22:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -36,6 +36,8 @@ import { handleShareInOrderDetails } from '@utils/handle_share.js'
 import {handleOrderButtons} from '../../config/button_config.js'
 // eslint-disable-next-line import/first
 import { interValCountDown } from '@utils/timer_handle.js'
+// eslint-disable-next-line import/first
+import Storage from '@utils/storage.js'
 import './index.styl'
 
 class OrderDetails extends Component {
@@ -59,6 +61,7 @@ class OrderDetails extends Component {
     this.timer = null
   }
   componentWillUnmount() {
+    Storage.removeStorage(`order_transport_${this.pageParams.order_code}`)
     clearInterval(this.timer)
   }
   
@@ -143,6 +146,15 @@ class OrderDetails extends Component {
       tipContent: res.tipContent,
       // canBargain: res.canBargain
     })
+    if (res.transferRealName) {
+      Storage.setStorage(`order_transport_${this.pageParams.order_code}`, {
+        orderCode: this.pageParams.order_code,
+        orderId: obj.orderId,
+        transferRealName: obj.transferRealName,
+        transferMobile: obj.transferMobile,
+        transferPrice: obj.transferPrice,
+      })
+    }
     const nowTimer = new Date().getTime()
     console.log('现在的时间戳' + nowTimer, '到期的时间戳' + res.discountDueTime, nowTimer - res.discountDueTime, nowTimer > res.discountDueTime)
     if (nowTimer > res.discountDueTime) {

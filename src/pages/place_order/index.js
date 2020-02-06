@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-18 13:47:43
+ * @LastEditTime : 2020-02-06 14:07:45
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -19,7 +19,8 @@ import {
 import {
   // validateIdCard,
   realNamePatter,
-  phoneNumberPatter
+  phoneNumberPatter,
+  handleMoney
 } from '@utils/patter.js'
 import { connect } from '@tarojs/redux'
 // eslint-disable-next-line import/first
@@ -54,6 +55,10 @@ class PlaceOrder extends Component {
       vins: '', // 车架号
       quotedPriceDesc: 0, // 报价
       placeOrderCustomer: {}, // 客户信息
+      transferPrice: '', // 运力接单价格
+      transferUserId: '', // 接单运力id
+      transferRealName: '', // 接单运力
+      transferMobile: '', // 接单运力手机号
       // disabled: true
     }
     this.pageParams = {}
@@ -132,7 +137,7 @@ class PlaceOrder extends Component {
   
   /**
    * 发车城市--名字验证
-   * @param {Type} e 名字
+   * @param {Object} e event对象
    * @return void
    */
   verificationSendName(e) {
@@ -146,7 +151,7 @@ class PlaceOrder extends Component {
 
   /**
    * 收车城市--名字验证
-   * @param {Type} e 名字
+   * @param {Object} e event对象
    * @return void
    */
   verificationReceiveName(e) {
@@ -160,7 +165,7 @@ class PlaceOrder extends Component {
 
   /**
    * 发车城市--手机号验证
-   * @param {Type} e 手机号
+   * @param {Object} e event对象
    * @return void
    */
   verificationSendPhone(e) {
@@ -174,7 +179,7 @@ class PlaceOrder extends Component {
   
   /**
    * 收车城市--手机号验证
-   * @param {Type} e 手机号
+   * @param {Object} e event对象
    * @return void
    */
   verificationReceivePhone(e) {
@@ -188,7 +193,7 @@ class PlaceOrder extends Component {
 
   /**
    * 发车城市--身份证号验证
-   * @param {Type} e 身份证号
+   * @param {Object} e event对象
    * @return void
    */
   verificationSendCardNo(e) {
@@ -202,7 +207,7 @@ class PlaceOrder extends Component {
   
   /**
    * 收车城市--身份证号验证
-   * @param {Type} e 身份证号
+   * @param {Object} e event对象
    * @return void
    */
   verificationReceiveCardNo(e) {
@@ -213,7 +218,20 @@ class PlaceOrder extends Component {
       this.saveInputOrTest()
     })
   }
- 
+  /**
+   * 运力接单价格
+   * @param {Object} e event对象
+   * @return void
+   */
+  transportPrice(e) { 
+    let { value } = e.detail
+    value = handleMoney(value)
+    this.setState({
+      transferPrice: value
+    }, () => {
+      this.saveInputOrTest()
+    })
+  }
 
   /**
    * 选择代下单客户
@@ -224,7 +242,15 @@ class PlaceOrder extends Component {
       url: '/pages/customer_info/index?pageType=choose'
     })
   }
-
+  /**
+   * 选择接单运力
+   * @return void
+   */
+  chooseTransport() {
+    Taro.navigateTo({
+      url: '/pages/transport_info/index?pageType=choose'
+    })
+  }
   /**
    * 提交订单
    * @return void
@@ -252,7 +278,11 @@ class PlaceOrder extends Component {
       carAmount,
       vins,
       quotedPriceDesc,
-      placeOrderCustomer
+      placeOrderCustomer,
+      transferPrice,
+      transferRealName, // 运力名称
+      transferUserId, // 接单运力id
+      transferMobile, // 接单运力手机号
     } = this.state
     let { userInfo } = this.props
     if (userInfo.userType === 0 && !placeOrderCustomer.userId) {
@@ -273,6 +303,10 @@ class PlaceOrder extends Component {
     }
     if (!(phoneNumberPatter.test(receiveMobile))) {
       this.toast('收车人手机号输入格式有误')      
+      return
+    }
+    if (userInfo.userType === 0 && transferRealName && transferPrice <= 0) {
+      this.toast('选择运力信息后请填写运力接单价格')
       return
     }
     // if (!(/^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/)/.test(sendCardNo))) {
@@ -310,7 +344,11 @@ class PlaceOrder extends Component {
       vins,
       quotedPriceDesc,
       userId: placeOrderCustomer.userId || userInfo.userId,
-      createUserId: userInfo.userId
+      createUserId: userInfo.userId,
+      transferPrice: transferPrice * 100,
+      transferRealName, // 运力名称
+      transferUserId, // 接单运力id
+      transferMobile, // 接单运力手机号
     }
     api.order.placeOrder(sendData, this)
       .then((res) => {
@@ -373,7 +411,11 @@ class PlaceOrder extends Component {
       carAmount, //车辆台数
       vins, // 车架号
       quotedPriceDesc, // 报价
-      placeOrderCustomer,
+      placeOrderCustomer, // 下单客户
+      transferRealName, // 运力名称
+      transferPrice, // 运力接单价格
+      // transferUserId, // 接单运力id
+      transferMobile, // 接单运力手机号
       // disabled
     } = this.state
     let {userInfo} = this.props
@@ -582,6 +624,58 @@ class PlaceOrder extends Component {
                   <Text>元/台</Text>
                 </View>
               </View>
+              {
+                userInfo.userType === 0 ? 
+                  <Block>
+                    <View className='details-form-item'>
+                      <View className='start-icon'></View>
+                      <View className='details-form-label'>运力名称:</View>
+                      <View className='details-form-content' onClick={this.chooseTransport}>
+                        {
+                          transferRealName.length ?
+                            <Text>{transferRealName}</Text>
+                            :
+                            <Block>
+                              <Text className='placeholder-style'>请选择接单运力</Text>
+                              <Text className='iconfont iconxiangyouxuanzejiantoux icon-right-style'></Text>                        
+                            </Block>
+                        }
+                      </View>
+                    </View>
+                    <View className='details-form-item'>
+                      <View className='start-icon'></View>
+                      <View className='details-form-label'>联系方式:</View>
+                      <View className='details-form-content' onClick={this.chooseTransport}>
+                        {
+                          transferMobile.length ?
+                            <Text>{transferMobile}</Text>
+                            :
+                            <Block>
+                              <Text className='placeholder-style'>请填写联系方式</Text>
+                              <Text className='iconfont iconxiangyouxuanzejiantoux icon-right-style'></Text>                        
+                            </Block>
+                        }
+                      </View>
+                    </View>
+                    <View className='details-form-item'>
+                      <View className='start-icon'>
+                        {transferRealName ? '*' : ''}
+                      </View>
+                      <View className='details-form-label'>此单价格:</View>
+                      <View className='details-form-content'>
+                        <Input
+                          type='digit'
+                          className='details-from-input'
+                          placeholder='请填写运力接单价格'
+                          onInput={this.transportPrice}
+                          placeholderClass='placeholder-style'
+                          maxLength='10'
+                          value={transferPrice}
+                        ></Input>
+                      </View>
+                    </View>
+                  </Block> : null
+              }
             </View>
           </View>
         </View>
