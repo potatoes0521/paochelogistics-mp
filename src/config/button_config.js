@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 按钮组的显示控制
  * @Date: 2019-12-13 15:09:48
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-13 15:44:11
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-02-06 14:55:45
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -34,6 +34,14 @@ const orderButtons = [
   {
     key: 'otherOnePayOrder',
     name: '请别人代付'
+  },
+  {
+    key: 'submitOrderTransport',
+    name: '提交运力信息'
+  },
+  {
+    key: 'seeOrderTransport',
+    name: '查看运力信息'
   }
 ]
  /**

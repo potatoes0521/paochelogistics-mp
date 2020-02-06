@@ -3,7 +3,7 @@
  * @description: 订单详情--底部详情 订单状态status 10 待支付 20 待交车 30 已取消 40 已完成
  * @Date: 2019-09-20 09:58:08
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-06 14:03:25
+ * @LastEditTime : 2020-02-06 14:50:43
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -65,20 +65,6 @@ class FooterDetailsComponent extends Component {
   }
   
   /**
-   * 分享砍价
-   * @return void
-   */
-  shareBargain() {
-    // this.onShareAppMessage()
-  }
-
-  /**
-   * 分享给客户
-   * @return void
-   */
-  shareCustomer() { }
-  
-  /**
    * 查看运输状态
    * @return void
    */
@@ -86,6 +72,12 @@ class FooterDetailsComponent extends Component {
     let { item } = this.props
     Taro.navigateTo({
       url: `/pages/transport_state/index?order_id=${item.orderId}`
+    })
+  }
+  orderTransport(type) { 
+    let { item } = this.props
+    Taro.navigateTo({
+      url: `/pages/order_transport/index?type=${type}&order_id=${item.orderId}&order_id=${item.orderCode}`
     })
   }
   getOrderDetails() {
@@ -98,6 +90,12 @@ class FooterDetailsComponent extends Component {
         break;
       case 'payOrder':
         this.paymentButton()
+        break;
+      case 'submitOrderTransport':
+        this.orderTransport('submit')
+        break;
+      case 'seeOrderTransport':
+        this.orderTransport('see')
         break;
       default:
         return
