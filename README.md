@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 项目描述文件
  * @Date: 2019-08-14 10:25:22
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-12 10:40:07
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-02-10 11:02:54
  -->
 ## 跑车帮小程序
  
@@ -186,3 +186,6 @@ taro update project
 * 8.暴露订单号 允许长按或者点击复制
 * 9.暴露订单所属客户
 
+### 1.0.1
+* 1.驿站人员运力上报
+* 2.驿站人员运力管理
