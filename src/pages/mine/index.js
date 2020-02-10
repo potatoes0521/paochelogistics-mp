@@ -3,7 +3,7 @@
  * @description: 我的
  * @Date: 2019-09-20 13:24:52
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-04 19:54:45
+ * @LastEditTime : 2020-02-10 11:02:10
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -92,9 +92,9 @@ class Mine extends Component {
               </View>
             )
           }
-          {/* {
-            userInfo.userType === 0 && ( */}
-              <View className='list-item' onClick={()=>this.navigatorPage('transport_info')}>
+          {
+            userInfo.userType === 0 && (
+              <View className='list-item' onClick={() => this.navigatorPage('transport_info')}>
                 <View className='list-left'>
                   <View className='icon-img'>
                     <Image src={transportImage}></Image>
@@ -103,8 +103,8 @@ class Mine extends Component {
                 </View>
                 <View className='list-right iconfont iconxiangyouxuanzejiantoux'></View>
               </View>
-            {/* ) */}
-          {/* } */}
+            )
+          }
           <View className='list-item' onClick={()=>this.navigatorPage('mine_info')}>
             <View className='list-left'>
               <View className='icon-img'>
