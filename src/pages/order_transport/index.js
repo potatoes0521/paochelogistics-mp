@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-05 17:16:19
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-06 14:45:39
+ * @LastEditTime : 2020-02-10 17:27:43
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -20,7 +20,6 @@ import { connect } from '@tarojs/redux'
 import api from '@api/index.js'
 import { handleMoney } from '@utils/patter.js'
 import Storage from '@utils/storage.js'
-import '../../assets/icon_font/icon.scss'
 import './index.styl'
 
 class OrderTransport extends Component{

@@ -13,7 +13,6 @@ import { View } from '@tarojs/components'
 import api from '@api/index.js'
 import { connect } from '@tarojs/redux'
 import NoTitleCard from '@c/no_title_card/index.js'
-import '../../assets/icon_font/icon.scss'
 import './index.styl'
 
 class PaySuccessDetails extends Component {

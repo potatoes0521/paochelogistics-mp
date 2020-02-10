@@ -3,7 +3,7 @@
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
  * @LastEditors  : liuYang
- * @LastEditTime : 2019-12-20 10:36:09
+ * @LastEditTime : 2020-02-10 17:27:35
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -24,7 +24,6 @@ import api from '@api/index.js'
 import { handleOfferButtons } from '../../config/button_config.js'
 
 import './index.styl'
-import '../../assets/icon_font/icon.scss'
 
 class OfferDetails extends Component {
   constructor(props) {
