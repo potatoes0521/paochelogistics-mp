@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-04 15:38:51
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-04 15:51:04
+ * @LastEditTime : 2020-02-12 12:13:48
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,14 +13,14 @@ import Taro from '@tarojs/taro'
 
 // eslint-disable-next-line import/prefer-default-export
 export const navigatorToChannel = (item) => {
-  if (item !== 'page' && !item.type) {
-    item.type = 'h5'
+  if (item !== 'page' && !item.openMode) {
+    item.openMode = 1
   }
-  if (item === 'page') {
+  if (+item.openMode === 2 || item === 'page') {
     Taro.navigateTo({
       url: '/pages/tool/index',
     })
-  } else if (item.type === 'h5') {
+  } else if (+item.openMode === 1) {
     let {
       locationUrl,
       title
@@ -31,7 +31,7 @@ export const navigatorToChannel = (item) => {
     Taro.navigateTo({
       url: `/pages/webview/index?url=${locationUrl}&title=${title}`
     })
-  } else if (item.type === 'mp') {
+  } else if (+item.openMode === 3) {
     Taro.navigateToMiniProgram({
       appId: item.appId,
       path: decodeURIComponent(item.path),
