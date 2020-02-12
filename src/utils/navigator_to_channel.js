@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-04 15:38:51
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-12 12:13:48
+ * @LastEditTime : 2020-02-12 12:34:13
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -18,7 +18,7 @@ export const navigatorToChannel = (item) => {
   }
   if (+item.openMode === 2 || item === 'page') {
     Taro.navigateTo({
-      url: '/pages/tool/index',
+      url: item.locationUrl,
     })
   } else if (+item.openMode === 1) {
     let {

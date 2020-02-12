@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-04 16:31:50
+ * @LastEditTime : 2020-02-12 12:38:47
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -55,7 +55,7 @@ class Index extends Component {
       bannerList: [],
       recommendList: [],
       failLoading: false,
-      toolList: [],
+      toolList: []
     }
     this.initCity = {}
     this.pageParams = {}
@@ -72,6 +72,7 @@ class Index extends Component {
       this.handleShare()
     }
     this.getBannerList()
+    this.getToolList()
     this.getRecommendList()
     this.handleWXUserInfo()
     this.handleLocation()
@@ -226,7 +227,13 @@ class Index extends Component {
         })
       })
   }
-  
+  getToolList() {
+    api.tool.getTopToolList({}, this).then(res => {
+      this.setState({
+        toolList: res
+      })
+    })
+  }
   modalCallBack() {
     this.setState({
       locationModal: false
@@ -348,7 +355,7 @@ class Index extends Component {
           receiveCityId={receiveCityId}
           sendCityId={sendCityId}
         />
-        <Tool toolList={toolList}></Tool>
+        <Tool toolList={toolList} />
         <View className='recommend-list'>
           {
             recommendList.length ?

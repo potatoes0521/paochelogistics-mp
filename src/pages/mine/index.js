@@ -3,7 +3,7 @@
  * @description: 我的
  * @Date: 2019-09-20 13:24:52
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-10 11:02:10
+ * @LastEditTime : 2020-02-12 12:24:27
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -20,6 +20,7 @@ import defaultImage from '@img/register/default_icon.png'
 import aboutImage from "@img/mine/about.png"
 import customerImage from "@img/mine/customer.png"
 import transportImage from "@img/mine/transport.png"
+import toolImage from "@img/mine/tool.png"
 import idCardImage from "@img/mine/id_card.png"
 import './index.styl'
 
@@ -111,6 +112,15 @@ class Mine extends Component {
                 <Image src={idCardImage}></Image>
               </View>
               <View className='item-name'>个人名片</View>
+            </View>
+            <View className='list-right iconfont iconxiangyouxuanzejiantoux'></View>
+          </View>
+          <View className='list-item' onClick={()=>this.navigatorPage('tool')}>
+            <View className='list-left'>
+              <View className='icon-img'>
+                <Image src={toolImage}></Image>
+              </View>
+              <View className='item-name'>工具</View>
             </View>
             <View className='list-right iconfont iconxiangyouxuanzejiantoux'></View>
           </View>
