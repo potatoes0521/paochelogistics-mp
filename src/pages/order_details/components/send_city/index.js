@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 订单详情中发车城市的组件
  * @Date: 2019-09-20 09:58:08
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-13 16:38:30
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-02-14 12:52:06
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,7 +12,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import PropTypes from 'prop-types'
-import './index.styl'
+import '../public.styl'
 
 class SendCityComponent extends Component {
   constructor(props) {

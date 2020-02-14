@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 订单详情报价、 金额、 支付方式 
  * @Date: 2019-09-20 09:58:08
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-13 10:40:46
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-02-14 12:55:19
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -17,6 +17,7 @@ import {
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import './index.styl'
+import '../public.styl'
 
 export default class PriceDetailsComponent extends Component {
   static options = {

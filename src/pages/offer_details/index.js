@@ -3,7 +3,7 @@
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-10 17:27:35
+ * @LastEditTime : 2020-02-14 12:54:37
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,7 +16,7 @@ import {
 import { connect } from '@tarojs/redux'
 import NoTitleCard from '@c/no_title_card/index.js'
 import classNames from 'classnames'
-import '../order_details/components/send_city/index.styl'
+import '../order_details/components/public.styl'
 // eslint-disable-next-line import/first
 import Storage from '@utils/storage.js'
 // eslint-disable-next-line import/first
