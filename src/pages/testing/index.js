@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-13 12:28:23
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-14 20:45:44
+ * @LastEditTime : 2020-02-14 21:31:45
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -26,7 +26,7 @@ class index extends Component {
     this.pageParams = {}
   }
 
-  componentDidMount() {
+  componentDidShow() {
     this.pageParams = this.$router.params
     this.getUserRealNameStatus()
   }
@@ -54,7 +54,7 @@ class index extends Component {
   render() {
     let {visible} = this.state
     return <View>
-      <Certification redirect onClick={this.changeVisibleState.bind(this)} visible={visible} />
+      <Certification onClick={this.changeVisibleState.bind(this)} visible={visible} />
     </View>
   }
 

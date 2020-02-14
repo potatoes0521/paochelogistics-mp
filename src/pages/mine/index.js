@@ -3,7 +3,7 @@
  * @description: 我的
  * @Date: 2019-09-20 13:24:52
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-14 20:57:55
+ * @LastEditTime : 2020-02-14 22:01:34
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -63,7 +63,7 @@ class Mine extends Component {
     let {userInfo} = this.props
     return (
       <View className='page-wrapper'>
-        <View className='user-msg-wrapper' onClick={()=>this.navigatorPage('mine')}>
+        <View className='user-msg-wrapper' onClick={()=>this.navigatorPage('mine_info')}>
           <View className='user-info'>
             <View className='user-icon'>
               {/* <AtAvatar circle size='small' openData={{ type: 'userAvatarUrl' }}></AtAvatar> */}
@@ -113,7 +113,7 @@ class Mine extends Component {
               </View>
             )
           }
-          <View className='list-item' onClick={()=>this.navigatorPage('mine_info')}>
+          {/* <View className='list-item' onClick={()=>this.navigatorPage('mine_info')}>
             <View className='list-left'>
               <View className='icon-img'>
                 <Image src={idCardImage}></Image>
@@ -121,7 +121,7 @@ class Mine extends Component {
               <View className='item-name'>个人名片</View>
             </View>
             <View className='list-right iconfont iconxiangyouxuanzejiantoux'></View>
-          </View>
+          </View> */}
           {/* <View className='list-item' onClick={()=>this.navigatorPage('tool')}>
             <View className='list-left'>
               <View className='icon-img'>
