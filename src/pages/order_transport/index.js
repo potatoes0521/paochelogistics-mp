@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-05 17:16:19
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-10 17:27:43
+ * @LastEditTime : 2020-02-14 18:08:51
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -163,7 +163,7 @@ class OrderTransport extends Component{
                     placeholderClass='placeholder-style'
                     maxLength='10'
                     value={transferPrice}
-                  ></Input> : <Text>{transferPrice}</Text>
+                  ></Input> : <Text>{transferPrice}元</Text>
               }
             </View>
           </View>

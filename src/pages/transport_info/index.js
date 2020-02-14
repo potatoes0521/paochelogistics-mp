@@ -3,7 +3,7 @@
  * @description: 运力信息列表
  * @Date: 2019-09-27 15:38:07
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-14 14:53:38
+ * @LastEditTime : 2020-02-14 18:02:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -41,11 +41,9 @@ class TransportInfo extends Component {
  
   componentDidShow() { 
     this.pageParams = this.$router.params
-    if (this.transportPage === 1 || this.state.transportListData.length < 10 ) {
-      this.transportPage = 1
-      this.transportFlag = false
-      this.getAllTransportList()
-    }
+    this.transportPage = 1
+    this.transportFlag = false
+    this.getAllTransportList()
   }
   /**
    * 获取运力列表
