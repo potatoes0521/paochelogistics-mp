@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-14 13:15:46
+ * @LastEditTime : 2020-02-14 13:46:18
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -302,6 +302,7 @@ class OrderDetails extends Component {
       open
       // canBargain
     } = this.state
+    const {userInfo} = this.props
     // 1. 请求到数据没有 2. 有没有展示文案 3. 没有过期 4 订单的支付状态是 未支付 5. 不是代付
     const showTipsView = showTips && tipContent && !fail && orderDetailsInfo.payStatus === 0 && pageParams.share_type !== '3'
     const orderMsgClassName = classNames({
@@ -343,7 +344,10 @@ class OrderDetails extends Component {
                     <View className='dividing-line'></View>
                     <ServiceDetailsComponent item={orderDetailsInfo}></ServiceDetailsComponent>
                     <View className='dividing-line'></View>
-                    <OrderTransport orderDetails={orderDetailsInfo}></OrderTransport>
+                    {
+                      userInfo.userType === 0 && <OrderTransport orderDetails={orderDetailsInfo}></OrderTransport>
+                    }
+                    
                   </Block>
                 )
               }

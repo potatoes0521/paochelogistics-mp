@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-13 12:28:23
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-13 13:18:36
+ * @LastEditTime : 2020-02-14 13:44:41
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -32,7 +32,7 @@ class index extends Component {
   }
   getUserRealNameStatus() { 
     let sendData = {
-      activeId: 1
+      activeId: this.pageParams.activeId
     }
     api.user.checkUserRealNameStatus(sendData, this).then(res => {
       if (!res) {
