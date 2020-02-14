@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-04 15:38:51
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-14 17:13:46
+ * @LastEditTime : 2020-02-14 18:58:18
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,7 +12,7 @@
 import Taro from '@tarojs/taro'
 
 // eslint-disable-next-line import/prefer-default-export
-export const navigatorToChannel = (item) => {
+export const navigatorToChannel = (item, redirect=false) => {
   if (item !== 'page' && !item.openMode) {
     item.openMode = 1
   }
@@ -35,9 +35,16 @@ export const navigatorToChannel = (item) => {
     } else {
       title = "跑车物流"
     }
-    Taro.navigateTo({
-      url: `/pages/webview/index?url=${locationUrl}&title=${title}`
-    })
+    let url = `/pages/webview/index?url=${locationUrl}&title=${title}`
+    if (redirect) {
+      Taro.redirectTo({
+        url
+      })
+    } else {
+      Taro.navigateTo({
+        url
+      })
+    }
   } else if (+item.openMode === 3) {
     Taro.navigateToMiniProgram({
       appId: item.appId,

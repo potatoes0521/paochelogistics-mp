@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-13 12:28:23
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-14 17:08:38
+ * @LastEditTime : 2020-02-14 18:54:36
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -40,7 +40,7 @@ class index extends Component {
           visible: true
         })
       } else {
-        navigatorToChannel(res)
+        navigatorToChannel(res, true)
       }
     })
   }
