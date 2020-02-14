@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-13 12:28:23
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-14 13:44:41
+ * @LastEditTime : 2020-02-14 17:08:38
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -32,7 +32,7 @@ class index extends Component {
   }
   getUserRealNameStatus() { 
     let sendData = {
-      activeId: this.pageParams.activeId
+      activeCode: this.pageParams.activeCode
     }
     api.user.checkUserRealNameStatus(sendData, this).then(res => {
       if (!res) {
@@ -48,7 +48,7 @@ class index extends Component {
     Taro.navigateBack()
   }
   config = {
-    navigationBarTitleText: '跑车帮' 
+    navigationBarTitleText: '跑车物流' 
   }
 
   render() {
