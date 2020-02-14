@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-04 15:38:51
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-12 12:34:13
+ * @LastEditTime : 2020-02-14 17:13:46
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -23,18 +23,25 @@ export const navigatorToChannel = (item) => {
   } else if (+item.openMode === 1) {
     let {
       locationUrl,
-      title
+      title,
+      toolName,
     } = item
     if (!locationUrl) return
     locationUrl = encodeURIComponent(locationUrl)
-    title = encodeURIComponent(title)
+    if (title) {
+      title = encodeURIComponent(title)
+    } else if (toolName) {
+      title = encodeURIComponent(toolName)
+    } else {
+      title = "跑车物流"
+    }
     Taro.navigateTo({
       url: `/pages/webview/index?url=${locationUrl}&title=${title}`
     })
   } else if (+item.openMode === 3) {
     Taro.navigateToMiniProgram({
       appId: item.appId,
-      path: decodeURIComponent(item.path),
+      path: decodeURIComponent(item.locationUrl),
       // envVersion: 'develop',
       success(res) {
         // 打开成功

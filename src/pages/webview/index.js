@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-05 14:12:35
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-03 16:24:04
+ * @LastEditTime : 2020-02-14 17:10:06
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -28,11 +28,11 @@ class index extends Component {
     this.setState({
       url: decodeURIComponent(this.pageParams.url)
     })
+    console.log('this.pageParams', this.pageParams)
     if (this.pageParams.title) {
-      console.log('this.pageParams.title', this.pageParams.title)
-      console.log('this.pageParams.title', decodeURIComponent(this.pageParams.title))
-
-      Taro.setNavigationBarTitle({title:decodeURIComponent(this.pageParams.title)})
+      Taro.setNavigationBarTitle({
+        title: decodeURIComponent(this.pageParams.title)
+      })
     }
   }
 
