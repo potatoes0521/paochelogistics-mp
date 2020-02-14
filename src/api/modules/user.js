@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 用户中心
  * @Date: 2019-09-26 11:23:16
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-17 12:01:25
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-02-14 13:41:28
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -41,5 +41,22 @@ export default {
   // 编辑用户信息
   editUserInfo(data, that) {
     return requestHandle.post('user/edituser', data, that);
-  }
+  },
+  // banner或者其他活动入口进入检测中间页
+  // 判断是否实名 未实名状态返回null 已实名返回跳转的页面
+  checkUserRealNameStatus(data, that) {
+    return requestHandle.get('active/activeurl', data, that);
+  },
+  // 身份证识别ORC
+  OCR(data, that) {
+    return requestHandle.get('user/wechatocr', data, that, '识别中...');
+  },
+  // 实名认证
+  realNameAuthentication(data, that) {
+    return requestHandle.post('user/addIdCard', data, that, '实名认证中...');
+  },
+  // 获取实名信息
+  getUserAuthorizeMsg(data, that) {
+    return requestHandle.get('user/idcard', data, that);
+  },
 }

@@ -3,7 +3,7 @@
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-06 11:22:46
+ * @LastEditTime : 2020-02-14 10:41:27
  */
 
 // 默认请求连接
@@ -127,7 +127,7 @@ export default {
               // '200002' 是未注册
               console.log(resData, '接口是' + url)
               if (!+resData.code || +resData.code === 200002 || +resData.code == 200 || +resData.code === 200004) {
-                if (url === 'user/customerlist' || +resData.code === 200004) {
+                if (url === 'user/customerlist' || +resData.code === 200004 || url === 'transfer/postertransferlist') {
                   resolve(resData)
                 } else {
                   resolve(resData.data)                  

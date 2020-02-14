@@ -52,7 +52,7 @@ class _App extends Component {
       'pages/customer_details/index',
       'pages/customer_edit/index',
       'pages/transport_info/index',
-      // 'pages/transport_details/index',
+      'pages/real_name_authentication/index',
       'pages/transport_edit/index',
       'pages/choose_city/index',
       'pages/register/index',
@@ -62,7 +62,8 @@ class _App extends Component {
       'pages/remark/index',
       'pages/share_bargain/index',
       'pages/webview/index',
-      'pages/tool/index'
+      'pages/tool/index',
+      'pages/testing/index',
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -106,7 +107,10 @@ class _App extends Component {
       "scope.userLocation": {
         "desc": "你的位置信息将用于小程序位置接口的效果展示" // 高速公路行驶持续后台定位
       }
-    }
+    },
+    navigateToMiniProgramAppIdList: [
+      "wx1f1ea04b716771be"
+    ]
   }
 
   // 在 App 类中的 render() 函数没有实际作用
