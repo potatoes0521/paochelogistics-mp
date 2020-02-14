@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-14 13:46:18
+ * @LastEditTime : 2020-02-14 17:18:12
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -36,7 +36,7 @@ import { handleShareInOrderDetails } from '@utils/handle_share.js'
 import {handleOrderButtons} from '../../config/button_config.js'
 // eslint-disable-next-line import/first
 import { interValCountDown } from '@utils/timer_handle.js'
-import OrderTransport from './components/order_transport/index.js'
+// import OrderTransport from './components/order_transport/index.js'
 // eslint-disable-next-line import/first
 import Storage from '@utils/storage.js'
 import './index.styl'
@@ -302,7 +302,7 @@ class OrderDetails extends Component {
       open
       // canBargain
     } = this.state
-    const {userInfo} = this.props
+    // const {userInfo} = this.props
     // 1. 请求到数据没有 2. 有没有展示文案 3. 没有过期 4 订单的支付状态是 未支付 5. 不是代付
     const showTipsView = showTips && tipContent && !fail && orderDetailsInfo.payStatus === 0 && pageParams.share_type !== '3'
     const orderMsgClassName = classNames({
@@ -344,9 +344,9 @@ class OrderDetails extends Component {
                     <View className='dividing-line'></View>
                     <ServiceDetailsComponent item={orderDetailsInfo}></ServiceDetailsComponent>
                     <View className='dividing-line'></View>
-                    {
+                    {/* {
                       userInfo.userType === 0 && <OrderTransport orderDetails={orderDetailsInfo}></OrderTransport>
-                    }
+                    } */}
                     
                   </Block>
                 )
