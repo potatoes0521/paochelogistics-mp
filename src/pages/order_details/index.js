@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-06 14:49:44
+ * @LastEditTime : 2020-02-14 13:15:46
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -36,6 +36,7 @@ import { handleShareInOrderDetails } from '@utils/handle_share.js'
 import {handleOrderButtons} from '../../config/button_config.js'
 // eslint-disable-next-line import/first
 import { interValCountDown } from '@utils/timer_handle.js'
+import OrderTransport from './components/order_transport/index.js'
 // eslint-disable-next-line import/first
 import Storage from '@utils/storage.js'
 import './index.styl'
@@ -342,6 +343,7 @@ class OrderDetails extends Component {
                     <View className='dividing-line'></View>
                     <ServiceDetailsComponent item={orderDetailsInfo}></ServiceDetailsComponent>
                     <View className='dividing-line'></View>
+                    <OrderTransport orderDetails={orderDetailsInfo}></OrderTransport>
                   </Block>
                 )
               }

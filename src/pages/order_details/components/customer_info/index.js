@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 客户信息
  * @Date: 2019-12-06 09:21:26
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-13 16:19:25
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-02-14 13:35:19
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,6 +14,7 @@ import PropTypes from 'prop-types'
 import './index.styl'
 
 class CustomerInfoComponent extends Component {
+
   constructor(props) {
     super(props)
     this.state = { }

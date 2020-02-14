@@ -15,6 +15,9 @@ import PropTypes from 'prop-types'
 import '../public.styl'
 
 class SendCityComponent extends Component {
+  static options = {
+    addGlobalClass: true // 允许外部样式修改组件样式
+  }
   constructor(props) {
     super(props)
     this.state = { }
