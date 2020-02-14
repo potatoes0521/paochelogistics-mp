@@ -3,7 +3,7 @@
  * @description: 我的
  * @Date: 2019-09-20 13:24:52
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-12 12:24:27
+ * @LastEditTime : 2020-02-14 17:50:54
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -115,7 +115,7 @@ class Mine extends Component {
             </View>
             <View className='list-right iconfont iconxiangyouxuanzejiantoux'></View>
           </View>
-          <View className='list-item' onClick={()=>this.navigatorPage('tool')}>
+          {/* <View className='list-item' onClick={()=>this.navigatorPage('tool')}>
             <View className='list-left'>
               <View className='icon-img'>
                 <Image src={toolImage}></Image>
@@ -123,7 +123,7 @@ class Mine extends Component {
               <View className='item-name'>工具</View>
             </View>
             <View className='list-right iconfont iconxiangyouxuanzejiantoux'></View>
-          </View>
+          </View> */}
           <View className='list-item' onClick={()=>this.navigatorPage('about')}>
             <View className='list-left'>
               <View className='icon-img'>
