@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-05 17:16:19
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-14 18:08:51
+ * @LastEditTime : 2020-02-14 18:31:29
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -30,6 +30,7 @@ class OrderTransport extends Component{
       transferMobile: '',
       transferPrice: '',
       transferUserId: '', // 接单运力id
+      transferPriceDesc: '',
       pageParams: {}
     }
   }
@@ -37,12 +38,13 @@ class OrderTransport extends Component{
     this.setState({
       pageParams: this.$router.params,
     }, () => {
-        this.handleData()
+      this.handleData()
     })
   }
   handleData() { 
-    Storage.getStorage(`order_transport_${this.pageParams.order_code}`).then(res => {
+    Storage.getStorage(`order_transport_${this.state.pageParams.order_code}`).then(res => {
       if (res) {
+        console.log('res', res)
         this.setState(res)
       }
     })
@@ -126,7 +128,8 @@ class OrderTransport extends Component{
       transferRealName,
       transferMobile,
       transferPrice,
-      pageParams
+      pageParams,
+      transferPriceDesc
     } = this.state
     return (
       <View className='page-wrapper'>
@@ -136,10 +139,7 @@ class OrderTransport extends Component{
             <View className='driver-info'>
               <View className='driver-name'>{transferRealName || '请选择司机信息'}</View>
               {
-                pageParams.type !== 'see' ?
-                  <View className='select-icon iconfont iconxiangyouxuanzejiantoux'></View>
-                  : 
-                  <View className='select-icon'></View>
+                pageParams.type !== 'see' && <View className='select-icon iconfont iconxiangyouxuanzejiantoux'></View>
               }
             </View>
           </View>
@@ -147,7 +147,6 @@ class OrderTransport extends Component{
             <View className='driver-title'>联系方式</View>
             <View className='driver-info'>
               <View className='driver-name'>{transferMobile || ''}</View>
-              <View className='select-icon'></View>
             </View>
           </View>
           <View className='driver-item'>
@@ -163,7 +162,7 @@ class OrderTransport extends Component{
                     placeholderClass='placeholder-style'
                     maxLength='10'
                     value={transferPrice}
-                  ></Input> : <Text>{transferPrice}元</Text>
+                  ></Input> : <Text className='driver-name'>{transferPriceDesc}元</Text>
               }
             </View>
           </View>

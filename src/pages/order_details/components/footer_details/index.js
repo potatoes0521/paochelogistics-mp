@@ -3,7 +3,7 @@
  * @description: 订单详情--底部详情 订单状态status 10 待支付 20 待交车 30 已取消 40 已完成
  * @Date: 2019-09-20 09:58:08
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-06 14:50:43
+ * @LastEditTime : 2020-02-14 18:23:45
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -77,7 +77,7 @@ class FooterDetailsComponent extends Component {
   orderTransport(type) { 
     let { item } = this.props
     Taro.navigateTo({
-      url: `/pages/order_transport/index?type=${type}&order_id=${item.orderId}&order_id=${item.orderCode}`
+      url: `/pages/order_transport/index?type=${type}&order_id=${item.orderId}&order_code=${item.orderCode}`
     })
   }
   getOrderDetails() {

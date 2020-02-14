@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-14 17:18:12
+ * @LastEditTime : 2020-02-14 18:31:46
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -154,6 +154,7 @@ class OrderDetails extends Component {
         transferRealName: obj.transferRealName,
         transferMobile: obj.transferMobile,
         transferPrice: obj.transferPrice,
+        transferPriceDesc: obj.transferPriceDesc
       })
     }
     const nowTimer = new Date().getTime()
