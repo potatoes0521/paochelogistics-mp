@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 客户信息列表
  * @Date: 2019-09-27 15:38:07
- * @LastEditors: liuYang
- * @LastEditTime: 2019-12-13 13:54:02
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-02-14 18:01:45
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -39,11 +39,9 @@ class CustomerInfo extends Component {
  
   componentDidShow() { 
     this.pageParams = this.$router.params
-    if (this.customerPage === 1 || this.state.customerListData.length < 10 ) {
-      this.customerPage = 1
-      this.customerFlag = false
-      this.getAllCustomerList()
-    }
+    this.customerPage = 1
+    this.customerFlag = false
+    this.getAllCustomerList()
   }
   /**
    * 获取客户列表
