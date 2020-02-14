@@ -3,7 +3,7 @@
  * @description: 我的
  * @Date: 2019-09-20 13:24:52
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-14 19:08:01
+ * @LastEditTime : 2020-02-14 20:57:55
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -63,21 +63,28 @@ class Mine extends Component {
     let {userInfo} = this.props
     return (
       <View className='page-wrapper'>
-        <View className='user-msg-wrapper'>
-          <View className='user-icon'>
+        <View className='user-msg-wrapper' onClick={()=>this.navigatorPage('mine')}>
+          <View className='user-info'>
+            <View className='user-icon'>
+              {/* <AtAvatar circle size='small' openData={{ type: 'userAvatarUrl' }}></AtAvatar> */}
+              {
+                userInfo.userId ? 
+                  <OpenData className='user-icon-img' type='userAvatarUrl'></OpenData>
+                  :
+                  <Image src={defaultImage} className='default-icon'></Image>
+              }
+            </View>
             {
               userInfo.userId ? 
-                <OpenData className='user-icon-img' type='userAvatarUrl'></OpenData>
+                <View className='userInfo-style'>
+                  <OpenData lang='zh_CN' className='nick-name' type='userNickName'></OpenData>
+                  {/* <View className={certificationClassName}></View> */}
+                </View>
                 :
-                <Image src={defaultImage} className='default-icon'></Image>
+                <View className='nick-name no-login'>注册/登录</View>
             }
           </View>
-          {
-            userInfo.userId ? 
-              <OpenData lang='zh_CN' className='nick-name' type='userNickName'></OpenData>
-              :
-              <View className='nick-name no-login'>注册/登录</View>
-          }
+          <View className='list-right iconfont iconxiangyouxuanzejiantoux'></View>
         </View>
         <View className='user-list'>
           {
