@@ -3,7 +3,7 @@
  * @description: 我的
  * @Date: 2019-09-20 13:24:52
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-14 17:50:54
+ * @LastEditTime : 2020-02-14 19:08:01
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -20,7 +20,7 @@ import defaultImage from '@img/register/default_icon.png'
 import aboutImage from "@img/mine/about.png"
 import customerImage from "@img/mine/customer.png"
 import transportImage from "@img/mine/transport.png"
-import toolImage from "@img/mine/tool.png"
+// import toolImage from "@img/mine/tool.png"
 import idCardImage from "@img/mine/id_card.png"
 import './index.styl'
 

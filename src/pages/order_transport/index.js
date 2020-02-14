@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-05 17:16:19
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-14 18:31:29
+ * @LastEditTime : 2020-02-14 20:09:06
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -83,8 +83,6 @@ class OrderTransport extends Component{
       transferRealName, // 运力名称
       transferUserId, // 接单运力id
       transferMobile, // 接单运力手机号
-      orderCode,
-      orderId,
     } = this.state
     if (!transferRealName) {
       Taro.showToast({
@@ -101,12 +99,12 @@ class OrderTransport extends Component{
       return
     }
     let sendData = {
-      transferPrice,
+      transferPrice: transferPrice * 100,
       transferRealName, // 运力名称
       transferUserId, // 接单运力id
       transferMobile, // 接单运力手机号
-      orderCode,
-      orderId
+      orderCode: this.state.pageParams.order_code,
+      orderId: +this.state.pageParams.order_id,
     }
     api.order.placeOrder(sendData, this)
       .then(() => {
@@ -146,7 +144,10 @@ class OrderTransport extends Component{
           <View className='driver-item'>
             <View className='driver-title'>联系方式</View>
             <View className='driver-info'>
-              <View className='driver-name'>{transferMobile || ''}</View>
+              <View className='driver-name'>{transferMobile || '请选择司机联系方式'}</View>
+              {
+                pageParams.type !== 'see' && <View className='select-icon iconfont iconxiangyouxuanzejiantoux'></View>
+              }
             </View>
           </View>
           <View className='driver-item'>
