@@ -3,7 +3,7 @@
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-14 10:41:27
+ * @LastEditTime : 2020-02-14 18:16:15
  */
 
 // 默认请求连接
@@ -43,6 +43,10 @@ export default {
         delete data[i]
       }
     }
+    let requestURL = defaultApiURL + url
+    if (url.indexOf('file/read') !== -1) {
+      requestURL = url
+    }
     const sign = createSignData(data, sign_id)[1]
     const headerUserLogin = JSON.stringify({
       'token': userInfo.token || '',
@@ -76,7 +80,7 @@ export default {
     }
     return new Promise((resolve, reject) => {
       Taro.request({
-        url: defaultApiURL + url,
+        url: requestURL,
         data: data,
         method: method,
         header: {
