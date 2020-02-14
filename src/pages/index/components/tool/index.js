@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-03 15:42:18
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-12 12:39:33
+ * @LastEditTime : 2020-02-14 14:54:51
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -58,7 +58,7 @@ export default class Tool extends Component {
           <View className='tool-swiper-item'>
             <Image
               className='tool-swiper-image'
-              src={item.img}
+              src={item.logo}
               onClick={this.navigatorToTool.bind(this, item)}
             ></Image>
           </View>
