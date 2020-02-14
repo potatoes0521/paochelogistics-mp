@@ -3,7 +3,7 @@
  * @description: 运力信息列表
  * @Date: 2019-09-27 15:38:07
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-14 10:39:38
+ * @LastEditTime : 2020-02-14 14:53:38
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -20,6 +20,8 @@ import api from '@api/index.js'
 import TransportItem from './components/transport_item/index.js'
 // eslint-disable-next-line import/first
 import EmptyData from '@c/empty_data/index.js'
+// eslint-disable-next-line import/first
+import Storage from '@utils/storage.js'
 import './index.styl'
 
 class TransportInfo extends Component { 
@@ -62,7 +64,6 @@ class TransportInfo extends Component {
     let { transportListData } = this.state
     api.transport.getTransportList(sendData, this).then(res => {
       const data = res.data
-      console.log('res', res)
       if (!data && selectParam) {
         Taro.showToast({
           title: '没搜索到结果',
@@ -107,7 +108,7 @@ class TransportInfo extends Component {
     } else {
       Storage.setStorage('transport_details', item)
       Taro.navigateTo({
-        url: `/pages/transport_edit/index?userId=${item.userId}`
+        url: `/pages/transport_edit/index?pageType=edit`
       })
     }
   }
