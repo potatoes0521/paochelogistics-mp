@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-10-10 09:33:18
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-10 18:00:26
+ * @LastEditors  : liuYang
+ * @LastEditTime : 2020-02-14 18:07:36
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -23,6 +23,13 @@ export default {
   getOpenId(that) {
     return new Promise((resolve) => { 
       Storage.getStorage('userInfo').then(res => {
+        Taro.getSystemInfo()
+          .then(phoneMsg => {
+            const phone = phoneMsg.model + '-' + phoneMsg.system + '-' + phoneMsg.SDKVersion
+            Actions.changeUserInfo({
+              userAgent: phone
+            })
+          })
         if (res && res.openId) {
           Actions.changeUserInfo({
             openId: res.openId,
@@ -40,13 +47,6 @@ export default {
    * @return void
    */
   getCode(that, notLogin = false, resolve) {
-      Taro.getSystemInfo()
-        .then(res => {
-          const phoneMsg = res.model + '-' + res.system + '-' + res.SDKVersion
-          Actions.changeUserInfo({
-            userAgent: phoneMsg
-          })
-        })
       Taro.login().then(res => {
         this.codeExchangeOpenID(res.code, that, resolve, notLogin)
       }).catch(err => {
