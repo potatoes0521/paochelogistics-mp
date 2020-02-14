@@ -3,7 +3,7 @@
  * @description: 实名认证
  * @Date: 2019-11-07 14:30:48
  * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-13 13:13:17
+ * @LastEditTime : 2020-02-14 20:48:50
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -21,9 +21,12 @@ export default class CertificationModal extends Component {
   }
 
   goToCertificationModal() {
-    Taro.navigateTo({
-      url: `/pages/real_name_authentication/index?page_back=1`
-    })
+    let url = `/pages/real_name_authentication/index?page_back=1`
+    if (this.props.redirect) { 
+      Taro.redirectTo({url})
+    } else {
+      Taro.navigateTo({url})
+    }
     this.closeCertificationModal()
   }
 
@@ -54,10 +57,12 @@ export default class CertificationModal extends Component {
 
 CertificationModal.defaultProps = {
   visible: false,
+  redirect: false,
   onClick: () => {}
 }
 
 CertificationModal.propTypes = {
+  redirect: PropTypes.bool,
   visible: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired
 }
