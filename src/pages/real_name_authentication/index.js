@@ -2,7 +2,7 @@
  * @Author: guorui
  * @description: 实名认证页面
  * @Date: 2019-11-04 10:29:09
- * @LastEditors  : liuYang
+ * @LastEditors: liuYang
  * @LastEditTime : 2020-02-14 20:56:20
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
@@ -25,7 +25,6 @@ import {
 } from '@utils/patter.js'
 import classNames from 'classnames'
 import api from '@api/index.js'
-import addImage from '@img/mine/add.png'
 import './index.styl'
 
 class RealName extends Component {
@@ -284,10 +283,7 @@ class RealName extends Component {
                         className='add-pictures-style'
                         onClick={this.chooseImageUpload.bind(this, 'before')}
                       >
-                        <View className='add-image-wrapper'>
-                          <Image className='add-image' src={addImage}></Image>
-                        </View>
-                        {/* <View className='add-pictures-icon iconfont iconjiahao'></View> */}
+                        <View className='add-pictures-icon iconfont iconjiahao'></View>
                         <View className='add-content'>拍摄人像页</View>
                       </View>
                   }
@@ -307,10 +303,7 @@ class RealName extends Component {
                         className='add-pictures-style'
                         onClick={this.chooseImageUpload.bind(this, 'after')}
                       >
-                        <View className='add-image-wrapper'>
-                          <Image className='add-image' src={addImage}></Image>
-                        </View>
-                        {/* <View className='add-pictures-icon iconfont iconjiahao'></View> */}
+                        <View className='add-pictures-icon iconfont iconjiahao'></View>
                         <View className='add-content'>拍摄国徽页</View>
                       </View>
                   }
