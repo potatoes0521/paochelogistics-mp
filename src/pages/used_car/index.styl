@@ -1,3 +1,101 @@
+@import '../../assets/css/theme.styl'
+
 page
   width 100%
   background-color #ffffff
+
+.tabs-wrapper
+  width 100%
+  height 88px
+  display flex
+  align-items center
+  justify-content space-between
+  position fixed
+  top 0
+  left 0
+  right 0
+  margin 0 auto
+  background-color #ffffff
+  border-bottom 2px solid #f5f5f5
+
+.tabs-item
+  width 33.33%
+  height 100%
+  display flex
+  align-items center
+  justify-content center
+
+.tab-text
+  color $font-text
+  font-size 28px
+
+.car-tab-icon
+  font-size 12px
+  margin-left 8px
+
+.car-list-wrapper
+  padding-top 90px
+
+.car-item
+  width 100%
+  box-sizing border-box
+  padding 32px 36px
+  border-bottom 2px solid #f5f5f5
+  display flex
+  align-items center
+  justify-content center
+
+.car-img-wrapper
+  width 240px
+  height 160px
+  overflow hidden
+  background-color #f5f5f5
+
+image 
+  width 100%
+  height 100%
+
+.car-des-wrapper
+  flex 1
+  // display flex
+  // justify-content space-between
+  margin-left 26px
+  // flex-direction column
+
+.car-des-title
+  font-size 32px
+  color $font-color
+  line-height 44px
+
+.car-des-time
+  font-size 24px
+  line-height 34px
+  margin 4px 0
+  color #BBBBBB
+
+.car-des-price
+  font-size 36px 
+  color $price-color
+
+.car-des-money,
+.car-des-data,
+.car-des-data-wrapper
+  display flex
+
+.car-des-data-wrapper
+  align-items center
+  justify-content flex-end
+.has-width
+  width 110px
+
+.car-des-money
+  align-items flex-end
+  justify-content space-between
+  height 50px
+
+.history-text
+  font-size 24px
+
+.history-icon
+  font-size 24px
+  margin-right 10px

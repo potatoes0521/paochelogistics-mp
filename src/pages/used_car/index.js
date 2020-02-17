@@ -11,7 +11,8 @@
 import Taro, { Component } from '@tarojs/taro'
 import {
   View,
-  Text
+  Text,
+  Image
 } from '@tarojs/components'
 // import classNames from 'classnames'
 import { connect } from '@tarojs/redux'
@@ -38,8 +39,40 @@ class UsedCar extends Component {
       <View className='page-wrapper'>
         <View className='tabs-wrapper'>
           <View className='tabs-item'>
-            <Text className='tab-text'></Text>
-            <Text className='tab-icon'></Text>
+            <Text className='tab-text'>地区</Text>
+            <Text className='car-tab-icon iconfont iconsanjiaoxing'></Text>
+          </View>
+          <View className='tabs-item'>
+            <Text className='tab-text'>品牌</Text>
+            <Text className='car-tab-icon iconfont iconsanjiaoxing'></Text>
+          </View>
+          <View className='tabs-item'>
+            <Text className='tab-text'>价格</Text>
+            <Text className='car-tab-icon iconfont iconsanjiaoxing'></Text>
+          </View>
+        </View>
+        <View className='car-list-wrapper'>
+          <View className='car-item'>
+            <View className='car-img-wrapper'>
+              <Image src='' mode='aspectFill' className='car-imag'></Image>
+            </View>
+            <View className='car-des-wrapper'>
+              <View className='car-des-title'>111</View>
+              <View className='car-des-time'>111</View>
+              <View className='car-des-money'>
+                <Text className='car-des-price'>999</Text>
+                <View className='car-des-data'>
+                  <View className='car-des-data-wrapper' >
+                    <Text className='history-icon iconfont iconliulan'></Text>
+                    <Text className='history-text'>99</Text>
+                  </View>
+                  <View className='car-des-data-wrapper has-width'>
+                    <Text className='history-icon iconfont iconlianxiwomen'></Text>
+                    <Text className='history-text'>99</Text>
+                  </View>
+                </View>
+              </View>
+            </View>
           </View>
         </View>
       </View>
