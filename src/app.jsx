@@ -64,6 +64,7 @@ class _App extends Component {
       'pages/webview/index',
       'pages/tool/index',
       'pages/testing/index',
+      'pages/used_car/index',
     ],
     window: {
       backgroundTextStyle: 'light',

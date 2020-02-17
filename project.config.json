@@ -144,6 +144,12 @@
           "name": "砍价",
           "pathName": "pages/share_bargain/index",
           "query": "share_type=2&order_code=PC381918506751232&c_id=146"
+        },
+        {
+          "id": -1,
+          "name": "车源",
+          "pathName": "pages/used_car/index",
+          "query": ""
         }
 			]
 		}
