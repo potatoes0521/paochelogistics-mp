@@ -3,8 +3,8 @@
  * @Author: liuYang
  * @description: 抽屉组件的内部的样式
  * @Date: 2019-10-29 10:25:23
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-04 11:21:07
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-18 12:52:48
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  * 
@@ -105,14 +105,6 @@ export default class Screen extends Component {
         })
         Taro.navigateTo({
           url: `/pages/choose_city/index?type=through`
-        })
-        return
-      case 'remark':
-        if (this.state.remark) {
-          Storage.setStorage('remark', this.state.remark)
-        }
-        Taro.navigateTo({
-          url: `/pages/remark/index`
         })
         return
       default:
