@@ -65,6 +65,7 @@ class _App extends Component {
       'pages/tool/index',
       'pages/testing/index',
       'pages/used_car/index',
+      'pages/used_car_details/index',
     ],
     window: {
       backgroundTextStyle: 'light',
