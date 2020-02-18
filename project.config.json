@@ -150,6 +150,12 @@
           "name": "车源",
           "pathName": "pages/used_car/index",
           "query": ""
+        },
+        {
+          "id": -1,
+          "name": "车源详情",
+          "pathName": "pages/used_car_details/index",
+          "query": ""
         }
 			]
 		}
