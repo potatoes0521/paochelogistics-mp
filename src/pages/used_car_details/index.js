@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 10:52:25
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-18 12:43:48
+ * @LastEditTime: 2020-02-18 12:46:12
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -36,6 +36,10 @@ class UsedCarDetails extends Component {
   showBigImage() {
     
   }
+  bannerChange(event) { 
+    console.log('event', event)
+    // event.detail = {current, source}
+  }
   config = {
     navigationBarTitleText: '车源详情' 
   }
@@ -66,6 +70,7 @@ class UsedCarDetails extends Component {
               circular
               indicatorActiveColor='#ffffff'
               interval='3000'
+              onChange={()=>this.bannerChange}
             >
               {
                 bannerList.length ?
