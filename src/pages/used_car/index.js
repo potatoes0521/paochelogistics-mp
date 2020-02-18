@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2020-02-17 12:28:08
- * @LastEditors: liuYang
+ * @LastEditors: guorui
  * @LastEditTime: 2020-02-17 12:28:08
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
@@ -17,6 +17,7 @@ import {
 // import classNames from 'classnames'
 import { connect } from '@tarojs/redux'
 // import api from '@api/index.js'
+import FloatBtn from '@c/float_btn/index.js'
 
 import './index.styl'
 
@@ -75,6 +76,7 @@ class UsedCar extends Component {
             </View>
           </View>
         </View>
+        <FloatBtn></FloatBtn>
       </View>
     )
   }
