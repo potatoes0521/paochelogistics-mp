@@ -231,6 +231,7 @@ class PlaceOrder extends Component {
     }, () => {
       this.saveInputOrTest()
     })
+    return value
   }
 
   /**
