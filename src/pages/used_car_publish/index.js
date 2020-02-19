@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 14:00:58
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-19 11:45:02
+ * @LastEditTime: 2020-02-19 19:17:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,11 +13,14 @@ import {
   View,
   Text,
   Image,
-  Input
+  Input,
+  Picker,
+  Block
 } from '@tarojs/components'
 import classNames from 'classnames'
 import { connect } from '@tarojs/redux'
 import { handleMoney } from '@utils/patter.js'
+import { uploadImage } from '@api/upload_request_handle.js'
 // import api from '@api/index.js'
 
 import './index.styl'
@@ -29,18 +32,20 @@ class UsedCarPublish extends Component {
     this.state = {
       carSourceId: '',
       brandId: '', //品牌Id
-      carImg: ['https://resource.paoche56.com/zhengmian.png'], //车辆照片
+      brandName: '', //品牌Id
+      carImg: [], //车辆照片
       carPrice: '', //价格
       carBasic: '', //车款
       carSerial: '', //车型
       effluentStandard: '', //排放标准
       gasDisplacement: '', //汽车排量
       locationId: '', //城市ID
+      locationName: '',
       mileage: '', //	里程数
       onTheCardTime: '', //首次上牌时间
       yearType: '', //年款
-      usedType: '', //车辆性质 1新车 2二手车
-      remark: '', //备注
+      usedType: 2, //车辆性质 1新车 2二手车
+      remark: '', //备注,
       activeIndex: 0
     }
   }
@@ -97,6 +102,98 @@ class UsedCarPublish extends Component {
     })
     return value
   }
+  /**
+   * 汽车排量
+   * @param {Object} event event对象
+   * @return void
+   */
+  inputGasDisplacement(event) { 
+    this.setState({
+      gasDisplacement: event.target.value
+    })
+  }
+  onChooseYearType(event) {
+    this.setState({
+      yearType: event.target.value
+    })
+  }
+  onChooseTheCardTime(event) {
+    this.setState({
+      onTheCardTime: event.target.value
+    })
+  }
+  chooseEffluentStandard() {
+    let list = ['国一', '国二', '国三', '国四', '国五', '国六']
+    Taro.showActionSheet({
+        itemList: ['国一', '国二', '国三', '国四', '国五', '国六']
+      })
+      .then(res => {
+        console.log('res', res)
+        this.setState({
+          effluentStandard: list[res.tapIndex]
+        })
+      })
+      .catch(err => console.log(err.errMsg))
+  }
+  deleteImage(index) {
+    let {carImg} = this.state
+    carImg.splice(index, 1)
+    this.setState({carImg})
+  }
+  upLoadImage() { 
+    let count = 9
+    let businessType = 1
+    let {carImg} = this.state
+    uploadImage({
+      count: count,
+      that: this,
+      businessType
+    }).then(res => {
+      this.setState({
+        carImg: [...carImg, ...res]
+      })
+    })
+  }
+  navigatorTo(pageName) {
+    switch (pageName) {
+      case 'choose_start_city':
+        Taro.navigateTo({
+          url: `/pages/choose_city/index?type=start`
+        })
+        return
+      case 'choose_target_city':
+        Taro.navigateTo({
+          url: `/pages/choose_city/index?type=target`
+        })
+        return
+      case 'choose_sell_city':
+        Taro.navigateTo({
+          url: `/pages/choose_city/index?type=sell`
+        })
+        return
+      case 'choose_through_city':
+        Storage.setStorage('through_city', {
+          id: this.state.throughCitys,
+          name: this.state.throughCitiesName
+        })
+        Taro.navigateTo({
+          url: `/pages/choose_city/index?type=through`
+        })
+        return
+      case 'choose_car_brand':
+        Taro.navigateTo({
+          url: `/pages/choose_car_brand/index`
+        })
+        return
+      case 'remark':
+        Taro.navigateTo({
+          url: `/pages/remark/index?pageType=used_car`
+        })
+        return
+      default:
+        return
+    }
+  }
   config = {
     navigationBarTitleText: '车源发布' 
   }
@@ -105,18 +202,17 @@ class UsedCarPublish extends Component {
     let {
       activeIndex,
       carImg,
-      brandId, //品牌Id
+      brandName, //品牌
       carPrice, //价格
       carBasic, //车款
       carSerial, //车型
       effluentStandard, //排放标准
       gasDisplacement, //汽车排量
-      locationId, //城市ID
       mileage, //	里程数
       onTheCardTime, //首次上牌时间
       yearType, //年款
-      usedType, //车辆性质 1新车 2二手车
       remark, //备注
+      locationName
     } = this.state
     const publishTabClassName = classNames('tab-item', {
       'tab-item-active': activeIndex === 0
@@ -124,11 +220,11 @@ class UsedCarPublish extends Component {
     const historyTabClassName = classNames('tab-item', {
       'tab-item-active': activeIndex === 1
     })
-    const carImgRenderList = carImg.map(item => {
+    const carImgRenderList = carImg.map((item, index) => {
       return (
         <View className='image-item' key={item}>
           <Image src={item} mode='aspectFill'></Image>
-          <Text className='delete-btn iconfont iconguanbi1'></Text>
+          <Text onClick={this.deleteImage.bind(this, index)} className='delete-btn iconfont iconguanbi1'></Text>
         </View>
       )
     })
@@ -145,9 +241,11 @@ class UsedCarPublish extends Component {
               <View className='publish-item'>
                 <View className='must-icon'>*</View>
                 <View className='publish-label'>卖车城市</View>
-                <View className='publish-content'>
-                  {/* <Text className='content-text'></Text> */}
-                  <Text className='placeholder-style'>请选择</Text>
+                <View className='publish-content' onClick={this.navigatorTo.bind(this, 'choose_sell_city')}>
+                  {
+                    locationName ? <Text className='content-text'>{locationName}</Text> :
+                      <Text className='placeholder-style'>请选择</Text>
+                  }
                   <Text className='iconfont iconxiangyouxuanzejiantoux publish-icon-right'></Text>  
                 </View>
               </View>
@@ -155,9 +253,11 @@ class UsedCarPublish extends Component {
               <View className='publish-item'>
                 <View className='must-icon'>*</View>
                 <View className='publish-label'>品牌</View>
-                <View className='publish-content'>
-                  {/* <Text className='content-text'></Text> */}
-                  <Text className='placeholder-style'>请选择</Text>
+                <View className='publish-content'  onClick={this.navigatorTo.bind(this, 'choose_car_brand')}>
+                  {
+                    brandName ? <Text className='content-text'>{brandName}</Text> :
+                      <Text className='placeholder-style'>请选择</Text>
+                  }
                   <Text className='iconfont iconxiangyouxuanzejiantoux publish-icon-right'></Text>  
                 </View>
               </View>
@@ -181,8 +281,16 @@ class UsedCarPublish extends Component {
                 <View className='must-icon'>*</View>
                 <View className='publish-label'>年款</View>
                 <View className='publish-content'>
-                  {/* <Text className='content-text'></Text> */}
-                  <Text className='placeholder-style'>请选择</Text>
+                  <Picker
+                    className='time-picker'
+                    mode='date'
+                    onChange={this.onChooseYearType}
+                    fields='year'
+                  >
+                    {
+                      yearType ? <Text className='content-text'>{yearType}</Text> : <Text className='placeholder-style'>请选择</Text>
+                    }
+                  </Picker>
                   <Text className='iconfont iconxiangyouxuanzejiantoux publish-icon-right'></Text>  
                 </View>
               </View>
@@ -206,8 +314,16 @@ class UsedCarPublish extends Component {
                 <View className='must-icon'>*</View>
                 <View className='publish-label long-label'>首次上牌时间</View>
                 <View className='publish-content'>
-                  {/* <Text className='content-text'></Text> */}
-                  <Text className='placeholder-style'>请选择</Text>
+                  <Picker
+                    className='time-picker'
+                    mode='date'
+                    onChange={this.onChooseTheCardTime}
+                    fields='month'
+                  >
+                    {
+                      onTheCardTime ? <Text className='content-text'>{onTheCardTime}</Text> : <Text className='placeholder-style'>请选择</Text>
+                    }
+                  </Picker>
                   <Text className='iconfont iconxiangyouxuanzejiantoux publish-icon-right'></Text>  
                 </View>
               </View>
@@ -234,17 +350,26 @@ class UsedCarPublish extends Component {
                 <View className='must-icon'>*</View>
                 <View className='publish-label long-label'>汽车排量</View>
                 <View className='publish-content'>
-                  {/* <Text className='content-text'></Text> */}
-                  <Text className='placeholder-style'>请输入汽车排量</Text>
+                  <Input
+                    type='digit'
+                    className='input'
+                    placeholder='请输入汽车排量'
+                    placeholderClass='placeholder-style'
+                    maxlength='10'
+                    value={gasDisplacement}
+                    onInput={this.inputGasDisplacement}
+                  ></Input>
                 </View>
               </View>
               <View className='line'></View>
               <View className='publish-item'>
                 <View className='must-icon'>*</View>
                 <View className='publish-label long-label'>排放标准</View>
-                <View className='publish-content'>
-                  {/* <Text className='content-text'></Text> */}
-                  <Text className='placeholder-style'>请选择</Text>
+                <View className='publish-content' onClick={this.chooseEffluentStandard.bind(this)}>
+                  {
+                    effluentStandard ? <Text className='content-text'>{effluentStandard}</Text>
+                      : <Text className='placeholder-style'>请选择</Text>
+                  }
                   <Text className='iconfont iconxiangyouxuanzejiantoux publish-icon-right'></Text>  
                 </View>
               </View>
@@ -296,13 +421,17 @@ class UsedCarPublish extends Component {
                 </View>
               </View>
               <View className='line'></View>
-              <View className='publish-item'>
+              <View className='publish-item more-text'>
                 <View className='must-icon'></View>
                 <View className='publish-label long-label'>其他说明</View>
-                <View className='publish-content'>
-                  {/* <Text className='content-text'></Text> */}
-                  <Text className='placeholder-style'>补充说明车辆情况</Text>
-                  <Text className='iconfont iconxiangyouxuanzejiantoux publish-icon-right'></Text>  
+                <View className='publish-content more-content' onClick={this.navigatorTo.bind(this, 'remark')}>
+                  {
+                    remark ? <Text className='content-text'>{remark}</Text> : 
+                      <Block>
+                        <Text className='placeholder-style'>补充说明车辆情况</Text>
+                      </Block>
+                  }
+                  <Text className='iconfont iconxiangyouxuanzejiantoux publish-icon-right more-content-icon'></Text>  
                 </View>
               </View>
             </View>
