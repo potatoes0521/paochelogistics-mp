@@ -1,12 +1,9 @@
 /*
  * @Author: liuYang
- * @description: 城市选择
- * 
- * 主要是修改redux的chooseCity里面的属性来进行页面交互
- * 
+ * @description: 城市选择 // 汽车品牌选择
  * @Date: 2019-08-30 15:53:51
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-19 20:54:14
+ * @LastEditTime: 2020-02-19 20:57:45
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,7 +13,8 @@ import Taro, {
 import {
   View,
   Input,
-  Text
+  Text,
+  Image
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import classNames from 'classnames'
@@ -236,6 +234,13 @@ class ChooseCity extends Component {
           onClick={this.chooseSearchCity.bind(this, city)}
           key={key}
         >
+          {
+            city.fieldLogo ? 
+              <View className='car-logo'>
+                <Image className='car-logo-image' src={this.props.fieldLogo}></Image>
+              </View>
+              : null
+          }
           <View className='search-item-name'>{city.cityName}</View>
           <Text className='iconfont iconxiangyouxuanzejiantoux icon-style-right'></Text>
         </View>
