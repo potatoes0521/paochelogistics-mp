@@ -3,8 +3,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2020-02-18 10:52:25
- * @LastEditors: liuYang
- * @LastEditTime: 2020-02-18 12:46:12
+ * @LastEditors: guorui
+ * @LastEditTime: 2020-02-19 12:00:55
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -18,7 +18,7 @@ import {
 } from '@tarojs/components'
 // import classNames from 'classnames'
 import { connect } from '@tarojs/redux'
-// import api from '@api/index.js'
+import api from '@api/index.js'
 
 import './index.styl'
 
@@ -27,11 +27,13 @@ class UsedCarDetails extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      bannerList: []
+      usedCarDetailsInfo: {}
     }
+    this.pageParams = {}
   }
 
   componentDidMount() {
+    this.pageParams = this.$router.params || {}
   }
   showBigImage() {
     
@@ -40,13 +42,46 @@ class UsedCarDetails extends Component {
     console.log('event', event)
     // event.detail = {current, source}
   }
+  /**
+   * 获取车源详情
+   * @return void
+   */
+  getCarSourceDetails() {
+    if (!this.pageParams.car_source_id) {
+      Taro.showToast({
+        icon: 'none',
+        title: 'car_source_id is null'
+      })
+      return;
+    }
+    let sendData = {
+      carSourceId: this.pageParams.car_source_id
+    }
+    api.car.getCarSourceDetails(sendData, this).then(res => {
+      if (!res) return
+      this.setState({
+        usedCarDetailsInfo: res
+      })
+    })
+  }
+  /**
+   * 联系卖家
+   * @return void
+   */
+  callSeller() {
+    let { usedCarDetailsInfo } = this.state
+    if (!usedCarDetailsInfo.mobile) return
+    Taro.makePhoneCall({
+      phoneNumber: usedCarDetailsInfo.mobile
+    })
+  }
   config = {
     navigationBarTitleText: '车源详情' 
   }
 
   render() {
-    let { bannerList} = this.state
-    const bannerListRender = bannerList.map(item => {
+    let { usedCarDetailsInfo } = this.state
+    const bannerListRender = usedCarDetailsInfo.imgUrls && usedCarDetailsInfo.imgUrls.map(item => {
       const key = item.id
       return (
         <SwiperItem key={key}>
@@ -73,7 +108,7 @@ class UsedCarDetails extends Component {
               onChange={()=>this.bannerChange}
             >
               {
-                bannerList.length ?
+                usedCarDetailsInfo.imgUrls.length ?
                   bannerListRender
                   :
                   <SwiperItem></SwiperItem>
@@ -85,14 +120,20 @@ class UsedCarDetails extends Component {
           </View>
           <View className='details-title-wrapper'>
             <View className='details-price'>
-              <Text className='money'>99.99</Text>
+              <Text className='money'>{usedCarDetailsInfo.carPrice || ''}</Text>
               <Text className='money-text'>万</Text>
               <Text className='history-icon iconfont iconliulan'></Text>
-              <Text className='history-text'>99</Text>
+              <Text className='history-text'>{usedCarDetailsInfo.browseHistoryCount || ''}</Text>
               <Text className='history-icon iconfont iconlianxiwomen'></Text>
-              <Text className='history-text'>99</Text>
+              <Text className='history-text'>{usedCarDetailsInfo.callHistoryCount || ''}</Text>
             </View>
-            <View className='details-title'>大众 帕萨特 2007款 1.8T 手动舒适型</View>
+            <View className='details-info'>
+              <Text className='details-title' space='ensp'>大众</Text>
+              <Text className='details-title' space='ensp'>{usedCarDetailsInfo.carSerial || ''}</Text>
+              <Text className='details-title' space='ensp'>{usedCarDetailsInfo.carBasic || ''}</Text>
+              <Text className='details-title' space='ensp'>1.8T</Text>
+              <Text className='details-title'>手动舒适型</Text>
+            </View>
           </View>
           <View className='title'>车辆档案</View>
           <View className='main main-des'>
@@ -103,17 +144,17 @@ class UsedCarDetails extends Component {
               </View>
               <View className='des-item'>
                 <Text className='item-title short'>里程</Text>
-                <Text className='item-des'>2007-06</Text>
+                <Text className='item-des'>{usedCarDetailsInfo.mileage || ''}</Text>
               </View>
             </View>
             <View className='des-line'>
               <View className='des-item long'>
                 <Text className='item-title'>排放</Text>
-                <Text className='item-des'>国四</Text>
+                <Text className='item-des'>{usedCarDetailsInfo.effluentStandard || ''}</Text>
               </View>
               <View className='des-item'>
                 <Text className='item-title short'>排量</Text>
-                <Text className='item-des'>2.0L</Text>
+                <Text className='item-des'>{usedCarDetailsInfo.gasDisplacement || ''}</Text>
               </View>
             </View>
             <View className='des-line'>
@@ -123,19 +164,17 @@ class UsedCarDetails extends Component {
               </View>
               <View className='des-item'>
                 <Text className='item-title short'>车龄</Text>
-                <Text className='item-des'>12年8个月</Text>
+                <Text className='item-des'>{usedCarDetailsInfo.carAge || ''}</Text>
               </View>
             </View>
           </View>
           <View className='title'>其他说明</View>
           <View className='main'>
-            <View className='remark'>
-              本车没出现过重大事故和水淹火烧的情况，后保险杠有改装，车架件完好，车体外观局部有瑕疵，漆面有进行过维修，内饰大体干净整洁，发动机有异常，变速箱工况良好，车辆灯光功能配置无故障无损坏，防冻液需补充。
-            </View>
+            <View className='remark'>{usedCarDetailsInfo.remark || ''}</View>
           </View>
         </View>
         <View className='btn-wrapper'>
-          <View className='btn'>
+          <View className='btn' onClick={this.callSeller}>
             联系卖家
           </View>
         </View>
