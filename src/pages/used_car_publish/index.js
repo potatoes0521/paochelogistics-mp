@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 14:00:58
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-19 19:17:40
+ * @LastEditTime: 2020-02-19 19:53:34
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -30,27 +30,28 @@ class UsedCarPublish extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      carSourceId: '',
-      brandId: '', //品牌Id
-      brandName: '', //品牌Id
-      carImg: [], //车辆照片
-      carPrice: '', //价格
-      carBasic: '', //车款
-      carSerial: '', //车型
-      effluentStandard: '', //排放标准
-      gasDisplacement: '', //汽车排量
       locationId: '', //城市ID
       locationName: '',
-      mileage: '', //	里程数
-      onTheCardTime: '', //首次上牌时间
+      brandId: '', //品牌Id
+      brandName: '', //品牌Id
+      carSerial: '', //车型
       yearType: '', //年款
+      carBasic: '', //车款
+      carPrice: '', //价格
+      onTheCardTime: '', //首次上牌时间
+      mileage: '', //	里程数
+      gasDisplacement: '', //汽车排量
+      effluentStandard: '', //排放标准
       usedType: 2, //车辆性质 1新车 2二手车
+      carImg: [], //车辆照片
       remark: '', //备注,
       activeIndex: 0
     }
+    this.pageParams = {}
   }
 
   componentDidMount() {
+    this.pageParams = this.$router.params
   }
   
   changeTab(index) { 
@@ -193,6 +194,54 @@ class UsedCarPublish extends Component {
       default:
         return
     }
+  }
+  submit() { 
+    let testingList = {
+      brandId: '请选择汽车品牌', //品牌Id
+      brandName: '请选择汽车品牌', //品牌Id
+      carImg: '请上传汽车图片', //车辆照片
+      carPrice: '请输入期望价格', //价格
+      carBasic: '请输入车款', //车款
+      carSerial: '请输入车型', //车型
+      effluentStandard: '请选择排放标准', //排放标准
+      gasDisplacement: '请填写汽车排量', //汽车排量
+      locationId: '请选择卖车城市', //城市ID
+      locationName: '请选择卖车城市',
+      mileage: '请填写里程数', //	里程数
+      onTheCardTime: '请选择首次上牌时间', //首次上牌时间
+      yearType: '请选择年款', //年款
+    }
+    let breakName = ''
+    for (let i in this.state) {
+      if ( i === 'remark' || i === 'activeIndex' ) { continue }
+      // if (this.pageParams.pageType !== 'edit' && i === 'carSourceId') {
+      //   continue
+      // }
+      if (i !== 'carImg' && !this.state[i]) {
+        breakName = i
+        break
+      } 
+      if (i === 'carImg' && this.state['carImg'].length === 0) {
+        breakName = i
+        break
+      }
+    }
+    if (breakName) {
+      Taro.showToast({
+        title: testingList[breakName],
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+    let sendData = Object.assign({}, this.state)
+    if (this.pageParams.pageType === 'edit') {
+      sendData.carSourceId = this.pageParams.carSourceId
+    }
+    sendData.carPrice = sendData.carPrice * 100
+    sendData.mileage = sendData.mileage * 100
+    sendData.onTheCardTime += '-01'
+    console.log(sendData)
   }
   config = {
     navigationBarTitleText: '车源发布' 
@@ -443,7 +492,7 @@ class UsedCarPublish extends Component {
             </View>
           </View>
           <View className='btn-wrapper'>
-            <View className='btn'>
+            <View className='btn' onClick={()=>this.submit()}>
               发布车源信息
             </View>
           </View>

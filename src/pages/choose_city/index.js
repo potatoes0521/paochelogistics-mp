@@ -6,7 +6,7 @@
  * 
  * @Date: 2019-08-30 15:53:51
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-19 14:16:51
+ * @LastEditTime: 2020-02-19 20:10:37
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -94,6 +94,7 @@ class ChooseCity extends Component {
    * @return void
    */
   onClick(item, item2) {
+    console.log('item', item)
     let pages = Taro.getCurrentPages() //  获取页面栈
     let prevPage = pages[pages.length - 2] // 上一个页面
     if (this.type === 'start') {
@@ -107,6 +108,13 @@ class ChooseCity extends Component {
       prevPage.$component.setState({
         receiveCityName: item.cityName,
         receiveCityId: item.cityId
+      }, () => {
+        Taro.navigateBack()
+      })
+    } else if (this.type === 'sell') {
+      prevPage.$component.setState({
+        locationName: item.cityName,
+        locationId: item.cityId
       }, () => {
         Taro.navigateBack()
       })
@@ -217,24 +225,23 @@ class ChooseCity extends Component {
     
     const allWrapperClassName = classNames({
       'choose-city-wrapper': true,
-      'search-padding-top': this.type === 'start' || this.type === 'target',
+      'search-padding-top': this.type !== 'through',
     })
 
     const indexesWrapperClassName = classNames({
       'indexes-wrapper': true,
-      'search-indexes-wrapper': this.type === 'start' || this.type === 'target',
+      'search-indexes-wrapper': this.type !== 'through',
       'checked-indexes-wrapper': this.type === 'through'
     })
 
     return (
       <View className={allWrapperClassName}>
         {
-          (this.type === 'start' || this.type === 'target') ?
+          (this.type !== 'through') ?
           <View className='choose-city-search-wrapper'>
             <View className='search-from-wrapper'>
               <View className='iconfont iconsousuo icon-style'></View>
               <View className='input-wrapper'>
-                {/* <View className='input-like' > 请输入城市名称进行搜索 </View> */}
                 <Input
                   className='input'
                   placeholder='请输入城市名称进行搜索'
