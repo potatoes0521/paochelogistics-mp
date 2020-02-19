@@ -6,7 +6,7 @@
  * 
  * @Date: 2019-08-30 15:53:51
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-19 20:10:37
+ * @LastEditTime: 2020-02-19 20:26:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -34,9 +34,9 @@ class ChooseCity extends Component {
     this.state = {
       allCity: [],
       hotCity: [],
-      filterCityList: []
+      filterCityList: [],
+      pageParams: {}
     }
-    this.type = ''
     this.allCityList = []
     this.timer = null
     this.throughCityNameList = []
@@ -44,7 +44,9 @@ class ChooseCity extends Component {
   }
   
   componentDidMount() {
-    this.type = this.$router.params && this.$router.params.type
+    this.setState({
+      pageParams: this.$router.params
+    })
     this.handleLocationMsg()
   }
   
@@ -95,23 +97,24 @@ class ChooseCity extends Component {
    */
   onClick(item, item2) {
     console.log('item', item)
+    let {pageParams} = this.state
     let pages = Taro.getCurrentPages() //  获取页面栈
     let prevPage = pages[pages.length - 2] // 上一个页面
-    if (this.type === 'start') {
+    if (pageParams.type === 'start') {
       prevPage.$component.setState({
         sendCityName: item.cityName,
         sendCityId: item.cityId
       }, () => {
         Taro.navigateBack()
       })
-    } else if (this.type === 'target') {
+    } else if (pageParams.type === 'target') {
       prevPage.$component.setState({
         receiveCityName: item.cityName,
         receiveCityId: item.cityId
       }, () => {
         Taro.navigateBack()
       })
-    } else if (this.type === 'sell') {
+    } else if (pageParams.type === 'sell') {
       prevPage.$component.setState({
         locationName: item.cityName,
         locationId: item.cityId
@@ -193,7 +196,8 @@ class ChooseCity extends Component {
     let {
       hotCity,
       allCity,
-      filterCityList
+      filterCityList,
+      pageParams
     } = this.state
     
     const hotCityList = hotCity.map(city => {
@@ -225,19 +229,19 @@ class ChooseCity extends Component {
     
     const allWrapperClassName = classNames({
       'choose-city-wrapper': true,
-      'search-padding-top': this.type !== 'through',
+      'search-padding-top': pageParams.type !== 'through',
     })
 
     const indexesWrapperClassName = classNames({
       'indexes-wrapper': true,
-      'search-indexes-wrapper': this.type !== 'through',
-      'checked-indexes-wrapper': this.type === 'through'
+      'search-indexes-wrapper': pageParams.type !== 'through',
+      'checked-indexes-wrapper': pageParams.type === 'through'
     })
 
     return (
       <View className={allWrapperClassName}>
         {
-          (this.type !== 'through') ?
+          (pageParams.type !== 'through') ?
           <View className='choose-city-search-wrapper'>
             <View className='search-from-wrapper'>
               <View className='iconfont iconsousuo icon-style'></View>
@@ -264,7 +268,7 @@ class ChooseCity extends Component {
                 animation
                 topKey='热门'
                 isVibrate={false}
-                checkBox={this.type === 'through'}
+                checkBox={pageParams.type === 'through'}
                 onClick={this.onClick.bind(this)}
               >
                 {
@@ -281,7 +285,7 @@ class ChooseCity extends Component {
           }
         </View>
         {
-          this.type === 'through' ?
+          pageParams.type === 'through' ?
             <View className='check-bottom-wrapper'>
               <View className='btn-public check-cancel' onClick={this.cancelChecked}>取消</View>
               <View className='btn-public check-submit' onClick={()=>this.cancelChecked('submit')}>确认</View>
