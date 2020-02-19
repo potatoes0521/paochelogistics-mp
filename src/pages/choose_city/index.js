@@ -6,7 +6,7 @@
  * 
  * @Date: 2019-08-30 15:53:51
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-11 17:06:40
+ * @LastEditTime: 2020-02-19 14:16:51
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -49,22 +49,23 @@ class ChooseCity extends Component {
   }
   
   handleLocationMsg() { 
-    Storage.getStorage('city_list').then(res => {
-      if (res) {
-        let hotCity = res.hotCities || []
-        let allCity = res.all || []
-        this.allCityList = allCity.map(item => {
-          return item.list
-        })
-        this.allCityList = _flattenDeep(this.allCityList)
-        this.setState({
-          hotCity,
-          allCity
-        })
-      } else {
-        this.getLocationMsg()
-      }
-    })
+    this.getLocationMsg()
+    // Storage.getStorage('city_list').then(res => {
+    //   if (res) {
+    //     let hotCity = res.hotCities || []
+    //     let allCity = res.all || []
+    //     this.allCityList = allCity.map(item => {
+    //       return item.list
+    //     })
+    //     this.allCityList = _flattenDeep(this.allCityList)
+    //     this.setState({
+    //       hotCity,
+    //       allCity
+    //     })
+    //   } else {
+    //     this.getLocationMsg()
+    //   }
+    // })
   }
   /**
    * 获取位置信息
