@@ -3,7 +3,7 @@
  * @description: 城市索引选择器
  * @Date: 2019-09-01 14:57:42
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-19 20:17:18
+ * @LastEditTime: 2020-02-19 20:40:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  *  maxCheck: PropTypes.number  // 最多多选几个
@@ -349,6 +349,13 @@ export default class Indexes extends Component {
                         </View>
                         : null
                     }
+                    {
+                      this.props.fieldLogo ? 
+                        <View className='car-logo'>
+                          <Image className='car-logo-image' src={this.props.fieldLogo}></Image>
+                        </View>
+                        : null
+                    }
                     <View>{item[this.props.fieldName]}</View>
                   </View>
                 )
@@ -410,6 +417,7 @@ Indexes.propTypes = {
   list: PropTypes.array,
   fieldId: PropTypes.string,
   fieldName: PropTypes.string,
+  fieldLogo: PropTypes.string,
   onClick: PropTypes.func
 }
 
@@ -422,5 +430,6 @@ Indexes.defaultProps = {
   list: [],
   fieldId: 'cityId',
   fieldName: 'cityName',
+  fieldLogo: '',
   onClick: () => { }
 }
