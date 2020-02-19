@@ -156,6 +156,12 @@
           "name": "车源详情",
           "pathName": "pages/used_car_details/index",
           "query": ""
+        },
+        {
+          "id": -1,
+          "name": "车源发布",
+          "pathName": "pages/used_car_publish/index",
+          "query": ""
         }
 			]
 		}
