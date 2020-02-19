@@ -3,7 +3,7 @@
  * @description: 城市索引选择器
  * @Date: 2019-09-01 14:57:42
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-11 16:34:18
+ * @LastEditTime: 2020-02-19 20:17:18
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  *  maxCheck: PropTypes.number  // 最多多选几个
@@ -123,7 +123,7 @@ export default class Indexes extends Component {
     }
   }
   /**
-   * 处理多选情况  把选中的城市数据的cityName和cityId单独分开放
+   * 处理多选情况 把选中的城市数据的[this.props.fieldName] 和[this.props.fieldId] 单独分开放
    * @param {arguments} ...arg 第一个是item,第二个是event
    * @return void
    */
@@ -133,10 +133,10 @@ export default class Indexes extends Component {
       _list: newList
     })
     const throughCityNameList = this.checkedList.map((item) => {
-      return item.cityName
+      return item[this.props.fieldName]
     })
     const throughCityIdList = this.checkedList.map((item) => {
-      return item.cityId
+      return item[this.props.fieldId]
     })
     this.props.onClick(throughCityNameList, throughCityIdList)
   }
@@ -151,7 +151,7 @@ export default class Indexes extends Component {
     arr.forEach(item => {
       if (item.list) {
         item.list.forEach(items => {
-          if (+items.cityId === +obj.cityId) {
+          if (+items[this.props.fieldId] === +obj[this.props.fieldId]) {
             items.checked = !items.checked
             if (items.checked) {
               this.checkedList.push(items)
@@ -171,7 +171,7 @@ export default class Indexes extends Component {
    */
   deleteInCheckedList(obj) { 
     this.checkedList.forEach((item, index) => {
-      if (+item.cityId === +obj.cityId) {
+      if (+item[this.props.fieldId] === +obj[this.props.fieldId]) {
         this.checkedList.splice(index, 1)
       }
     })
@@ -184,7 +184,7 @@ export default class Indexes extends Component {
   diff(cleanData, checkedData) {
     const map = checkedData.reduce((res, item) =>({
       ...res,
-      [item.cityId]: item
+      [item[this.props.fieldId]]: item
     }), {})
     this.dfs(cleanData, map);
   }
@@ -193,7 +193,7 @@ export default class Indexes extends Component {
       if (item.list) {
         this.dfs(item.list, map)
       }
-      if (item.cityId in map) {
+      if (item[this.props.fieldId] in map) {
         item.checked = true
       } else {
         item.checked = false
@@ -328,7 +328,7 @@ export default class Indexes extends Component {
                   'box-checked': item.checked
                   // 'box-disabled': disbaled
                 })
-                const keyCityId = item.cityId
+                const keyCityId = item[this.props.fieldId]
                 return (
                   <View
                     className='indexes-list-item'
@@ -349,7 +349,7 @@ export default class Indexes extends Component {
                         </View>
                         : null
                     }
-                    <View>{item.cityName}</View>
+                    <View>{item[this.props.fieldName]}</View>
                   </View>
                 )
               })
@@ -408,6 +408,8 @@ Indexes.propTypes = {
   isShowToast: PropTypes.bool,
   topKey: PropTypes.string,
   list: PropTypes.array,
+  fieldId: PropTypes.string,
+  fieldName: PropTypes.string,
   onClick: PropTypes.func
 }
 
@@ -418,5 +420,7 @@ Indexes.defaultProps = {
   topKey: 'Top',
   isShowToast: true,
   list: [],
+  fieldId: 'cityId',
+  fieldName: 'cityName',
   onClick: () => { }
 }
