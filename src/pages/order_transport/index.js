@@ -100,7 +100,7 @@ class OrderTransport extends Component{
       return
     }
     let sendData = {
-      transferPrice: transferPrice * 100,
+      transferPrice: transferPrice* 1000 / 10,
       transferRealName, // 运力名称
       transferUserId, // 接单运力id
       transferMobile, // 接单运力手机号

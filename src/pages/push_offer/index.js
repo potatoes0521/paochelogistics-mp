@@ -284,7 +284,7 @@ class Index extends Component {
       sendAddress, // 收车详细地址
       storePickup, // 上门提车
       homeDelivery, // 上门送车
-      assessedPrice: assessedPrice * 100, //驿站估价
+      assessedPrice: assessedPrice* 1000 / 10, //驿站估价
     }
     api.offer.submitOffer(sendData, this).then(() => {
       this.initData()
