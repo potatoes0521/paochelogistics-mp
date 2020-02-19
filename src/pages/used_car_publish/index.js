@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 14:00:58
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-19 19:53:34
+ * @LastEditTime: 2020-02-19 21:18:20
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -21,7 +21,7 @@ import classNames from 'classnames'
 import { connect } from '@tarojs/redux'
 import { handleMoney } from '@utils/patter.js'
 import { uploadImage } from '@api/upload_request_handle.js'
-// import api from '@api/index.js'
+import api from '@api/index.js'
 
 import './index.styl'
 
@@ -32,8 +32,8 @@ class UsedCarPublish extends Component {
     this.state = {
       locationId: '', //城市ID
       locationName: '',
-      brandId: '', //品牌Id
-      brandName: '', //品牌Id
+      brandId: '1111', //品牌Id
+      brandName: '1111', //品牌Id
       carSerial: '', //车型
       yearType: '', //年款
       carBasic: '', //车款
@@ -43,17 +43,20 @@ class UsedCarPublish extends Component {
       gasDisplacement: '', //汽车排量
       effluentStandard: '', //排放标准
       usedType: 2, //车辆性质 1新车 2二手车
-      carImg: [], //车辆照片
+      carImg: [1111], //车辆照片
       remark: '', //备注,
       activeIndex: 0
     }
     this.pageParams = {}
+    this.timer = null
   }
 
   componentDidMount() {
     this.pageParams = this.$router.params
   }
-  
+  componentWillUnmount() { 
+    clearTimeout(this.timer)
+  }
   changeTab(index) { 
     this.setState({
       activeIndex: index
@@ -101,6 +104,7 @@ class UsedCarPublish extends Component {
     this.setState({
       carPrice: value
     })
+    console.log('value', value)
     return value
   }
   /**
@@ -238,10 +242,28 @@ class UsedCarPublish extends Component {
     if (this.pageParams.pageType === 'edit') {
       sendData.carSourceId = this.pageParams.carSourceId
     }
-    sendData.carPrice = sendData.carPrice * 100
-    sendData.mileage = sendData.mileage * 100
+    console.log('object', sendData.carPrice)
+    sendData.carPrice = sendData.carPrice* 1000 / 10
+    sendData.mileage = sendData.mileage* 1000 / 10
     sendData.onTheCardTime += '-01'
+    console.log('object', sendData.carPrice)
     console.log(sendData)
+    api.car.submitPublish(sendData, this).then(() => {
+      let title = ''
+      if (this.pageParams.pageType === 'edit') {
+        title = '编辑成功'
+      } else {
+        title = '发布成功'
+      }
+      Taro.showToast({
+        title,
+        icon: 'none',
+        duration: 2000
+      })
+      this.timer = setTimeout(() => {
+        Taro.navigateBack()
+      }, 1900)
+    })
   }
   config = {
     navigationBarTitleText: '车源发布' 
@@ -451,7 +473,7 @@ class UsedCarPublish extends Component {
                   }
                   {
                     carImg.length < 9 ? 
-                      <View className='image-item add-btn'>
+                      <View className='image-item add-btn' onClick={() => this.upLoadImage}>
                         <View className='add-btn-wrapper'>
                           <Text className='iconfont iconjiahao icon-add'></Text>
                         </View>
