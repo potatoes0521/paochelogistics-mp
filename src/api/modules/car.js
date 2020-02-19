@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 车源相关接口
  * @Date: 2020-02-19 10:30:01
- * @LastEditors: guorui
- * @LastEditTime: 2020-02-19 10:51:33
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-19 20:35:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -17,5 +17,9 @@ export default {
   // 获取车源详情
   getCarSourceDetails(data, that) {
     return requestHandle.get('carsource/detail', data, that);
-  }
+  },
+  // 获取汽车品牌
+  getCarBrand(data, that) {
+    return requestHandle.get('carsource/brandlist', data, that);
+  },
 }

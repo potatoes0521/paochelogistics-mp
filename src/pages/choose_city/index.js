@@ -6,7 +6,7 @@
  * 
  * @Date: 2019-08-30 15:53:51
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-19 20:26:02
+ * @LastEditTime: 2020-02-19 20:54:14
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -22,7 +22,7 @@ import { connect } from '@tarojs/redux'
 import classNames from 'classnames'
 import _flattenDeep from 'lodash/flattenDeep'
 import api from '@api/index.js'
-import Storage from '@utils/storage.js'
+// import Storage from '@utils/storage.js'
 import './index.styl'
 
 // eslint-disable-next-line import/first
@@ -32,12 +32,12 @@ class ChooseCity extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      allCity: [],
-      hotCity: [],
-      filterCityList: [],
+      allData: [],
+      hotData: [],
+      filterDataList: [],
       pageParams: {}
     }
-    this.allCityList = []
+    this.allDataList = []
     this.timer = null
     this.throughCityNameList = []
     this.throughCityIdList = []
@@ -47,22 +47,26 @@ class ChooseCity extends Component {
     this.setState({
       pageParams: this.$router.params
     })
-    this.handleLocationMsg()
+    this.handleLocationMsg(this.$router.params)
   }
   
-  handleLocationMsg() { 
-    this.getLocationMsg()
+  handleLocationMsg(pageParams) { 
+    if (pageParams.pageType === 'car') { 
+      this.getCarBrand()
+    } else {
+      this.getLocationMsg()
+    }
     // Storage.getStorage('city_list').then(res => {
     //   if (res) {
-    //     let hotCity = res.hotCities || []
-    //     let allCity = res.all || []
-    //     this.allCityList = allCity.map(item => {
+    //     let hotData = res.hotCities || []
+    //     let allData = res.all || []
+    //     this.allDataList = allData.map(item => {
     //       return item.list
     //     })
-    //     this.allCityList = _flattenDeep(this.allCityList)
+    //     this.allDataList = _flattenDeep(this.allDataList)
     //     this.setState({
-    //       hotCity,
-    //       allCity
+    //       hotData,
+    //       allData
     //     })
     //   } else {
     //     this.getLocationMsg()
@@ -76,17 +80,23 @@ class ChooseCity extends Component {
   getLocationMsg() {
     api.city.getLocationMsg({}, this)
       .then(res => {
-        let hotCity = res.hotCities || []
-        let allCity = res.all || []
-        Storage.setStorage('city_list', res)
-        this.allCityList = allCity.map(item => {
+        let hotData = res.hotCities || []
+        let allData = res.all || []
+        // Storage.setStorage('city_list', res)
+        this.allDataList = allData.map(item => {
           return item.list
         })
-        this.allCityList = _flattenDeep(this.allCityList)
+        this.allDataList = _flattenDeep(this.allDataList)
         this.setState({
-          hotCity,
-          allCity
+          hotData,
+          allData
         })
+      })
+  }
+  getCarBrand() { 
+    api.car.getCarBrand({}, this)
+      .then(res => {
+        console.log('res', res)
       })
   }
   /**
@@ -144,12 +154,17 @@ class ChooseCity extends Component {
     let { value } = e.target
     if (value.length < 1) return
     clearTimeout(this.timer)
+    let {pageParams} = this.state
     this.timer = setTimeout(() => {
-      let filterCityList = this.allCityList.filter(item => {
-        return (item && item.cityName && item.cityName.indexOf(value) !== -1) || (item && item.spell && item.spell.indexOf(value) !== -1)
+      let filterDataList = this.allDataList.filter(item => {
+        if (pageParams.pageType === 'car') {
+          return (item && item.masterBrandName && item.masterBrandName.indexOf(value) !== -1) || (item && item.spell && item.spell.indexOf(value) !== -1)
+        } else {
+          return (item && item.cityName && item.cityName.indexOf(value) !== -1) || (item && item.spell && item.spell.indexOf(value) !== -1)
+        }
       })
       this.setState({
-        filterCityList
+        filterDataList
       })
     },1000)
   }
@@ -194,13 +209,13 @@ class ChooseCity extends Component {
 
   render() {
     let {
-      hotCity,
-      allCity,
-      filterCityList,
+      hotData,
+      allData,
+      filterDataList,
       pageParams
     } = this.state
     
-    const hotCityList = hotCity.map(city => {
+    const hotDataList = hotData.map(city => {
       const key = city.cityId
       return (
         <View
@@ -213,7 +228,7 @@ class ChooseCity extends Component {
       )
     })
     
-    const filterList = filterCityList.map(city => {
+    const filterList = filterDataList.map(city => {
       const key = city.cityId
       return (
         <View
@@ -248,7 +263,7 @@ class ChooseCity extends Component {
               <View className='input-wrapper'>
                 <Input
                   className='input'
-                  placeholder='请输入城市名称进行搜索'
+                  placeholder={pageParams.pageType !== 'car' ? '请输入城市名称进行搜索' : '请输入品牌名称进行搜索'}
                   onInput={this.searchCity}
                 ></Input>
               </View>
@@ -258,28 +273,27 @@ class ChooseCity extends Component {
         }
         <View className={indexesWrapperClassName}>
           {
-            filterCityList.length ?
+            filterDataList.length ?
               <View className='search-wrapper'>
                 {filterList}
               </View>
               :
               <Indexes
-                list={allCity}
+                list={allData}
                 animation
-                topKey='热门'
+                topKey={pageParams.pageType !== 'car' ? '热门' : '#'}
                 isVibrate={false}
                 checkBox={pageParams.type === 'through'}
                 onClick={this.onClick.bind(this)}
               >
                 {
-                  hotCity.length ?
+                  hotData.length &&
                     <View className='hot-city-wrapper'>
-                      <View className='hot-title'>热门城市</View>
+                    <View className='hot-title'>热门{pageParams.pageType === 'car' ? '品牌' : '城市'}</View>
                       <View className='hot-city-list'>
-                        {hotCityList}
+                        {hotDataList}
                       </View>
                     </View>
-                    : null
                 }
               </Indexes>
           }
