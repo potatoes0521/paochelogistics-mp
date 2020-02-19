@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-09-12 11:17:44
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-08 11:04:35
+ * @LastEditors: guorui
+ * @LastEditTime: 2020-02-19 18:02:46
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -64,5 +64,40 @@ export const orderTabs = [
   {
     label: '全部',
     id: 3
+  }
+]
+
+export const carPriceList = [
+  {
+    id: 1,
+    label: '不限'
+  },
+  {
+    id: 2,
+    label: '5万以下'
+  },
+  {
+    id: 3,
+    label: '5-10万'
+  },
+  {
+    id: 4,
+    label: '10-15万'
+  },
+  {
+    id: 5,
+    label: '15-20万'
+  },
+  {
+    id: 6,
+    label: '20-30万'
+  },
+  {
+    id: 7,
+    label: '30-50万'
+  },
+  {
+    id: 8,
+    label: '50万以上'
   }
 ]

@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 10:52:25
  * @LastEditors: guorui
- * @LastEditTime: 2020-02-19 12:00:55
+ * @LastEditTime: 2020-02-19 14:38:22
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -128,11 +128,11 @@ class UsedCarDetails extends Component {
               <Text className='history-text'>{usedCarDetailsInfo.callHistoryCount || ''}</Text>
             </View>
             <View className='details-info'>
-              <Text className='details-title' space='ensp'>大众</Text>
+              <Text className='details-title' space='ensp'>{usedCarDetailsInfo.masterBrandName || ''}</Text>
               <Text className='details-title' space='ensp'>{usedCarDetailsInfo.carSerial || ''}</Text>
-              <Text className='details-title' space='ensp'>{usedCarDetailsInfo.carBasic || ''}</Text>
-              <Text className='details-title' space='ensp'>1.8T</Text>
-              <Text className='details-title'>手动舒适型</Text>
+              <Text className='details-title' space='ensp'>{usedCarDetailsInfo.carBasic || ''}款</Text>
+              <Text className='details-title' space='ensp'>{usedCarDetailsInfo.gasDisplacement || ''}</Text>
+              <Text className='details-title'>{usedCarDetailsInfo.carSerial || ''}</Text>
             </View>
           </View>
           <View className='title'>车辆档案</View>
@@ -140,11 +140,11 @@ class UsedCarDetails extends Component {
             <View className='des-line'>
               <View className='des-item long'>
                 <Text className='item-title'>首次上牌</Text>
-                <Text className='item-des'>2007-06</Text>
+                <Text className='item-des'>{usedCarDetailsInfo.onTheCardTimeDesc && usedCarDetailsInfo.onTheCardTimeDesc.substring(0, 7) || ''}</Text>
               </View>
               <View className='des-item'>
                 <Text className='item-title short'>里程</Text>
-                <Text className='item-des'>{usedCarDetailsInfo.mileage || ''}</Text>
+                <Text className='item-des'>{usedCarDetailsInfo.mileage || ''}万公里</Text>
               </View>
             </View>
             <View className='des-line'>
@@ -160,7 +160,7 @@ class UsedCarDetails extends Component {
             <View className='des-line'>
               <View className='des-item long'>
                 <Text className='item-title'>所在城市</Text>
-                <Text className='item-des'>北京</Text>
+                <Text className='item-des'>{usedCarDetailsInfo.locationName || ''}</Text>
               </View>
               <View className='des-item'>
                 <Text className='item-title short'>车龄</Text>
