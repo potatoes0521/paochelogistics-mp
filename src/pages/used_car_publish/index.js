@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 14:00:58
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-20 20:20:10
+ * @LastEditTime: 2020-02-20 20:31:42
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -46,7 +46,7 @@ class UsedCarPublish extends Component {
       usedType: 2, //车辆性质 1新车 2二手车
       carImg: [], //车辆照片
       remark: '', //备注,
-      activeIndex: 1,
+      activeIndex: 0,
       minePublishList: []
     }
     this.pageParams = {}
@@ -299,7 +299,7 @@ class UsedCarPublish extends Component {
         return
       case 'choose_car_brand':
         Taro.navigateTo({
-          url: `/pages/choose_car_brand/index`
+          url: `/pages/choose_city/index?type=sell&pageType=car`
         })
         return
       case 'remark':

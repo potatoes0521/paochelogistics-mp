@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-17 12:28:08
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-20 18:47:23
+ * @LastEditTime: 2020-02-20 20:37:15
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -31,8 +31,10 @@ class UsedCar extends Component {
     super(props)
     this.state = {
       usedCarListData: [],
-      brandId: '', //品牌id
-      locationId: '', //城市id
+      brandId: '', //品牌Id
+      brandName: '', //品牌Id
+      locationId: '', //城市ID
+      locationName: '',
       choosePrice: false,
       activeIndex: 1,
       activeName: ''
@@ -95,7 +97,7 @@ class UsedCar extends Component {
    */
   chooseCity() {
     Taro.navigateTo({
-      url: `/pages/choose_city/index?type=carList`
+      url: `/pages/choose_city/index?type=sell`
     })
   }
   /**
@@ -103,7 +105,9 @@ class UsedCar extends Component {
    * @return void
    */
   chooseBrand() {
-    
+    Taro.navigateTo({
+      url: `/pages/choose_city/index?type=sell&pageType=car`
+    })
   }
   /**
    * 选择价格
@@ -160,7 +164,9 @@ class UsedCar extends Component {
       usedCarListData,
       choosePrice,
       activeIndex,
-      activeName
+      activeName,
+      brandName,
+      locationName
     } = this.state
     const userCarList = usedCarListData && usedCarListData.map((item) => {
       const key = item.userId
@@ -186,19 +192,34 @@ class UsedCar extends Component {
         <View className={carPriceStyle} key={key} onClick={this.choosePriceItem.bind(this, item)}>{item.label}</View>
       )
     })
-    const activeNameStyle = classNames('tab-text', {
-      'active-style': activeName
+    const locationNameClassName = classNames('tab-text', {
+      'active-style-text': locationName
     })
+    const locationNameIconClassName = classNames('car-tab-icon iconfont iconsanjiaoxing', {
+      'active-style-icon': locationName,
+      'active-style-text': locationName
+    })
+    const brandNameClassName = classNames('tab-text', {
+      'active-style-text': brandName,
+    })
+    const brandNameIconClassName = classNames('car-tab-icon iconfont iconsanjiaoxing', {
+      'active-style-icon': brandName,
+      'active-style-text': brandName
+    })
+    const activeNameStyle = classNames('tab-text', {
+      'active-style-text': activeName
+    })
+    
     return (
       <View className='page-wrapper'>
         <View className='tabs-wrapper'>
           <View className='tabs-item' onClick={this.chooseCity.bind(this)}>
-            <Text className='tab-text'>地区</Text>
-            <Text className='car-tab-icon iconfont iconsanjiaoxing'></Text>
+            <Text className={locationNameClassName}>{ locationName ? locationName : '地区'}</Text>
+            <Text className={locationNameIconClassName}></Text>
           </View>
           <View className='tabs-item' onClick={this.chooseBrand.bind(this)}>
-            <Text className='tab-text'>品牌</Text>
-            <Text className='car-tab-icon iconfont iconsanjiaoxing'></Text>
+            <Text className={brandNameClassName}>{brandName ? brandName : '品牌'}</Text>
+            <Text className={brandNameIconClassName}></Text>
           </View>
           <View className='tabs-item' onClick={this.choosePrice.bind(this)}>
             <Text className={activeNameStyle}>{activeName || '价格'}</Text>
