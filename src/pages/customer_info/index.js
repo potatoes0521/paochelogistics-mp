@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 客户信息列表
  * @Date: 2019-09-27 15:38:07
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-14 18:01:45
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-20 20:53:25
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -95,7 +95,8 @@ class CustomerInfo extends Component {
       let pages = Taro.getCurrentPages(); //  获取页面栈
       let prevPage = pages[pages.length - 2]; // 上一个页面
       prevPage.$component.setState({
-        placeOrderCustomer: item
+        realName: item.remarkName,
+        userId: item.userId,
       }, () => {
         Taro.navigateBack()
       })

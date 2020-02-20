@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 14:00:58
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-20 20:31:42
+ * @LastEditTime: 2020-02-20 20:57:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -47,6 +47,8 @@ class UsedCarPublish extends Component {
       carImg: [], //车辆照片
       remark: '', //备注,
       activeIndex: 0,
+      userId: 0,
+      realName: '',
       minePublishList: []
     }
     this.pageParams = {}
@@ -272,6 +274,7 @@ class UsedCarPublish extends Component {
     })
   }
   navigatorTo(pageName) {
+    console.log('pageName', pageName)
     switch (pageName) {
       case 'choose_start_city':
         Taro.navigateTo({
@@ -305,6 +308,11 @@ class UsedCarPublish extends Component {
       case 'remark':
         Taro.navigateTo({
           url: `/pages/remark/index?pageType=used_car`
+        })
+        return
+      case 'choose_customer':
+        Taro.navigateTo({
+          url: '/pages/customer_info/index?pageType=choose'
         })
         return
       default:
@@ -357,6 +365,9 @@ class UsedCarPublish extends Component {
     sendData.carPrice = sendData.carPrice* 1000 / 10
     sendData.mileage = sendData.mileage* 1000 / 10
     sendData.onTheCardTime += '-01'
+    if (!sendData.userId) {
+      sendData.userId = this.props.userInfo.userId
+    }
     api.car.submitPublish(sendData, this).then(res => {
       if (this.pageParams.pageType === 'edit') {
         Taro.showToast({
@@ -409,7 +420,8 @@ class UsedCarPublish extends Component {
       yearType, //年款
       remark, //备注
       locationName,
-      minePublishList
+      minePublishList,
+      realName
     } = this.state
     const publishTabClassName = classNames('tab-item', {
       'tab-item-active': activeIndex === 0
@@ -449,6 +461,17 @@ class UsedCarPublish extends Component {
             <View className='tab-panel'>
               <View className='tab-panel-main'>
                 <View className='publish-card'>
+                  <View className='publish-choose-customer' onClick={this.navigatorTo.bind(this, 'choose_customer')}>
+                    <View className='customer-info'>
+                      <View className='iconfont iconkehu customer-img'></View>
+                      <View className='customer-name'>
+                        {
+                          realName ? realName: '选择代下单客户'
+                        }
+                      </View>
+                    </View>
+                    <View className='iconfont iconxiangyouxuanzejiantoux choose-arrow'></View>
+                  </View>
                   <View className='publish-item'>
                     <View className='must-icon'>*</View>
                     <View className='publish-label'>卖车城市</View>
