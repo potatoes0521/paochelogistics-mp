@@ -1,12 +1,9 @@
 /*
  * @Author: liuYang
- * @description: 城市选择
- * 
- * 主要是修改redux的chooseCity里面的属性来进行页面交互
- * 
+ * @description: 城市选择 // 汽车品牌选择
  * @Date: 2019-08-30 15:53:51
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-11 17:06:40
+ * @LastEditTime: 2020-02-19 20:57:45
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,13 +13,14 @@ import Taro, {
 import {
   View,
   Input,
-  Text
+  Text,
+  Image
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import classNames from 'classnames'
 import _flattenDeep from 'lodash/flattenDeep'
 import api from '@api/index.js'
-import Storage from '@utils/storage.js'
+// import Storage from '@utils/storage.js'
 import './index.styl'
 
 // eslint-disable-next-line import/first
@@ -32,39 +30,46 @@ class ChooseCity extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      allCity: [],
-      hotCity: [],
-      filterCityList: []
+      allData: [],
+      hotData: [],
+      filterDataList: [],
+      pageParams: {}
     }
-    this.type = ''
-    this.allCityList = []
+    this.allDataList = []
     this.timer = null
     this.throughCityNameList = []
     this.throughCityIdList = []
   }
   
   componentDidMount() {
-    this.type = this.$router.params && this.$router.params.type
-    this.handleLocationMsg()
+    this.setState({
+      pageParams: this.$router.params
+    })
+    this.handleLocationMsg(this.$router.params)
   }
   
-  handleLocationMsg() { 
-    Storage.getStorage('city_list').then(res => {
-      if (res) {
-        let hotCity = res.hotCities || []
-        let allCity = res.all || []
-        this.allCityList = allCity.map(item => {
-          return item.list
-        })
-        this.allCityList = _flattenDeep(this.allCityList)
-        this.setState({
-          hotCity,
-          allCity
-        })
-      } else {
-        this.getLocationMsg()
-      }
-    })
+  handleLocationMsg(pageParams) { 
+    if (pageParams.pageType === 'car') { 
+      this.getCarBrand()
+    } else {
+      this.getLocationMsg()
+    }
+    // Storage.getStorage('city_list').then(res => {
+    //   if (res) {
+    //     let hotData = res.hotCities || []
+    //     let allData = res.all || []
+    //     this.allDataList = allData.map(item => {
+    //       return item.list
+    //     })
+    //     this.allDataList = _flattenDeep(this.allDataList)
+    //     this.setState({
+    //       hotData,
+    //       allData
+    //     })
+    //   } else {
+    //     this.getLocationMsg()
+    //   }
+    // })
   }
   /**
    * 获取位置信息
@@ -73,17 +78,23 @@ class ChooseCity extends Component {
   getLocationMsg() {
     api.city.getLocationMsg({}, this)
       .then(res => {
-        let hotCity = res.hotCities || []
-        let allCity = res.all || []
-        Storage.setStorage('city_list', res)
-        this.allCityList = allCity.map(item => {
+        let hotData = res.hotCities || []
+        let allData = res.all || []
+        // Storage.setStorage('city_list', res)
+        this.allDataList = allData.map(item => {
           return item.list
         })
-        this.allCityList = _flattenDeep(this.allCityList)
+        this.allDataList = _flattenDeep(this.allDataList)
         this.setState({
-          hotCity,
-          allCity
+          hotData,
+          allData
         })
+      })
+  }
+  getCarBrand() { 
+    api.car.getCarBrand({}, this)
+      .then(res => {
+        console.log('res', res)
       })
   }
   /**
@@ -93,19 +104,28 @@ class ChooseCity extends Component {
    * @return void
    */
   onClick(item, item2) {
+    console.log('item', item)
+    let {pageParams} = this.state
     let pages = Taro.getCurrentPages() //  获取页面栈
     let prevPage = pages[pages.length - 2] // 上一个页面
-    if (this.type === 'start') {
+    if (pageParams.type === 'start') {
       prevPage.$component.setState({
         sendCityName: item.cityName,
         sendCityId: item.cityId
       }, () => {
         Taro.navigateBack()
       })
-    } else if (this.type === 'target') {
+    } else if (pageParams.type === 'target') {
       prevPage.$component.setState({
         receiveCityName: item.cityName,
         receiveCityId: item.cityId
+      }, () => {
+        Taro.navigateBack()
+      })
+    } else if (pageParams.type === 'sell') {
+      prevPage.$component.setState({
+        locationName: item.cityName,
+        locationId: item.cityId
       }, () => {
         Taro.navigateBack()
       })
@@ -132,12 +152,17 @@ class ChooseCity extends Component {
     let { value } = e.target
     if (value.length < 1) return
     clearTimeout(this.timer)
+    let {pageParams} = this.state
     this.timer = setTimeout(() => {
-      let filterCityList = this.allCityList.filter(item => {
-        return (item && item.cityName && item.cityName.indexOf(value) !== -1) || (item && item.spell && item.spell.indexOf(value) !== -1)
+      let filterDataList = this.allDataList.filter(item => {
+        if (pageParams.pageType === 'car') {
+          return (item && item.masterBrandName && item.masterBrandName.indexOf(value) !== -1) || (item && item.spell && item.spell.indexOf(value) !== -1)
+        } else {
+          return (item && item.cityName && item.cityName.indexOf(value) !== -1) || (item && item.spell && item.spell.indexOf(value) !== -1)
+        }
       })
       this.setState({
-        filterCityList
+        filterDataList
       })
     },1000)
   }
@@ -182,12 +207,13 @@ class ChooseCity extends Component {
 
   render() {
     let {
-      hotCity,
-      allCity,
-      filterCityList
+      hotData,
+      allData,
+      filterDataList,
+      pageParams
     } = this.state
     
-    const hotCityList = hotCity.map(city => {
+    const hotDataList = hotData.map(city => {
       const key = city.cityId
       return (
         <View
@@ -200,7 +226,7 @@ class ChooseCity extends Component {
       )
     })
     
-    const filterList = filterCityList.map(city => {
+    const filterList = filterDataList.map(city => {
       const key = city.cityId
       return (
         <View
@@ -208,6 +234,13 @@ class ChooseCity extends Component {
           onClick={this.chooseSearchCity.bind(this, city)}
           key={key}
         >
+          {
+            city.fieldLogo ? 
+              <View className='car-logo'>
+                <Image className='car-logo-image' src={this.props.fieldLogo}></Image>
+              </View>
+              : null
+          }
           <View className='search-item-name'>{city.cityName}</View>
           <Text className='iconfont iconxiangyouxuanzejiantoux icon-style-right'></Text>
         </View>
@@ -216,27 +249,26 @@ class ChooseCity extends Component {
     
     const allWrapperClassName = classNames({
       'choose-city-wrapper': true,
-      'search-padding-top': this.type === 'start' || this.type === 'target',
+      'search-padding-top': pageParams.type !== 'through',
     })
 
     const indexesWrapperClassName = classNames({
       'indexes-wrapper': true,
-      'search-indexes-wrapper': this.type === 'start' || this.type === 'target',
-      'checked-indexes-wrapper': this.type === 'through'
+      'search-indexes-wrapper': pageParams.type !== 'through',
+      'checked-indexes-wrapper': pageParams.type === 'through'
     })
 
     return (
       <View className={allWrapperClassName}>
         {
-          (this.type === 'start' || this.type === 'target') ?
+          (pageParams.type !== 'through') ?
           <View className='choose-city-search-wrapper'>
             <View className='search-from-wrapper'>
               <View className='iconfont iconsousuo icon-style'></View>
               <View className='input-wrapper'>
-                {/* <View className='input-like' > 请输入城市名称进行搜索 </View> */}
                 <Input
                   className='input'
-                  placeholder='请输入城市名称进行搜索'
+                  placeholder={pageParams.pageType !== 'car' ? '请输入城市名称进行搜索' : '请输入品牌名称进行搜索'}
                   onInput={this.searchCity}
                 ></Input>
               </View>
@@ -246,34 +278,33 @@ class ChooseCity extends Component {
         }
         <View className={indexesWrapperClassName}>
           {
-            filterCityList.length ?
+            filterDataList.length ?
               <View className='search-wrapper'>
                 {filterList}
               </View>
               :
               <Indexes
-                list={allCity}
+                list={allData}
                 animation
-                topKey='热门'
+                topKey={pageParams.pageType !== 'car' ? '热门' : '#'}
                 isVibrate={false}
-                checkBox={this.type === 'through'}
+                checkBox={pageParams.type === 'through'}
                 onClick={this.onClick.bind(this)}
               >
                 {
-                  hotCity.length ?
+                  hotData.length &&
                     <View className='hot-city-wrapper'>
-                      <View className='hot-title'>热门城市</View>
+                    <View className='hot-title'>热门{pageParams.pageType === 'car' ? '品牌' : '城市'}</View>
                       <View className='hot-city-list'>
-                        {hotCityList}
+                        {hotDataList}
                       </View>
                     </View>
-                    : null
                 }
               </Indexes>
           }
         </View>
         {
-          this.type === 'through' ?
+          pageParams.type === 'through' ?
             <View className='check-bottom-wrapper'>
               <View className='btn-public check-cancel' onClick={this.cancelChecked}>取消</View>
               <View className='btn-public check-submit' onClick={()=>this.cancelChecked('submit')}>确认</View>

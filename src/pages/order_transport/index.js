@@ -3,8 +3,8 @@
  * @description: 提交/查看驿站人员提交的运力信息
  * @path: 引入路径
  * @Date: 2020-02-05 17:16:19
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-14 20:09:06
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-19 11:45:26
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -72,6 +72,7 @@ class OrderTransport extends Component{
     this.setState({
       transferPrice: value
     })
+    return value
   }
   /**
    * 确认司机信息
@@ -99,7 +100,7 @@ class OrderTransport extends Component{
       return
     }
     let sendData = {
-      transferPrice: transferPrice * 100,
+      transferPrice: transferPrice* 1000 / 10,
       transferRealName, // 运力名称
       transferUserId, // 接单运力id
       transferMobile, // 接单运力手机号

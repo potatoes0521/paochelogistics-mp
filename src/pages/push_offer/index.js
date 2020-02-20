@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-06 11:17:37
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-13 16:49:06
+ * @LastEditTime: 2020-02-19 11:45:15
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -201,6 +201,7 @@ class Index extends Component {
     this.setState({
       assessedPrice: value
     })
+    return value
   }
   /**
    * 输入车辆信息
@@ -283,7 +284,7 @@ class Index extends Component {
       sendAddress, // 收车详细地址
       storePickup, // 上门提车
       homeDelivery, // 上门送车
-      assessedPrice: assessedPrice * 100, //驿站估价
+      assessedPrice: assessedPrice* 1000 / 10, //驿站估价
     }
     api.offer.submitOffer(sendData, this).then(() => {
       this.initData()

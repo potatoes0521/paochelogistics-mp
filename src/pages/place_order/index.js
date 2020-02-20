@@ -231,6 +231,7 @@ class PlaceOrder extends Component {
     }, () => {
       this.saveInputOrTest()
     })
+    return value
   }
 
   /**
@@ -345,7 +346,7 @@ class PlaceOrder extends Component {
       quotedPriceDesc,
       userId: placeOrderCustomer.userId || userInfo.userId,
       createUserId: userInfo.userId,
-      transferPrice: transferPrice * 100,
+      transferPrice: transferPrice* 1000 / 10,
       transferRealName, // 运力名称
       transferUserId, // 接单运力id
       transferMobile, // 接单运力手机号
