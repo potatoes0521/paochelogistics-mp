@@ -3,7 +3,7 @@
  * @description: 城市索引选择器
  * @Date: 2019-09-01 14:57:42
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-19 20:40:58
+ * @LastEditTime: 2020-02-20 15:16:55
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  *  maxCheck: PropTypes.number  // 最多多选几个
@@ -30,6 +30,7 @@ import {
 import classNames from 'classnames'
 import { AtToast } from 'taro-ui'
 import _flattenDeep from 'lodash/flattenDeep'
+import { defaultFileURL } from '@config/request_config.js'
 import utils from './utils.js'
 // eslint-disable-next-line import/first
 import imageDuiHao from '@img/indexes/duigou.png'
@@ -329,6 +330,7 @@ export default class Indexes extends Component {
                   // 'box-disabled': disbaled
                 })
                 const keyCityId = item[this.props.fieldId]
+                const logoUrl = defaultFileURL + item[this.props.fieldLogo]
                 return (
                   <View
                     className='indexes-list-item'
@@ -352,7 +354,7 @@ export default class Indexes extends Component {
                     {
                       this.props.fieldLogo ? 
                         <View className='car-logo'>
-                          <Image className='car-logo-image' src={this.props.fieldLogo}></Image>
+                          <Image className='car-logo-image' src={logoUrl}></Image>
                         </View>
                         : null
                     }

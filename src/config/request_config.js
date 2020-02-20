@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 服务器状态码错误配置
  * @Date: 2019-08-13 12:22:58
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-13 13:22:32
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-20 15:16:38
  */
 
 // api地址
@@ -16,8 +16,11 @@ export const defaultFileUrl = 'https://api.user.paoche56.com/'
 
 // 图片资源服务器
 export const defaultResourceImgURL = 'https://resource.paoche56.com/paochelogistics/mp_img/'
+
 // 文件资源服务器
 export const defaultResourceConfigURL = 'https://resource.paoche56.com/paochelogistics/mp_config/'
+
+export const defaultFileURL = 'http://file.paoche56.com'
 
 export const HTTP_STATUS = {
   SUCCESS: 200,

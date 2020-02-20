@@ -3,7 +3,7 @@
  * @description: 城市选择 // 汽车品牌选择
  * @Date: 2019-08-30 15:53:51
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-20 12:38:45
+ * @LastEditTime: 2020-02-20 15:16:28
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -20,6 +20,7 @@ import { connect } from '@tarojs/redux'
 import classNames from 'classnames'
 import _flattenDeep from 'lodash/flattenDeep'
 import api from '@api/index.js'
+import { defaultFileURL } from '@config/request_config.js'
 // import Storage from '@utils/storage.js'
 import './index.styl'
 
@@ -232,7 +233,8 @@ class ChooseCity extends Component {
     
     const hotDataList = hotData.map(city => {
       const key = city.cityId
-      return pageParams.type === 'car' ? (
+      const logoUrl = defaultFileURL + city.masterBrandLogo
+      return pageParams.pageType !== 'car' ? (
         <View
           className='hot-item'
           onClick={this.chooseSearchCity.bind(this, city)}
@@ -247,7 +249,7 @@ class ChooseCity extends Component {
             key={key}
           >
           <View className='hot-brand-image-wrapper'>
-            <Image className='hot-brand-image' src={city.masterBrandLogo}></Image>
+            <Image className='hot-brand-image' src={logoUrl}></Image>
           </View>
           <Text className='hot-brand-text'>{city.masterBrandName}</Text>
         </View>
@@ -256,6 +258,7 @@ class ChooseCity extends Component {
     
     const filterList = filterDataList.map(city => {
       const key = city.cityId
+      const logoUrl = defaultFileURL + city.masterBrandLogo
       return (
         <View
           className='search-item'
@@ -265,7 +268,7 @@ class ChooseCity extends Component {
           {
             city.masterBrandLogo ?
               <View className='car-logo'>
-                <Image className='car-logo-image' src={city.masterBrandLogo}></Image>
+                <Image className='car-logo-image' src={logoUrl}></Image>
               </View>
               : null
           }
@@ -306,6 +309,9 @@ class ChooseCity extends Component {
         }
         <View className={indexesWrapperClassName}>
           {
+            hotDataList
+          }
+          {/* {
             filterDataList.length ?
               <View className='search-wrapper'>
                 {filterList}
@@ -332,7 +338,7 @@ class ChooseCity extends Component {
                     </View>
                 }
               </Indexes>
-          }
+          } */}
         </View>
         {
           pageParams.type === 'through' ?
