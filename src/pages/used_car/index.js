@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-17 12:28:08
  * @LastEditors: guorui
- * @LastEditTime: 2020-02-19 19:10:50
+ * @LastEditTime: 2020-02-20 12:18:18
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,9 +12,9 @@ import Taro, { Component } from '@tarojs/taro'
 import {
   View,
   Text,
-  // Block
+  Block
 } from '@tarojs/components'
-// import classNames from 'classnames'
+import classNames from 'classnames'
 import { connect } from '@tarojs/redux'
 import { carPriceList } from '@config/text_config.js'
 import UsedCarItem from './components/used_car_item/index.js'
@@ -33,9 +33,11 @@ class UsedCar extends Component {
       usedCarListData: [],
       brandId: '', //品牌id
       locationId: '', //城市id
-      carPriceSection: [], //价格区间
-      choosePrice: false
+      choosePrice: false,
+      activeIndex: 1,
+      activeName: ''
     }
+    this.carPriceSection = [] //价格区间
     this.usedCarPage = 1
     this.usedCarFlag = false
   }
@@ -56,7 +58,7 @@ class UsedCar extends Component {
   getUsedCarList({
     brandId = this.state.brandId,
     locationId = this.state.locationId,
-    carPriceSection = this.state.carPriceSection,
+    carPriceSection = this.carPriceSection,
     usedType = 2,
     pageNum = this.usedCarPage,
     pageSize = 10
@@ -87,10 +89,56 @@ class UsedCar extends Component {
       }
     })
   }
+  /**
+   * 选择城市
+   * @return void
+   */
+  chooseCity() {
+    Taro.navigateTo({
+      url: `/pages/choose_city/index?type=carList`
+    })
+  }
+  /**
+   * 选择品牌
+   * @return void
+   */
+  chooseBrand() {
+    
+  }
+  /**
+   * 选择价格
+   * @return void
+   */
   choosePrice() {
     this.setState({
       choosePrice: !this.state.choosePrice
     })
+  }
+  choosePriceItem(item) {
+    this.setState({
+      choosePrice: !this.state.choosePrice,
+      activeIndex: item.id,
+      activeName: item.label
+    })
+    this.carPriceSection = []
+    if (item.id === 1) {
+      this.carPriceSection = []
+    } else if (item.id === 2) {
+      this.carPriceSection = [0, 50000]
+    } else if (item.id === 3) {
+      this.carPriceSection = [50000, 100000]
+    } else if (item.id === 4) {
+      this.carPriceSection = [100000, 150000]
+    } else if (item.id === 5) {
+      this.carPriceSection = [150000, 200000]
+    } else if (item.id === 6) {
+      this.carPriceSection = [200000, 300000]
+    } else if (item.id === 7) {
+      this.carPriceSection = [300000, 500000]
+    } else if (item.id === 8) {
+      this.carPriceSection = [500000, 0]
+    }
+    // this.getUsedCarList({})
   }
 
   /**
@@ -109,51 +157,63 @@ class UsedCar extends Component {
 
   render() {
     let {
-      // usedCarListData,
-      choosePrice
+      usedCarListData,
+      choosePrice,
+      activeIndex,
+      activeName
     } = this.state
-    // const userCarList = usedCarListData.map((item, index) => {
-    //   const key = item.userId
-    //   return (
-    //     <Block
-    //       key={key}
-    //     >
-    //       <UsedCarItem
-    //         item={item}
-    //         data-item={item}
-    //       ></UsedCarItem>
-    //       {
-    //         index < usedCarListData.length - 1 ?
-    //           <View className='line'></View>
-    //           : null
-    //       }
-    //     </Block>
-    //   )
-    // })
+    const userCarList = usedCarListData && usedCarListData.map((item, index) => {
+      const key = item.userId
+      return (
+        <Block
+          key={key}
+        >
+          <UsedCarItem
+            item={item}
+            data-item={item}
+          ></UsedCarItem>
+          {
+            index < usedCarListData.length - 1 ?
+              <View className='line'></View>
+              : null
+          }
+        </Block>
+      )
+    })
     const carPriceItem = carPriceList.map( item => {
+      const carPriceStyle = classNames('car-price-item',
+        {
+          'choose-car-price': activeIndex === item.id
+        }
+      )
       const key = item.id
       return (
-        <View className='car-price-item' key={key}>{item.label}</View>
+        <View className={carPriceStyle} key={key} onClick={this.choosePriceItem.bind(this, item)}>{item.label}</View>
       )
+    })
+    const activeNameStyle = classNames('tab-text', {
+      'active-style': activeName
     })
     return (
       <View className='page-wrapper'>
         <View className='tabs-wrapper'>
-          <View className='tabs-item'>
+          <View className='tabs-item' onClick={this.chooseCity.bind(this)}>
             <Text className='tab-text'>地区</Text>
             <Text className='car-tab-icon iconfont iconsanjiaoxing'></Text>
           </View>
-          <View className='tabs-item'>
+          <View className='tabs-item' onClick={this.chooseBrand.bind(this)}>
             <Text className='tab-text'>品牌</Text>
             <Text className='car-tab-icon iconfont iconsanjiaoxing'></Text>
           </View>
-          <View className='tabs-item' onClick={this.choosePrice}>
-            <Text className='tab-text'>价格</Text>
+          <View className='tabs-item' onClick={this.choosePrice.bind(this)}>
+            <Text className={activeNameStyle}>{activeName || '价格'}</Text>
             <Text className='car-tab-icon iconfont iconsanjiaoxing'></Text>
           </View>
         </View>
         <View className='car-list-wrapper'>
-          <UsedCarItem></UsedCarItem>
+          {
+            userCarList
+          }
         </View>
         <FloatBtn></FloatBtn>
         {

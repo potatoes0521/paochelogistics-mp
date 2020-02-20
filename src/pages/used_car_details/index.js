@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 10:52:25
  * @LastEditors: guorui
- * @LastEditTime: 2020-02-20 09:21:08
+ * @LastEditTime: 2020-02-20 11:41:23
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -27,7 +27,8 @@ class UsedCarDetails extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      usedCarDetailsInfo: {}
+      usedCarDetailsInfo: {},
+      swiperIndex: 0 
     }
     this.pageParams = {}
   }
@@ -41,6 +42,9 @@ class UsedCarDetails extends Component {
   bannerChange(event) { 
     console.log('event', event)
     // event.detail = {current, source}
+    this.setState({
+      swiperIndex: event.detail.current
+    })
   }
   /**
    * 获取车源详情
@@ -75,12 +79,25 @@ class UsedCarDetails extends Component {
       phoneNumber: usedCarDetailsInfo.mobile
     })
   }
+  /**
+   * 编辑
+   * @return void
+   */
+  editUsedCar() {
+    let { usedCarDetailsInfo } = this.state
+    Taro.navigateTo({
+      url: `/pages/used_car_publish/index?pageType=edit&carSourceId=${usedCarDetailsInfo.carSourceId}`
+    })
+  }
   config = {
     navigationBarTitleText: '车源详情' 
   }
 
   render() {
-    let { usedCarDetailsInfo } = this.state
+    let {
+      usedCarDetailsInfo,
+      swiperIndex
+    } = this.state
     const bannerListRender = usedCarDetailsInfo.imgUrls && usedCarDetailsInfo.imgUrls.map(item => {
       const key = item.id
       return (
@@ -115,7 +132,7 @@ class UsedCarDetails extends Component {
               }
             </Swiper>
             <View className='doc-wrapper'>
-              22/22
+              {swiperIndex}/{usedCarDetailsInfo.imgUrls && usedCarDetailsInfo.imgUrls.length}
             </View>
           </View>
           <View className='details-title-wrapper'>
@@ -130,9 +147,9 @@ class UsedCarDetails extends Component {
             <View className='details-info'>
               <Text className='details-title' space='ensp'>{usedCarDetailsInfo.masterBrandName || ''}</Text>
               <Text className='details-title' space='ensp'>{usedCarDetailsInfo.carSerial || ''}</Text>
-              <Text className='details-title' space='ensp'>{usedCarDetailsInfo.carBasic || ''}款</Text>
+              <Text className='details-title' space='ensp'>{usedCarDetailsInfo.yearType || ''}款</Text>
               <Text className='details-title' space='ensp'>{usedCarDetailsInfo.gasDisplacement || ''}</Text>
-              <Text className='details-title'>{usedCarDetailsInfo.carSerial || ''}</Text>
+              <Text className='details-title'>{usedCarDetailsInfo.carBasic || ''}</Text>
             </View>
           </View>
           <View className='title'>车辆档案</View>
@@ -168,16 +185,31 @@ class UsedCarDetails extends Component {
               </View>
             </View>
           </View>
-          <View className='title'>其他说明</View>
-          <View className='main'>
-            <View className='remark'>{usedCarDetailsInfo.remark || ''}</View>
-          </View>
+          {
+            usedCarDetailsInfo.buttons && usedCarDetailsInfo.buttons.length ?
+              null :
+              <View className='other-remark'>
+                <View className='title'>其他说明</View>
+                <View className='main'>
+                  <View className='remark'>{usedCarDetailsInfo.remark || ''}</View>
+                </View>
+              </View>
+          }
         </View>
-        <View className='btn-wrapper'>
-          <View className='btn' onClick={this.callSeller}>
-            联系卖家
-          </View>
-        </View>
+        {
+          usedCarDetailsInfo.buttons && usedCarDetailsInfo.buttons.length ? 
+            <View className='btn-wrapper'>
+              <View className='btn' onClick={this.editUsedCar.bind(this)}>
+                编辑
+              </View>
+            </View>
+            :
+            <View className='btn-wrapper'>
+              <View className='btn' onClick={this.callSeller.bind(this)}>
+                联系卖家
+              </View>
+            </View>
+        }
       </View>
     )
   }

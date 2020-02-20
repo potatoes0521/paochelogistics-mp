@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2020-02-19 15:10:11
  * @LastEditors: guorui
- * @LastEditTime: 2020-02-20 09:20:46
+ * @LastEditTime: 2020-02-20 09:36:19
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -38,9 +38,9 @@ export default class UsedCarItem extends Component {
           <View className='car-des-title'>
             <Text className='car-title' space='ensp'>{item.masterBrandName || ''}</Text>
             <Text className='car-title' space='ensp'>{item.carSerial || ''}</Text>
-            <Text className='car-title' space='ensp'>{item.carBasic || ''}款</Text>
+            <Text className='car-title' space='ensp'>{item.yearType || ''}款</Text>
             <Text className='car-title' space='ensp'>{item.gasDisplacement || ''}</Text>
-            <Text className='car-title'>{item.carSerial || ''}</Text>
+            <Text className='car-title'>{item.carBasic || ''}</Text>
           </View>
           <View className='car-des'>
             <Text className='car-des-time'>{item.yearType || ''}年</Text>

@@ -3,7 +3,7 @@
  * @description: 发布车源按钮
  * @Date: 2020-02-18 15:34:37
  * @LastEditors: guorui
- * @LastEditTime: 2020-02-18 15:34:38
+ * @LastEditTime: 2020-02-20 09:25:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -33,7 +33,9 @@ class FloatBtn extends Component {
     if (!userId) {
       showModalAndRegister()
     } else {
-      console.log("fabu")
+      Taro.navigateTo({
+        url: `/pages/used_car_publish/index?pageType=publish`
+      })
     }
   }
 
