@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 没有订单的样式
  * @Date: 2019-09-29 15:00:46
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-04 19:59:48
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-20 14:22:39
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -17,6 +17,7 @@ import PropTypes from 'prop-types'
 import noOrderDataImg from '@img/empty_data/no_order.png'
 import noOfferDataImg from '@img/empty_data/no_offer.png'
 import noCustomerDataImg from '@img/empty_data/no_customer.png'
+import noCarDataImg from '@img/empty_data/no_car.png'
 import './index.styl'
 
 export default class EmptyData extends Component {
@@ -56,6 +57,9 @@ export default class EmptyData extends Component {
           url: '/pages/register/index'
         })
         break;
+      case 'car':
+        this.props.onClickBtn()
+        break;
       default:
         Taro.switchTab({
           url: '/pages/index/index'
@@ -90,6 +94,11 @@ export default class EmptyData extends Component {
         text = '去登录'
         tips = '亲，登录后可以查看自己相关的订单哦～'
         break;
+      case 'car':
+        imgSrc = noCarDataImg
+        text = '去发布'
+        tips = '暂无车源发布记录'
+        break;
       default:
         imgSrc = noOfferDataImg
         return
@@ -119,9 +128,11 @@ export default class EmptyData extends Component {
 }
 
 EmptyData.defaultProps = {
-  pageType: 'offer'
+  pageType: 'offer',
+  onClickBtn: () => {}
 }
 
 EmptyData.propTypes = {
-  pageType: PropTypes.string
+  pageType: PropTypes.string,
+  onClickBtn: PropTypes.func,
 }
