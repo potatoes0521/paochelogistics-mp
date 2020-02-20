@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 14:00:58
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-20 20:57:02
+ * @LastEditTime: 2020-02-20 21:00:47
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -334,8 +334,13 @@ class UsedCarPublish extends Component {
       mileage: '请填写里程数', //	里程数
       onTheCardTime: '请选择首次上牌时间', //首次上牌时间
       yearType: '请选择年款', //年款
+      userId: '请选择代下单的客户', //年款
     }
     let breakName = ''
+    let {userInfo} = this.props
+    if (userInfo.userType === 0 && !this.state.userId) {
+      breakName = 'userId'
+    }
     for (let i in this.state) {
       if ( i === 'remark' || i === 'activeIndex' ) { continue }
       // if (this.pageParams.pageType !== 'edit' && i === 'carSourceId') {
@@ -423,6 +428,7 @@ class UsedCarPublish extends Component {
       minePublishList,
       realName
     } = this.state
+    let {userInfo} = this.props
     const publishTabClassName = classNames('tab-item', {
       'tab-item-active': activeIndex === 0
     })
@@ -461,17 +467,21 @@ class UsedCarPublish extends Component {
             <View className='tab-panel'>
               <View className='tab-panel-main'>
                 <View className='publish-card'>
-                  <View className='publish-choose-customer' onClick={this.navigatorTo.bind(this, 'choose_customer')}>
-                    <View className='customer-info'>
-                      <View className='iconfont iconkehu customer-img'></View>
-                      <View className='customer-name'>
-                        {
-                          realName ? realName: '选择代下单客户'
-                        }
+                  {
+                    userInfo.userType === 0 ?
+                      <View className='publish-choose-customer' onClick={this.navigatorTo.bind(this, 'choose_customer')}>
+                        <View className='customer-info'>
+                          <View className='iconfont iconkehu customer-img'></View>
+                          <View className='customer-name'>
+                            {
+                              realName ? realName: '选择代下单客户'
+                            }
+                          </View>
+                        </View>
+                        <View className='iconfont iconxiangyouxuanzejiantoux choose-arrow'></View>
                       </View>
-                    </View>
-                    <View className='iconfont iconxiangyouxuanzejiantoux choose-arrow'></View>
-                  </View>
+                      : null
+                  }
                   <View className='publish-item'>
                     <View className='must-icon'>*</View>
                     <View className='publish-label'>卖车城市</View>
