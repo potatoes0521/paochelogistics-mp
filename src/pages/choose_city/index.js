@@ -3,7 +3,7 @@
  * @description: 城市选择 // 汽车品牌选择
  * @Date: 2019-08-30 15:53:51
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-19 20:57:45
+ * @LastEditTime: 2020-02-20 12:38:45
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -94,7 +94,17 @@ class ChooseCity extends Component {
   getCarBrand() { 
     api.car.getCarBrand({}, this)
       .then(res => {
-        console.log('res', res)
+        let hotData = res.hotCarMasterBrandList || []
+        let allData = res.normalCarMasterBrandList || []
+        // Storage.setStorage('city_list', res)
+        this.allDataList = allData.map(item => {
+          return item.list
+        })
+        this.allDataList = _flattenDeep(this.allDataList)
+        this.setState({
+          hotData,
+          allData
+        })
       })
   }
   /**
@@ -122,10 +132,17 @@ class ChooseCity extends Component {
       }, () => {
         Taro.navigateBack()
       })
-    } else if (pageParams.type === 'sell') {
+    } else if (pageParams.type === 'sell' && pageParams.pageType !== 'car') {
       prevPage.$component.setState({
         locationName: item.cityName,
         locationId: item.cityId
+      }, () => {
+        Taro.navigateBack()
+      })
+    } else if (pageParams.type === 'sell' && pageParams.pageType === 'car') {
+      prevPage.$component.setState({
+        brandId: item.masterBrandId,
+        brandName: item.masterBrandName
       }, () => {
         Taro.navigateBack()
       })
@@ -215,13 +232,24 @@ class ChooseCity extends Component {
     
     const hotDataList = hotData.map(city => {
       const key = city.cityId
-      return (
+      return pageParams.type === 'car' ? (
         <View
           className='hot-item'
           onClick={this.chooseSearchCity.bind(this, city)}
           key={key}
         >
           <View className='hot-item-btn'>{city.cityName}</View>
+        </View>
+      ) : (
+          <View
+            className='hot-brand-item'
+            onClick={this.chooseSearchCity.bind(this, city)}
+            key={key}
+          >
+          <View className='hot-brand-image-wrapper'>
+            <Image className='hot-brand-image' src={city.masterBrandLogo}></Image>
+          </View>
+          <Text className='hot-brand-text'>{city.masterBrandName}</Text>
         </View>
       )
     })
@@ -235,13 +263,13 @@ class ChooseCity extends Component {
           key={key}
         >
           {
-            city.fieldLogo ? 
+            city.masterBrandLogo ?
               <View className='car-logo'>
-                <Image className='car-logo-image' src={this.props.fieldLogo}></Image>
+                <Image className='car-logo-image' src={city.masterBrandLogo}></Image>
               </View>
               : null
           }
-          <View className='search-item-name'>{city.cityName}</View>
+          <View className='search-item-name'>{city.cityName || city.masterBrandName}</View>
           <Text className='iconfont iconxiangyouxuanzejiantoux icon-style-right'></Text>
         </View>
       )
@@ -289,6 +317,9 @@ class ChooseCity extends Component {
                 topKey={pageParams.pageType !== 'car' ? '热门' : '#'}
                 isVibrate={false}
                 checkBox={pageParams.type === 'through'}
+                fieldId={pageParams.pageType !== 'car' ? 'cityId' : 'masterBrandId'}
+                fieldName={pageParams.pageType !== 'car' ? 'cityName' : 'masterBrandName'}
+                fieldLogo={pageParams.pageType !== 'car' ? '' : 'masterBrandLogo'}
                 onClick={this.onClick.bind(this)}
               >
                 {
