@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2020-02-19 15:10:11
  * @LastEditors: guorui
- * @LastEditTime: 2020-02-19 15:48:21
+ * @LastEditTime: 2020-02-20 09:20:46
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,10 +14,23 @@ import PropTypes from 'prop-types'
 import './index.styl'
 
 export default class UsedCarItem extends Component {
+  constructor(props) {
+    super(props)
+  }
+  /**
+   * 跳转到车源详情
+   * @return void
+   */
+  navigatorToUsedCarDetails() {
+    let { item } = this.props
+    Taro.navigateTo({
+      url: `/pages/used_car_details/index?carSourceId=${item.carSourceId}`
+    })
+  }
   render() {
     let {item} = this.props
     return (
-      <View className='car-item'>
+      <View className='car-item' onClick={this.navigatorToUsedCarDetails}>
         <View className='car-img-wrapper'>
           <Image src={item.carImg} mode='aspectFill' className='car-imag'></Image>
         </View>

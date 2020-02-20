@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 10:52:25
  * @LastEditors: guorui
- * @LastEditTime: 2020-02-19 14:38:22
+ * @LastEditTime: 2020-02-20 09:21:08
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -47,15 +47,15 @@ class UsedCarDetails extends Component {
    * @return void
    */
   getCarSourceDetails() {
-    if (!this.pageParams.car_source_id) {
+    if (!this.pageParams.carSourceId) {
       Taro.showToast({
         icon: 'none',
-        title: 'car_source_id is null'
+        title: 'carSourceId is null'
       })
       return;
     }
     let sendData = {
-      carSourceId: this.pageParams.car_source_id
+      carSourceId: this.pageParams.carSourceId
     }
     api.car.getCarSourceDetails(sendData, this).then(res => {
       if (!res) return
