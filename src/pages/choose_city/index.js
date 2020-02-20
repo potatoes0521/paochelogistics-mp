@@ -3,7 +3,7 @@
  * @description: 城市选择 // 汽车品牌选择
  * @Date: 2019-08-30 15:53:51
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-20 15:16:28
+ * @LastEditTime: 2020-02-20 15:24:09
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -309,9 +309,6 @@ class ChooseCity extends Component {
         }
         <View className={indexesWrapperClassName}>
           {
-            hotDataList
-          }
-          {/* {
             filterDataList.length ?
               <View className='search-wrapper'>
                 {filterList}
@@ -338,7 +335,7 @@ class ChooseCity extends Component {
                     </View>
                 }
               </Indexes>
-          } */}
+          }
         </View>
         {
           pageParams.type === 'through' ?
