@@ -3,7 +3,7 @@
  * @description: 服务器状态码错误配置
  * @Date: 2019-08-13 12:22:58
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-20 15:16:38
+ * @LastEditTime: 2020-02-20 16:16:55
  */
 
 // api地址
