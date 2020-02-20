@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 10:52:25
  * @LastEditors: guorui
- * @LastEditTime: 2020-02-20 11:41:23
+ * @LastEditTime: 2020-02-20 15:46:12
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -35,9 +35,18 @@ class UsedCarDetails extends Component {
 
   componentDidMount() {
     this.pageParams = this.$router.params || {}
+    this.getCarSourceDetails()
   }
-  showBigImage() {
-    
+  /**
+   * 放大图片
+   * @return void
+   */
+  showBigImage(index) {
+    let { usedCarDetailsInfo } = this.state
+    Taro.previewImage({
+      current: usedCarDetailsInfo.imgUrls[index], // 当前显示图片的http链接
+      urls: usedCarDetailsInfo.imgUrls // 需要预览的图片http链接列表
+    })
   }
   bannerChange(event) { 
     console.log('event', event)
@@ -75,6 +84,12 @@ class UsedCarDetails extends Component {
   callSeller() {
     let { usedCarDetailsInfo } = this.state
     if (!usedCarDetailsInfo.mobile) return
+    let sendData = {
+      infoType: 2, //类型    1 新车   2 二手车
+      objectId: usedCarDetailsInfo.carSourceId,
+      behaviourSource: 3 //行为来源  1 精选推荐   2 列表   3 详情
+    };
+    api.statistics.callPhone(sendData, this).then(() => {});
     Taro.makePhoneCall({
       phoneNumber: usedCarDetailsInfo.mobile
     })
@@ -98,7 +113,7 @@ class UsedCarDetails extends Component {
       usedCarDetailsInfo,
       swiperIndex
     } = this.state
-    const bannerListRender = usedCarDetailsInfo.imgUrls && usedCarDetailsInfo.imgUrls.map(item => {
+    const bannerListRender = usedCarDetailsInfo.imgUrls && usedCarDetailsInfo.imgUrls.map((item, index) => {
       const key = item.id
       return (
         <SwiperItem key={key}>
@@ -106,7 +121,7 @@ class UsedCarDetails extends Component {
             <Image
               className='banner-image'
               src={item.img}
-              onClick={this.showBigImage.bind(this, item)}
+              onClick={this.showBigImage.bind(this, index)}
             ></Image>
           </View>
         </SwiperItem>

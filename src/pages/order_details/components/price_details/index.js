@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 订单详情报价、 金额、 支付方式 
  * @Date: 2019-09-20 09:58:08
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-14 13:34:48
+ * @LastEditors: guorui
+ * @LastEditTime: 2020-02-20 17:08:56
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,10 +16,11 @@ import {
 } from '@tarojs/components'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import { connect } from '@tarojs/redux'
 import './index.styl'
 import '../public.styl'
 
-export default class PriceDetailsComponent extends Component {
+class PriceDetailsComponent extends Component {
   static options = {
     addGlobalClass: true // 允许外部样式修改组件样式
   }
@@ -34,7 +35,8 @@ export default class PriceDetailsComponent extends Component {
     let {
       item,
       fail,
-      hidePayType
+      hidePayType,
+      userInfo
     } = this.props
     const payTypeClassName = classNames(
       'number',
@@ -90,6 +92,20 @@ export default class PriceDetailsComponent extends Component {
           <View className='details-form-price'>￥{item.payPriceDesc || ''}</View>
         </View>
         {
+          userInfo.userType === 0 ?
+            <Block>
+              <View className='details-form-item'>
+                <View className='details-form-label'>发票:</View>
+                <View className='details-form-price'>{item.invoiceTypeDesc || ''}</View>
+              </View>
+              <View className='details-form-item'>
+                <View className='details-form-label'></View>
+                <View className='details-form-price fail-price'>发票金额为实际支付金额，不含虚拟资产、砍价优惠扣减金额等</View>
+              </View>
+            </Block>
+            : null
+        }
+        {
           (item.share_type !== '3' && !hidePayType) ?
             (
               <Block>
@@ -114,6 +130,12 @@ export default class PriceDetailsComponent extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    userInfo: state.user_msg.userInfo
+  }
+}
+export default connect(mapStateToProps)(PriceDetailsComponent)
 
 PriceDetailsComponent.defaultProps = {
   item: {},

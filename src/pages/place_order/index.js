@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
- * @LastEditors: liuYang
- * @LastEditTime: 2020-02-18 12:52:20
+ * @LastEditors: guorui
+ * @LastEditTime: 2020-02-20 17:04:32
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -26,6 +26,8 @@ import { connect } from '@tarojs/redux'
 // eslint-disable-next-line import/first
 import api from '@api/index.js'
 import Storage from '@utils/storage.js'
+import classNames from 'classnames'
+import { invoiceList } from '@config/text_config.js'
 
 import './index.styl'
 
@@ -59,9 +61,11 @@ class PlaceOrder extends Component {
       transferUserId: '', // 接单运力id
       transferRealName: '', // 接单运力
       transferMobile: '', // 接单运力手机号
+      invoiceTypeInfo: {} //发票
       // disabled: true
     }
     this.pageParams = {}
+    this.invoiceList = invoiceList
   }
   componentDidMount() {
     this.pageParams = this.$router.params || {}
@@ -105,7 +109,8 @@ class PlaceOrder extends Component {
           storePickup: res.storePickup,
           carInfo: res.carInfo,
           carAmount: res.carAmount,
-          usedType: res.usedType
+          usedType: res.usedType,
+          invoiceTypeDesc: res.invoiceTypeDesc
         })
       })
   }
@@ -253,6 +258,22 @@ class PlaceOrder extends Component {
     })
   }
   /**
+   * 选择发票
+   * @return void
+   */
+  chooseInvoice() {
+    let carInvoiceList = this.invoiceList.map(item => item.label)
+    Taro.showActionSheet({
+        itemList: carInvoiceList
+      })
+      .then(res => {
+        this.setState({
+          invoiceTypeInfo: this.invoiceList[res.tapIndex]
+        })
+      })
+      .catch(err => console.log(err.errMsg))
+  }
+  /**
    * 提交订单
    * @return void
    */
@@ -284,8 +305,13 @@ class PlaceOrder extends Component {
       transferRealName, // 运力名称
       transferUserId, // 接单运力id
       transferMobile, // 接单运力手机号
+      invoiceTypeInfo
     } = this.state
     let { userInfo } = this.props
+    if (userInfo.userType === 0 && JSON.stringify(invoiceTypeInfo) === `{}`) {
+      this.toast('请选择发票类型')
+      return
+    }
     if (userInfo.userType === 0 && !placeOrderCustomer.userId) {
       this.toast('请选择代下单的客户')
       return
@@ -350,6 +376,7 @@ class PlaceOrder extends Component {
       transferRealName, // 运力名称
       transferUserId, // 接单运力id
       transferMobile, // 接单运力手机号
+      invoiceType: invoiceTypeInfo.id
     }
     api.order.placeOrder(sendData, this)
       .then((res) => {
@@ -417,6 +444,7 @@ class PlaceOrder extends Component {
       transferPrice, // 运力接单价格
       // transferUserId, // 接单运力id
       transferMobile, // 接单运力手机号
+      invoiceTypeInfo
       // disabled
     } = this.state
     let {userInfo} = this.props
@@ -625,6 +653,26 @@ class PlaceOrder extends Component {
                   <Text>元/台</Text>
                 </View>
               </View>
+              {
+                userInfo.userType === 0 ?
+                  <View className='details-form-item' onClick={this.chooseInvoice.bind(this)}>
+                    <View className='start-icon'>*</View>
+                    <View className='details-form-label'>发票:</View>
+                    <View className='details-form-content'>
+                      <Text
+                        className={classNames({
+                          'details-from-text': !invoiceTypeInfo.label
+                        })}
+                      >
+                        {
+                          invoiceTypeInfo.label ? invoiceTypeInfo.label : '请选择发票类型'
+                        }
+                      </Text>
+                      <Text className='iconfont iconxiangyouxuanzejiantoux icon-right-style'></Text>
+                    </View>
+                  </View>
+                  : null
+              }
               {
                 userInfo.userType === 0 ? 
                   <Block>
