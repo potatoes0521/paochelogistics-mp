@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-17 12:28:08
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-20 18:16:00
+ * @LastEditTime: 2020-02-20 18:47:23
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -162,7 +162,7 @@ class UsedCar extends Component {
       activeIndex,
       activeName
     } = this.state
-    const userCarList = usedCarListData && usedCarListData.map((item, index) => {
+    const userCarList = usedCarListData && usedCarListData.map((item) => {
       const key = item.userId
       return (
         <Block
@@ -172,11 +172,6 @@ class UsedCar extends Component {
             item={item}
             data-item={item}
           ></UsedCarItem>
-          {
-            index < usedCarListData.length - 1 ?
-              <View className='line'></View>
-              : null
-          }
         </Block>
       )
     })

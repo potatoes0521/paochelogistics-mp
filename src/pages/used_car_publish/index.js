@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 14:00:58
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-20 14:52:04
+ * @LastEditTime: 2020-02-20 20:20:10
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -23,7 +23,7 @@ import { handleMoney } from '@utils/patter.js'
 import { uploadImage } from '@api/upload_request_handle.js'
 import api from '@api/index.js'
 import EmptyData from '@c/empty_data/index.js'
-
+import UsedCarItem from '../used_car/components/used_car_item/index.js'
 import './index.styl'
 
 class UsedCarPublish extends Component { 
@@ -46,17 +46,127 @@ class UsedCarPublish extends Component {
       usedType: 2, //车辆性质 1新车 2二手车
       carImg: [], //车辆照片
       remark: '', //备注,
-      activeIndex: 1
+      activeIndex: 1,
+      minePublishList: []
     }
     this.pageParams = {}
     this.timer = null
+    this.usedCarPage = 0
+    this.usedCarFlag = false
   }
 
   componentDidMount() {
     this.pageParams = this.$router.params
+    if (this.pageParams.pageType === 'edit') {
+      this.getCarSourceDetails()
+    }
+    this.getMinePublish({})
   }
   componentWillUnmount() { 
     clearTimeout(this.timer)
+  }
+  getMinePublish({
+      pageSize = this.usedCarPage,
+      pageNum = 10,
+      usedType=2
+    }) {
+    let sendData = {
+      pageNum,
+      pageSize,
+      usedType
+    }
+    let {minePublishList} = this.state
+    api.car.getMinePublish(sendData, this).then(res => {
+      res = [
+        {
+          "carSourceId": 1,
+          "brandId": 1,
+          "carSerial": "帕萨特",
+          "yearType": 2012,
+          "carBasic": "2012款",
+          "onTheCardTime": "2020-02-18T03:36:19.000+0000",
+          "onTheCardTimeDesc": null,
+          "mileage": 200000,
+          "gasDisplacement": "2.0L",
+          "carPrice": 100000,
+          "carImg": "i am car image 1",
+          "soldOutDesc": "未下架",
+          "updateTimeDesc": "2020-02-18 11:36",
+          "browseHistoryCount": 0,
+          "callHistoryCount": 0
+        }, {
+          "carSourceId": 2,
+          "brandId": 1,
+          "carSerial": "帕萨特",
+          "yearType": 2013,
+          "carBasic": "2013款",
+          "onTheCardTime": "2020-02-18T03:36:19.000+0000",
+          "onTheCardTimeDesc": null,
+          "mileage": 210000,
+          "gasDisplacement": "2.0L",
+          "carPrice": 100000,
+          "carImg": "i am car image 1",
+          "soldOutDesc": "未下架",
+          "updateTimeDesc": "2020-02-18 11:36",
+          "browseHistoryCount": 0,
+          "callHistoryCount": 0
+        },
+        {
+          "carSourceId": 3,
+          "brandId": 1,
+          "carSerial": "帕萨特",
+          "yearType": 2012,
+          "carBasic": "2012款",
+          "onTheCardTime": "2020-02-18T03:36:19.000+0000",
+          "onTheCardTimeDesc": null,
+          "mileage": 200000,
+          "gasDisplacement": "2.0L",
+          "carPrice": 100000,
+          "carImg": "i am car image 1",
+          "soldOutDesc": "未下架",
+          "updateTimeDesc": "2020-02-18 11:36",
+          "browseHistoryCount": 0,
+          "callHistoryCount": 0
+        }
+      ]
+      if (!res) return
+      if (res && res.length < pageSize) {
+        this.usedCarFlag = true
+      }
+      this.usedCarPage += 1
+      if (pageNum === 1) {
+        this.setState({
+          minePublishList: [...res]
+        })
+      } else {
+        this.setState({
+          minePublishList: [...minePublishList, ...res]
+        })
+      }
+    })
+  }
+  /**
+   * 获取车源详情
+   * @return void
+   */
+  getCarSourceDetails() {
+    if (!this.pageParams.carSourceId) {
+      Taro.showToast({
+        icon: 'none',
+        title: 'carSourceId is null'
+      })
+      return;
+    }
+    let sendData = {
+      carSourceId: this.pageParams.carSourceId
+    }
+    api.car.getCarSourceDetails(sendData, this).then(res => {
+      if (!res) return
+      res.carPrice = res.carPrice / 100
+      res.mileage = res.mileage / 100
+      res.onTheCardTime = res.onTheCardTime.split('-01')[0]
+      this.setState(res)
+    })
   }
   changeTab(index) { 
     console.log('index', index)
@@ -271,6 +381,15 @@ class UsedCarPublish extends Component {
       }
     })
   }
+  onLowerPublish() { 
+    console.log('下架')
+  }
+  onClickEditBtn(item) {
+    this.changeTab(0)
+    this.pageParams.pageType === 'edit'
+    this.pageParams.carSourceId = item.carSourceId
+    this.getCarSourceDetails()
+  }
   config = {
     navigationBarTitleText: '车源发布' 
   }
@@ -289,7 +408,8 @@ class UsedCarPublish extends Component {
       onTheCardTime, //首次上牌时间
       yearType, //年款
       remark, //备注
-      locationName
+      locationName,
+      minePublishList
     } = this.state
     const publishTabClassName = classNames('tab-item', {
       'tab-item-active': activeIndex === 0
@@ -305,6 +425,18 @@ class UsedCarPublish extends Component {
         </View>
       )
     })
+    const minePublishListRender = minePublishList.map(item => {
+      const key = item.carSourceId
+      return (
+        <UsedCarItem
+          key={key}
+          item={item}
+          from='publish'
+          onClickLowerBtn={this.onLowerPublish.bind(this)}
+          onClickEditBtn={this.onClickEditBtn.bind(this)}
+        ></UsedCarItem>
+      )
+    })
     return (
       <View className='page-wrapper'>
         <View className='tab-wrapper'>
@@ -312,231 +444,235 @@ class UsedCarPublish extends Component {
           <View className='vertical-line'></View>
           <View className={historyTabClassName} onClick={this.changeTab.bind(this, 1)}>发布记录</View>
         </View>
-        <View className='tab-panel'>
-          {
-            activeIndex === 0 ?
-              <Block>
-                <View className='tab-panel-main'>
-                  <View className='publish-card'>
-                    <View className='publish-item'>
-                      <View className='must-icon'>*</View>
-                      <View className='publish-label'>卖车城市</View>
-                      <View className='publish-content' onClick={this.navigatorTo.bind(this, 'choose_sell_city')}>
+        {
+          activeIndex === 0 ?
+            <View className='tab-panel'>
+              <View className='tab-panel-main'>
+                <View className='publish-card'>
+                  <View className='publish-item'>
+                    <View className='must-icon'>*</View>
+                    <View className='publish-label'>卖车城市</View>
+                    <View className='publish-content' onClick={this.navigatorTo.bind(this, 'choose_sell_city')}>
+                      {
+                        locationName ? <Text className='content-text'>{locationName}</Text> :
+                          <Text className='placeholder-style'>请选择</Text>
+                      }
+                      <Text className='iconfont iconxiangyouxuanzejiantoux publish-icon-right'></Text>  
+                    </View>
+                  </View>
+                  <View className='line'></View>
+                  <View className='publish-item'>
+                    <View className='must-icon'>*</View>
+                    <View className='publish-label'>品牌</View>
+                    <View className='publish-content'  onClick={this.navigatorTo.bind(this, 'choose_car_brand')}>
+                      {
+                        brandName ? <Text className='content-text'>{brandName}</Text> :
+                          <Text className='placeholder-style'>请选择</Text>
+                      }
+                      <Text className='iconfont iconxiangyouxuanzejiantoux publish-icon-right'></Text>  
+                    </View>
+                  </View>
+                  <View className='line'></View>
+                  <View className='publish-item'>
+                    <View className='must-icon'>*</View>
+                    <View className='publish-label'>车型</View>
+                    <View className='publish-content'>
+                      <Input
+                        className='input'
+                        placeholder='请输入汽车车型，如朗逸'
+                        placeholderClass='placeholder-style'
+                        maxlength='15'
+                        value={carSerial}
+                        onInput={this.inputCarSerial}
+                      ></Input>
+                    </View>
+                  </View>
+                  <View className='line'></View>
+                  <View className='publish-item'>
+                    <View className='must-icon'>*</View>
+                    <View className='publish-label'>年款</View>
+                    <View className='publish-content'>
+                      <Picker
+                        className='time-picker'
+                        mode='date'
+                        onChange={this.onChooseYearType}
+                        fields='year'
+                      >
                         {
-                          locationName ? <Text className='content-text'>{locationName}</Text> :
-                            <Text className='placeholder-style'>请选择</Text>
+                          yearType ? <Text className='content-text'>{yearType}</Text> : <Text className='placeholder-style'>请选择</Text>
                         }
-                        <Text className='iconfont iconxiangyouxuanzejiantoux publish-icon-right'></Text>  
-                      </View>
+                      </Picker>
+                      <Text className='iconfont iconxiangyouxuanzejiantoux publish-icon-right'></Text>  
                     </View>
-                    <View className='line'></View>
-                    <View className='publish-item'>
-                      <View className='must-icon'>*</View>
-                      <View className='publish-label'>品牌</View>
-                      <View className='publish-content'  onClick={this.navigatorTo.bind(this, 'choose_car_brand')}>
+                  </View>
+                  <View className='line'></View>
+                  <View className='publish-item'>
+                    <View className='must-icon'>*</View>
+                    <View className='publish-label'>车款</View>
+                    <View className='publish-content'>
+                      <Input
+                        className='input'
+                        placeholder='请输入汽车车款，如经典版'
+                        placeholderClass='placeholder-style'
+                        maxlength='15'
+                        value={carBasic}
+                        onInput={this.inputCarBasic}
+                      ></Input>
+                    </View>
+                  </View>
+                  <View className='line'></View>
+                  <View className='publish-item'>
+                    <View className='must-icon'>*</View>
+                    <View className='publish-label long-label'>首次上牌时间</View>
+                    <View className='publish-content'>
+                      <Picker
+                        className='time-picker'
+                        mode='date'
+                        onChange={this.onChooseTheCardTime}
+                        fields='month'
+                      >
                         {
-                          brandName ? <Text className='content-text'>{brandName}</Text> :
-                            <Text className='placeholder-style'>请选择</Text>
+                          onTheCardTime ? <Text className='content-text'>{onTheCardTime}</Text> : <Text className='placeholder-style'>请选择</Text>
                         }
-                        <Text className='iconfont iconxiangyouxuanzejiantoux publish-icon-right'></Text>  
-                      </View>
+                      </Picker>
+                      <Text className='iconfont iconxiangyouxuanzejiantoux publish-icon-right'></Text>  
                     </View>
-                    <View className='line'></View>
-                    <View className='publish-item'>
+                  </View>
+                  <View className='line'></View>
+                  <View className='publish-item'>
+                    <View className='must-icon'>*</View>
+                    <View className='publish-label long-label'>行驶里程</View>
+                    <View className='publish-content'>
+                      {/* <Text className='content-text'></Text> */}
+                      <Input
+                        type='digit'
+                        className='input'
+                        placeholder='请输入公里数'
+                        placeholderClass='placeholder-style'
+                        maxlength='10'
+                        value={mileage}
+                        onInput={this.inputMileage}
+                      ></Input>
+                      <Text className='content-text margin-text'>万公里</Text>
+                    </View>
+                  </View>
+                  <View className='line'></View>
+                  <View className='publish-item'>
+                    <View className='must-icon'>*</View>
+                    <View className='publish-label long-label'>汽车排量</View>
+                    <View className='publish-content'>
+                      <Input
+                        type='digit'
+                        className='input'
+                        placeholder='请输入汽车排量'
+                        placeholderClass='placeholder-style'
+                        maxlength='10'
+                        value={gasDisplacement}
+                        onInput={this.inputGasDisplacement}
+                      ></Input>
+                    </View>
+                  </View>
+                  <View className='line'></View>
+                  <View className='publish-item'>
+                    <View className='must-icon'>*</View>
+                    <View className='publish-label long-label'>排放标准</View>
+                    <View className='publish-content' onClick={this.chooseEffluentStandard.bind(this)}>
+                      {
+                        effluentStandard ? <Text className='content-text'>{effluentStandard}</Text>
+                          : <Text className='placeholder-style'>请选择</Text>
+                      }
+                      <Text className='iconfont iconxiangyouxuanzejiantoux publish-icon-right'></Text>  
+                    </View>
+                  </View>
+                  <View className='line'></View>
+                  <View className='publish-item'>
+                    <View className='must-icon'>*</View>
+                    <View className='publish-label long-label'>期望售价</View>
+                    <View className='publish-content'>
+                      <Input
+                        type='digit'
+                        className='input'
+                        placeholder='请输入价格'
+                        placeholderClass='placeholder-style'
+                        maxlength='10'
+                        value={carPrice}
+                        onInput={this.inputCarPrice}
+                      ></Input>
+                      <Text className='content-text margin-text'>万元</Text>
+                    </View>
+                  </View>
+                  <View className='line'></View>
+                  <View className='publish-item-image'>
+                    <View className='publish-item publish-item-image-title'>
                       <View className='must-icon'>*</View>
-                      <View className='publish-label'>车型</View>
-                      <View className='publish-content'>
-                        <Input
-                          className='input'
-                          placeholder='请输入汽车车型，如朗逸'
-                          placeholderClass='placeholder-style'
-                          maxlength='15'
-                          value={carSerial}
-                          onInput={this.inputCarSerial}
-                        ></Input>
-                      </View>
+                      <View className='publish-label long-label'>车源照片</View>
                     </View>
-                    <View className='line'></View>
-                    <View className='publish-item'>
-                      <View className='must-icon'>*</View>
-                      <View className='publish-label'>年款</View>
-                      <View className='publish-content'>
-                        <Picker
-                          className='time-picker'
-                          mode='date'
-                          onChange={this.onChooseYearType}
-                          fields='year'
-                        >
-                          {
-                            yearType ? <Text className='content-text'>{yearType}</Text> : <Text className='placeholder-style'>请选择</Text>
-                          }
-                        </Picker>
-                        <Text className='iconfont iconxiangyouxuanzejiantoux publish-icon-right'></Text>  
-                      </View>
-                    </View>
-                    <View className='line'></View>
-                    <View className='publish-item'>
-                      <View className='must-icon'>*</View>
-                      <View className='publish-label'>车款</View>
-                      <View className='publish-content'>
-                        <Input
-                          className='input'
-                          placeholder='请输入汽车车款，如经典版'
-                          placeholderClass='placeholder-style'
-                          maxlength='15'
-                          value={carBasic}
-                          onInput={this.inputCarBasic}
-                        ></Input>
-                      </View>
-                    </View>
-                    <View className='line'></View>
-                    <View className='publish-item'>
-                      <View className='must-icon'>*</View>
-                      <View className='publish-label long-label'>首次上牌时间</View>
-                      <View className='publish-content'>
-                        <Picker
-                          className='time-picker'
-                          mode='date'
-                          onChange={this.onChooseTheCardTime}
-                          fields='month'
-                        >
-                          {
-                            onTheCardTime ? <Text className='content-text'>{onTheCardTime}</Text> : <Text className='placeholder-style'>请选择</Text>
-                          }
-                        </Picker>
-                        <Text className='iconfont iconxiangyouxuanzejiantoux publish-icon-right'></Text>  
-                      </View>
-                    </View>
-                    <View className='line'></View>
-                    <View className='publish-item'>
-                      <View className='must-icon'>*</View>
-                      <View className='publish-label long-label'>行驶里程</View>
-                      <View className='publish-content'>
-                        {/* <Text className='content-text'></Text> */}
-                        <Input
-                          type='digit'
-                          className='input'
-                          placeholder='请输入公里数'
-                          placeholderClass='placeholder-style'
-                          maxlength='10'
-                          value={mileage}
-                          onInput={this.inputMileage}
-                        ></Input>
-                        <Text className='content-text margin-text'>万公里</Text>
-                      </View>
-                    </View>
-                    <View className='line'></View>
-                    <View className='publish-item'>
-                      <View className='must-icon'>*</View>
-                      <View className='publish-label long-label'>汽车排量</View>
-                      <View className='publish-content'>
-                        <Input
-                          type='digit'
-                          className='input'
-                          placeholder='请输入汽车排量'
-                          placeholderClass='placeholder-style'
-                          maxlength='10'
-                          value={gasDisplacement}
-                          onInput={this.inputGasDisplacement}
-                        ></Input>
-                      </View>
-                    </View>
-                    <View className='line'></View>
-                    <View className='publish-item'>
-                      <View className='must-icon'>*</View>
-                      <View className='publish-label long-label'>排放标准</View>
-                      <View className='publish-content' onClick={this.chooseEffluentStandard.bind(this)}>
-                        {
-                          effluentStandard ? <Text className='content-text'>{effluentStandard}</Text>
-                            : <Text className='placeholder-style'>请选择</Text>
-                        }
-                        <Text className='iconfont iconxiangyouxuanzejiantoux publish-icon-right'></Text>  
-                      </View>
-                    </View>
-                    <View className='line'></View>
-                    <View className='publish-item'>
-                      <View className='must-icon'>*</View>
-                      <View className='publish-label long-label'>期望售价</View>
-                      <View className='publish-content'>
-                        <Input
-                          type='digit'
-                          className='input'
-                          placeholder='请输入价格'
-                          placeholderClass='placeholder-style'
-                          maxlength='10'
-                          value={carPrice}
-                          onInput={this.inputCarPrice}
-                        ></Input>
-                        <Text className='content-text margin-text'>万元</Text>
-                      </View>
-                    </View>
-                    <View className='line'></View>
-                    <View className='publish-item-image'>
-                      <View className='publish-item publish-item-image-title'>
-                        <View className='must-icon'>*</View>
-                        <View className='publish-label long-label'>车源照片</View>
-                      </View>
-                      <View className='image-list'>
-                        {
-                          carImgRenderList
-                        }
-                        {
-                          carImg.length < 9 ? 
-                            <View className='image-item add-btn' onClick={() => this.upLoadImage}>
-                              <View className='add-btn-wrapper'>
-                                <Text className='iconfont iconjiahao icon-add'></Text>
-                              </View>
+                    <View className='image-list'>
+                      {
+                        carImgRenderList
+                      }
+                      {
+                        carImg.length < 9 ? 
+                          <View className='image-item add-btn' onClick={() => this.upLoadImage}>
+                            <View className='add-btn-wrapper'>
+                              <Text className='iconfont iconjiahao icon-add'></Text>
                             </View>
-                            : null
-                        }
-                        {
-                          carImg.length === 0 && (
-                            <View className='tips-only-one'>
-                              至少上传一张车辆照片，最多上传9张
-                            </View>)
-                        }
-                      </View>
-                      <View className='images-tips'>
-                        据统计，买车人更喜欢查看有图车源，图越多、售出率越高哦~
-                      </View>
+                          </View>
+                          : null
+                      }
+                      {
+                        carImg.length === 0 && (
+                          <View className='tips-only-one'>
+                            至少上传一张车辆照片，最多上传9张
+                          </View>)
+                      }
                     </View>
-                    <View className='line'></View>
-                    <View className='publish-item more-text'>
-                      <View className='must-icon'></View>
-                      <View className='publish-label long-label'>其他说明</View>
-                      <View className='publish-content more-content' onClick={this.navigatorTo.bind(this, 'remark')}>
-                        {
-                          remark ? <Text className='content-text'>{remark}</Text> : 
-                            <Block>
-                              <Text className='placeholder-style'>补充说明车辆情况</Text>
-                            </Block>
-                        }
-                        <Text className='iconfont iconxiangyouxuanzejiantoux publish-icon-right more-content-icon'></Text>  
-                      </View>
+                    <View className='images-tips'>
+                      据统计，买车人更喜欢查看有图车源，图越多、售出率越高哦~
                     </View>
                   </View>
-                  <View className='bottom-tips'>
-                    <Text className='tips-title'>保护说明：</Text>
-                    <Text className='tips-main'>
-                      您的信息一经提交，可能会收到买车意向客户的咨询（如个人、经销商、中介机构等），请保持电话畅通并保证车辆信息的真实性。
-                    </Text>
+                  <View className='line'></View>
+                  <View className='publish-item more-text'>
+                    <View className='must-icon'></View>
+                    <View className='publish-label long-label'>其他说明</View>
+                    <View className='publish-content more-content' onClick={this.navigatorTo.bind(this, 'remark')}>
+                      {
+                        remark ? <Text className='content-text'>{remark}</Text> : 
+                          <Block>
+                            <Text className='placeholder-style'>补充说明车辆情况</Text>
+                          </Block>
+                      }
+                      <Text className='iconfont iconxiangyouxuanzejiantoux publish-icon-right more-content-icon'></Text>  
+                    </View>
                   </View>
                 </View>
-                <View className='btn-wrapper'>
-                  <View className='btn' onClick={()=>this.submit()}>
-                    发布车源信息
-                  </View>
+                <View className='bottom-tips'>
+                  <Text className='tips-title'>保护说明：</Text>
+                  <Text className='tips-main'>
+                    您的信息一经提交，可能会收到买车意向客户的咨询（如个人、经销商、中介机构等），请保持电话畅通并保证车辆信息的真实性。
+                  </Text>
                 </View>
-              </Block>
-              :
-              <Block>
-                <View>
-                  <EmptyData pageType='car' onClickBtn={this.changeTab.bind(this, 0)}></EmptyData>
+              </View>
+              <View className='btn-wrapper'>
+                <View className='btn' onClick={()=>this.submit()}>
+                  发布车源信息
                 </View>
-              </Block>
-          }
-          
-        </View>
+              </View>
+            </View>
+            :
+            <Block>
+              {
+                minePublishList ? 
+                <View className='min-publish-wrapper'>
+                  {
+                    minePublishListRender
+                  }
+                </View>
+                :
+                <EmptyData pageType='car' onClickBtn={this.changeTab.bind(this, 0)}></EmptyData>
+              }
+            </Block>
+        }
       </View>
     )
   }
