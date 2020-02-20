@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-09-05 15:02:41
  * @LastEditors: guorui
- * @LastEditTime: 2020-02-19 10:52:06
+ * @LastEditTime: 2020-02-20 15:32:51
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -18,6 +18,7 @@ import pay from './modules/pay.js'; // 支付信息接口
 import index from './modules/index.js'; // 首页的接口
 import tool from './modules/tool.js'; // 工具的接口
 import car from './modules/car.js'; // 车源的接口
+import statistics from './modules/statistics.js'; // 呼叫历史
 
 export default {
   tool,
@@ -29,5 +30,6 @@ export default {
   customer,
   transport,
   pay,
-  car
+  car,
+  statistics
 }

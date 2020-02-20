@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-09-12 11:17:44
  * @LastEditors: guorui
- * @LastEditTime: 2020-02-19 18:02:46
+ * @LastEditTime: 2020-02-20 14:25:20
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -101,3 +101,18 @@ export const carPriceList = [
     label: '50万以上'
   }
 ]
+
+export const invoiceList = [
+  {
+    id: 0,
+    label: '不开'
+  },
+  {
+    id: 1,
+    label: '普通发票'
+  },
+  {
+    id: 2,
+    label: '增值税专用发票'
+  }
+ ]

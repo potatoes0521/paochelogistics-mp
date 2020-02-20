@@ -3,7 +3,7 @@
  * @description: 发布车源按钮
  * @Date: 2020-02-18 15:34:37
  * @LastEditors: guorui
- * @LastEditTime: 2020-02-20 09:25:00
+ * @LastEditTime: 2020-02-20 15:26:45
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,7 +13,7 @@ import {
   View,
   Image
 } from '@tarojs/components'
-import { showModalAndRegister } from '@utils/common.js'
+import Certification from '@c/certification_modal/index.js'
 import imagePublish from '../../assets/img/float_btn/fabu.png'
 
 import './index.styl'
@@ -22,16 +22,20 @@ class FloatBtn extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      visible: false
+    }
   }
   /**
    * 发布车源
    * @return void
    */
   publish() { 
-    let {userId} = this.props.userInfo
-    if (!userId) {
-      showModalAndRegister()
+    let {userInfo} = this.props
+    if (!userInfo.realNameAuthStatus) {
+      this.setState({
+        visible: true
+      })
     } else {
       Taro.navigateTo({
         url: `/pages/used_car_publish/index?pageType=publish`
@@ -40,9 +44,13 @@ class FloatBtn extends Component {
   }
 
   render() { 
+    let {visible} = this.state
     return (
-      <View className='float-btn-wrapper' onClick={() => this.publish()}>
-        <Image src={imagePublish}></Image>
+      <View className='page-wrapper'>
+        <View className='float-btn-wrapper' onClick={() => this.publish()}>
+          <Image src={imagePublish}></Image>
+        </View>
+        <Certification visible={visible} />
       </View>
     )
   }
