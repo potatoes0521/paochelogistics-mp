@@ -3,8 +3,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2020-02-18 10:52:25
- * @LastEditors: guorui
- * @LastEditTime: 2020-02-20 11:41:23
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-20 14:36:38
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -33,7 +33,7 @@ class UsedCarDetails extends Component {
     this.pageParams = {}
   }
 
-  componentDidMount() {
+  componentDidShow() {
     this.pageParams = this.$router.params || {}
   }
   showBigImage() {
