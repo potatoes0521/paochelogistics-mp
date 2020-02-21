@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-10-21 15:12:17
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-18 13:00:55
+ * @LastEditTime: 2020-02-21 15:11:08
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -40,21 +40,24 @@ export default class Remark extends Component {
   }
   handlePageType() { 
     let title = '备注'
+    let storageName = ''
     if (this.pageParams.pageType === 'order') {
-      Storage.getStorage('vins').then(res => {
-        this.setState({
-          value: res,
-          disabled: res ? false : true
-        })
-      })
+      storageName = 'vins'
       title = '填写车架号'
     } else if (this.pageParams.pageType === 'used_car') {
       title = '其他说明'
+      storageName = 'used_car'
       this.setState({
         placeholderText: '请输入备注，最多500个字哦~',
         maxlength: 500
       })
     }
+    Storage.getStorage(storageName).then(res => {
+      this.setState({
+        value: res,
+        disabled: res ? false : true
+      })
+    })
     Taro.setNavigationBarTitle({
       title,
     })
