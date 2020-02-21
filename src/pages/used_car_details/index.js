@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 10:52:25
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 14:50:40
+ * @LastEditTime: 2020-02-21 16:21:25
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -19,6 +19,7 @@ import {
 // import classNames from 'classnames'
 import { connect } from '@tarojs/redux'
 import api from '@api/index.js'
+// import { defaultResourceImgURL } from '@config/request_config.js'
 
 import './index.styl'
 
@@ -115,6 +116,17 @@ class UsedCarDetails extends Component {
       url: `/pages/used_car_publish/index?pageType=edit&carSourceId=${usedCarDetailsInfo.carSourceId}`
     })
   }
+  onShareAppMessage() {
+    // let imageUrl = `${defaultResourceImgURL}share_mp.png`
+    let {usedCarDetailsInfo} = this.state
+    let path = `/pages/index/index?share_type=5&carSourceId=${this.pageParams.carSourceId}`
+    let title = `${usedCarDetailsInfo.masterBrandName || ''} ${usedCarDetailsInfo.carSerial || ''} ${usedCarDetailsInfo.yearType || ''}款 ${usedCarDetailsInfo.gasDisplacement || ''} ${usedCarDetailsInfo.carBasic || ''}`
+    return {
+      title,
+      path,
+      // imageUrl
+    }
+  }
   config = {
     navigationBarTitleText: '车源详情' 
   }
@@ -131,6 +143,7 @@ class UsedCarDetails extends Component {
             <Image
               className='banner-image'
               src={item}
+              mode='aspectFill'
               onClick={this.showBigImage.bind(this, index)}
             ></Image>
           </View>

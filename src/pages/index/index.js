@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 11:46:12
+ * @LastEditTime: 2020-02-21 16:04:22
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -67,7 +67,7 @@ class Index extends Component {
     console.log('参数:', this.pageParams)
     this.initData()
     await login.getOpenId(this) 
-    // share_type 1 分享给客户 2 分享砍价
+    // share_type 1 分享给客户 2 分享砍价 3找人代付 4车源列表 5车源详情
     if (this.pageParams.share_type) {
       this.handleShare()
     }

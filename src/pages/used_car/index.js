@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-17 12:28:08
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 15:31:04
+ * @LastEditTime: 2020-02-21 16:34:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -194,6 +194,16 @@ class UsedCar extends Component {
     // 停止下拉动作
     Taro.stopPullDownRefresh();
   }
+  
+  handleRegister(event) { 
+    event.stopPropagation();
+    Taro.navigateTo({
+      url: '/pages/register/index'
+    })
+  }
+  stop(event) {
+    event.stopPropagation();
+  }
   /**
    * 上拉触底
    * @return void
@@ -203,7 +213,16 @@ class UsedCar extends Component {
     if (this.usedCarFlag) return
     this.getUsedCarList({})
   }
-
+  onShareAppMessage() {
+    // let imageUrl = `${defaultResourceImgURL}share_mp.png`
+    let path = `/pages/index/index?share_type=4`
+    let title = `在线看车，实时发布全国车源`
+    return {
+      title,
+      path,
+      // imageUrl
+    }
+  }
   config = {
     navigationBarTitleText: '车源',
     enablePullDownRefresh: true
@@ -307,6 +326,11 @@ class UsedCar extends Component {
             : null
         }
         <Certification visible={visible} />
+        {
+          !userInfo.userId && (
+            <View className='go-register' onTouchMove={this.stop.bind(this)} onClick={this.handleRegister.bind(this)}></View>
+          )
+        }
       </View>
     )
   }
