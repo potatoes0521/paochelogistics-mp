@@ -3,7 +3,7 @@
  * @description: 车源相关接口
  * @Date: 2020-02-19 10:30:01
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-20 18:11:09
+ * @LastEditTime: 2020-02-21 12:09:06
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,7 +12,7 @@ import requestHandle from '../request_handle.js';
 export default {
   // 获取车源列表
   getCarSourceList(data, that) {
-    return requestHandle.post('carsource/list', data, that);
+    return requestHandle.get('carsource/list', data, that);
   },
   // 获取车源详情
   getCarSourceDetails(data, that) {
