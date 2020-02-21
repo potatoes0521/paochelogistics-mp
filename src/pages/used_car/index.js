@@ -3,8 +3,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2020-02-17 12:28:08
- * @LastEditors: liuYang
- * @LastEditTime: 2020-02-20 20:37:15
+ * @LastEditors: guorui
+ * @LastEditTime: 2020-02-21 09:34:50
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -209,6 +209,10 @@ class UsedCar extends Component {
     const activeNameStyle = classNames('tab-text', {
       'active-style-text': activeName
     })
+    const priceNameIconClassName = classNames('car-tab-icon iconfont iconsanjiaoxing', {
+      'active-style-icon': activeName,
+      'active-style-text': activeName
+    })
     
     return (
       <View className='page-wrapper'>
@@ -222,8 +226,8 @@ class UsedCar extends Component {
             <Text className={brandNameIconClassName}></Text>
           </View>
           <View className='tabs-item' onClick={this.choosePrice.bind(this)}>
-            <Text className={activeNameStyle}>{activeName || '价格'}</Text>
-            <Text className='car-tab-icon iconfont iconsanjiaoxing'></Text>
+            <Text className={activeNameStyle}>{activeName ? activeName : '价格'}</Text>
+            <Text className={priceNameIconClassName}></Text>
           </View>
         </View>
         <View className='car-list-wrapper'>
