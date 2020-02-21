@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-17 12:28:08
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 15:20:15
+ * @LastEditTime: 2020-02-21 15:31:04
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -177,6 +177,24 @@ class UsedCar extends Component {
     })
   }
   /**
+   * 下拉刷新
+   * @return void
+   */
+  async onPullDownRefresh() {
+    Taro.showNavigationBarLoading()
+    this.usedCarPage = 1
+    this.usedCarFlag = false
+    this.setState({
+      usedCarListData: []
+    }, () => {
+      this.getUsedCarList({})
+    })
+    // 隐藏导航栏加载框
+    Taro.hideNavigationBarLoading();
+    // 停止下拉动作
+    Taro.stopPullDownRefresh();
+  }
+  /**
    * 上拉触底
    * @return void
    */
@@ -187,7 +205,8 @@ class UsedCar extends Component {
   }
 
   config = {
-    navigationBarTitleText: '车源' 
+    navigationBarTitleText: '车源',
+    enablePullDownRefresh: true
   }
 
   render() {
