@@ -3,8 +3,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2020-02-17 12:28:08
- * @LastEditors: guorui
- * @LastEditTime: 2020-02-21 14:38:12
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-21 15:20:15
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -84,7 +84,7 @@ class UsedCar extends Component {
       pageSize,
     }
     if (carPriceSection && carPriceSection.length) {
-      sendData.carPriceSection = carPriceSection
+      sendData.carPriceSection = carPriceSection.toString()
     }
     let { usedCarListData } = this.state
     api.car.getCarSourceList(sendData, this).then(res => {
