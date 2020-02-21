@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 10:52:25
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 14:40:21
+ * @LastEditTime: 2020-02-21 14:50:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -49,6 +49,7 @@ class UsedCarDetails extends Component {
     })
   }
   bannerChange(event) {
+    console.log('event', event)
     this.setState({
       swiperIndex: event.detail.current + 1
     })
@@ -151,7 +152,7 @@ class UsedCarDetails extends Component {
               circular
               indicatorActiveColor='#ffffff'
               interval='3000'
-              onChange={()=>this.bannerChange}
+              onChange={this.bannerChange.bind(this)}
             >
               {
                 usedCarDetailsInfo.imgUrls.length ?

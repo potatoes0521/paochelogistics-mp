@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 14:00:58
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 13:25:40
+ * @LastEditTime: 2020-02-21 15:07:26
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -289,12 +289,14 @@ class UsedCarPublish extends Component {
       userId: '请选择代下单的客户', //年款
     }
     let breakName = ''
-    let {userInfo} = this.props
+    let { userInfo } = this.props
     if (userInfo.userType === 0 && !this.state.userId) {
       breakName = 'userId'
     }
     for (let i in this.state) {
-      if ( i === 'remark' || i === 'activeIndex' ) { continue }
+      if (i === 'remark' || i === 'activeIndex' || i === 'userId' || i === 'realName') {
+        continue
+      }
       // if (this.pageParams.pageType !== 'edit' && i === 'carSourceId') {
       //   continue
       // }
@@ -307,6 +309,7 @@ class UsedCarPublish extends Component {
         break
       }
     }
+    console.log('break', breakName)
     if (breakName) {
       Taro.showToast({
         title: testingList[breakName],
@@ -414,7 +417,7 @@ class UsedCarPublish extends Component {
       minePublishList,
       realName
     } = this.state
-    let {userInfo} = this.props
+    let { userInfo } = this.props
     const publishTabClassName = classNames('tab-item', {
       'tab-item-active': activeIndex === 0
     })
@@ -581,7 +584,6 @@ class UsedCarPublish extends Component {
                     <View className='publish-label long-label'>汽车排量</View>
                     <View className='publish-content'>
                       <Input
-                        type='digit'
                         className='input'
                         placeholder='请输入汽车排量'
                         placeholderClass='placeholder-style'
