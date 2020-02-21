@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 10:52:25
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 14:25:09
+ * @LastEditTime: 2020-02-21 14:40:21
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -75,6 +75,18 @@ class UsedCarDetails extends Component {
       })
     })
   }
+  buttonsFun(key) {
+    switch (key) {
+      case 'contactOwner':
+        this.callSeller()
+        break;
+      case 'carSourceEdit':
+        this.editUsedCar()
+        break;
+      default:
+        return
+    }
+  }
   /**
    * 联系卖家
    * @return void
@@ -122,6 +134,11 @@ class UsedCarDetails extends Component {
             ></Image>
           </View>
         </SwiperItem>
+      )
+    })
+    const buttonsList = usedCarDetailsInfo.buttons && usedCarDetailsInfo.buttons.map(item => {
+      return (
+        <View className='btn' key={item} onClick={() => this.buttonsFun(item.key)}>{item.name}</View>
       )
     })
     return (
@@ -208,20 +225,11 @@ class UsedCarDetails extends Component {
               </View>
           }
         </View>
-        {
-          usedCarDetailsInfo.buttons && usedCarDetailsInfo.buttons.length ? 
-            <View className='btn-wrapper'>
-              <View className='btn' onClick={this.editUsedCar.bind(this)}>
-                编辑
-              </View>
-            </View>
-            :
-            <View className='btn-wrapper'>
-              <View className='btn' onClick={this.callSeller.bind(this)}>
-                联系卖家
-              </View>
-            </View>
-        }
+        <View className='btn-wrapper'>
+          {
+            buttonsList
+          }
+        </View>
       </View>
     )
   }
