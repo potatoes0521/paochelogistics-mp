@@ -3,8 +3,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2020-02-17 12:28:08
- * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 12:57:09
+ * @LastEditors: guorui
+ * @LastEditTime: 2020-02-21 14:38:12
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -120,6 +120,15 @@ class UsedCar extends Component {
   chooseBrand() {
     Taro.navigateTo({
       url: `/pages/choose_city/index?type=sell&pageType=car`
+    })
+  }
+  /**
+   * 关闭价格弹框
+   * @return void
+   */
+  closeChoosePrice() {
+    this.setState({
+      choosePrice: false
     })
   }
   /**
@@ -269,7 +278,7 @@ class UsedCar extends Component {
         </View>
         {
           choosePrice ?
-            <View className='car-price-wrapper'>
+            <View className='car-price-wrapper' onClick={this.closeChoosePrice.bind(this)}>
               <View className='car-price'>
                 {
                   carPriceItem
