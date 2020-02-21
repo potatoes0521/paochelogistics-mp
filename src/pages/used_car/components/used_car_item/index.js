@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 请填写描述信息
  * @Date: 2020-02-19 15:10:11
- * @LastEditors: liuYang
- * @LastEditTime: 2020-02-20 20:13:12
+ * @LastEditors: guorui
+ * @LastEditTime: 2020-02-21 10:18:07
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -70,7 +70,7 @@ export default class UsedCarItem extends Component {
           <View className='car-des'>
             <Text className='car-des-time'>{item.yearType || ''}年</Text>
             <Text className='car-des-time'>/</Text>
-            <Text className='car-des-time'>{item.mileage || ''}万公里</Text>
+            <Text className='car-des-time'>{item.mileage / 100 || ''}万公里</Text>
           </View>
           <View className='car-des-money'>
             <Text className='car-des-price'>{item.carPrice / 100}万</Text>

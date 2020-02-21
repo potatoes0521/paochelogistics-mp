@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-17 12:28:08
  * @LastEditors: guorui
- * @LastEditTime: 2020-02-21 09:46:55
+ * @LastEditTime: 2020-02-21 10:31:14
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -32,14 +32,32 @@ class UsedCar extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      usedCarListData: [],
+      usedCarListData: [{
+        "carSourceId": 3,
+        "brandId": 1,
+        "masterBrandName": "奔驰",
+        "locationName": "北京",
+        "carSerial": "帕萨特",
+        "yearType": 2012,
+        "carBasic": "2012款",
+        "onTheCardTime": "2020-02-18T03:36:19.000+0000",
+        "onTheCardTimeDesc": "2020-02-18 11:36",
+        "mileage": 200000,
+        "gasDisplacement": "2.0L",
+        "effluentStandard": "国四",
+        "carPrice": 100000,
+        "carAge": "2018年10个月",
+        "carImg": "i am car image 1",
+        "browseHistoryCount": 10,
+        "callHistoryCount": 10
+      }],
       brandId: '', //品牌Id
       brandName: '', //品牌Id
       locationId: '', //城市ID
       locationName: '',
       choosePrice: false,
-      activeIndex: 1,
-      activeName: ''
+      priceIndex: 1,
+      priceName: ''
     }
     this.carPriceSection = [] //价格区间
     this.usedCarPage = 1
@@ -123,8 +141,8 @@ class UsedCar extends Component {
   choosePriceItem(item) {
     this.setState({
       choosePrice: !this.state.choosePrice,
-      activeIndex: item.id,
-      activeName: item.label
+      priceIndex: item.id,
+      priceName: item.label
     })
     this.carPriceSection = []
     if (item.id === 1) {
@@ -165,8 +183,8 @@ class UsedCar extends Component {
     let {
       usedCarListData,
       choosePrice,
-      activeIndex,
-      activeName,
+      priceIndex,
+      priceName,
       brandName,
       locationName
     } = this.state
@@ -184,14 +202,14 @@ class UsedCar extends Component {
       )
     })
     const carPriceItem = carPriceList.map( item => {
-      const carPriceStyle = classNames('car-price-item',
+      const carPriceClassName = classNames('car-price-item',
         {
-          'choose-car-price': activeIndex === item.id
+          'choose-car-price': priceIndex === item.id
         }
       )
       const key = item.id
       return (
-        <View className={carPriceStyle} key={key} onClick={this.choosePriceItem.bind(this, item)}>{item.label}</View>
+        <View className={carPriceClassName} key={key} onClick={this.choosePriceItem.bind(this, item)}>{item.label}</View>
       )
     })
     const locationNameClassName = classNames('tab-text', {
@@ -208,12 +226,12 @@ class UsedCar extends Component {
       'active-style-icon': brandName,
       'active-style-text': brandName
     })
-    const activeNameStyle = classNames('tab-text', {
-      'active-style-text': activeName
+    const priceNameClassName = classNames('tab-text', {
+      'active-style-text': priceName
     })
     const priceNameIconClassName = classNames('car-tab-icon iconfont iconsanjiaoxing', {
-      'active-style-icon': activeName,
-      'active-style-text': activeName
+      'active-style-icon': priceName,
+      'active-style-text': priceName
     })
     
     return (
@@ -228,7 +246,7 @@ class UsedCar extends Component {
             <Text className={brandNameIconClassName}></Text>
           </View>
           <View className='tabs-item' onClick={this.choosePrice.bind(this)}>
-            <Text className={activeNameStyle}>{activeName ? activeName : '价格'}</Text>
+            <Text className={priceNameClassName}>{priceName ? priceName : '价格'}</Text>
             <Text className={priceNameIconClassName}></Text>
           </View>
         </View>
@@ -242,7 +260,7 @@ class UsedCar extends Component {
                 <FloatBtn></FloatBtn>
               </Block>
               :
-              <EmptyData pageType='car'></EmptyData>
+              <EmptyData pageType='carList'></EmptyData>
           }
         </View>
         {

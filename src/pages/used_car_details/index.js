@@ -3,8 +3,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2020-02-18 10:52:25
- * @LastEditors: liuYang
- * @LastEditTime: 2020-02-20 18:36:52
+ * @LastEditors: guorui
+ * @LastEditTime: 2020-02-21 10:33:53
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -27,7 +27,25 @@ class UsedCarDetails extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      usedCarDetailsInfo: {},
+      usedCarDetailsInfo: {
+        "carSourceId": 3,
+        "brandId": 1,
+        "masterBrandName": "奔驰",
+        "locationName": "北京",
+        "carSerial": "帕萨特",
+        "yearType": 2012,
+        "carBasic": "2012款",
+        "onTheCardTime": "2020-02-18T03:36:19.000+0000",
+        "onTheCardTimeDesc": "2020-02-18 11:36",
+        "mileage": 200000,
+        "gasDisplacement": "2.0L",
+        "effluentStandard": "国四",
+        "carPrice": 100000,
+        "carAge": "2018年10个月",
+        "carImg": "i am car image 1",
+        "browseHistoryCount": 10,
+        "callHistoryCount": 10
+      }, 
       swiperIndex: 0 
     }
     this.pageParams = {}
@@ -152,7 +170,7 @@ class UsedCarDetails extends Component {
           </View>
           <View className='details-title-wrapper'>
             <View className='details-price'>
-              <Text className='money'>{usedCarDetailsInfo.carPrice || ''}</Text>
+              <Text className='money'>{usedCarDetailsInfo.carPrice / 100 || ''}</Text>
               <Text className='money-text'>万</Text>
               <Text className='history-icon iconfont iconliulan'></Text>
               <Text className='history-text'>{usedCarDetailsInfo.browseHistoryCount || ''}</Text>
@@ -176,7 +194,7 @@ class UsedCarDetails extends Component {
               </View>
               <View className='des-item'>
                 <Text className='item-title short'>里程</Text>
-                <Text className='item-des'>{usedCarDetailsInfo.mileage || ''}万公里</Text>
+                <Text className='item-des'>{usedCarDetailsInfo.mileage / 100 || ''}万公里</Text>
               </View>
             </View>
             <View className='des-line'>
@@ -201,7 +219,7 @@ class UsedCarDetails extends Component {
             </View>
           </View>
           {
-            usedCarDetailsInfo.buttons && usedCarDetailsInfo.buttons.length ?
+            usedCarDetailsInfo.buttons && usedCarDetailsInfo.buttons.length || !usedCarDetailsInfo.remark ?
               null :
               <View className='other-remark'>
                 <View className='title'>其他说明</View>
