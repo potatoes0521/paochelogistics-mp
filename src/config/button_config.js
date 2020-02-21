@@ -3,7 +3,7 @@
  * @description: 按钮组的显示控制
  * @Date: 2019-12-13 15:09:48
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 17:46:11
+ * @LastEditTime: 2020-02-21 18:04:10
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -112,13 +112,16 @@ const toolButtons = [
   * @return data 处理后的数据
   */
 export const handleToolButtons = (buttons) => {
-  const notCheckData = buttons.map(item => {
+  const notCheckData = buttons.filter(item => {
     return +item.openMode === 1
   })
   const arrDiffData = _differenceBy(buttons, toolButtons, "tool_key");
   const data = _differenceBy(buttons, arrDiffData, "tool_key");
   let returnData = [...notCheckData, ...data]
   returnData.sort(compare('orderNum'));
+  console.log('not', notCheckData)
+  console.log('data', data)
+  console.log('returnData', returnData)
   return returnData
 }
 
