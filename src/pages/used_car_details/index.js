@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 10:52:25
  * @LastEditors: guorui
- * @LastEditTime: 2020-02-21 14:32:15
+ * @LastEditTime: 2020-02-21 14:49:05
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -204,7 +204,7 @@ class UsedCarDetails extends Component {
             <View className='des-line'>
               <View className='des-item long'>
                 <Text className='item-title'>首次上牌</Text>
-                <Text className='item-des'>{usedCarDetailsInfo.onTheCardTimeDesc && usedCarDetailsInfo.onTheCardTimeDesc.substring(0, 7) || ''}</Text>
+                <Text className='item-des'>{usedCarDetailsInfo.onTheCardTimeDesc || ''}</Text>
               </View>
               <View className='des-item'>
                 <Text className='item-title short'>里程</Text>
