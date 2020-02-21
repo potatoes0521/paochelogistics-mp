@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 14:00:58
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 13:11:24
+ * @LastEditTime: 2020-02-21 13:25:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -350,7 +350,9 @@ class UsedCarPublish extends Component {
     })
   }
   onLowerPublish() { 
-    console.log('下架')
+    this.usedCarPage = 1
+    this.usedCarFlag = false
+    this.getMinePublish({})
   }
   onClickEditBtn(item) {
     this.changeTab(0)
@@ -434,7 +436,7 @@ class UsedCarPublish extends Component {
           key={key}
           item={item}
           from='publish'
-          onClickLowerBtn={this.onLowerPublish.bind(this)}
+          onHandleSoldOut={this.onLowerPublish.bind(this)}
           onClickEditBtn={this.onClickEditBtn.bind(this)}
         ></UsedCarItem>
       )

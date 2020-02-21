@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 10:52:25
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 13:05:41
+ * @LastEditTime: 2020-02-21 14:25:09
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -27,25 +27,7 @@ class UsedCarDetails extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      usedCarDetailsInfo: {
-        "carSourceId": 3,
-        "brandId": 1,
-        "masterBrandName": "奔驰",
-        "locationName": "北京",
-        "carSerial": "帕萨特",
-        "yearType": 2012,
-        "carBasic": "2012款",
-        "onTheCardTime": "2020-02-18T03:36:19.000+0000",
-        "onTheCardTimeDesc": "2020-02-18 11:36",
-        "mileage": 200000,
-        "gasDisplacement": "2.0L",
-        "effluentStandard": "国四",
-        "carPrice": 100000,
-        "carAge": "2018年10个月",
-        "carImg": "i am car image 1",
-        "browseHistoryCount": 10,
-        "callHistoryCount": 10
-      }, 
+      usedCarDetailsInfo: {}, 
       swiperIndex: 1
     }
     this.pageParams = {}
@@ -170,9 +152,9 @@ class UsedCarDetails extends Component {
               <Text className='money'>{usedCarDetailsInfo.carPrice / 100 || ''}</Text>
               <Text className='money-text'>万</Text>
               <Text className='history-icon iconfont iconliulan'></Text>
-              <Text className='history-text'>{usedCarDetailsInfo.browseHistoryCount || ''}</Text>
+              <Text className='history-text'>{usedCarDetailsInfo.browseHistoryCount || '0'}</Text>
               <Text className='history-icon iconfont iconlianxiwomen'></Text>
-              <Text className='history-text'>{usedCarDetailsInfo.callHistoryCount || ''}</Text>
+              <Text className='history-text'>{usedCarDetailsInfo.callHistoryCount || '0'}</Text>
             </View>
             <View className='details-info'>
               <Text className='details-title' space='ensp'>{usedCarDetailsInfo.masterBrandName || ''} </Text>
