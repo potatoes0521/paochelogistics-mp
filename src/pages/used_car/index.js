@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-17 12:28:08
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 12:27:05
+ * @LastEditTime: 2020-02-21 12:57:09
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -48,6 +48,9 @@ class UsedCar extends Component {
   componentDidShow() {
     this.usedCarPage = 1
     this.usedCarFlag = false
+    this.setState({
+      usedCarListData: []
+    })
     this.getUsedCarList({})
   }
   componentDidHide() {
@@ -152,6 +155,11 @@ class UsedCar extends Component {
     } else if (item.id === 8) {
       this.carPriceSection = [500000, 0]
     }
+    this.usedCarPage = 1
+    this.usedCarFlag = false
+    this.setState({
+      usedCarListData: []
+    })
     this.getUsedCarList({})
   }
   showRealNameModal() { 
