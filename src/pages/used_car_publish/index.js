@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 14:00:58
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 12:07:44
+ * @LastEditTime: 2020-02-21 12:13:36
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -655,7 +655,7 @@ class UsedCarPublish extends Component {
                       }
                       {
                         carImg.length < 9 ? 
-                          <View className='image-item add-btn' onClick={() => this.upLoadImage}>
+                          <View className='image-item add-btn' onClick={() => this.upLoadImage()}>
                             <View className='add-btn-wrapper'>
                               <Text className='iconfont iconjiahao icon-add'></Text>
                             </View>
