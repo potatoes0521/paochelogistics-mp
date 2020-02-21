@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-17 12:28:08
  * @LastEditors: guorui
- * @LastEditTime: 2020-02-21 09:34:50
+ * @LastEditTime: 2020-02-21 09:46:55
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -22,6 +22,8 @@ import UsedCarItem from './components/used_car_item/index.js'
 import api from '@api/index.js'
 // eslint-disable-next-line import/first
 import FloatBtn from '@c/float_btn/index.js'
+// eslint-disable-next-line import/first
+import EmptyData from '@c/empty_data/index.js'
 
 import './index.styl'
 
@@ -232,10 +234,17 @@ class UsedCar extends Component {
         </View>
         <View className='car-list-wrapper'>
           {
-            userCarList
+            usedCarListData.length ?
+              <Block>
+                {
+                  userCarList
+                }
+                <FloatBtn></FloatBtn>
+              </Block>
+              :
+              <EmptyData pageType='car'></EmptyData>
           }
         </View>
-        <FloatBtn></FloatBtn>
         {
           choosePrice ?
             <View className='car-price-wrapper'>
