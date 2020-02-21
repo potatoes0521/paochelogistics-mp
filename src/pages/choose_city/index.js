@@ -3,7 +3,7 @@
  * @description: 城市选择 // 汽车品牌选择
  * @Date: 2019-08-30 15:53:51
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 11:49:19
+ * @LastEditTime: 2020-02-21 12:58:11
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -319,7 +319,7 @@ class ChooseCity extends Component {
               <Indexes
                 list={allData}
                 animation
-                topKey={pageParams.pageType !== 'car' ? '热门' : '#'}
+                topKey='热门'
                 isVibrate={false}
                 checkBox={pageParams.type === 'through'}
                 fieldId={pageParams.pageType !== 'car' ? 'cityId' : 'masterBrandId'}
