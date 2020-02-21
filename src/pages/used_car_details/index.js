@@ -3,8 +3,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2020-02-18 10:52:25
- * @LastEditors: guorui
- * @LastEditTime: 2020-02-21 10:33:53
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-21 13:05:41
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -46,7 +46,7 @@ class UsedCarDetails extends Component {
         "browseHistoryCount": 10,
         "callHistoryCount": 10
       }, 
-      swiperIndex: 0 
+      swiperIndex: 1
     }
     this.pageParams = {}
   }
@@ -66,11 +66,9 @@ class UsedCarDetails extends Component {
       urls: usedCarDetailsInfo.imgUrls // 需要预览的图片http链接列表
     })
   }
-  bannerChange(event) { 
-    console.log('event', event)
-    // event.detail = {current, source}
+  bannerChange(event) {
     this.setState({
-      swiperIndex: event.detail.current
+      swiperIndex: event.detail.current + 1
     })
   }
   /**
@@ -132,13 +130,12 @@ class UsedCarDetails extends Component {
       swiperIndex
     } = this.state
     const bannerListRender = usedCarDetailsInfo.imgUrls && usedCarDetailsInfo.imgUrls.map((item, index) => {
-      const key = item.id
       return (
-        <SwiperItem key={key}>
+        <SwiperItem key={item}>
           <View className='banner-item'>
             <Image
               className='banner-image'
-              src={item.img}
+              src={item}
               onClick={this.showBigImage.bind(this, index)}
             ></Image>
           </View>
@@ -178,10 +175,10 @@ class UsedCarDetails extends Component {
               <Text className='history-text'>{usedCarDetailsInfo.callHistoryCount || ''}</Text>
             </View>
             <View className='details-info'>
-              <Text className='details-title' space='ensp'>{usedCarDetailsInfo.masterBrandName || ''}</Text>
-              <Text className='details-title' space='ensp'>{usedCarDetailsInfo.carSerial || ''}</Text>
-              <Text className='details-title' space='ensp'>{usedCarDetailsInfo.yearType || ''}款</Text>
-              <Text className='details-title' space='ensp'>{usedCarDetailsInfo.gasDisplacement || ''}</Text>
+              <Text className='details-title' space='ensp'>{usedCarDetailsInfo.masterBrandName || ''} </Text>
+              <Text className='details-title' space='ensp'>{usedCarDetailsInfo.carSerial || ''} </Text>
+              <Text className='details-title' space='ensp'>{usedCarDetailsInfo.yearType || ''}款 </Text>
+              <Text className='details-title' space='ensp'>{usedCarDetailsInfo.gasDisplacement || ''} </Text>
               <Text className='details-title'>{usedCarDetailsInfo.carBasic || ''}</Text>
             </View>
           </View>
@@ -219,7 +216,7 @@ class UsedCarDetails extends Component {
             </View>
           </View>
           {
-            usedCarDetailsInfo.buttons && usedCarDetailsInfo.buttons.length || !usedCarDetailsInfo.remark ?
+            !usedCarDetailsInfo.remark ?
               null :
               <View className='other-remark'>
                 <View className='title'>其他说明</View>
