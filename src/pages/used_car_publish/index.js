@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 14:00:58
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 15:16:06
+ * @LastEditTime: 2020-02-21 17:11:25
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -50,7 +50,8 @@ class UsedCarPublish extends Component {
       activeIndex: 0,
       userId: 0,
       realName: '',
-      minePublishList: []
+      minePublishList: [],
+      initYearArray: []
     }
     this.pageParams = {}
     this.timer = null
@@ -66,9 +67,21 @@ class UsedCarPublish extends Component {
     this.usedCarPage = 1
     this.usedCarFlag = false
     this.getMinePublish({})
+    this.initYearType()
   }
   componentWillUnmount() { 
     clearTimeout(this.timer)
+  }
+  initYearType() { 
+    let date = (new Date()).getFullYear()
+    let yearArr = [];
+    for (let i = 0; i < date - 1999; i++) {
+      let year = i > 9 ? i : '0' + i
+      yearArr.push('20' + year + '年')
+    }
+    this.setState({
+      initYearArray: yearArr
+    })
   }
   getMinePublish({
       pageSize = 10,
@@ -186,8 +199,9 @@ class UsedCarPublish extends Component {
     })
   }
   onChooseYearType(event) {
+    let {initYearArray} = this.state
     this.setState({
-      yearType: event.target.value
+      yearType: initYearArray[event.target.value] && initYearArray[event.target.value].split('年')[0]
     })
   }
   onChooseTheCardTime(event) {
@@ -196,7 +210,7 @@ class UsedCarPublish extends Component {
     })
   }
   chooseEffluentStandard() {
-    let list = ['国一', '国二', '国三', '国四', '国五', '国六']
+    let list = ['国III', '国IV', '国V', '国VI']
     Taro.showActionSheet({
         itemList: list
       })
@@ -418,7 +432,8 @@ class UsedCarPublish extends Component {
       remark, //备注
       locationName,
       minePublishList,
-      realName
+      realName,
+      initYearArray
     } = this.state
     let { userInfo } = this.props
     const publishTabClassName = classNames('tab-item', {
@@ -466,7 +481,7 @@ class UsedCarPublish extends Component {
                           <View className='iconfont iconkehu customer-img'></View>
                           <View className='customer-name'>
                             {
-                              realName ? realName: '选择代下单客户'
+                              realName ? realName: '选择代发布客户'
                             }
                           </View>
                         </View>
@@ -519,7 +534,8 @@ class UsedCarPublish extends Component {
                     <View className='publish-content'>
                       <Picker
                         className='time-picker'
-                        mode='date'
+                        mode='selector'
+                        range={initYearArray}
                         onChange={this.onChooseYearType}
                         fields='year'
                       >
@@ -679,7 +695,7 @@ class UsedCarPublish extends Component {
               </View>
               <View className='btn-wrapper'>
                 <View className='btn' onClick={()=>this.submit()}>
-                  发布车源信息
+                  发布
                 </View>
               </View>
             </View>

@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 16:04:22
+ * @LastEditTime: 2020-02-21 17:29:27
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -25,21 +25,16 @@ import { defaultResourceImgURL } from '@config/request_config.js'
 // eslint-disable-next-line import/first
 import api from '@api/index.js'
 import login from '@utils/login.js'
-// eslint-disable-next-line import/first
-import LocationModal from './components/location_modal/index.js'
-// eslint-disable-next-line import/first
 import loadingImage from '@img/index/loading.png'
-// eslint-disable-next-line import/first
 import { handleShare } from '@utils/handle_share.js'
-// eslint-disable-next-line import/first
 import { getUserInfo } from '@utils/get_user_info.js'
-// eslint-disable-next-line import/first
 import Actions from '@store/actions/index.js'
-// eslint-disable-next-line import/first
 import BottomLoginTips from '@c/bottom_login_tips/index.js'
 import OfferForm from './components/offer_city/index.js'
+import LocationModal from './components/location_modal/index.js'
 import Tool from './components/tool/index'
 import Banner from './components/banner/index'
+import { handleToolButtons } from '../../config/button_config.js'
 import './index.styl'
 
 class Index extends Component {
@@ -230,7 +225,7 @@ class Index extends Component {
   getToolList() {
     api.tool.getTopToolList({}, this).then(res => {
       this.setState({
-        toolList: res
+        toolList: handleToolButtons(res)
       })
     })
   }
