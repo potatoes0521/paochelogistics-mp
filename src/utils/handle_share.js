@@ -3,7 +3,7 @@
  * @description: 处理进入小程序的分享
  * @Date: 2019-11-06 12:25:04
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 16:28:00
+ * @LastEditTime: 2020-02-21 16:38:53
  * @mustParam: 
  * // share_type 
  *  1 分享给客户 
@@ -174,6 +174,6 @@ export const redirectToOrderDetails = (pageParams) => {
  */
 export const navigateToUsedCarDetails = (pageParams) => {
   Taro.navigateTo({
-    url: `/pages/order_details/index?carSourceId=${pageParams.carSourceId}`
+    url: `/pages/used_car_details/index?carSourceId=${pageParams.carSourceId}`
   })
 }
