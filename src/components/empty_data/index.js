@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 没有订单的样式
  * @Date: 2019-09-29 15:00:46
- * @LastEditors: guorui
- * @LastEditTime: 2020-02-21 10:21:02
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-21 12:26:41
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -30,7 +30,11 @@ export default class EmptyData extends Component {
   }
   navigatorTo(e) { 
     e.stopPropagation()
-    let { pageType } = this.props
+    let {
+      pageType,
+      needCheck,
+      userInfo
+    } = this.props
     switch (pageType) {
       case 'offer':
         Taro.switchTab({
@@ -61,9 +65,13 @@ export default class EmptyData extends Component {
         this.props.onClickBtn()
         break;
       case 'carList':
-        Taro.navigateTo({
-          url: `/pages/used_car_publish/index?pageType=publish`
-        })
+        if (needCheck && !userInfo.realNameAuthStatus) {
+          this.props.onNoRealName()
+        } else {
+          Taro.navigateTo({
+            url: `/pages/used_car_publish/index?pageType=publish`
+          })
+        }
         break;
       default:
         Taro.switchTab({
@@ -139,10 +147,14 @@ export default class EmptyData extends Component {
 
 EmptyData.defaultProps = {
   pageType: 'offer',
-  onClickBtn: () => {}
+  needCheck: false,
+  onClickBtn: () => { },
+  onNoRealName: () => {}
 }
 
 EmptyData.propTypes = {
   pageType: PropTypes.string,
+  needCheck: PropTypes.bool,
   onClickBtn: PropTypes.func,
+  onNoRealName: PropTypes.func,
 }

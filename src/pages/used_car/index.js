@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-17 12:28:08
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 12:05:05
+ * @LastEditTime: 2020-02-21 12:27:05
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -17,13 +17,11 @@ import {
 import classNames from 'classnames'
 import { connect } from '@tarojs/redux'
 import { carPriceList } from '@config/text_config.js'
-import UsedCarItem from './components/used_car_item/index.js'
-// eslint-disable-next-line import/first
 import api from '@api/index.js'
-// eslint-disable-next-line import/first
 import FloatBtn from '@c/float_btn/index.js'
-// eslint-disable-next-line import/first
 import EmptyData from '@c/empty_data/index.js'
+import Certification from '@c/certification_modal/index.js'
+import UsedCarItem from './components/used_car_item/index.js'
 
 import './index.styl'
 
@@ -39,15 +37,23 @@ class UsedCar extends Component {
       locationName: '',
       choosePrice: false,
       priceIndex: 1,
-      priceName: ''
+      priceName: '',
+      visible: false,
     }
     this.carPriceSection = [] //价格区间
     this.usedCarPage = 1
     this.usedCarFlag = false
   }
 
-  componentDidMount() {
+  componentDidShow() {
+    this.usedCarPage = 1
+    this.usedCarFlag = false
     this.getUsedCarList({})
+  }
+  componentDidHide() {
+    this.setState({
+      visible: false
+    })
   }
   /**
    * 获取车源列表
@@ -148,7 +154,11 @@ class UsedCar extends Component {
     }
     this.getUsedCarList({})
   }
-
+  showRealNameModal() { 
+    this.setState({
+      visible: true
+    })
+  }
   /**
    * 上拉触底
    * @return void
@@ -170,8 +180,10 @@ class UsedCar extends Component {
       priceIndex,
       priceName,
       brandName,
-      locationName
+      locationName,
+      visible
     } = this.state
+    let {userInfo} = this.props
     const userCarList = usedCarListData && usedCarListData.map((item) => {
       const key = item.userId
       return (
@@ -241,10 +253,10 @@ class UsedCar extends Component {
                 {
                   userCarList
                 }
-                <FloatBtn></FloatBtn>
+                <FloatBtn needCheck onNoRealName={this.showRealNameModal.bind(this)}></FloatBtn>
               </Block>
               :
-              <EmptyData pageType='carList'></EmptyData>
+              <EmptyData pageType='carList' userInfo={userInfo} needCheck onNoRealName={this.showRealNameModal.bind(this)}></EmptyData>
           }
         </View>
         {
@@ -258,6 +270,7 @@ class UsedCar extends Component {
             </View>
             : null
         }
+        <Certification visible={visible} />
       </View>
     )
   }

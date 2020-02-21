@@ -3,7 +3,7 @@
  * @description: 发布车源按钮
  * @Date: 2020-02-18 15:34:37
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 11:59:06
+ * @LastEditTime: 2020-02-21 12:22:19
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,7 +13,7 @@ import {
   View,
   Image
 } from '@tarojs/components'
-import Certification from '@c/certification_modal/index.js'
+import PropTypes from 'prop-types'
 import imagePublish from '../../assets/img/float_btn/fabu.png'
 
 import './index.styl'
@@ -22,25 +22,19 @@ class FloatBtn extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {
-      visible: false
-    }
   }
-  componentDidHide() { 
-    this.setState({
-      visible: false
-    })
-  }
+  
   /**
    * 发布车源
    * @return void
    */
   publish() { 
-    let {userInfo} = this.props
-    if (!userInfo.realNameAuthStatus) {
-      this.setState({
-        visible: true
-      })
+    let {
+      userInfo,
+      needCheck
+    } = this.props
+    if (needCheck && !userInfo.realNameAuthStatus) {
+      this.props.onNoRealName()
     } else {
       Taro.navigateTo({
         url: `/pages/used_car_publish/index?pageType=publish`
@@ -49,13 +43,11 @@ class FloatBtn extends Component {
   }
 
   render() { 
-    let {visible} = this.state
     return (
       <View className='page-wrapper'>
         <View className='float-btn-wrapper' onClick={() => this.publish()}>
           <Image src={imagePublish}></Image>
         </View>
-        <Certification visible={visible} />
       </View>
     )
   }
@@ -66,4 +58,15 @@ const mapStateToProps = (state) => {
     userInfo: state.user_msg.userInfo
   }
 }
+
+FloatBtn.defaultProps = {
+  needCheck: false,
+  onNoRealName: () => {}
+}
+
+FloatBtn.propTypes = {
+  needCheck: PropTypes.bool,
+  onNoRealName: PropTypes.func,
+}
+
 export default connect(mapStateToProps)(FloatBtn)
