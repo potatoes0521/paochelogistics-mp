@@ -3,8 +3,8 @@
  * @description: 首页
  * 
  * @Date: 2019-09-17 11:53:57
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-12 12:38:47
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-21 11:46:12
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -309,6 +309,11 @@ class Index extends Component {
       imageUrl
     }
   }
+  go() { 
+    Taro.navigateTo({
+      url: '/pages/used_car/index'
+    })
+  }
   config = {
     navigationBarTitleText: '跑车物流'
   }
@@ -355,6 +360,7 @@ class Index extends Component {
           receiveCityId={receiveCityId}
           sendCityId={sendCityId}
         />
+        <View onClick={()=>this.go()}>车源测试入口</View>
         <Tool toolList={toolList} />
         <View className='recommend-list'>
           {
