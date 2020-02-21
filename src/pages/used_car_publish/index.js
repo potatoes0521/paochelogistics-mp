@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 14:00:58
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 12:13:36
+ * @LastEditTime: 2020-02-21 13:11:24
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -53,7 +53,7 @@ class UsedCarPublish extends Component {
     }
     this.pageParams = {}
     this.timer = null
-    this.usedCarPage = 0
+    this.usedCarPage = 1
     this.usedCarFlag = false
   }
 
@@ -62,14 +62,16 @@ class UsedCarPublish extends Component {
     if (this.pageParams.pageType === 'edit') {
       this.getCarSourceDetails()
     }
+    this.usedCarPage = 1
+    this.usedCarFlag = false
     this.getMinePublish({})
   }
   componentWillUnmount() { 
     clearTimeout(this.timer)
   }
   getMinePublish({
-      pageSize = this.usedCarPage,
-      pageNum = 10,
+      pageSize = 10,
+      pageNum = this.usedCarPage,
       usedType=2
     }) {
     let sendData = {
@@ -79,58 +81,6 @@ class UsedCarPublish extends Component {
     }
     let {minePublishList} = this.state
     api.car.getMinePublish(sendData, this).then(res => {
-      res = [
-        {
-          "carSourceId": 1,
-          "brandId": 1,
-          "carSerial": "帕萨特",
-          "yearType": 2012,
-          "carBasic": "2012款",
-          "onTheCardTime": "2020-02-18T03:36:19.000+0000",
-          "onTheCardTimeDesc": null,
-          "mileage": 200000,
-          "gasDisplacement": "2.0L",
-          "carPrice": 100000,
-          "carImg": "i am car image 1",
-          "soldOutDesc": "未下架",
-          "updateTimeDesc": "2020-02-18 11:36",
-          "browseHistoryCount": 0,
-          "callHistoryCount": 0
-        }, {
-          "carSourceId": 2,
-          "brandId": 1,
-          "carSerial": "帕萨特",
-          "yearType": 2013,
-          "carBasic": "2013款",
-          "onTheCardTime": "2020-02-18T03:36:19.000+0000",
-          "onTheCardTimeDesc": null,
-          "mileage": 210000,
-          "gasDisplacement": "2.0L",
-          "carPrice": 100000,
-          "carImg": "i am car image 1",
-          "soldOutDesc": "未下架",
-          "updateTimeDesc": "2020-02-18 11:36",
-          "browseHistoryCount": 0,
-          "callHistoryCount": 0
-        },
-        {
-          "carSourceId": 3,
-          "brandId": 1,
-          "carSerial": "帕萨特",
-          "yearType": 2012,
-          "carBasic": "2012款",
-          "onTheCardTime": "2020-02-18T03:36:19.000+0000",
-          "onTheCardTimeDesc": null,
-          "mileage": 200000,
-          "gasDisplacement": "2.0L",
-          "carPrice": 100000,
-          "carImg": "i am car image 1",
-          "soldOutDesc": "未下架",
-          "updateTimeDesc": "2020-02-18 11:36",
-          "browseHistoryCount": 0,
-          "callHistoryCount": 0
-        }
-      ]
       if (!res) return
       if (res && res.length < pageSize) {
         this.usedCarFlag = true
@@ -167,11 +117,14 @@ class UsedCarPublish extends Component {
       res.carPrice = res.carPrice / 100
       res.mileage = res.mileage / 100
       res.onTheCardTime = res.onTheCardTime.split('-01')[0]
+      res.brandName = res.masterBrandName
+      res.carImg = res.imgUrls
+      res.userId = res.userId
+      res.realName = res.userName
       this.setState(res)
     })
   }
   changeTab(index) { 
-    console.log('index', index)
     this.setState({
       activeIndex: index
     })
@@ -244,10 +197,9 @@ class UsedCarPublish extends Component {
   chooseEffluentStandard() {
     let list = ['国一', '国二', '国三', '国四', '国五', '国六']
     Taro.showActionSheet({
-        itemList: ['国一', '国二', '国三', '国四', '国五', '国六']
+        itemList: list
       })
       .then(res => {
-        console.log('res', res)
         this.setState({
           effluentStandard: list[res.tapIndex]
         })
@@ -261,7 +213,7 @@ class UsedCarPublish extends Component {
   }
   upLoadImage() { 
     let count = 9
-    let businessType = 1
+    let businessType = 10
     let {carImg} = this.state
     uploadImage({
       count: count,
@@ -405,6 +357,29 @@ class UsedCarPublish extends Component {
     this.pageParams.pageType === 'edit'
     this.pageParams.carSourceId = item.carSourceId
     this.getCarSourceDetails()
+  }
+  publishBtn() { 
+    this.pageParams.pageType === 'publish'
+    this.setState({
+      locationId: '', //城市ID
+      locationName: '',
+      brandId: '', //品牌Id
+      brandName: '', //品牌Id
+      carSerial: '', //车型
+      yearType: '', //年款
+      carBasic: '', //车款
+      carPrice: '', //价格
+      onTheCardTime: '', //首次上牌时间
+      mileage: '', //	里程数
+      gasDisplacement: '', //汽车排量
+      effluentStandard: '', //排放标准
+      usedType: 2, //车辆性质 1新车 2二手车
+      carImg: [], //车辆照片
+      remark: '', //备注,
+      userId: 0,
+      realName: '',
+    })
+    this.changeTab(0)
   }
   /**
    * 上拉触底
@@ -704,14 +679,14 @@ class UsedCarPublish extends Component {
             :
             <Block>
               {
-                minePublishList ? 
+                minePublishList && minePublishList.length ?
                 <View className='min-publish-wrapper'>
                   {
                     minePublishListRender
                   }
                 </View>
                 :
-                <EmptyData pageType='car' onClickBtn={this.changeTab.bind(this, 0)}></EmptyData>
+                <EmptyData pageType='car' onClickBtn={this.publishBtn.bind(this)}></EmptyData>
               }
             </Block>
         }
