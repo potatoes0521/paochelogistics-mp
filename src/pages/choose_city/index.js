@@ -3,7 +3,7 @@
  * @description: 城市选择 // 汽车品牌选择
  * @Date: 2019-08-30 15:53:51
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-20 15:24:09
+ * @LastEditTime: 2020-02-21 11:49:19
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -265,14 +265,16 @@ class ChooseCity extends Component {
           onClick={this.chooseSearchCity.bind(this, city)}
           key={key}
         >
-          {
-            city.masterBrandLogo ?
-              <View className='car-logo'>
-                <Image className='car-logo-image' src={logoUrl}></Image>
-              </View>
-              : null
-          }
-          <View className='search-item-name'>{city.cityName || city.masterBrandName}</View>
+          <View className='left-wrapper'>
+            {
+              city.masterBrandLogo ?
+                <View className='car-logo'>
+                  <Image className='car-logo-image' src={logoUrl}></Image>
+                </View>
+                : null
+            }
+            <View className='search-item-name'>{city.cityName || city.masterBrandName}</View>
+          </View>
           <Text className='iconfont iconxiangyouxuanzejiantoux icon-style-right'></Text>
         </View>
       )
