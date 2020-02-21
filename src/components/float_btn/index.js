@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 发布车源按钮
  * @Date: 2020-02-18 15:34:37
- * @LastEditors: guorui
- * @LastEditTime: 2020-02-20 15:26:45
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-21 11:59:06
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -25,6 +25,11 @@ class FloatBtn extends Component {
     this.state = {
       visible: false
     }
+  }
+  componentDidHide() { 
+    this.setState({
+      visible: false
+    })
   }
   /**
    * 发布车源

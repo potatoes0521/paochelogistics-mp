@@ -3,8 +3,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2020-02-17 12:28:08
- * @LastEditors: guorui
- * @LastEditTime: 2020-02-21 10:31:14
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-21 11:59:31
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -32,25 +32,7 @@ class UsedCar extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      usedCarListData: [{
-        "carSourceId": 3,
-        "brandId": 1,
-        "masterBrandName": "奔驰",
-        "locationName": "北京",
-        "carSerial": "帕萨特",
-        "yearType": 2012,
-        "carBasic": "2012款",
-        "onTheCardTime": "2020-02-18T03:36:19.000+0000",
-        "onTheCardTimeDesc": "2020-02-18 11:36",
-        "mileage": 200000,
-        "gasDisplacement": "2.0L",
-        "effluentStandard": "国四",
-        "carPrice": 100000,
-        "carAge": "2018年10个月",
-        "carImg": "i am car image 1",
-        "browseHistoryCount": 10,
-        "callHistoryCount": 10
-      }],
+      usedCarListData: [],
       brandId: '', //品牌Id
       brandName: '', //品牌Id
       locationId: '', //城市ID
@@ -65,7 +47,7 @@ class UsedCar extends Component {
   }
 
   componentDidMount() {
-    // this.getUsedCarList({})
+    this.getUsedCarList({})
   }
   /**
    * 获取车源列表
