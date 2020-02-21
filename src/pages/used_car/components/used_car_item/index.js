@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2020-02-19 15:10:11
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 14:33:00
+ * @LastEditTime: 2020-02-21 16:44:21
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -99,14 +99,22 @@ class UsedCarItem extends Component {
               {
                 from !== 'publish' ?
                   <Block>
-                    <View className='car-des-data-wrapper' >
-                      <Text className='history-icon iconfont iconliulan'></Text>
-                      <Text className='history-text'>{item.browseHistoryCount || 0}</Text>
-                    </View>
-                    <View className='car-des-data-wrapper has-width'>
-                      <Text className='history-icon iconfont iconlianxiwomen'></Text>
-                      <Text className='history-text'>{item.callHistoryCount || 0}</Text>
-                    </View>
+                    {
+                      item.browseHistoryCount > 0 && (
+                        <View className='car-des-data-wrapper' >
+                          <Text className='history-icon iconfont iconliulan'></Text>
+                          <Text className='history-text'>{item.browseHistoryCount || 0}</Text>
+                        </View>
+                      )
+                    }
+                    {
+                      item.callHistoryCount > 0 && (
+                        <View className='car-des-data-wrapper has-width'>
+                          <Text className='history-icon iconfont iconlianxiwomen'></Text>
+                          <Text className='history-text'>{item.callHistoryCount || 0}</Text>
+                        </View>
+                      )
+                    }
                   </Block>
                   : 
                   <Block>

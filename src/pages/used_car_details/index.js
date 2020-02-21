@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 10:52:25
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 16:21:25
+ * @LastEditTime: 2020-02-21 16:46:13
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,7 +14,8 @@ import {
   Swiper,
   SwiperItem,
   Image,
-  Text
+  Text,
+  Block
 } from '@tarojs/components'
 // import classNames from 'classnames'
 import { connect } from '@tarojs/redux'
@@ -182,10 +183,22 @@ class UsedCarDetails extends Component {
             <View className='details-price'>
               <Text className='money'>{usedCarDetailsInfo.carPrice / 100 || ''}</Text>
               <Text className='money-text'>万</Text>
-              <Text className='history-icon iconfont iconliulan'></Text>
-              <Text className='history-text'>{usedCarDetailsInfo.browseHistoryCount || '0'}</Text>
-              <Text className='history-icon iconfont iconlianxiwomen'></Text>
-              <Text className='history-text'>{usedCarDetailsInfo.callHistoryCount || '0'}</Text>
+              {
+                usedCarDetailsInfo.browseHistoryCount > 0 && (
+                  <Block>
+                    <Text className='history-icon iconfont iconliulan'></Text>
+                    <Text className='history-text'>{usedCarDetailsInfo.browseHistoryCount || '0'}</Text>
+                  </Block>
+                )
+              }
+              {
+                usedCarDetailsInfo.callHistoryCount > 0 && (
+                  <Block>
+                    <Text className='history-icon iconfont iconlianxiwomen'></Text>
+                    <Text className='history-text'>{usedCarDetailsInfo.callHistoryCount || '0'}</Text>
+                  </Block>
+                )
+              }
             </View>
             <View className='details-info'>
               <Text className='details-title' space='ensp'>{usedCarDetailsInfo.masterBrandName || ''} </Text>
