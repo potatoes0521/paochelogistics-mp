@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2020-02-19 15:10:11
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 13:24:43
+ * @LastEditTime: 2020-02-21 14:33:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -11,10 +11,11 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Image, Text, Block } from '@tarojs/components'
 import PropTypes from 'prop-types'
 import api from '@api/index.js'
+import { connect } from '@tarojs/redux'
 
 import './index.styl'
 
-export default class UsedCarItem extends Component {
+class UsedCarItem extends Component {
   static options = {
     addGlobalClass: true // 允许外部样式修改组件样式
   }
@@ -31,6 +32,14 @@ export default class UsedCarItem extends Component {
       from
     } = this.props
     if (from && from === 'publish') {
+      if (item.soldOut === 2) {
+        Taro.showToast({
+          title: '已下架信息不可编辑哦',
+          icon: 'none',
+          duration: 2000
+        })
+        return
+      }
       this.props.onClickEditBtn(item)
     } else {
       Taro.navigateTo({
@@ -43,7 +52,7 @@ export default class UsedCarItem extends Component {
     Taro.showModal({
       title: '提示',
       content: '改操作会下架车源信息, 是否确认',
-      success(res) {
+      success: (res)=> {
         if (res.confirm) {
           let {item} = this.props
           let sendData = {
@@ -101,7 +110,12 @@ export default class UsedCarItem extends Component {
                   </Block>
                   : 
                   <Block>
-                    <View className='lower-btn' onClick={this.lowerCarMsg.bind(this)}>下架</View>
+                    {
+                      item.soldOut === 1 ?
+                        <View className='lower-btn' onClick={this.lowerCarMsg.bind(this)}>下架</View>
+                        : 
+                        <View className='lower-text'>{item.soldOutDesc}</View>
+                    }
                   </Block>
               }
             </View>
@@ -123,3 +137,10 @@ UsedCarItem.propTypes = {
   from: PropTypes.string,
   onHandleSoldOut: PropTypes.func
 }
+
+const mapStateToProps = (state) => {
+  return {
+    userInfo: state.user_msg.userInfo
+  }
+}
+export default connect(mapStateToProps)(UsedCarItem)
