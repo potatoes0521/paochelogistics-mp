@@ -3,7 +3,7 @@
  * @description: 城市选择 // 汽车品牌选择
  * @Date: 2019-08-30 15:53:51
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 12:58:11
+ * @LastEditTime: 2020-02-21 13:02:23
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -98,6 +98,14 @@ class ChooseCity extends Component {
         let hotData = res.hotCarMasterBrandList || []
         let allData = res.normalCarMasterBrandList || []
         // Storage.setStorage('city_list', res)
+        let noBrandId = [{
+          initial: '#',
+          list: [{
+            masterBrandId: '',
+            masterBrandName: '不限品牌'
+          }]
+        }]
+        allData = [...noBrandId, ...allData]
         this.allDataList = allData.map(item => {
           return item.list
         })

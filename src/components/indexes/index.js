@@ -3,7 +3,7 @@
  * @description: 城市索引选择器
  * @Date: 2019-09-01 14:57:42
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-20 15:16:55
+ * @LastEditTime: 2020-02-21 13:04:05
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  *  maxCheck: PropTypes.number  // 最多多选几个
@@ -330,7 +330,7 @@ export default class Indexes extends Component {
                   // 'box-disabled': disbaled
                 })
                 const keyCityId = item[this.props.fieldId]
-                const logoUrl = defaultFileURL + item[this.props.fieldLogo]
+                const logoUrl = item[this.props.fieldLogo] ? defaultFileURL + item[this.props.fieldLogo] : ''
                 return (
                   <View
                     className='indexes-list-item'
@@ -352,7 +352,7 @@ export default class Indexes extends Component {
                         : null
                     }
                     {
-                      this.props.fieldLogo ? 
+                      this.props.fieldLogo && logoUrl ?
                         <View className='car-logo'>
                           <Image className='car-logo-image' src={logoUrl}></Image>
                         </View>
