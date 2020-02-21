@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 14:00:58
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-20 21:00:47
+ * @LastEditTime: 2020-02-21 12:07:44
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -405,6 +405,15 @@ class UsedCarPublish extends Component {
     this.pageParams.pageType === 'edit'
     this.pageParams.carSourceId = item.carSourceId
     this.getCarSourceDetails()
+  }
+  /**
+   * 上拉触底
+   * @return void
+   */
+  onReachBottom() {
+    console.log('触底')
+    if (this.usedCarFlag) return
+    this.getMinePublish({})
   }
   config = {
     navigationBarTitleText: '车源发布' 
