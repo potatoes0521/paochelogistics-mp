@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 请填写描述信息
  * @Date: 2020-02-19 15:10:11
- * @LastEditors: guorui
- * @LastEditTime: 2020-02-21 10:18:07
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-21 12:33:29
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -102,7 +102,7 @@ export default class UsedCarItem extends Component {
 
 UsedCarItem.defaultProps = {
   item: {},
-  from: 'publish'
+  from: ''
 }
 
 UsedCarItem.propTypes = {
