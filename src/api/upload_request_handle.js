@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-11-12 10:04:11
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-07 11:14:17
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-21 12:43:20
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -22,6 +22,7 @@ import { defaultFileUrl } from '@config/request_config.js'
  * 7 询价单表格
  * 8 客户表格
  * 9 banner位图片
+ * 10 车源图片
  */
 // eslint-disable-next-line import/prefer-default-export
 export const uploadImage = ({
