@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-17 12:28:08
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 11:59:31
+ * @LastEditTime: 2020-02-21 12:05:05
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -70,10 +70,12 @@ class UsedCar extends Component {
     let sendData = {
       brandId,
       locationId,
-      carPriceSection,
       usedType,
       pageNum,
       pageSize,
+    }
+    if (carPriceSection && carPriceSection.length) {
+      sendData.carPriceSection = carPriceSection
     }
     let { usedCarListData } = this.state
     api.car.getCarSourceList(sendData, this).then(res => {
@@ -144,7 +146,7 @@ class UsedCar extends Component {
     } else if (item.id === 8) {
       this.carPriceSection = [500000, 0]
     }
-    // this.getUsedCarList({})
+    this.getUsedCarList({})
   }
 
   /**
