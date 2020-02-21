@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 14:00:58
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 15:07:26
+ * @LastEditTime: 2020-02-21 15:16:06
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -23,6 +23,7 @@ import { handleMoney } from '@utils/patter.js'
 import { uploadImage } from '@api/upload_request_handle.js'
 import api from '@api/index.js'
 import EmptyData from '@c/empty_data/index.js'
+import Storage from '@utils/storage.js'
 import UsedCarItem from '../used_car/components/used_car_item/index.js'
 import './index.styl'
 
@@ -214,7 +215,8 @@ class UsedCarPublish extends Component {
   upLoadImage() { 
     let count = 9
     let businessType = 10
-    let {carImg} = this.state
+    let { carImg } = this.state
+    count-= carImg.length 
     uploadImage({
       count: count,
       that: this,
@@ -258,6 +260,7 @@ class UsedCarPublish extends Component {
         })
         return
       case 'remark':
+        Storage.setStorage('used_car', this.state.remark)
         Taro.navigateTo({
           url: `/pages/remark/index?pageType=used_car`
         })
@@ -293,7 +296,7 @@ class UsedCarPublish extends Component {
     if (userInfo.userType === 0 && !this.state.userId) {
       breakName = 'userId'
     }
-    for (let i in this.state) {
+    for (let i in testingList) {
       if (i === 'remark' || i === 'activeIndex' || i === 'userId' || i === 'realName') {
         continue
       }
@@ -309,7 +312,7 @@ class UsedCarPublish extends Component {
         break
       }
     }
-    console.log('break', breakName)
+    console.log('breakName', breakName)
     if (breakName) {
       Taro.showToast({
         title: testingList[breakName],
