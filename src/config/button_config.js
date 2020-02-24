@@ -3,7 +3,7 @@
  * @description: 按钮组的显示控制
  * @Date: 2019-12-13 15:09:48
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 18:04:10
+ * @LastEditTime: 2020-02-24 10:03:17
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -95,11 +95,11 @@ const offerButtons = [
 
 const toolButtons = [
   {
-    tool_key: 'paoche_gasoil',
+    toolKey: 'paoche_gasoil',
     name: '跑车加油'
   },
   {
-    tool_key: 'paoche_carsource',
+    toolKey: 'paoche_carsource',
     name: '车源'
   }
 ]
@@ -115,8 +115,8 @@ export const handleToolButtons = (buttons) => {
   const notCheckData = buttons.filter(item => {
     return +item.openMode === 1
   })
-  const arrDiffData = _differenceBy(buttons, toolButtons, "tool_key");
-  const data = _differenceBy(buttons, arrDiffData, "tool_key");
+  const arrDiffData = _differenceBy(buttons, toolButtons, "toolKey");
+  const data = _differenceBy(buttons, arrDiffData, "toolKey");
   let returnData = [...notCheckData, ...data]
   returnData.sort(compare('orderNum'));
   console.log('not', notCheckData)
