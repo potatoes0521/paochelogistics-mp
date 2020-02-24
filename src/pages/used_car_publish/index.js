@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 14:00:58
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 17:11:25
+ * @LastEditTime: 2020-02-24 10:42:26
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -185,7 +185,6 @@ class UsedCarPublish extends Component {
     this.setState({
       carPrice: value
     })
-    console.log('value', value)
     return value
   }
   /**
@@ -242,7 +241,6 @@ class UsedCarPublish extends Component {
     })
   }
   navigatorTo(pageName) {
-    console.log('pageName', pageName)
     switch (pageName) {
       case 'choose_start_city':
         Taro.navigateTo({
@@ -294,6 +292,7 @@ class UsedCarPublish extends Component {
       brandName: '请选择汽车品牌', //品牌Id
       carImg: '请上传汽车图片', //车辆照片
       carPrice: '请输入期望价格', //价格
+      // carPriceZero: '期望价格不能为0', //价格
       carBasic: '请输入车款', //车款
       carSerial: '请输入车型', //车型
       effluentStandard: '请选择排放标准', //排放标准
@@ -301,12 +300,14 @@ class UsedCarPublish extends Component {
       locationId: '请选择卖车城市', //城市ID
       locationName: '请选择卖车城市',
       mileage: '请填写里程数', //	里程数
+      // mileageZero: '里程数不能为0', 
       onTheCardTime: '请选择首次上牌时间', //首次上牌时间
       yearType: '请选择年款', //年款
       userId: '请选择代下单的客户', //年款
     }
     let breakName = ''
     let { userInfo } = this.props
+    let { mileage, carPrice } = this.state
     if (userInfo.userType === 0 && !this.state.userId) {
       breakName = 'userId'
     }
@@ -326,10 +327,25 @@ class UsedCarPublish extends Component {
         break
       }
     }
-    console.log('breakName', breakName)
     if (breakName) {
       Taro.showToast({
         title: testingList[breakName],
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+    if (Number(mileage) <= 0) {
+      Taro.showToast({
+        title: '里程数不能为0',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+    if (Number(carPrice) <= 0) {
+      Taro.showToast({
+        title: '期望价格不能为0',
         icon: 'none',
         duration: 2000
       })
@@ -345,6 +361,7 @@ class UsedCarPublish extends Component {
     if (!sendData.userId) {
       sendData.userId = this.props.userInfo.userId
     }
+    delete sendData['onTheCardTimeDesc']
     api.car.submitPublish(sendData, this).then(res => {
       if (this.pageParams.pageType === 'edit') {
         Taro.showToast({
