@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 17:29:27
+ * @LastEditTime: 2020-02-24 12:27:07
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -355,7 +355,6 @@ class Index extends Component {
           receiveCityId={receiveCityId}
           sendCityId={sendCityId}
         />
-        <View onClick={()=>this.go()}>车源测试入口</View>
         <Tool toolList={toolList} />
         <View className='recommend-list'>
           {

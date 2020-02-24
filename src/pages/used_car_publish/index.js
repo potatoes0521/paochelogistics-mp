@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 14:00:58
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-24 10:42:26
+ * @LastEditTime: 2020-02-24 11:38:23
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -130,7 +130,7 @@ class UsedCarPublish extends Component {
       if (!res) return
       res.carPrice = res.carPrice / 100
       res.mileage = res.mileage / 100
-      res.onTheCardTime = res.onTheCardTime.split('-01')[0]
+      res.onTheCardTime = res.onTheCardTime.split('-01T')[0]
       res.brandName = res.masterBrandName
       res.carImg = res.imgUrls
       res.userId = res.userId
@@ -362,6 +362,7 @@ class UsedCarPublish extends Component {
       sendData.userId = this.props.userInfo.userId
     }
     delete sendData['onTheCardTimeDesc']
+    console.log('sendData', sendData)
     api.car.submitPublish(sendData, this).then(res => {
       if (this.pageParams.pageType === 'edit') {
         Taro.showToast({
