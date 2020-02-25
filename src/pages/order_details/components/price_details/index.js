@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 订单详情报价、 金额、 支付方式 
  * @Date: 2019-09-20 09:58:08
- * @LastEditors: guorui
- * @LastEditTime: 2020-02-20 17:08:56
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-24 17:55:42
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -36,8 +36,11 @@ class PriceDetailsComponent extends Component {
       item,
       fail,
       hidePayType,
-      userInfo
+      userInfo,
+      pageParams
     } = this.props
+    console.log('item', item)
+    console.log(pageParams)
     const payTypeClassName = classNames(
       'number',
       {
@@ -92,7 +95,7 @@ class PriceDetailsComponent extends Component {
           <View className='details-form-price'>￥{item.payPriceDesc || ''}</View>
         </View>
         {
-          userInfo.userType === 0 ?
+          userInfo.userType === 0 && !pageParams.share_type ?
             <Block>
               <View className='details-form-item'>
                 <View className='details-form-label'>发票:</View>

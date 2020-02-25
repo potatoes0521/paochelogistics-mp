@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 14:00:58
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-24 11:38:23
+ * @LastEditTime: 2020-02-24 16:49:51
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -80,7 +80,7 @@ class UsedCarPublish extends Component {
       yearArr.push('20' + year + '年')
     }
     this.setState({
-      initYearArray: yearArr
+      initYearArray: yearArr.reverse()
     })
   }
   getMinePublish({
@@ -573,7 +573,7 @@ class UsedCarPublish extends Component {
                         className='input'
                         placeholder='请输入汽车车款，如经典版'
                         placeholderClass='placeholder-style'
-                        maxlength='15'
+                        maxlength='25'
                         value={carBasic}
                         onInput={this.inputCarBasic}
                       ></Input>

@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-14 20:38:11
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-24 17:02:17
  */
 
 // 默认请求连接
@@ -26,7 +26,7 @@ import Actions from '@store/actions/index.js'
 
 const sign_id = 'wx90c791e28c3c7d4d'
 const contentType = 'application/json;charset=UTF-8'
-export const appVersion = '1.0.0'
+export const appVersion = '1.0.1'
 
 export default {
   baseOptions(url, data, that, loadingTitle, method = 'GET') {

@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2020-02-19 15:10:11
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 16:44:21
+ * @LastEditTime: 2020-02-24 16:44:18
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -51,7 +51,7 @@ class UsedCarItem extends Component {
     event.stopPropagation();
     Taro.showModal({
       title: '提示',
-      content: '改操作会下架车源信息, 是否确认',
+      content: '该操作会下架车源信息, 是否确定',
       success: (res)=> {
         if (res.confirm) {
           let {item} = this.props

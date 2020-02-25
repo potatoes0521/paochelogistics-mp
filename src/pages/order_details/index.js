@@ -2,8 +2,8 @@
  * @Author: guorui
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-14 18:31:46
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-24 17:53:32
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -362,6 +362,7 @@ class OrderDetails extends Component {
             <View className='show-price-wrapper'>
               <PriceDetailsComponent
                 item={orderDetailsInfo}
+                pageParams={pageParams}
                 fail={fail}
                 onClick={this.clickWhyNotUse.bind(this)}
               ></PriceDetailsComponent>
