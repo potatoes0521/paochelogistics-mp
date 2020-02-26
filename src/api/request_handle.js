@@ -3,7 +3,7 @@
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-24 17:02:17
+ * @LastEditTime: 2020-02-26 14:02:09
  */
 
 // 默认请求连接
@@ -44,7 +44,7 @@ export default {
       }
     }
     let requestURL = defaultApiURL + url
-    if (url.indexOf('file/read') !== -1) {
+    if (url.indexOf('file/read') !== -1 || url.indexOf('file/delete') !== -1) {
       requestURL = url
     }
     const sign = createSignData(data, sign_id)[1]
