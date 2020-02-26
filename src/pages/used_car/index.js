@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-17 12:28:08
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-24 10:12:31
+ * @LastEditTime: 2020-02-26 11:58:35
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -43,9 +43,13 @@ class UsedCar extends Component {
     this.carPriceSection = [] //价格区间
     this.usedCarPage = 1
     this.usedCarFlag = false
+    this.pageParams = {
+      usedType: 2
+    }
   }
 
   componentDidShow() {
+    this.pageParams = this.$router.params
     this.usedCarPage = 1
     this.usedCarFlag = false
     this.setState({
@@ -72,7 +76,7 @@ class UsedCar extends Component {
     brandId = this.state.brandId,
     locationId = this.state.locationId,
     carPriceSection = this.carPriceSection,
-    usedType = 2,
+    usedType = this.pageParams.usedType || 2,
     pageNum = this.usedCarPage,
     pageSize = 10
   }) {
@@ -215,7 +219,7 @@ class UsedCar extends Component {
   }
   onShareAppMessage() {
     // let imageUrl = `${defaultResourceImgURL}share_mp.png`
-    let path = `/pages/index/index?share_type=4`
+    let path = `/pages/index/index?share_type=4&usedType=${this.pageParams.usedType}`
     let title = `在线看车，实时发布全国车源`
     return {
       title,
@@ -310,7 +314,7 @@ class UsedCar extends Component {
                 {
                   userCarList
                 }
-                <FloatBtn needCheck onNoRealName={this.showRealNameModal.bind(this)}></FloatBtn>
+                <FloatBtn needCheck usedType={this.pageParams.usedType} onNoRealName={this.showRealNameModal.bind(this)}></FloatBtn>
               </Block>
               :
               <EmptyData pageType='carList' userInfo={userInfo} needCheck onNoRealName={this.showRealNameModal.bind(this)}></EmptyData>

@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 10:52:25
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-26 11:13:03
+ * @LastEditTime: 2020-02-26 12:03:26
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -113,7 +113,7 @@ class UsedCarDetails extends Component {
   editUsedCar() {
     let { usedCarDetailsInfo } = this.state
     Taro.navigateTo({
-      url: `/pages/used_car_publish/index?pageType=edit&carSourceId=${usedCarDetailsInfo.carSourceId}`
+      url: `/pages/used_car_publish/index?pageType=edit&carSourceId=${usedCarDetailsInfo.carSourceId}&usedType=${usedCarDetailsInfo.usedType}`
     })
   }
   onShareAppMessage() {
@@ -209,16 +209,22 @@ class UsedCarDetails extends Component {
           </View>
           <View className='title'>车辆档案</View>
           <View className='main main-des'>
-            <View className='des-line'>
-              <View className='des-item long'>
-                <Text className='item-title'>首次上牌</Text>
-                <Text className='item-des'>{usedCarDetailsInfo.onTheCardTimeDesc && usedCarDetailsInfo.onTheCardTimeDesc.substring(0, 7) || ''}</Text>
-              </View>
-              <View className='des-item'>
-                <Text className='item-title short'>里程</Text>
-                <Text className='item-des'>{usedCarDetailsInfo.mileage / 100 || ''}万公里</Text>
-              </View>
-            </View>
+            {
+              usedCarDetailsInfo.usedType == 2 ?
+                <Block>
+                  <View className='des-line'>
+                    <View className='des-item long'>
+                      <Text className='item-title'>首次上牌</Text>
+                      <Text className='item-des'>{usedCarDetailsInfo.onTheCardTimeDesc && usedCarDetailsInfo.onTheCardTimeDesc.substring(0, 7) || ''}</Text>
+                    </View>
+                    <View className='des-item'>
+                      <Text className='item-title short'>里程</Text>
+                      <Text className='item-des'>{usedCarDetailsInfo.mileage / 100 || ''}万公里</Text>
+                    </View>
+                  </View>
+                </Block>
+                : null
+            }
             <View className='des-line'>
               <View className='des-item long'>
                 <Text className='item-title'>排放</Text>
@@ -234,10 +240,14 @@ class UsedCarDetails extends Component {
                 <Text className='item-title'>所在城市</Text>
                 <Text className='item-des'>{usedCarDetailsInfo.locationName || ''}</Text>
               </View>
-              <View className='des-item'>
-                <Text className='item-title short'>车龄</Text>
-                <Text className='item-des'>{usedCarDetailsInfo.carAge || ''}</Text>
-              </View>
+              {
+                usedCarDetailsInfo.usedType == 2 ? 
+                  <View className='des-item'>
+                    <Text className='item-title short'>车龄</Text>
+                    <Text className='item-des'>{usedCarDetailsInfo.carAge || ''}</Text>
+                  </View>
+                  : null
+              }
             </View>
           </View>
           {

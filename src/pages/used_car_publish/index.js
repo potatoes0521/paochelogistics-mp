@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 14:00:58
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-24 16:49:51
+ * @LastEditTime: 2020-02-26 14:05:50
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -20,7 +20,10 @@ import {
 import classNames from 'classnames'
 import { connect } from '@tarojs/redux'
 import { handleMoney } from '@utils/patter.js'
-import { uploadImage } from '@api/upload_request_handle.js'
+import {
+  uploadImage,
+  deleteImage
+} from '@api/upload_request_handle.js'
 import api from '@api/index.js'
 import EmptyData from '@c/empty_data/index.js'
 import Storage from '@utils/storage.js'
@@ -86,7 +89,7 @@ class UsedCarPublish extends Component {
   getMinePublish({
       pageSize = 10,
       pageNum = this.usedCarPage,
-      usedType=2
+      usedType= this.pageParams.usedType
     }) {
     let sendData = {
       pageNum,
@@ -222,7 +225,11 @@ class UsedCarPublish extends Component {
   }
   deleteImage(index) {
     let {carImg} = this.state
-    carImg.splice(index, 1)
+    const img = carImg.splice(index, 1)
+    let sendData = {
+      virthPath: img
+    }
+    deleteImage(sendData)
     this.setState({carImg})
   }
   upLoadImage() { 
@@ -315,6 +322,10 @@ class UsedCarPublish extends Component {
       if (i === 'remark' || i === 'activeIndex' || i === 'userId' || i === 'realName') {
         continue
       }
+      // 如果是新车  没有上牌时间和里程数
+      if ((+this.pageParams.usedType === 1 && i === 'mileage') || (+this.pageParams.usedType === 1 && i === 'onTheCardTime')) {
+        continue
+      }
       // if (this.pageParams.pageType !== 'edit' && i === 'carSourceId') {
       //   continue
       // }
@@ -335,7 +346,7 @@ class UsedCarPublish extends Component {
       })
       return
     }
-    if (Number(mileage) <= 0) {
+    if (+this.pageParams.usedType === 2 && Number(mileage) <= 0) {
       Taro.showToast({
         title: '里程数不能为0',
         icon: 'none',
@@ -355,9 +366,16 @@ class UsedCarPublish extends Component {
     if (this.pageParams.pageType === 'edit') {
       sendData.carSourceId = this.pageParams.carSourceId
     }
-    sendData.carPrice = sendData.carPrice* 1000 / 10
-    sendData.mileage = sendData.mileage* 1000 / 10
-    sendData.onTheCardTime += '-01'
+    // 如果是新车  没有上牌时间和里程数
+    if (+this.pageParams.usedType === 2) {
+      sendData.mileage = sendData.mileage * 1000 / 10
+      sendData.onTheCardTime += '-01'
+    } else {
+      delete sendData['mileage']
+      delete sendData['onTheCardTime']
+    }
+    sendData.carPrice = sendData.carPrice * 1000 / 10
+    sendData.usedType = this.pageParams.usedType
     if (!sendData.userId) {
       sendData.userId = this.props.userInfo.userId
     }
@@ -413,7 +431,6 @@ class UsedCarPublish extends Component {
       mileage: '', //	里程数
       gasDisplacement: '', //汽车排量
       effluentStandard: '', //排放标准
-      usedType: 2, //车辆性质 1新车 2二手车
       carImg: [], //车辆照片
       remark: '', //备注,
       userId: 0,
@@ -580,42 +597,46 @@ class UsedCarPublish extends Component {
                     </View>
                   </View>
                   <View className='line'></View>
-                  <View className='publish-item'>
-                    <View className='must-icon'>*</View>
-                    <View className='publish-label long-label'>首次上牌时间</View>
-                    <View className='publish-content'>
-                      <Picker
-                        className='time-picker'
-                        mode='date'
-                        onChange={this.onChooseTheCardTime}
-                        fields='month'
-                      >
-                        {
-                          onTheCardTime ? <Text className='content-text'>{onTheCardTime}</Text> : <Text className='placeholder-style'>请选择</Text>
-                        }
-                      </Picker>
-                      <Text className='iconfont iconxiangyouxuanzejiantoux publish-icon-right'></Text>  
-                    </View>
-                  </View>
-                  <View className='line'></View>
-                  <View className='publish-item'>
-                    <View className='must-icon'>*</View>
-                    <View className='publish-label long-label'>行驶里程</View>
-                    <View className='publish-content'>
-                      {/* <Text className='content-text'></Text> */}
-                      <Input
-                        type='digit'
-                        className='input'
-                        placeholder='请输入公里数'
-                        placeholderClass='placeholder-style'
-                        maxlength='10'
-                        value={mileage}
-                        onInput={this.inputMileage}
-                      ></Input>
-                      <Text className='content-text margin-text'>万公里</Text>
-                    </View>
-                  </View>
-                  <View className='line'></View>
+                  {
+                    this.pageParams.usedType == 2 ? <Block>
+                      <View className='publish-item'>
+                        <View className='must-icon'>*</View>
+                        <View className='publish-label long-label'>首次上牌时间</View>
+                        <View className='publish-content'>
+                          <Picker
+                            className='time-picker'
+                            mode='date'
+                            onChange={this.onChooseTheCardTime}
+                            fields='month'
+                          >
+                            {
+                              onTheCardTime ? <Text className='content-text'>{onTheCardTime}</Text> : <Text className='placeholder-style'>请选择</Text>
+                            }
+                          </Picker>
+                          <Text className='iconfont iconxiangyouxuanzejiantoux publish-icon-right'></Text>  
+                        </View>
+                      </View>
+                      <View className='line'></View>
+                      <View className='publish-item'>
+                        <View className='must-icon'>*</View>
+                        <View className='publish-label long-label'>行驶里程</View>
+                        <View className='publish-content'>
+                          {/* <Text className='content-text'></Text> */}
+                          <Input
+                            type='digit'
+                            className='input'
+                            placeholder='请输入公里数'
+                            placeholderClass='placeholder-style'
+                            maxlength='10'
+                            value={mileage}
+                            onInput={this.inputMileage}
+                          ></Input>
+                          <Text className='content-text margin-text'>万公里</Text>
+                        </View>
+                      </View>
+                      <View className='line'></View>
+                    </Block> : null
+                  }
                   <View className='publish-item'>
                     <View className='must-icon'>*</View>
                     <View className='publish-label long-label'>汽车排量</View>
