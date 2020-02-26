@@ -3,7 +3,7 @@
  * @description: 城市选择 // 汽车品牌选择
  * @Date: 2019-08-30 15:53:51
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 13:02:23
+ * @LastEditTime: 2020-02-21 16:56:15
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -81,6 +81,17 @@ class ChooseCity extends Component {
       .then(res => {
         let hotData = res.hotCities || []
         let allData = res.all || []
+        let noCityId = [{
+            initial: '#',
+            list: [{
+              cityId: '',
+                cityName: '不限城市'
+            }]
+          }]
+        let {pageParams} = this.state
+        if (pageParams.type === 'sell') { 
+          allData = [...noCityId, ...allData]
+        }
         // Storage.setStorage('city_list', res)
         this.allDataList = allData.map(item => {
           return item.list

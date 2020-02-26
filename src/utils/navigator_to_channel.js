@@ -3,9 +3,13 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2020-02-04 15:38:51
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-14 18:58:18
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-21 17:30:59
  * @mustParam: 必传参数
+ * openMode 打开方式 
+ * 1 应用内打开H5 
+ * 2 应用内页面 
+ * 3 是跳转小程序
  * @optionalParam: 选传参数
  */
 

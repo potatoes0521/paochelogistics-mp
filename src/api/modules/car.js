@@ -3,7 +3,7 @@
  * @description: 车源相关接口
  * @Date: 2020-02-19 10:30:01
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 12:09:06
+ * @LastEditTime: 2020-02-21 13:20:23
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -29,5 +29,9 @@ export default {
   // 获取汽车品牌
   getMinePublish(data, that) {
     return requestHandle.get('carsource/record', data, that);
+  },
+  // 获取汽车品牌
+  soldOutMinePublish(data, that) {
+    return requestHandle.get('carsource/soldout', data, that);
   },
 }

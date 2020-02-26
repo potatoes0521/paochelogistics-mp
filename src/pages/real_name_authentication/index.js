@@ -3,7 +3,7 @@
  * @description: 实名认证页面
  * @Date: 2019-11-04 10:29:09
  * @LastEditors: liuYang
- * @LastEditTime : 2020-02-14 20:56:20
+ * @LastEditTime: 2020-02-26 14:06:43
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -17,7 +17,10 @@ import {
   // Block
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
-import { uploadImage } from '@api/upload_request_handle.js'
+import {
+  uploadImage,
+  deleteImage
+} from '@api/upload_request_handle.js'
 import Actions from '@store/actions/index.js'
 import {
   validateIdCard,
@@ -116,6 +119,10 @@ class RealName extends Component {
         this.setState({
           realFlag: true
         })
+        let sendDataImage = {
+          virthPath: imageUrl
+        }
+        deleteImage(sendDataImage)
         Taro.showToast({
           title: '识别失败,请换一张试试~',
           icon: 'none',

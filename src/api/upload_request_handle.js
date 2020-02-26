@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-11-12 10:04:11
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 12:43:20
+ * @LastEditTime: 2020-02-26 14:03:18
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -150,4 +150,8 @@ function uploadHandle({
   */
 function splicingURL(data, that) {
   return requestHandle.get(`${defaultFileUrl}file/read?virthPath=${data.virthPath}`, data, that)
+}
+
+export const deleteImage = (data, that) => {
+  return requestHandle.get(`${defaultFileUrl}file/delete?virthPath=${data.virthPath}`, data, that)
 }

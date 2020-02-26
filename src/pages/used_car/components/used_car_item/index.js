@@ -3,17 +3,19 @@
  * @description: 请填写描述信息
  * @Date: 2020-02-19 15:10:11
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 12:33:29
+ * @LastEditTime: 2020-02-24 16:44:18
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import Taro, { Component } from '@tarojs/taro'
 import { View, Image, Text, Block } from '@tarojs/components'
 import PropTypes from 'prop-types'
+import api from '@api/index.js'
+import { connect } from '@tarojs/redux'
 
 import './index.styl'
 
-export default class UsedCarItem extends Component {
+class UsedCarItem extends Component {
   static options = {
     addGlobalClass: true // 允许外部样式修改组件样式
   }
@@ -30,6 +32,14 @@ export default class UsedCarItem extends Component {
       from
     } = this.props
     if (from && from === 'publish') {
+      if (item.soldOut === 2) {
+        Taro.showToast({
+          title: '已下架信息不可编辑哦',
+          icon: 'none',
+          duration: 2000
+        })
+        return
+      }
       this.props.onClickEditBtn(item)
     } else {
       Taro.navigateTo({
@@ -41,10 +51,21 @@ export default class UsedCarItem extends Component {
     event.stopPropagation();
     Taro.showModal({
       title: '提示',
-      content: '改操作会下架车源信息, 是否确认',
-      success(res) {
+      content: '该操作会下架车源信息, 是否确定',
+      success: (res)=> {
         if (res.confirm) {
-          console.log('用户点击确定')
+          let {item} = this.props
+          let sendData = {
+            carSourceId: item.carSourceId
+          }
+          api.car.soldOutMinePublish(sendData, this).then(() => {
+            Taro.showToast({
+              title: '下架成功',
+              icon: 'none',
+              duration: 2000
+            })
+            this.props.onHandleSoldOut()
+          })
         }
       }
     })
@@ -78,18 +99,31 @@ export default class UsedCarItem extends Component {
               {
                 from !== 'publish' ?
                   <Block>
-                    <View className='car-des-data-wrapper' >
-                      <Text className='history-icon iconfont iconliulan'></Text>
-                      <Text className='history-text'>{item.browseHistoryCount || 0}</Text>
-                    </View>
-                    <View className='car-des-data-wrapper has-width'>
-                      <Text className='history-icon iconfont iconlianxiwomen'></Text>
-                      <Text className='history-text'>{item.callHistoryCount || 0}</Text>
-                    </View>
+                    {
+                      item.browseHistoryCount > 0 && (
+                        <View className='car-des-data-wrapper' >
+                          <Text className='history-icon iconfont iconliulan'></Text>
+                          <Text className='history-text'>{item.browseHistoryCount || 0}</Text>
+                        </View>
+                      )
+                    }
+                    {
+                      item.callHistoryCount > 0 && (
+                        <View className='car-des-data-wrapper has-width'>
+                          <Text className='history-icon iconfont iconlianxiwomen'></Text>
+                          <Text className='history-text'>{item.callHistoryCount || 0}</Text>
+                        </View>
+                      )
+                    }
                   </Block>
                   : 
                   <Block>
-                    <View className='lower-btn' onClick={this.lowerCarMsg.bind(this)}>下架</View>
+                    {
+                      item.soldOut === 1 ?
+                        <View className='lower-btn' onClick={this.lowerCarMsg.bind(this)}>下架</View>
+                        : 
+                        <View className='lower-text'>{item.soldOutDesc}</View>
+                    }
                   </Block>
               }
             </View>
@@ -102,10 +136,19 @@ export default class UsedCarItem extends Component {
 
 UsedCarItem.defaultProps = {
   item: {},
-  from: ''
+  from: '',
+  onHandleSoldOut: () => {}
 }
 
 UsedCarItem.propTypes = {
   item: PropTypes.object,
-  from: PropTypes.string
+  from: PropTypes.string,
+  onHandleSoldOut: PropTypes.func
 }
+
+const mapStateToProps = (state) => {
+  return {
+    userInfo: state.user_msg.userInfo
+  }
+}
+export default connect(mapStateToProps)(UsedCarItem)

@@ -3,8 +3,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2020-02-18 10:52:25
- * @LastEditors: guorui
- * @LastEditTime: 2020-02-21 14:49:05
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-26 14:16:54
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,11 +14,13 @@ import {
   Swiper,
   SwiperItem,
   Image,
-  Text
+  Text,
+  Block
 } from '@tarojs/components'
 // import classNames from 'classnames'
 import { connect } from '@tarojs/redux'
 import api from '@api/index.js'
+// import { defaultResourceImgURL } from '@config/request_config.js'
 
 import './index.styl'
 
@@ -27,25 +29,7 @@ class UsedCarDetails extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      usedCarDetailsInfo: {
-        "carSourceId": 3,
-        "brandId": 1,
-        "masterBrandName": "奔驰",
-        "locationName": "北京",
-        "carSerial": "帕萨特",
-        "yearType": 2012,
-        "carBasic": "2012款",
-        "onTheCardTime": "2020-02-18T03:36:19.000+0000",
-        "onTheCardTimeDesc": "2020-02-18 11:36",
-        "mileage": 200000,
-        "gasDisplacement": "2.0L",
-        "effluentStandard": "国四",
-        "carPrice": 100000,
-        "carAge": "2018年10个月",
-        "carImg": "i am car image 1",
-        "browseHistoryCount": 10,
-        "callHistoryCount": 10
-      }, 
+      usedCarDetailsInfo: {}, 
       swiperIndex: 1
     }
     this.pageParams = {}
@@ -129,8 +113,19 @@ class UsedCarDetails extends Component {
   editUsedCar() {
     let { usedCarDetailsInfo } = this.state
     Taro.navigateTo({
-      url: `/pages/used_car_publish/index?pageType=edit&carSourceId=${usedCarDetailsInfo.carSourceId}`
+      url: `/pages/used_car_publish/index?pageType=edit&carSourceId=${usedCarDetailsInfo.carSourceId}&usedType=${usedCarDetailsInfo.usedType}`
     })
+  }
+  onShareAppMessage() {
+    // let imageUrl = `${defaultResourceImgURL}share_mp.png`
+    let {usedCarDetailsInfo} = this.state
+    let path = `/pages/index/index?share_type=5&carSourceId=${this.pageParams.carSourceId}`
+    let title = `${usedCarDetailsInfo.masterBrandName || ''} ${usedCarDetailsInfo.carSerial || ''} ${usedCarDetailsInfo.yearType || ''}款 ${usedCarDetailsInfo.gasDisplacement || ''} ${usedCarDetailsInfo.carBasic || ''}`
+    return {
+      title,
+      path,
+      // imageUrl
+    }
   }
   config = {
     navigationBarTitleText: '车源详情' 
@@ -148,6 +143,7 @@ class UsedCarDetails extends Component {
             <Image
               className='banner-image'
               src={item}
+              mode='aspectFill'
               onClick={this.showBigImage.bind(this, index)}
             ></Image>
           </View>
@@ -169,7 +165,7 @@ class UsedCarDetails extends Component {
               circular
               indicatorActiveColor='#ffffff'
               interval='3000'
-              onChange={()=>this.bannerChange}
+              onChange={this.bannerChange.bind(this)}
             >
               {
                 usedCarDetailsInfo.imgUrls.length ?
@@ -186,10 +182,22 @@ class UsedCarDetails extends Component {
             <View className='details-price'>
               <Text className='money'>{usedCarDetailsInfo.carPrice / 100 || ''}</Text>
               <Text className='money-text'>万</Text>
-              <Text className='history-icon iconfont iconliulan'></Text>
-              <Text className='history-text'>{usedCarDetailsInfo.browseHistoryCount || ''}</Text>
-              <Text className='history-icon iconfont iconlianxiwomen'></Text>
-              <Text className='history-text'>{usedCarDetailsInfo.callHistoryCount || ''}</Text>
+              {
+                usedCarDetailsInfo.browseHistoryCount > 0 && (
+                  <Block>
+                    <Text className='history-icon iconfont iconliulan'></Text>
+                    <Text className='history-text'>{usedCarDetailsInfo.browseHistoryCount || '0'}</Text>
+                  </Block>
+                )
+              }
+              {
+                usedCarDetailsInfo.callHistoryCount > 0 && (
+                  <Block>
+                    <Text className='history-icon iconfont iconlianxiwomen'></Text>
+                    <Text className='history-text'>{usedCarDetailsInfo.callHistoryCount || '0'}</Text>
+                  </Block>
+                )
+              }
             </View>
             <View className='details-info'>
               <Text className='details-title' space='ensp'>{usedCarDetailsInfo.masterBrandName || ''} </Text>
@@ -201,16 +209,22 @@ class UsedCarDetails extends Component {
           </View>
           <View className='title'>车辆档案</View>
           <View className='main main-des'>
-            <View className='des-line'>
-              <View className='des-item long'>
-                <Text className='item-title'>首次上牌</Text>
-                <Text className='item-des'>{usedCarDetailsInfo.onTheCardTimeDesc || ''}</Text>
-              </View>
-              <View className='des-item'>
-                <Text className='item-title short'>里程</Text>
-                <Text className='item-des'>{usedCarDetailsInfo.mileage / 100 || ''}万公里</Text>
-              </View>
-            </View>
+            {
+              usedCarDetailsInfo.usedType == 2 ?
+                <Block>
+                  <View className='des-line'>
+                    <View className='des-item long'>
+                      <Text className='item-title'>首次上牌</Text>
+                      <Text className='item-des'>{usedCarDetailsInfo.onTheCardTimeDesc && usedCarDetailsInfo.onTheCardTimeDesc.substring(0, 7) || ''}</Text>
+                    </View>
+                    <View className='des-item'>
+                      <Text className='item-title short'>里程</Text>
+                      <Text className='item-des'>{usedCarDetailsInfo.mileage / 100 || ''}万公里</Text>
+                    </View>
+                  </View>
+                </Block>
+                : null
+            }
             <View className='des-line'>
               <View className='des-item long'>
                 <Text className='item-title'>排放</Text>
@@ -226,10 +240,14 @@ class UsedCarDetails extends Component {
                 <Text className='item-title'>所在城市</Text>
                 <Text className='item-des'>{usedCarDetailsInfo.locationName || ''}</Text>
               </View>
-              <View className='des-item'>
-                <Text className='item-title short'>车龄</Text>
-                <Text className='item-des'>{usedCarDetailsInfo.carAge || ''}</Text>
-              </View>
+              {
+                usedCarDetailsInfo.usedType == 2 ? 
+                  <View className='des-item'>
+                    <Text className='item-title short'>车龄</Text>
+                    <Text className='item-des'>{usedCarDetailsInfo.carAge || ''}</Text>
+                  </View>
+                  : null
+              }
             </View>
           </View>
           {

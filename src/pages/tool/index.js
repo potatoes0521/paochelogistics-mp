@@ -3,8 +3,8 @@
  * @description: 工具页面
  * @path: 引入路径
  * @Date: 2020-02-04 14:53:48
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-12 12:29:07
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-21 17:46:47
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,6 +14,7 @@ import classNames from 'classnames'
 import { connect } from '@tarojs/redux'
 import api from '@api/index.js'
 import navigatorToChannel from '@utils/navigator_to_channel.js'
+import { handleToolButtons } from '../../config/button_config.js'
 
 import './index.styl'
 
@@ -36,7 +37,7 @@ class Tool extends Component {
   getToolList() { 
     api.tool.getAllToolList({}, this).then(res => {
       this.setState({
-        toolList: res
+        toolList: handleToolButtons(res)
       })
     })
   }

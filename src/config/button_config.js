@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 按钮组的显示控制
  * @Date: 2019-12-13 15:09:48
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-06 14:55:45
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-24 10:03:17
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -92,3 +92,43 @@ const offerButtons = [
    const data = _differenceBy(buttons, arrDiffData, "key");
    return data
  }
+
+const toolButtons = [
+  {
+    toolKey: 'paoche_gasoil',
+    name: '跑车加油'
+  },
+  {
+    toolKey: 'paoche_carsource',
+    name: '车源'
+  }
+]
+
+ /**
+  * 处理工具的按钮组 本地没有的  不予显示
+  * 1. 找到数据里有  本地没有的
+  * 2. 数据里有除去没有的就是有的
+  * @param {Array} buttons 后端返回的按钮组
+  * @return data 处理后的数据
+  */
+export const handleToolButtons = (buttons) => {
+  const notCheckData = buttons.filter(item => {
+    return +item.openMode === 1
+  })
+  const arrDiffData = _differenceBy(buttons, toolButtons, "toolKey");
+  const data = _differenceBy(buttons, arrDiffData, "toolKey");
+  let returnData = [...notCheckData, ...data]
+  returnData.sort(compare('orderNum'));
+  console.log('not', notCheckData)
+  console.log('data', data)
+  console.log('returnData', returnData)
+  return returnData
+}
+
+function compare(property) {
+  return function (a, b) {
+    var value1 = a[property];
+    var value2 = b[property];
+    return value1 - value2;
+  }
+}

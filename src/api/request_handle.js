@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-14 20:38:11
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-26 14:02:09
  */
 
 // 默认请求连接
@@ -26,7 +26,7 @@ import Actions from '@store/actions/index.js'
 
 const sign_id = 'wx90c791e28c3c7d4d'
 const contentType = 'application/json;charset=UTF-8'
-export const appVersion = '1.0.0'
+export const appVersion = '1.0.1'
 
 export default {
   baseOptions(url, data, that, loadingTitle, method = 'GET') {
@@ -44,7 +44,7 @@ export default {
       }
     }
     let requestURL = defaultApiURL + url
-    if (url.indexOf('file/read') !== -1) {
+    if (url.indexOf('file/read') !== -1 || url.indexOf('file/delete') !== -1) {
       requestURL = url
     }
     const sign = createSignData(data, sign_id)[1]

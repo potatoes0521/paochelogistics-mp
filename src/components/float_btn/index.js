@@ -3,7 +3,7 @@
  * @description: 发布车源按钮
  * @Date: 2020-02-18 15:34:37
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 12:22:19
+ * @LastEditTime: 2020-02-26 11:57:44
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -31,13 +31,14 @@ class FloatBtn extends Component {
   publish() { 
     let {
       userInfo,
-      needCheck
+      needCheck,
+      usedType
     } = this.props
     if (needCheck && !userInfo.realNameAuthStatus) {
       this.props.onNoRealName()
     } else {
       Taro.navigateTo({
-        url: `/pages/used_car_publish/index?pageType=publish`
+        url: `/pages/used_car_publish/index?pageType=publish&usedType=${usedType}`
       })
     }
   }

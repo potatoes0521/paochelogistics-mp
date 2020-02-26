@@ -3,8 +3,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2020-02-17 12:28:08
- * @LastEditors: guorui
- * @LastEditTime: 2020-02-21 14:38:12
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-26 11:58:35
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -43,9 +43,13 @@ class UsedCar extends Component {
     this.carPriceSection = [] //价格区间
     this.usedCarPage = 1
     this.usedCarFlag = false
+    this.pageParams = {
+      usedType: 2
+    }
   }
 
   componentDidShow() {
+    this.pageParams = this.$router.params
     this.usedCarPage = 1
     this.usedCarFlag = false
     this.setState({
@@ -72,7 +76,7 @@ class UsedCar extends Component {
     brandId = this.state.brandId,
     locationId = this.state.locationId,
     carPriceSection = this.carPriceSection,
-    usedType = 2,
+    usedType = this.pageParams.usedType || 2,
     pageNum = this.usedCarPage,
     pageSize = 10
   }) {
@@ -84,7 +88,7 @@ class UsedCar extends Component {
       pageSize,
     }
     if (carPriceSection && carPriceSection.length) {
-      sendData.carPriceSection = carPriceSection
+      sendData.carPriceSection = carPriceSection.toString()
     }
     let { usedCarListData } = this.state
     api.car.getCarSourceList(sendData, this).then(res => {
@@ -150,19 +154,19 @@ class UsedCar extends Component {
     if (item.id === 1) {
       this.carPriceSection = []
     } else if (item.id === 2) {
-      this.carPriceSection = [0, 50000]
+      this.carPriceSection = [0, 500]
     } else if (item.id === 3) {
-      this.carPriceSection = [50000, 100000]
+      this.carPriceSection = [500, 1000]
     } else if (item.id === 4) {
-      this.carPriceSection = [100000, 150000]
+      this.carPriceSection = [1000, 1500]
     } else if (item.id === 5) {
-      this.carPriceSection = [150000, 200000]
+      this.carPriceSection = [1500, 2000]
     } else if (item.id === 6) {
-      this.carPriceSection = [200000, 300000]
+      this.carPriceSection = [2000, 3000]
     } else if (item.id === 7) {
-      this.carPriceSection = [300000, 500000]
+      this.carPriceSection = [3000, 5000]
     } else if (item.id === 8) {
-      this.carPriceSection = [500000, 0]
+      this.carPriceSection = [5000, 0]
     }
     this.usedCarPage = 1
     this.usedCarFlag = false
@@ -177,6 +181,34 @@ class UsedCar extends Component {
     })
   }
   /**
+   * 下拉刷新
+   * @return void
+   */
+  async onPullDownRefresh() {
+    Taro.showNavigationBarLoading()
+    this.usedCarPage = 1
+    this.usedCarFlag = false
+    this.setState({
+      usedCarListData: []
+    }, () => {
+      this.getUsedCarList({})
+    })
+    // 隐藏导航栏加载框
+    Taro.hideNavigationBarLoading();
+    // 停止下拉动作
+    Taro.stopPullDownRefresh();
+  }
+  
+  handleRegister(event) { 
+    event.stopPropagation();
+    Taro.navigateTo({
+      url: '/pages/register/index'
+    })
+  }
+  stop(event) {
+    event.stopPropagation();
+  }
+  /**
    * 上拉触底
    * @return void
    */
@@ -185,9 +217,19 @@ class UsedCar extends Component {
     if (this.usedCarFlag) return
     this.getUsedCarList({})
   }
-
+  onShareAppMessage() {
+    // let imageUrl = `${defaultResourceImgURL}share_mp.png`
+    let path = `/pages/index/index?share_type=4&usedType=${this.pageParams.usedType}`
+    let title = `在线看车，实时发布全国车源`
+    return {
+      title,
+      path,
+      // imageUrl
+    }
+  }
   config = {
-    navigationBarTitleText: '车源' 
+    navigationBarTitleText: '车源',
+    enablePullDownRefresh: true
   }
 
   render() {
@@ -198,7 +240,9 @@ class UsedCar extends Component {
       priceName,
       brandName,
       locationName,
-      visible
+      visible,
+      locationId,
+      brandId
     } = this.state
     let {userInfo} = this.props
     const userCarList = usedCarListData && usedCarListData.map((item) => {
@@ -226,25 +270,25 @@ class UsedCar extends Component {
       )
     })
     const locationNameClassName = classNames('tab-text', {
-      'active-style-text': locationName
+      'active-style-text': locationName && locationId
     })
     const locationNameIconClassName = classNames('car-tab-icon iconfont iconsanjiaoxing', {
-      'active-style-icon': locationName,
-      'active-style-text': locationName
+      'active-style-icon': locationName && locationId,
+      'active-style-text': locationName && locationId
     })
     const brandNameClassName = classNames('tab-text', {
-      'active-style-text': brandName,
+      'active-style-text': brandName && brandId,
     })
     const brandNameIconClassName = classNames('car-tab-icon iconfont iconsanjiaoxing', {
-      'active-style-icon': brandName,
-      'active-style-text': brandName
+      'active-style-icon': brandName && brandId,
+      'active-style-text': brandName && brandId
     })
     const priceNameClassName = classNames('tab-text', {
-      'active-style-text': priceName
+      'active-style-text': priceName && priceIndex !== 1
     })
     const priceNameIconClassName = classNames('car-tab-icon iconfont iconsanjiaoxing', {
-      'active-style-icon': priceName,
-      'active-style-text': priceName
+      'active-style-icon': priceName && priceIndex !== 1,
+      'active-style-text': priceName && priceIndex !== 1
     })
     
     return (
@@ -270,7 +314,7 @@ class UsedCar extends Component {
                 {
                   userCarList
                 }
-                <FloatBtn needCheck onNoRealName={this.showRealNameModal.bind(this)}></FloatBtn>
+                <FloatBtn needCheck usedType={this.pageParams.usedType} onNoRealName={this.showRealNameModal.bind(this)}></FloatBtn>
               </Block>
               :
               <EmptyData pageType='carList' userInfo={userInfo} needCheck onNoRealName={this.showRealNameModal.bind(this)}></EmptyData>
@@ -288,6 +332,11 @@ class UsedCar extends Component {
             : null
         }
         <Certification visible={visible} />
+        {
+          !userInfo.userId && (
+            <View className='go-register' onTouchMove={this.stop.bind(this)} onClick={this.handleRegister.bind(this)}></View>
+          )
+        }
       </View>
     )
   }

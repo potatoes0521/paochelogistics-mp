@@ -2,9 +2,15 @@
  * @Author: liuYang
  * @description: 处理进入小程序的分享
  * @Date: 2019-11-06 12:25:04
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-06 11:26:39
- * @mustParam: 必传参数
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-21 16:38:53
+ * @mustParam: 
+ * // share_type 
+ *  1 分享给客户 
+ *  2 分享砍价 
+ *  3 找人代付 
+ *  4 车源列表 
+ *  5 车源详情
  * @optionalParam: 选传参数
  */
 import Taro from '@tarojs/taro'
@@ -32,6 +38,22 @@ export const handleShare = (pageParams, userInfo) => {
       })
     }
     return
+  } else if (pageParams.share_type === '4') {
+    Taro.navigateTo({
+      url: `/pages/used_car/index`
+    })
+  } else if (pageParams.share_type === '5') {
+    if (+userInfo.userId) { // 注册了去详情页
+      navigateToUsedCarDetails(pageParams)
+    } else if (!userInfo.userId) { // 如果没有注册去注册
+      let str = ''
+      for (let i in pageParams) {
+        str += i + '=' + pageParams[i] + '&'
+      }
+      Taro.navigateTo({
+        url: `/pages/register/index?${str}`
+      })
+    }
   }
 }
 /**
@@ -119,7 +141,9 @@ export const handleRegisterShare = ({ pageParams, userInfo, wxUserInfo, that }) 
         }
       })
     })
-  } else {
+  } else if (pageParams.share_type === '5') {
+    navigateToUsedCarDetails(pageParams)
+  }else {
     Taro.navigateBack()
   }
 }
@@ -141,5 +165,15 @@ export const navigateToOrderDetails = (pageParams) => {
 export const redirectToOrderDetails = (pageParams) => {
   Taro.redirectTo({
     url: `/pages/order_details/index?order_code=${pageParams.order_code}`
+  })
+}
+/**
+ * 导航到车源详情页
+ * @param {Object} pageParams 参数描述
+ * @return void
+ */
+export const navigateToUsedCarDetails = (pageParams) => {
+  Taro.navigateTo({
+    url: `/pages/used_car_details/index?carSourceId=${pageParams.carSourceId}`
   })
 }
