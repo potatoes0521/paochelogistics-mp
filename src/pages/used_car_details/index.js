@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 10:52:25
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 16:46:13
+ * @LastEditTime: 2020-02-26 11:13:03
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -51,7 +51,6 @@ class UsedCarDetails extends Component {
     })
   }
   bannerChange(event) {
-    console.log('event', event)
     this.setState({
       swiperIndex: event.detail.current + 1
     })
