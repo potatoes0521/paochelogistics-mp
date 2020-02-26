@@ -3,7 +3,7 @@
  * @description: 没有订单的样式
  * @Date: 2019-09-29 15:00:46
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 12:26:41
+ * @LastEditTime: 2020-02-26 15:21:06
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -33,7 +33,8 @@ export default class EmptyData extends Component {
     let {
       pageType,
       needCheck,
-      userInfo
+      userInfo,
+      usedType
     } = this.props
     switch (pageType) {
       case 'offer':
@@ -69,7 +70,7 @@ export default class EmptyData extends Component {
           this.props.onNoRealName()
         } else {
           Taro.navigateTo({
-            url: `/pages/used_car_publish/index?pageType=publish`
+            url: `/pages/used_car_publish/index?pageType=publish&usedType=${usedType}`
           })
         }
         break;

@@ -3,7 +3,7 @@
  * @description: 按钮组的显示控制
  * @Date: 2019-12-13 15:09:48
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-24 10:03:17
+ * @LastEditTime: 2020-02-26 14:38:04
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -100,7 +100,11 @@ const toolButtons = [
   },
   {
     toolKey: 'paoche_carsource',
-    name: '车源'
+    name: '二手车车源'
+  },
+  {
+    toolKey: 'paoche_new_carsource',
+    name: '新车车源'
   }
 ]
 

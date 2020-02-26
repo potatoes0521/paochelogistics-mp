@@ -3,7 +3,7 @@
  * @description: 发布车源按钮
  * @Date: 2020-02-18 15:34:37
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-26 11:57:44
+ * @LastEditTime: 2020-02-26 15:00:17
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -34,6 +34,7 @@ class FloatBtn extends Component {
       needCheck,
       usedType
     } = this.props
+    console.log('usedType', usedType)
     if (needCheck && !userInfo.realNameAuthStatus) {
       this.props.onNoRealName()
     } else {

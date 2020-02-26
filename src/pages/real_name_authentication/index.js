@@ -3,7 +3,7 @@
  * @description: 实名认证页面
  * @Date: 2019-11-04 10:29:09
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-26 14:06:43
+ * @LastEditTime: 2020-02-26 15:26:49
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -122,7 +122,7 @@ class RealName extends Component {
         let sendDataImage = {
           virthPath: imageUrl
         }
-        deleteImage(sendDataImage)
+        deleteImage(sendDataImage, this)
         Taro.showToast({
           title: '识别失败,请换一张试试~',
           icon: 'none',

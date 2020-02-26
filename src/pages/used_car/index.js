@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-17 12:28:08
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-26 11:58:35
+ * @LastEditTime: 2020-02-26 15:20:27
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -50,6 +50,7 @@ class UsedCar extends Component {
 
   componentDidShow() {
     this.pageParams = this.$router.params
+    console.log(this.pageParams)
     this.usedCarPage = 1
     this.usedCarFlag = false
     this.setState({
@@ -317,7 +318,7 @@ class UsedCar extends Component {
                 <FloatBtn needCheck usedType={this.pageParams.usedType} onNoRealName={this.showRealNameModal.bind(this)}></FloatBtn>
               </Block>
               :
-              <EmptyData pageType='carList' userInfo={userInfo} needCheck onNoRealName={this.showRealNameModal.bind(this)}></EmptyData>
+              <EmptyData pageType='carList' usedType={this.pageParams.usedType} userInfo={userInfo} needCheck onNoRealName={this.showRealNameModal.bind(this)}></EmptyData>
           }
         </View>
         {

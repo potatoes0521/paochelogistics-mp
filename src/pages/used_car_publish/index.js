@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 14:00:58
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-26 14:05:50
+ * @LastEditTime: 2020-02-26 15:26:39
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -64,6 +64,7 @@ class UsedCarPublish extends Component {
 
   componentDidMount() {
     this.pageParams = this.$router.params
+    console.log(this.pageParams, '参数')
     if (this.pageParams.pageType === 'edit') {
       this.getCarSourceDetails()
     }
@@ -229,7 +230,7 @@ class UsedCarPublish extends Component {
     let sendData = {
       virthPath: img
     }
-    deleteImage(sendData)
+    deleteImage(sendData, this)
     this.setState({carImg})
   }
   upLoadImage() { 
@@ -323,7 +324,8 @@ class UsedCarPublish extends Component {
         continue
       }
       // 如果是新车  没有上牌时间和里程数
-      if ((+this.pageParams.usedType === 1 && i === 'mileage') || (+this.pageParams.usedType === 1 && i === 'onTheCardTime')) {
+      console.log('i, this.pageParams.usedType', i, this.pageParams.usedType)
+      if ((+this.pageParams.usedType == 1 && i === 'mileage') || (+this.pageParams.usedType == 1 && i === 'onTheCardTime')) {
         continue
       }
       // if (this.pageParams.pageType !== 'edit' && i === 'carSourceId') {
