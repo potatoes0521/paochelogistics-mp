@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 14:00:58
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-26 15:26:39
+ * @LastEditTime: 2020-02-26 15:37:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -133,8 +133,10 @@ class UsedCarPublish extends Component {
     api.car.getCarSourceDetails(sendData, this).then(res => {
       if (!res) return
       res.carPrice = res.carPrice / 100
-      res.mileage = res.mileage / 100
-      res.onTheCardTime = res.onTheCardTime.split('-01T')[0]
+      if (this.pageParams.usedType == 2) { 
+        res.mileage = res.mileage / 100
+        res.onTheCardTime = res.onTheCardTime.split('-01T')[0]
+      }
       res.brandName = res.masterBrandName
       res.carImg = res.imgUrls
       res.userId = res.userId
