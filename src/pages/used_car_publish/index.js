@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 14:00:58
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-26 15:37:00
+ * @LastEditTime: 2020-02-27 10:21:20
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -230,7 +230,7 @@ class UsedCarPublish extends Component {
     let {carImg} = this.state
     const img = carImg.splice(index, 1)
     let sendData = {
-      virthPath: img
+      virthPath: img[0]
     }
     deleteImage(sendData, this)
     this.setState({carImg})
