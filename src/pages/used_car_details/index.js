@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 10:52:25
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-26 14:16:54
+ * @LastEditTime: 2020-02-27 10:13:11
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -200,6 +200,13 @@ class UsedCarDetails extends Component {
               }
             </View>
             <View className='details-info'>
+              {
+                usedCarDetailsInfo.usedType == 1 && (
+                  <View className='new-car-wrapper'>
+                    <View className='new-car-tips'>新车</View>
+                  </View>
+                )
+              }
               <Text className='details-title' space='ensp'>{usedCarDetailsInfo.masterBrandName || ''} </Text>
               <Text className='details-title' space='ensp'>{usedCarDetailsInfo.carSerial || ''} </Text>
               <Text className='details-title' space='ensp'>{usedCarDetailsInfo.yearType || ''}款 </Text>
