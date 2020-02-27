@@ -3,8 +3,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2020-02-03 15:42:18
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-14 14:54:51
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-26 16:02:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -114,10 +114,10 @@ export default class Tool extends Component {
             <View className='tool-wrapper'>
               <View className='tool-title-wrapper'>
                 <Text className='tool-title'>工具</Text>
-                <View className='tool-more-wrapper' onClick={this.navigatorToTool.bind(this, 'page')}>
+                {/* <View className='tool-more-wrapper' onClick={this.navigatorToTool.bind(this, 'page')}>
                   <Text className='tool-more'>更多工具</Text>
                   <Text className='iconfont iconxiangyouxuanzejiantoux icon-right-style'></Text>
-                </View>
+                </View> */}
               </View>
               <View className='tool-grid-wrapper'>
                 {gridListRender}
