@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-03 15:42:18
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-26 16:02:00
+ * @LastEditTime: 2020-02-27 12:15:14
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -75,7 +75,7 @@ export default class Tool extends Component {
                 const keys = ite
                 return (
                   <View className='tool-grid-item' onClick={this.navigatorToTool.bind(this, ite)} key={keys}>
-                    <Image className='tool-grid-item-image' src={ite.logo}></Image>
+                    <Image className='tool-grid-item-image' src={ite.smallLogo}></Image>
                     <Text className='tool-grid-item-text'>{ite.toolName}</Text>
                   </View>
                 )

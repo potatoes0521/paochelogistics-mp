@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-04 14:53:48
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 17:46:47
+ * @LastEditTime: 2020-02-27 12:14:59
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -62,7 +62,7 @@ class Tool extends Component {
       })
       return (
         <View className={itemClassName} onClick={this.navigatorToTool.bind(this, item)} key={key}>
-          <Image className='tool-grid-item-image' src={item.logo}></Image>
+          <Image className='tool-grid-item-image' src={item.smallLogo}></Image>
           <Text className='tool-grid-item-text'>{item.toolName}</Text>
         </View>
       )
