@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-17 12:28:08
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-26 15:20:27
+ * @LastEditTime: 2020-02-27 10:19:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -47,7 +47,18 @@ class UsedCar extends Component {
       usedType: 2
     }
   }
-
+  componentDidMount() { 
+    const params = this.$router.params
+    let title = ''
+    if (params.usedType == 1) {
+      title = '新车车源'
+    } else {
+      title = '二手车车源'
+    }
+    Taro.setNavigationBarTitle({
+      title,
+    })
+  }
   componentDidShow() {
     this.pageParams = this.$router.params
     console.log(this.pageParams)
