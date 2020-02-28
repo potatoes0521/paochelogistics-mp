@@ -3,8 +3,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2020-02-03 15:11:48
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-04 11:22:10
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-02-28 13:41:44
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -72,6 +72,7 @@ export default class index extends Component {
       receiveCityName,
       sendCityName,
       sendCityId,
+      type
     } = this.props
     if (!sendCityName) {
       this.toast('请选择发车城市')
@@ -87,14 +88,17 @@ export default class index extends Component {
       sendCityName,
       sendCityId,
     }
-    console.log(sendData)
     let str = ''
     for (let i in sendData) {
       str += i + '=' + encodeURIComponent(sendData[i]) + '&'
     }
-    Taro.navigateTo({
-      url: `/pages/push_offer/index?${str}`
-    })
+    if (type === 'offer' ) { 
+      Taro.navigateTo({
+        url: `/pages/push_offer/index?${str}`
+      })
+    } else {
+      this.props.onSubmit()
+    }
   }
 
   toast(errMsg) {
@@ -175,9 +179,12 @@ index.defaultProps = {
   receiveCityName: '',
   sendCityId: 0, // 发车地址ID
   sendCityName: '',
+  type: 'offer',
+  onSubmit: () => {}
 }
 
 index.propTypes = {
   receiveCityName: PropTypes.string,
   sendCityName: PropTypes.string,
+  onSubmit: PropTypes.func
 }
