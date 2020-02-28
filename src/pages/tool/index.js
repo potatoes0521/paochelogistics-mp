@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-04 14:53:48
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-27 12:14:59
+ * @LastEditTime: 2020-02-28 13:36:03
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,7 +13,7 @@ import { View, Image, Text } from '@tarojs/components'
 import classNames from 'classnames'
 import { connect } from '@tarojs/redux'
 import api from '@api/index.js'
-import navigatorToChannel from '@utils/navigator_to_channel.js'
+import {navigatorToChannel} from '@utils/navigator_to_channel.js'
 import { handleToolButtons } from '../../config/button_config.js'
 
 import './index.styl'
@@ -47,6 +47,7 @@ class Tool extends Component {
    * @return void
    */
   navigatorToTool(item) {
+    console.log('item', item)
     navigatorToChannel(item)
   }
   config = {
