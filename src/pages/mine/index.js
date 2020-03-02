@@ -3,7 +3,7 @@
  * @description: 我的
  * @Date: 2019-09-20 13:24:52
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-26 14:15:01
+ * @LastEditTime: 2020-03-02 12:12:17
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -21,6 +21,7 @@ import aboutImage from "@img/mine/about.png"
 import customerImage from "@img/mine/customer.png"
 import transportImage from "@img/mine/transport.png"
 import toolImage from "@img/mine/tool.png"
+import searchLineImage from "@img/mine/line_price.png"
 // import idCardImage from "@img/mine/id_card.png"
 import './index.styl'
 
@@ -108,6 +109,19 @@ class Mine extends Component {
                     <Image src={transportImage}></Image>
                   </View>
                   <View className='item-name'>运力管理</View>
+                </View>
+                <View className='list-right iconfont iconxiangyouxuanzejiantoux'></View>
+              </View>
+            )
+          }
+          {
+            userInfo.userType === 0 && (
+              <View className='list-item' onClick={() => this.navigatorPage('search_line')}>
+                <View className='list-left'>
+                  <View className='icon-img'>
+                    <Image src={searchLineImage}></Image>
+                  </View>
+                  <View className='item-name'>线路价格查询</View>
                 </View>
                 <View className='list-right iconfont iconxiangyouxuanzejiantoux'></View>
               </View>

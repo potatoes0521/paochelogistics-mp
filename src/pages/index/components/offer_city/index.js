@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-03 15:11:48
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-28 13:41:44
+ * @LastEditTime: 2020-03-02 12:24:36
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -35,6 +35,9 @@ export default class index extends Component {
    * @return void
    */
   chooseCity(pageName = 'choose_start_city') {
+    if (this.props && this.props.onChooseNewCity) {
+      this.props.onChooseNewCity()
+    }
     switch (pageName) {
       case 'choose_start_city':
         Taro.navigateTo({
@@ -180,11 +183,13 @@ index.defaultProps = {
   sendCityId: 0, // 发车地址ID
   sendCityName: '',
   type: 'offer',
-  onSubmit: () => {}
+  onSubmit: () => {},
+  onChooseNewCity: () => {},
 }
 
 index.propTypes = {
   receiveCityName: PropTypes.string,
   sendCityName: PropTypes.string,
-  onSubmit: PropTypes.func
+  onSubmit: PropTypes.func,
+  onChooseNewCity: PropTypes.func
 }

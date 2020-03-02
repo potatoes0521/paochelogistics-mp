@@ -3,7 +3,7 @@
  * @description: 没有订单的样式
  * @Date: 2019-09-29 15:00:46
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-26 15:21:06
+ * @LastEditTime: 2020-03-02 12:08:37
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -118,6 +118,11 @@ export default class EmptyData extends Component {
         text = '去发布'
         tips = '暂无车源发布记录'
         break;
+      case 'searchLine':
+        imgSrc = noCarDataImg
+        text = ''
+        tips = '暂无该线路价格记录'
+        break;
       default:
         imgSrc = noOfferDataImg
         return
@@ -136,10 +141,14 @@ export default class EmptyData extends Component {
             src={imgSrc}
           ></Image>
           <View className='tips'>{tips}</View>
-          <View
-            className='btn'
-            onClick={this.navigatorTo}
-          >{text}</View>
+          {
+            text ? 
+              <View
+                className='btn'
+                onClick={this.navigatorTo}
+              >{text}</View>
+              : null
+          }
         </View>
       </View>
     )
