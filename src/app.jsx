@@ -113,7 +113,8 @@ class _App extends Component {
       }
     },
     navigateToMiniProgramAppIdList: [
-      "wx1f1ea04b716771be"
+      "wx1f1ea04b716771be",
+      "wx3c23f726e516e0a0"
     ]
   }
 
