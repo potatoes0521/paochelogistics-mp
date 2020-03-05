@@ -3,7 +3,7 @@
  * @description: 按钮组的显示控制
  * @Date: 2019-12-13 15:09:48
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-26 14:38:04
+ * @LastEditTime: 2020-03-05 10:00:29
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -105,7 +105,11 @@ const toolButtons = [
   {
     toolKey: 'paoche_new_carsource',
     name: '新车车源'
-  }
+  },
+  {
+    toolKey: 'paoche_usedcar_price_eval',
+    name: '二手车估值'
+  },
 ]
 
  /**
@@ -123,9 +127,6 @@ export const handleToolButtons = (buttons) => {
   const data = _differenceBy(buttons, arrDiffData, "toolKey");
   let returnData = [...notCheckData, ...data]
   returnData.sort(compare('orderNum'));
-  console.log('not', notCheckData)
-  console.log('data', data)
-  console.log('returnData', returnData)
   return returnData
 }
 
