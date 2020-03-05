@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-03 15:42:18
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-27 12:15:14
+ * @LastEditTime: 2020-03-05 09:58:33
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -46,8 +46,9 @@ export default class Tool extends Component {
     let { toolList } = this.props
     let newArray = []
     if (toolList && toolList.length > 2) {
-      for (var i = 0; i < toolList.length; i += 3) {
-        newArray.push(toolList.slice(i, i + 3));
+      const step = toolList.length % 4 === 0 ? 4 : 3
+      for (var i = 0; i < toolList.length; i += step) {
+        newArray.push(toolList.slice(i, i + step));
       }
     }
     // 工具swiper列表
