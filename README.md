@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 项目描述文件
  * @Date: 2019-08-14 10:25:22
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-10 11:06:13
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-03-05 12:16:55
  -->
 ## 跑车帮小程序
  
@@ -191,3 +191,12 @@ taro update project
 * 2.驿站人员运力管理
 * 3.工具页面
 * 4.首页新增工具
+
+### 1.0.2
+* 1.二手车车源模块上线
+* 2.新车车源模块上线
+* 3.发票模块处理
+
+### 1.0.3
+* 1.线路价格查询
+* 2.工具模块UI优化  兼容4个和3个情况的UI
