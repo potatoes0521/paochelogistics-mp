@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2020-02-19 15:10:11
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-26 15:40:32
+ * @LastEditTime: 2020-03-11 12:35:28
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -89,7 +89,11 @@ class UsedCarItem extends Component {
             <Text className='car-title'>{item.carBasic || ''}</Text>
           </View>
           <View className='car-des'>
-            <Text className='car-des-time'>{item.yearType || ''}年</Text>
+            {
+              item.onTheCardTimeDesc ? 
+                <Text className='car-des-time'>{item.onTheCardTimeDesc || ''}年</Text>
+                : null
+            }
             {
               item.mileage ? 
                 <Block>

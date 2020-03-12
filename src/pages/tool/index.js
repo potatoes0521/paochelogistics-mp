@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-04 14:53:48
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-05 12:07:37
+ * @LastEditTime: 2020-03-05 14:18:52
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -59,7 +59,7 @@ class Tool extends Component {
     const gridListRender = toolList.map((item, index) => {
       const key = item.toolId
       const itemClassName = classNames('tool-grid-item', {
-        'grid-item-right-border': toolList.length % 4 !== 0 ? index % 3 !== 2 : index % 4 !== 0,
+        'grid-item-right-border': toolList.length % 4 !== 0 ? index % 3 !== 2 : ((index + 1) % 4 !== 0),
         'tool-grid-item-shot': toolList.length % 4 === 0,
       })
       return (
