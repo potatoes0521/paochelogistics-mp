@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-05 14:03:22
+ * @LastEditTime: 2020-03-16 17:56:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -79,7 +79,7 @@ class Index extends Component {
   }
   async handleWXUserInfo() {
     let wxUserInfo = await getUserInfo()
-    if (!wxUserInfo.nickName) return
+    if (!wxUserInfo.nickName || !wxUserInfo.iv) return
     Actions.changeUserInfo(
       Object.assign({}, wxUserInfo, {
         userPhoto: wxUserInfo.avatarUrl,

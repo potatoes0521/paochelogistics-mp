@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-03 15:11:48
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-02 12:24:36
+ * @LastEditTime: 2020-03-16 17:36:15
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -57,6 +57,9 @@ export default class index extends Component {
     let {
       userInfo
     } = e.target
+    userInfo.signature = e.target.signature
+    userInfo.iv = e.target.iv
+    userInfo.encryptedData = e.target.encryptedData
     Actions.changeUserInfo(
       Object.assign({}, userInfo, {
         nickName: userInfo.nickName,
@@ -165,7 +168,7 @@ export default class index extends Component {
               </View>
             </View>
             {
-              !userInfo.nickName ? 
+              !userInfo.nickName || !userInfo.iv ? 
                 <Button type='button' openType='getUserInfo' lang='zh_CN' onGetUserInfo={this.getUserInfo} className='submit-btn'>立即询价</Button>
                 :
                 <Button type='button' className='submit-btn' onClick={this.submitOffer}>立即询价</Button>

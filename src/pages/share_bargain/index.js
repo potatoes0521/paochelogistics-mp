@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 分享砍价
  * @Date: 2019-11-05 13:24:34
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-14 13:37:24
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-03-16 17:33:15
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -223,6 +223,9 @@ class ShareBargain extends Component {
           })
         } else { // 获取不到授权的点击这个按钮会获取授权
           const wxUserInfo = e.target.userInfo
+          wxUserInfo.signature = e.target.signature
+          wxUserInfo.iv = e.target.iv
+          wxUserInfo.encryptedData = e.target.encryptedData
           if (!wxUserInfo) {
             Taro.hideLoading()
             Taro.showToast({

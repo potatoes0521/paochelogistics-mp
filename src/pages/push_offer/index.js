@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-06 11:17:37
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-19 11:45:15
+ * @LastEditTime: 2020-03-16 17:36:31
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -344,12 +344,16 @@ class Index extends Component {
    */
   getUserInfo(e) { 
     let { userInfo } = e.target
+    userInfo.signature = e.target.signature
+    userInfo.iv = e.target.iv
+    userInfo.encryptedData = e.target.encryptedData
     Actions.changeUserInfo(
       Object.assign({}, userInfo, {
         nickName: userInfo.nickName,
         userPhoto: userInfo.avatarUrl,
       })
     )
+    console.log('userInfo', userInfo)
     this.submitOffer()
   }
   onShareAppMessage() {
@@ -563,7 +567,7 @@ class Index extends Component {
         </NoTitleCard>
         {/* disabled={disabled}  */}
         {
-          !userInfo.nickName ? 
+          !userInfo.nickName || !userInfo.iv ?
             <Button type='button' openType='getUserInfo' lang='zh_CN' onGetUserInfo={this.getUserInfo} className='submit-btn'>立即询价</Button>
             :
             <Button type='button' className='submit-btn' onClick={this.submitOffer}>立即询价</Button>

@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 注册页面
  * @Date: 2019-08-22 11:58:25
- * @LastEditors  : guorui
- * @LastEditTime : 2020-01-14 13:36:33
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-03-16 17:31:02
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -120,6 +120,9 @@ class usePhoneNumberRegister extends Component {
       return
     }
     const wxUserInfo = e.target.userInfo
+    wxUserInfo.signature = e.target.signature
+    wxUserInfo.iv = e.target.iv
+    wxUserInfo.encryptedData = e.target.encryptedData
     if (!wxUserInfo) {
       Taro.showToast({
         title: '需要获取一下您的头像和昵称哦~',

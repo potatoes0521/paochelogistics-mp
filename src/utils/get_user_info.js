@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 获取授权
  * @Date: 2019-11-07 13:45:09
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-01-06 11:15:20
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-03-16 17:42:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -37,7 +37,11 @@ export const getUserInfo = () => {
     Taro.getUserInfo({
       lang: 'zh_CN',
       success: (res) => {
-        resolve(res.userInfo)
+        let userInfo = res.userInfo
+        userInfo.signature = res.signature
+        userInfo.iv = res.iv
+        userInfo.encryptedData = res.encryptedData
+        resolve(userInfo)
       },
       fail: () => {
         resolve(false)

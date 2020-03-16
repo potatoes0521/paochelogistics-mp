@@ -3,7 +3,7 @@
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-26 14:02:09
+ * @LastEditTime: 2020-03-16 17:58:03
  */
 
 // 默认请求连接
@@ -36,6 +36,13 @@ export default {
       data = Object.assign({}, {
         nickName: encodeURIComponent(userInfo.nickName),
         userPhoto: userInfo.userPhoto
+      }, data)
+    }
+    if (userInfo.iv) { // && userInfo.signature && userInfo.encryptedData
+      data = Object.assign({}, {
+        signature: userInfo.signature,
+        iv: userInfo.iv,
+        encryptedData: userInfo.encryptedData
       }, data)
     }
     for (let i in data) { 
