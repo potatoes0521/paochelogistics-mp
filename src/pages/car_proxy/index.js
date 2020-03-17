@@ -1,0 +1,46 @@
+/*
+ * @Author: liuYang
+ * @description: 请填写描述信息
+ * @path: 引入路径
+ * @Date: 2020-03-17 16:11:16
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-03-17 16:12:30
+ * @mustParam: 必传参数
+ * @optionalParam: 选传参数
+ */
+import Taro, { Component } from '@tarojs/taro'
+import { View } from '@tarojs/components'
+// import classNames from 'classnames'
+import { connect } from '@tarojs/redux'
+// import api from '@api/index.js'
+
+import './index.styl'
+
+class CarProxy extends Component { 
+
+  constructor(props) {
+    super(props)
+    this.state={}
+  }
+
+  componentDidMount() {
+  }
+
+  config = {
+    navigationBarTitleText: '我的' 
+  }
+
+  render() {
+    return (
+      <View></View>
+    )
+  }
+
+}
+
+const mapStateToProps = (state) => {
+  return {
+    userInfo: state.user_msg.userInfo
+  }
+}
+export default connect(mapStateToProps)(CarProxy)
