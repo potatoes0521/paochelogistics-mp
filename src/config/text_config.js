@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-09-12 11:17:44
- * @LastEditors: guorui
- * @LastEditTime: 2020-02-20 14:25:20
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-03-18 11:07:45
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -59,6 +59,25 @@ export const orderTabs = [
   },
   {
     label: '待交车',
+    id: 2
+  },
+  {
+    label: '全部',
+    id: 3
+  }
+]
+
+export const carProxyTabs = [
+  {
+    label: '待付款',
+    id: 0
+  },
+  {
+    label: '办理中',
+    id: 1
+  },
+  {
+    label: '已完成',
     id: 2
   },
   {
