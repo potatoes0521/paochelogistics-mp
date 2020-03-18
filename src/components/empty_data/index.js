@@ -3,7 +3,7 @@
  * @description: 没有订单的样式
  * @Date: 2019-09-29 15:00:46
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-02 12:08:37
+ * @LastEditTime: 2020-03-18 11:54:52
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -74,6 +74,11 @@ export default class EmptyData extends Component {
           })
         }
         break;
+      case 'car_proxy':
+        Taro.navigateTo({
+          url: '/pages/car_proxy_publish/index?pageType=publish'
+        })
+        break;
       default:
         Taro.switchTab({
           url: '/pages/index/index'
@@ -122,6 +127,11 @@ export default class EmptyData extends Component {
         imgSrc = noCarDataImg
         text = ''
         tips = '暂无该线路价格记录'
+        break;
+      case 'car_proxy':
+        imgSrc = noCarDataImg
+        text = '车务代办'
+        tips = '亲，您还没有相关订单哦～'
         break;
       default:
         imgSrc = noOfferDataImg
