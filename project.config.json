@@ -162,6 +162,36 @@
           "name": "车源发布",
           "pathName": "pages/used_car_publish/index",
           "query": ""
+        },
+        {
+          "id": -1,
+          "name": "车务列表",
+          "pathName": "pages/car_proxy/index",
+          "query": ""
+        },
+        {
+          "id": -1,
+          "name": "车务发布",
+          "pathName": "pages/car_proxy_publish/index",
+          "query": ""
+        },
+        {
+          "id": -1,
+          "name": "车务详情",
+          "pathName": "pages/car_proxy_details/index",
+          "query": ""
+        },
+        {
+          "id": -1,
+          "name": "车务付款成功",
+          "pathName": "pages/car_proxy_pay_success/index",
+          "query": ""
+        },
+        {
+          "id": -1,
+          "name": "车务退款",
+          "pathName": "pages/car_proxy_pay_refund/index",
+          "query": ""
         }
 			]
 		}
