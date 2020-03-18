@@ -46,28 +46,48 @@ class _App extends Component {
       'pages/push_offer/index',
       'pages/place_order/index',
       'pages/about/index',
+      // 个人信息
       'pages/mine_info/index',
       'pages/mine_edit/index',
+      // 客户
       'pages/customer_info/index',
       'pages/customer_details/index',
       'pages/customer_edit/index',
+      // 运力模块
       'pages/transport_info/index',
-      'pages/real_name_authentication/index',
       'pages/transport_edit/index',
+      // 实名认证
+      'pages/real_name_authentication/index',
       'pages/choose_city/index',
+      // 注册
       'pages/register/index',
+      // 支付详情
       'pages/pay_details/index',
+      // 支付成功
       'pages/pay_success/index',
+      // 选择项
       'pages/choose_item/index',
+      // 备注
       'pages/remark/index',
+      // 分享砍价
       'pages/share_bargain/index',
       'pages/webview/index',
+      // 工具
       'pages/tool/index',
+      // 进入小程序内部页面检测
       'pages/testing/index',
+      // 车源
       'pages/used_car/index',
       'pages/used_car_details/index',
       'pages/used_car_publish/index',
+      // 搜索热门线路价格
       'pages/search_line/index',
+      // 车务
+      'pages/car_proxy/index',
+      'pages/car_proxy_details/index',
+      'pages/car_proxy_pay_refund/index',
+      'pages/car_proxy_pay_success/index',
+      'pages/car_proxy_publish/index',
     ],
     window: {
       backgroundTextStyle: 'light',
