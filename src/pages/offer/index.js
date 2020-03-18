@@ -3,7 +3,7 @@
  * @description: 询价单页面
  * @Date: 2019-09-20 13:24:22
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-09 09:46:04
+ * @LastEditTime: 2020-03-18 11:03:14
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,13 +14,10 @@ import {
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import Tabs from '@c/tabs/index.js'
-import OfferItem from './components/offer_item/index.js'
-// eslint-disable-next-line import/first
 import EmptyData from '@c/empty_data/index.js'
-// eslint-disable-next-line import/first
 import { offerTabs } from '@config/text_config.js'
-// eslint-disable-next-line import/first
 import api from '@api/index.js'
+import OfferItem from './components/offer_item/index.js'
 import './index.styl'
 
 class Offer extends Component {
