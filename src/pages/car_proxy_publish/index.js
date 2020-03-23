@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-17 16:11:16
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-23 17:31:39
+ * @LastEditTime: 2020-03-23 17:33:42
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -145,7 +145,6 @@ class CarProxyPublish extends Component {
     return (
       <View className='page-wrapper'>
         <View className='page-main'>
-          <View className='top-bg-img'></View>
           <View className='main-wrapper'>
             <View className='public-wrapper'>
               <View className='public-item'>
