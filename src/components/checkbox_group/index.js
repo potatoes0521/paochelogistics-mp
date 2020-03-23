@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-09-27 11:02:36
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-04 11:20:59
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-03-23 11:44:11
  * @mustParam: 必传参数
  *    options  选项组   数组形式  必须有id 和   label
  *    在选中后会返回修改后的options数据  在父组件需要一个变量把修改后的options再传进来解决初始化的问题
