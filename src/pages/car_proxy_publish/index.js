@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-17 16:11:16
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-23 14:07:36
+ * @LastEditTime: 2020-03-23 17:31:39
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -23,7 +23,7 @@ import CallService from './components/call_service/index.js'
 
 import './index.styl'
 
-class CarProxy extends Component { 
+class CarProxyPublish extends Component { 
 
   constructor(props) {
     super(props)
@@ -241,4 +241,4 @@ const mapStateToProps = (state) => {
     userInfo: state.user_msg.userInfo
   }
 }
-export default connect(mapStateToProps)(CarProxy)
+export default connect(mapStateToProps)(CarProxyPublish)
