@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-17 16:11:16
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-23 17:33:42
+ * @LastEditTime: 2020-03-23 17:35:12
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -32,6 +32,7 @@ class CarProxyPublish extends Component {
       mobile: '',
       locationName: '',
       remark: '',
+      mailingAddress: '', // 回寄详细地址
       carProxyBusinessList: [
         {
             "id": 1,
@@ -123,6 +124,7 @@ class CarProxyPublish extends Component {
       mobile,
       locationName,
       remark,
+      mailingAddress,
       carProxyBusinessList,
     } = this.state
     const carProxyBusinessListRender = carProxyBusinessList.map(item => {
@@ -211,10 +213,14 @@ class CarProxyPublish extends Component {
                 </View>
               </View>
               <View className='textarea-wrapper'>
-                <View className='lick-placeholder-wrapper'>
-                  <View className='placeholder-class'>请输入姓名、联系方式及详细地址</View>
-                  <View className='placeholder-class'>例如：张三 18545678765 北京市海淀区定慧北里23号蓝宏中心</View>
-                </View>
+                {
+                  mailingAddress.length < 1 && (
+                    <View className='lick-placeholder-wrapper'>
+                      <View className='placeholder-class'>请输入姓名、联系方式及详细地址</View>
+                      <View className='placeholder-class'>例如：张三 18545678765 北京市海淀区定慧北里23号蓝宏中心</View>
+                    </View>
+                  )
+                }
                 <Textarea
                   className='textarea'
                   // auto-height
