@@ -3,7 +3,7 @@
  * @description: 按钮组的显示控制
  * @Date: 2019-12-13 15:09:48
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-05 10:00:29
+ * @LastEditTime: 2020-03-24 10:11:57
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -136,4 +136,36 @@ function compare(property) {
     var value2 = b[property];
     return value1 - value2;
   }
+}
+
+const carProxyDetailsButtons = [
+  {
+    key: 'payOrder',
+    name: '立即付款'
+  },
+  {
+    key: 'refund',
+    name: '申请退款'
+  },
+  {
+    key: 'submitCode',
+    name: '提交单号'
+  },
+  {
+    key: 'paid',
+    name: '确认完成'
+  },
+]
+
+/**
+ * 处理车务订单的按钮组 本地没有的  不予显示
+ * 1. 找到数据里有  本地没有的
+ * 2. 数据里有除去没有的就是有的
+ * @param {Array} buttons 后端返回的按钮组
+ * @return data 处理后的数据
+ */
+export const handleCarProxyOrderDetailsButtons = (buttons) => {
+  const arrDiffData = _differenceBy(buttons, carProxyDetailsButtons, "key");
+  const data = _differenceBy(buttons, arrDiffData, "key");
+  return data
 }
