@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-17 16:11:16
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-25 10:59:40
+ * @LastEditTime: 2020-03-25 11:07:33
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -122,6 +122,7 @@ class CarProxyDetails extends Component {
       locationName,
       proxyOrderStatus,
       proxyOrderStatusDesc,
+      proxyOrderStatusReason,
       remark,
       carProxyOrderItemRelationVoList,
       proxyOrderCode,
@@ -168,7 +169,9 @@ class CarProxyDetails extends Component {
           <View className='main-wrapper'>
             <View className='status-wrapper'>
               <Text>{proxyOrderStatusDesc || ''}</Text>
-              <Text className='small-text'>{proxyOrderStatusDesc || ''}</Text>
+              {
+                proxyOrderStatusReason && (<Text className='small-text'>{proxyOrderStatusReason || ''}</Text>)
+              }
             </View>
             <View className='public-wrapper'>
               <View className='public-item'>
