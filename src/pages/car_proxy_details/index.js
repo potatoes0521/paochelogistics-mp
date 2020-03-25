@@ -4,12 +4,17 @@
  * @path: 引入路径
  * @Date: 2020-03-17 16:11:16
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-24 10:15:25
+ * @LastEditTime: 2020-03-25 10:59:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 import Taro, { Component } from '@tarojs/taro'
-import { View } from '@tarojs/components'
+import {
+  View,
+  Text,
+  Block,
+  Input
+} from '@tarojs/components'
 import classNames from 'classnames'
 import { connect } from '@tarojs/redux'
 import api from '@api/index.js'
@@ -50,7 +55,7 @@ class CarProxyDetails extends Component {
         "carProxyItemPrice": 10000,
         "carProxyItemPriceDesc": "10000"
       }],
-      "carProxyMailingAddressList": [{
+      customerMailingData: {
         "id": 4,
         "carProxyOrderId": 4,
         "mailingLocationId": 110000,
@@ -63,7 +68,22 @@ class CarProxyDetails extends Component {
         "createTime": "2020-03-11T03:06:44.000+0000",
         "updateTime": "2020-03-11T03:06:44.000+0000",
         "isActive": 1
-      }],
+      },
+      businessMailingData: {
+        "id": 4,
+        "carProxyOrderId": 4,
+        "mailingLocationId": 110000,
+        "mailingUsername": "罗旭日222",
+        "mailingMobile": "1871000637022",
+        "mailingAddress": "蓝红中心9层22",
+        "expressNum": '',
+        "materialsBill": null,
+        "mailingType": 1,
+        "createTime": "2020-03-11T03:06:44.000+0000",
+        "updateTime": "2020-03-11T03:06:44.000+0000",
+        "isActive": 2
+      },
+      expressNum: '',
       "buttons": [
         {
           "key": "refund",
@@ -73,13 +93,24 @@ class CarProxyDetails extends Component {
           "key": "submitCode",
           "name": "确认完成"
         },
-      ]
+      ],
+      open: false
     }
   }
 
   componentDidMount() {
   }
-
+  clickOpenBtn() { 
+    this.setState({
+      open: !this.state.open
+    })
+  }
+  onExpressNumInput(e) { 
+    let { value } = e.target
+    this.setState({
+      expressNum: value
+    })
+  }
   config = {
     navigationBarTitleText: '订单详情' 
   }
@@ -96,7 +127,13 @@ class CarProxyDetails extends Component {
       proxyOrderCode,
       createTimeDesc,
       totalPriceDesc,
-      buttons
+      buttons,
+      open,
+      payTimeDesc,
+      payPriceDesc,
+      businessMailingData,
+      customerMailingData,
+      expressNum
     } = this.state
     const carProxyOrderItemRelationVoListRender = carProxyOrderItemRelationVoList.map(item => {
       const key = item.id
@@ -107,17 +144,32 @@ class CarProxyDetails extends Component {
         </View>
       )
     })
-    const bottomButtonsRender = buttons.map(item => {
+    const bottomButtonsRender = buttons && buttons.map(item => {
       const key = item.key
       return (
         <View key={key} className={key}>{item.name}</View>
       )
     })
+    const iconClassName = classNames({
+      'icon-for-bottom': !open,
+      'icon-for-top': open,
+    })
+    // 客户向业务发送的材料清单
+    const materialsBillClassName = classNames('textarea-public', {
+      'no-text': !businessMailingData.materialsBill || !businessMailingData.materialsBill.length
+    })
+    // 客户向业务发送快递单号
+    const businessExpressNumClassName = classNames('textarea-public', {
+      'no-text': !businessMailingData.expressNum || !businessMailingData.expressNum.length
+    })
     return (
       <View className='page-wrapper'>
         <View className='page-main'>
           <View className='main-wrapper'>
-            <View className='status-wrapper'>{proxyOrderStatusDesc || ''}</View>
+            <View className='status-wrapper'>
+              <Text>{proxyOrderStatusDesc || ''}</Text>
+              <Text className='small-text'>{proxyOrderStatusDesc || ''}</Text>
+            </View>
             <View className='public-wrapper'>
               <View className='public-item'>
                 <View className='public-label font-weight'>姓名</View>
@@ -138,13 +190,128 @@ class CarProxyDetails extends Component {
                 <View className='public-label font-weight'>备注</View>
                 <View className='public-content more-text'>{remark || '--'}</View>
               </View>
+              <View className='border'></View>
+              {
+                open && (
+                  <Block>
+                    <View className='public-item'>
+                      <View className='public-label font-ash'>订单编号</View>
+                      <View className='public-content font-ash'>{proxyOrderCode || ''}</View>
+                    </View>
+                    <View className='public-item'>
+                      <View className='public-label font-ash'>下单时间</View>
+                      <View className='public-content font-ash'>{createTimeDesc || ''}</View>
+                    </View>
+                    <View className='public-item'>
+                      <View className='public-label font-ash'>付款时间</View>
+                      <View className='public-content font-ash'>{payTimeDesc || ''}</View>
+                    </View>
+                    <View className='public-item'>
+                      <View className='public-label font-ash'>订单总价</View>
+                      <View className='public-content font-ash'>¥ {totalPriceDesc || ''}</View>
+                    </View>
+                    {
+                      proxyOrderStatus === 41 || proxyOrderStatus === 21 ?
+                        <View className='public-item'>
+                          <View className='public-label font-ash'>退款金额</View>
+                          <View className='public-content font-ash'>{payPriceDesc ? '¥' + payPriceDesc : '审核中'}</View>
+                        </View> : null
+                    }
+                  </Block>
+                )
+              }
+              {
+                proxyOrderStatus !== 10 && (
+                  <View className='open-btn' onClick={this.clickOpenBtn}>
+                    <Text>{ open ? '收起' : '查看更多'}</Text>
+                    <View className={iconClassName}>
+                      <Text className='iconfont iconxiangyouxuanzejiantoux icon-open'></Text>
+                    </View>
+                  </View>
+                )
+              }
+            </View>
+            <View className='public-wrapper'>
+              <View className='public-item'>
+                <View className='public-label font-weight lang-label'>所需材料</View>
+              </View>
+              <View className={materialsBillClassName}>
+                {businessMailingData.materialsBill || '业务人员更新材料清单后会向您发送消息提醒'}
+              </View>
+              <View className='public-item'>
+                <View className='public-label font-weight lang-label'>材料回寄信息</View>
+              </View>
+              <View className='textarea-public'>
+                <View>{customerMailingData.mailingUsername} {customerMailingData.mailingMobile}</View>
+                <View>{customerMailingData.mailingAddress}</View>
+              </View>
+              {
+                businessMailingData.expressNum && (
+                  <Block>
+                    <View className='public-item'>
+                      <View className='public-label font-weight lang-label'>材料回寄单号</View>
+                    </View>
+                    <View className='textarea-public'>
+                      <View className='copy-btn'>复制</View>
+                      {businessMailingData.expressNum}
+                    </View>
+                  </Block>
+                )
+              }
+              <View className='public-item'>
+                <View className='public-label font-weight lang-label'>材料邮寄信息</View>
+              </View>
+              <View className={businessExpressNumClassName}>
+                {
+                  businessMailingData.expressNum && (
+                    <View className='copy-btn'>复制</View>
+                  )
+                }
+                {
+                  businessMailingData.materialsBill ? (
+                    <Block>
+                      <View>{businessMailingData.mailingUsername} {businessMailingData.mailingMobile}</View>
+                      <View>{businessMailingData.mailingAddress}</View>
+                    </Block>
+                  ): '业务人员更新邮寄地址后会向您发送消息提醒'
+                }
+              </View>
+              {
+                !customerMailingData.expressNum ?
+                  <Block>
+                    <View className='public-item'>
+                      <View className='mast-input'>*</View>
+                      <View className='public-label font-weight lang-label'>上传材料邮寄单号</View>
+                    </View>
+                    <View className='express-num-wrapper'>
+                      <Input
+                        className='public-input'
+                        placeholder-class='placeholder-class'
+                        placeholder='请输入材料邮寄单号'
+                        value={expressNum}
+                        onInput={this.onExpressNumInput}
+                      ></Input>
+                      <View className='scan-code iconfont iconsaoyisao'></View>
+                    </View>
+                  </Block>
+                  :
+                  <Block>
+                    <View className='public-item'>
+                      <View className='public-label font-weight lang-label'>材料邮寄单号</View>
+                    </View>
+                    <View className='textarea-public'>
+                      <View className='copy-btn'>复制</View>
+                      {customerMailingData.expressNum || ''}
+                    </View>
+                  </Block>
+              }
             </View>
             {
               proxyOrderStatus === 10 && (
                 <View className='public-wrapper'>
                   <View className='public-item'>
                     <View className='public-label'>订单编号</View>
-                    <View className='public-content more-text'>{proxyOrderCode || ''}</View>
+                    <View className='public-content'>{proxyOrderCode || ''}</View>
                   </View>
                   <View className='public-item'>
                     <View className='public-label'>下单时间</View>
@@ -164,12 +331,18 @@ class CarProxyDetails extends Component {
             )
           }
         </View>
-        
-        <View className='bottom-btn-wrapper'>
-          {
-            bottomButtonsRender
-          }
-        </View>
+        {
+          proxyOrderStatus !== 21 &&
+          proxyOrderStatus !== 40 &&
+          proxyOrderStatus !== 41 &&
+          proxyOrderStatus !== 42 ? (
+            <View className='bottom-btn-wrapper'>
+              {
+                bottomButtonsRender
+              }
+            </View>
+          ) : null
+        }
       </View>
     )
   }
