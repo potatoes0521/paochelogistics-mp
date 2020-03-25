@@ -3,7 +3,7 @@
  * @description: 按钮组的显示控制
  * @Date: 2019-12-13 15:09:48
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-24 10:11:57
+ * @LastEditTime: 2020-03-24 11:25:24
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -148,11 +148,11 @@ const carProxyDetailsButtons = [
     name: '申请退款'
   },
   {
-    key: 'submitCode',
+    key: 'submitExpressNum',
     name: '提交单号'
   },
   {
-    key: 'paid',
+    key: 'finishedOrder',
     name: '确认完成'
   },
 ]
