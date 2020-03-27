@@ -104,7 +104,7 @@ class ChooseCity extends Component {
       })
   }
   getCarBrand() { 
-    api.car.getCarBrand({}, this)
+    api.carSource.getCarBrand({}, this)
       .then(res => {
         let hotData = res.hotCarMasterBrandList || []
         let allData = res.normalCarMasterBrandList || []

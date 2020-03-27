@@ -70,7 +70,7 @@ class UsedCarDetails extends Component {
     let sendData = {
       carSourceId: this.pageParams.carSourceId
     }
-    api.car.getCarSourceDetails(sendData, this).then(res => {
+    api.carSource.getCarSourceDetails(sendData, this).then(res => {
       if (!res) return
       this.setState({
         usedCarDetailsInfo: res

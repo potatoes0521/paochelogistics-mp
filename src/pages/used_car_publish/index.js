@@ -98,7 +98,7 @@ class UsedCarPublish extends Component {
       usedType
     }
     let {minePublishList} = this.state
-    api.car.getMinePublish(sendData, this).then(res => {
+    api.carSource.getMinePublish(sendData, this).then(res => {
       if (!res) return
       if (res && res.length < pageSize) {
         this.usedCarFlag = true
@@ -130,7 +130,7 @@ class UsedCarPublish extends Component {
     let sendData = {
       carSourceId: this.pageParams.carSourceId
     }
-    api.car.getCarSourceDetails(sendData, this).then(res => {
+    api.carSource.getCarSourceDetails(sendData, this).then(res => {
       if (!res) return
       res.carPrice = res.carPrice / 100
       if (this.pageParams.usedType == 2) { 
@@ -385,7 +385,7 @@ class UsedCarPublish extends Component {
     }
     delete sendData['onTheCardTimeDesc']
     console.log('sendData', sendData)
-    api.car.submitPublish(sendData, this).then(res => {
+    api.carSource.submitPublish(sendData, this).then(res => {
       if (this.pageParams.pageType === 'edit') {
         Taro.showToast({
           title: '编辑成功',

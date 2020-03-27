@@ -103,7 +103,7 @@ class UsedCar extends Component {
       sendData.carPriceSection = carPriceSection.toString()
     }
     let { usedCarListData } = this.state
-    api.car.getCarSourceList(sendData, this).then(res => {
+    api.carSource.getCarSourceList(sendData, this).then(res => {
       if(!res) return
       if (res && res.length < pageSize) {
         this.usedCarFlag = true

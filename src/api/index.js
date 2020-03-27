@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-09-05 15:02:41
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-02 11:53:13
+ * @LastEditTime: 2020-03-27 11:21:33
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -17,7 +17,7 @@ import transport from './modules/transport.js'; // 运力信息接口
 import pay from './modules/pay.js'; // 支付信息接口
 import index from './modules/index.js'; // 首页的接口
 import tool from './modules/tool.js'; // 工具的接口
-import car from './modules/car.js'; // 车源的接口
+import carSource from './modules/carSource.js'; // 车源的接口
 import statistics from './modules/statistics.js'; // 呼叫历史
 import searchLine from './modules/search_line.js';
 
@@ -31,7 +31,7 @@ export default {
   customer,
   transport,
   pay,
-  car,
+  carSource,
   statistics,
   searchLine
 }

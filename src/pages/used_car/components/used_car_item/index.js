@@ -58,7 +58,7 @@ class UsedCarItem extends Component {
           let sendData = {
             carSourceId: item.carSourceId
           }
-          api.car.soldOutMinePublish(sendData, this).then(() => {
+          api.carSource.soldOutMinePublish(sendData, this).then(() => {
             Taro.showToast({
               title: '下架成功',
               icon: 'none',
