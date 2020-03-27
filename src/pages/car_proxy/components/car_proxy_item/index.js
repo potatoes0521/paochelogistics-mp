@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-18 12:02:51
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-23 09:16:51
+ * @LastEditTime: 2020-03-27 18:10:28
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -29,6 +29,12 @@ export default class index extends Component {
   componentDidMount() {
   }
 
+  navigatorToDetails() { 
+    let { item } = this.props
+    Taro.navigateTo({
+      url: `/pages/car_proxy_details/index?id=${item.id}`
+    })
+  }
 
   render() {
     let { item } = this.props
@@ -51,7 +57,7 @@ export default class index extends Component {
       )
     }) : []
     return (
-      <View className='car-proxy-item'>
+      <View className='car-proxy-item' onClick={this.navigatorToDetails}>
         <View className='car-proxy-item-title'>
           <View className='car-proxy-item-time'>{item.createTimeDesc}</View>
           <View className='car-proxy-item-status-wrapper'>
