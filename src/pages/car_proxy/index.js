@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-17 16:11:16
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-23 09:54:10
+ * @LastEditTime: 2020-03-27 11:50:50
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -19,6 +19,7 @@ import EmptyData from '@c/empty_data/index.js'
 import CarProxyItem from './components/car_proxy_item/index.js'
 import PublishBtn from './components/publish_btn/index.js'
 import './index.styl'
+import api from '../../api/index.js'
 
 class CarProxy extends Component { 
 
@@ -26,76 +27,15 @@ class CarProxy extends Component {
     super(props)
     this.state = {
       current: 0,
-      carProxyList: [
-        {
-          "id": 4,
-          "proxyOrderCode": "CW1583903706966",
-          "createUserId": 10218,
-          "userId": 10218,
-          "userName": "罗旭日旭日",
-          "mobile": "18710006370",
-          "locationId": 110000,
-          "locationName": "北京市-北京市北京市北京市北京市",
-          "remark": "我是一条测试数据",
-          "proxyOrderStatus": 21,
-          "proxyOrderStatusDesc": "退款中",
-          "totalPrice": 10000,
-          "totalPriceDesc": "10000.00",
-          "payPrice": null,
-          "payPriceDesc": null,
-          "createTime": "2020-03-11T03:06:44.000+0000",
-          "createTimeDesc": "2020-03-11 11:06:44",
-          "updateTime": "2020-03-11T05:15:20.000+0000",
-          "updateTimeDesc": "2020-03-11 13:15:20",
-          "payTime": "2020-03-11T05:10:16.000+0000",
-          "payTimeDesc": "2020-03-11 13:10:16",
-          "carProxyOrderItemRelationVoList": [{
-            "id": 4,
-            "carProxyItemId": 1,
-            "carProxyItemName": "提档",
-            "carProxyOrderId": 4,
-            "carProxyItemPrice": 10000,
-            "carProxyItemPriceDesc": "10000"
-          }, {
-            "id": 4,
-            "carProxyItemId": 1,
-            "carProxyItemName": "提档",
-            "carProxyOrderId": 4,
-            "carProxyItemPrice": 10000,
-            "carProxyItemPriceDesc": "10000"
-          }, {
-            "id": 4,
-            "carProxyItemId": 1,
-            "carProxyItemName": "提档",
-            "carProxyOrderId": 4,
-            "carProxyItemPrice": 10000,
-            "carProxyItemPriceDesc": "10000"
-          } ,{
-            "id": 4,
-            "carProxyItemId": 1,
-            "carProxyItemName": "提档",
-            "carProxyOrderId": 4,
-            "carProxyItemPrice": 10000,
-            "carProxyItemPriceDesc": "10000"
-          }],
-          "carProxyMailingAddressList": null,
-          "buttons": [{
-              "key": "paid",
-              "name": "确认完成"
-            },
-            {
-              "key": "refund",
-              "name": "申请退款"
-            }
-          ]
-        }
-      ]
+      carProxyList: [],
     }
     this.carProxyFlag = false
     this.carProxyPage = 1
+    this.carProxyOrderStatus = 10
   }
 
-  componentDidMount() {
+  componentDidShow() {
+    this.getCarProxyList({})
   }
 
   /**
@@ -113,18 +53,79 @@ class CarProxy extends Component {
         this.handleRequest()
       })
   }
+  
   handleRequest() {
     let {current} = this.state
-    this.status = ''
-    if (current === 2) {
-      this.status = ''
+    this.carProxyOrderStatus = ''
+    if (current === 3) {
+      this.carProxyOrderStatus = ''
+    } else if(current === 2) {
+      this.carProxyOrderStatus = 30
     } else if (current === 1) {
-      this.status = 20
+      this.carProxyOrderStatus = 22
     } else if (current === 0) {
-      this.status = 10
+      this.carProxyOrderStatus = 10
     }
-    // this.getOfferList(this.status, this.offerPage)
+    this.getCarProxyList({})
   }
+
+  getCarProxyList({
+    pageNum = this.carProxyPage,
+    pageSize = 10,
+    businessType = 1,
+    carProxyOrderStatus = this.carProxyOrderStatus
+  }) { 
+    let sendData = {
+      pageNum,
+      pageSize,
+      businessType,
+      carProxyOrderStatus
+    }
+    api.carProxy.getCarProxyList(sendData, this).then(res => {
+      if (res && res.length < pageSize) {
+        this.carProxyFlag = true
+      }
+      this.carProxyPage += 1
+      let { carProxyList } = this.state
+      if (pageNum === 1) {
+        this.setState({
+          carProxyList: res
+        })
+      } else {
+        this.setState({
+          carProxyList: [...carProxyList, ...res]
+        })
+      }
+    })
+  }
+
+  /**
+   * 下拉刷新
+   * @return void
+   */
+  async onPullDownRefresh() {
+    // 显示顶部刷新图标
+    this.carProxyPage = 1
+    this.carProxyFlag = false
+    this.setState({
+      carProxyList: []
+    }, () => {
+      this.handleRequest()
+    })
+    // 停止下拉动作
+    Taro.stopPullDownRefresh();
+  }
+  
+  /**
+   * 上拉触底
+   * @return void
+   */
+  onReachBottom() {
+    console.log('触底')
+    if (this.carProxyFlag) return
+    this.handleRequest()
+  }
+
   config = {
     navigationBarTitleText: '车务订单' 
   }
