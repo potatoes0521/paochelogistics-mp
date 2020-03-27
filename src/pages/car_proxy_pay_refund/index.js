@@ -73,7 +73,7 @@ class CarProxy extends Component {
       refundReason,
       refundAmount: payPrice
     }
-    api.carProxy.refund(sendData, this).then(() => {
+    api.carProxy.carProxyRefund(sendData, this).then(() => {
       Taro.showToast({
         icon: 'none',
         title: '退款申请已提交'
