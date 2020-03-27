@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-17 16:11:16
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-27 18:06:42
+ * @LastEditTime: 2020-03-27 18:08:09
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -18,12 +18,12 @@ import {
 from '@tarojs/components'
 import classNames from 'classnames'
 import { connect } from '@tarojs/redux'
-import CallService from './components/call_service/index.js'
 import api from '@api/index.js'
 import {
   realNamePatter,
   phoneNumberPatter
 } from '@utils/patter.js'
+import CallService from './components/call_service/index.js'
 import './index.styl'
 
 class CarProxyPublish extends Component { 
