@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-09-05 15:02:41
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-27 11:21:33
+ * @LastEditTime: 2020-03-27 11:30:42
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -20,6 +20,7 @@ import tool from './modules/tool.js'; // 工具的接口
 import carSource from './modules/carSource.js'; // 车源的接口
 import statistics from './modules/statistics.js'; // 呼叫历史
 import searchLine from './modules/search_line.js';
+import carProxy from './modules/carProxy.js';
 
 export default {
   tool,
@@ -33,5 +34,6 @@ export default {
   pay,
   carSource,
   statistics,
-  searchLine
+  searchLine,
+  carProxy
 }
