@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-17 16:11:16
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-27 11:19:57
+ * @LastEditTime: 2020-03-27 11:23:34
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -30,7 +30,7 @@ class CarProxy extends Component {
 
   componentDidMount() {
     this.pageParams = this.$router.params
-    this.getOrderDetails()
+    this.getCarProxyDetails()
   }
 
   componentWillUnmount() { 
@@ -42,12 +42,12 @@ class CarProxy extends Component {
    * 获取订单详情
    * @return void
    */
-  getOrderDetails() { 
+  getCarProxyDetails() {
     let sendData = {
       carProxyOrderId: this.pageParams.id,
       businessType: 1
     }
-    api.carProxy.getOrderDetails(sendData, this).then(res => {
+    api.carProxy.getCarProxyDetails(sendData, this).then(res => {
       this.setState(res)
     })
   }
