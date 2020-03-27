@@ -3,7 +3,7 @@
  * @description: 请求方法的公共方法封装
  * @Date: 2019-08-12 17:39:29
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-16 17:58:03
+ * @LastEditTime: 2020-03-27 17:00:48
  */
 
 // 默认请求连接
@@ -46,7 +46,7 @@ export default {
       }, data)
     }
     for (let i in data) { 
-      if (data[i] === '') { 
+      if (data[i] === '' && i !== 'locationId') {
         delete data[i]
       }
     }

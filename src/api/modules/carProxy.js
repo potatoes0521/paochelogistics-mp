@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-27 11:22:16
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-27 11:29:46
+ * @LastEditTime: 2020-03-27 12:03:04
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -17,7 +17,7 @@ export default {
   },
   // 车务代办项目列表
   getCarProxyProjectList(data, that) {
-    return requestHandle.get('carproxy/itemList', data, that);
+    return requestHandle.get('carproxy/itemlist', data, that);
   },
   // 提交快递单号
   submitCarProxyExpressNum(data, that) {
@@ -29,7 +29,7 @@ export default {
   },
   // 可办理车务的城市
   getCarProxyProjectCityList(data, that) {
-    return requestHandle.get('carproxy/itemLocationList', data, that);
+    return requestHandle.get('carproxy/itemlocationlist', data, that);
   },
   // 获取车务详情
   getCarProxyDetails(data, that) {

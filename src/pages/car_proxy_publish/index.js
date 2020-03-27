@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-17 16:11:16
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-23 17:35:12
+ * @LastEditTime: 2020-03-27 18:06:42
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -19,8 +19,11 @@ from '@tarojs/components'
 import classNames from 'classnames'
 import { connect } from '@tarojs/redux'
 import CallService from './components/call_service/index.js'
-// import api from '@api/index.js'
-
+import api from '@api/index.js'
+import {
+  realNamePatter,
+  phoneNumberPatter
+} from '@utils/patter.js'
 import './index.styl'
 
 class CarProxyPublish extends Component { 
@@ -31,64 +34,65 @@ class CarProxyPublish extends Component {
       username: '',
       mobile: '',
       locationName: '',
+      locationId: '',
       remark: '',
       mailingAddress: '', // 回寄详细地址
-      carProxyBusinessList: [
-        {
-            "id": 1,
-            "proxyItemCode": "TD",
-            "proxyItemName": "提档",
-            "proxyItemPrice": 10000,
-            "proxyItemSourcePlatform": 1,
-            "createTime": "2020-03-11T02:25:35.000+0000",
-            "updateTime": "2020-03-11T02:25:35.000+0000",
-            "isActive": 1
-        },
-        {
-            "id": 2,
-            "proxyItemCode": "SP",
-            "proxyItemName": "上牌",
-            "proxyItemPrice": 20000,
-            "proxyItemSourcePlatform": 1,
-            "createTime": "2020-03-11T02:25:35.000+0000",
-            "updateTime": "2020-03-11T02:25:35.000+0000",
-            "isActive": 1
-        },
-        {
-            "id": 3,
-            "proxyItemCode": "GH",
-            "proxyItemName": "过户",
-            "proxyItemPrice": 30000,
-            "proxyItemSourcePlatform": 1,
-            "createTime": "2020-03-11T02:25:35.000+0000",
-            "updateTime": "2020-03-11T02:25:35.000+0000",
-            "isActive": 1
-        },
-        {
-            "id": 4,
-            "proxyItemCode": "DY",
-            "proxyItemName": "代办抵押",
-            "proxyItemPrice": 40000,
-            "proxyItemSourcePlatform": 1,
-            "createTime": "2020-03-11T02:25:35.000+0000",
-            "updateTime": "2020-03-11T02:25:35.000+0000",
-            "isActive": 1
-        },
-        {
-            "id": 5,
-            "proxyItemCode": "JY",
-            "proxyItemName": "代办解压",
-            "proxyItemPrice": 50000,
-            "proxyItemSourcePlatform": 1,
-            "createTime": "2020-03-11T02:25:35.000+0000",
-            "updateTime": "2020-03-11T02:25:35.000+0000",
-            "isActive": 1
-        }
-    ]
+      carProxyBusinessList: [],
+      allChooseBusinessList: [],
+      totalPrice: 0,
+      mailingLocationId: '',
+      mailingLocationName: ''
     }
+    this.pageParams = {}
+    this.timer = null
   }
 
   componentDidMount() {
+    this.handleUserMsg()
+    this.getCarProxyProjectList('130100')
+  }
+  componentWillUnmount() { 
+    if (!this.timer) return;
+    clearTimeout(this.timer)
+  }
+  handleUserMsg() { 
+    let { userInfo } = this.props
+    console.log('userInfo', userInfo)
+    if(this.pageParams.type === 'edit') { 
+  
+    } else {
+      this.setState({
+        mobile: userInfo.mobile,
+      })
+    }
+  }
+  /**
+   * 根据城市ID获取业务城市价格
+   * @param {String || Number} locationId='' 城市id
+   * @return void
+   */
+  getCarProxyProjectList(locationId='') {
+    let sendData = {
+      locationId
+    }
+    api.carProxy.getCarProxyProjectList(sendData, this).then(res => {
+      if (locationId) {
+        this.setState({
+          carProxyBusinessList: res
+        })
+      } else {
+        const data = res.map((item,index) => {
+          return {
+            id: index,
+            proxyItemName: item.proxyItemName,
+            proxyItemPrice: item.proxyItemPrice || 0
+          }
+        })
+        this.setState({
+          carProxyBusinessList: data
+        })
+      }
+    })
   }
   onUsernameInput(e) {
     let { value } = e.target
@@ -114,6 +118,117 @@ class CarProxyPublish extends Component {
       remark: value
     })
   }
+  onAddressInput(e) { 
+    let { value } = e.target
+    this.setState({
+      mailingAddress: value
+    })
+  }
+  navigatorToChooseCity() { 
+    Taro.navigateTo({
+      url: '/pages/choose_city/index?type=car_proxy'
+    })
+  }
+  /**
+   * 当业务项被选中
+   * @param {Object} item 被选中项
+   * @return void
+   */
+  carProxyProjectOnChoose(item) { 
+    if (!item.id || !item.proxyItemPrice) {
+      this.showToast('请先选择办理城市')
+      return
+    }
+    let {
+      carProxyBusinessList,
+      allChooseBusinessList,
+      totalPrice
+    } = this.state
+    carProxyBusinessList.forEach(ite => {
+      if (ite.id === item.id) {
+        if (ite.checked) {
+          ite.checked = false
+          allChooseBusinessList = allChooseBusinessList.filter(it => it.id !== item.id)
+        } else {
+          ite.checked = true
+          allChooseBusinessList.push(ite)
+        }
+      }
+    })
+    totalPrice = allChooseBusinessList.reduce((prev, ite) => prev + ite.proxyItemPrice, 0)
+    this.setState({
+      carProxyBusinessList,
+      allChooseBusinessList,
+      totalPrice
+    })
+  }
+  submitOrder() { 
+    let {
+      username,
+      mobile,
+      locationId,
+      allChooseBusinessList,
+      mailingLocationId,
+      mailingAddress,
+      totalPrice,
+      remark,
+    } = this.state
+    const carProxyItemIds = allChooseBusinessList.map(item => item.id)
+    let testingList = {
+      username: '请填写姓名',
+      mobile: '请填写手机号',
+      locationId: '请选择办理城市',
+      carProxyItemIds: '至少选择一个代办项~',
+      mailingLocationId: '请选择回寄地址',
+      mailingAddress: '请填写详细回寄地址',
+      totalPrice: '总价有误',
+    }
+    let breakName = ''
+    for (let i in testingList) {
+      if (!this.state[i]) { 
+        breakName = i
+        break
+      }
+    }
+    if (breakName) {
+      this.showToast(testingList[breakName])
+      return
+    }
+    if (!(realNamePatter).test(username)) {
+      this.showToast('请填写正确格式姓名')
+      return
+    }
+    if (!(phoneNumberPatter).test(mobile)) {
+      this.showToast('请填写正确格式手机号')
+      return
+    }
+    
+    let sendData = {
+      username,
+      mobile,
+      locationId,
+      carProxyItemIds,
+      mailingType: 1,
+      mailingLocationId,
+      mailingAddress,
+      totalPrice,
+      remark,
+    }
+    console.log('sendData', sendData)
+    api.carProxy.publishCarProxy(sendData, this).then(() => {
+      this.showToast('发布成功')
+      this.timer = setTimeout(() => {
+        Taro.navigateBack()
+      }, 1800)
+    })
+  }
+  showToast(str) {
+    Taro.showToast({
+      title: str,
+      icon: 'none',
+      duration: 2000
+    })
+  }
   config = {
     navigationBarTitleText: '车务代办' 
   }
@@ -126,6 +241,9 @@ class CarProxyPublish extends Component {
       remark,
       mailingAddress,
       carProxyBusinessList,
+      allChooseBusinessList,
+      mailingLocationName,
+      totalPrice
     } = this.state
     const carProxyBusinessListRender = carProxyBusinessList.map(item => {
       const key = item.id
@@ -133,7 +251,7 @@ class CarProxyPublish extends Component {
         'checked iconfont iconduigoux': item.checked
       })
       return (
-        <View className='public-item' key={key}>
+        <View className='public-item' key={key} onClick={()=> this.carProxyProjectOnChoose(item)}>
           <View className='public-label'>{item.proxyItemName}</View>
           <View className='public-content'>
             {
@@ -175,14 +293,14 @@ class CarProxyPublish extends Component {
               </View>
               <View className='public-item'>
                 <View className='public-label'>办理城市</View>
-                <View className='public-content'>
-                  <Input
-                    className='public-input'
-                    placeholder-class='placeholder-class'
-                    placeholder='请填写手机号'
-                    value={locationName}
-                    onInput={this.onLocationNameInput}
-                  ></Input>
+                <View className='public-content' onClick={this.navigatorToChooseCity}>
+                  {
+                    locationName ?
+                      <Text className='public-price'>{locationName}</Text>
+                      :
+                      <Text className='public-no-check-text'>请选择城市</Text>
+                  }
+                  <Text className='iconfont iconxiangyouxuanzejiantoux icon-style-right'></Text>
                 </View>
               </View>
             </View>
@@ -208,7 +326,12 @@ class CarProxyPublish extends Component {
                 <View className='important'>*</View>
                 <View className='public-label lang-label'>材料回寄信息</View>
                 <View className='public-content'>
-                  <Text className='public-no-check-text'>请选择省-市-区/县</Text>
+                  {
+                    mailingLocationName ?
+                      <Text className='public-no-check-text'>{mailingLocationName}</Text>
+                      :
+                      <Text className='public-no-check-text'>请选择省-市-区/县</Text>
+                  }
                   <Text className='iconfont iconxiangyouxuanzejiantoux icon-style-right'></Text>
                 </View>
               </View>
@@ -223,7 +346,8 @@ class CarProxyPublish extends Component {
                 }
                 <Textarea
                   className='textarea'
-                  // auto-height
+                  value={mailingAddress}
+                  onInput={this.onAddressInput}
                 ></Textarea>
               </View>
             </View>
@@ -231,8 +355,8 @@ class CarProxyPublish extends Component {
           </View>
         </View>
         <View className='bottom-btn-wrapper'>
-          <View className='total'>合计:¥1000</View>
-          <View className='order-btn'>立即下单(0)</View>
+          <View className='total'>合计:¥{totalPrice / 100}</View>
+          <View className='order-btn' onClick={this.submitOrder}>立即下单({allChooseBusinessList.length})</View>
         </View>
         <CallService />
       </View>
