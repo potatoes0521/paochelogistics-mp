@@ -3,7 +3,7 @@
  * @description: 城市处理接口
  * @Date: 2019-10-08 15:54:20
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-13 16:08:35
+ * @LastEditTime: 2020-03-29 19:46:23
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,5 +16,8 @@ export default {
   },
   cityNameChangeCityID(data, that) {
     return requestHandle.get('location/citybyname', data, that, false);
-  }
+  },
+  getAllProvinceList(data, that) {
+    return requestHandle.get('location/provincecollection', data, that);
+  },
 }

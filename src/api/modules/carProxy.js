@@ -21,7 +21,7 @@ export default {
   },
   // 提交快递单号
   submitCarProxyExpressNum(data, that) {
-    return requestHandle.post('carproxy/submitExpressNum', data, that);
+    return requestHandle.get('carproxy/submitExpressNum', data, that);
   },
   // 发布编辑车务
   publishCarProxy(data, that) {

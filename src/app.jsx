@@ -58,7 +58,9 @@ class _App extends Component {
       'pages/transport_edit/index',
       // 实名认证
       'pages/real_name_authentication/index',
+      // 选择城市
       'pages/choose_city/index',
+      'pages/choose_city_three_level/index',
       // 注册
       'pages/register/index',
       // 支付详情
