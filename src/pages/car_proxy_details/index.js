@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-17 16:11:16
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-25 11:07:33
+ * @LastEditTime: 2020-03-27 18:47:21
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -26,79 +26,63 @@ class CarProxyDetails extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      "id": 4,
-      "proxyOrderCode": "CW1583903706966",
-      "createUserId": 10218,
-      "userId": 10218,
-      "userName": "罗旭日",
-      "mobile": "18710006370",
-      "locationId": 110000,
-      "locationName": "北京市",
-      "remark": "我是一条测试数据",
-      "proxyOrderStatus": 21,
-      "proxyOrderStatusDesc": "退款中",
-      "totalPrice": 10000,
-      "totalPriceDesc": "10000",
-      "payPrice": null,
-      "payPriceDesc": null,
-      "createTime": "2020-03-11T03:06:44.000+0000",
-      "createTimeDesc": "2020-03-11 11:06:44",
-      "updateTime": "2020-03-11T05:15:20.000+0000",
-      "updateTimeDesc": "2020-03-11 13:15:20",
-      "payTime": "2020-03-11T05:10:16.000+0000",
-      "payTimeDesc": "2020-03-11 13:10:16",
-      "carProxyOrderItemRelationVoList": [{
-        "id": 4,
-        "carProxyItemId": 1,
-        "carProxyItemName": "提档",
-        "carProxyOrderId": 4,
-        "carProxyItemPrice": 10000,
-        "carProxyItemPriceDesc": "10000"
-      }],
-      customerMailingData: {
-        "id": 4,
-        "carProxyOrderId": 4,
-        "mailingLocationId": 110000,
-        "mailingUsername": "罗旭日",
-        "mailingMobile": "18710006370",
-        "mailingAddress": "蓝红中心9层",
-        "expressNum": null,
-        "materialsBill": null,
-        "mailingType": 1,
-        "createTime": "2020-03-11T03:06:44.000+0000",
-        "updateTime": "2020-03-11T03:06:44.000+0000",
-        "isActive": 1
-      },
-      businessMailingData: {
-        "id": 4,
-        "carProxyOrderId": 4,
-        "mailingLocationId": 110000,
-        "mailingUsername": "罗旭日222",
-        "mailingMobile": "1871000637022",
-        "mailingAddress": "蓝红中心9层22",
-        "expressNum": '',
-        "materialsBill": null,
-        "mailingType": 1,
-        "createTime": "2020-03-11T03:06:44.000+0000",
-        "updateTime": "2020-03-11T03:06:44.000+0000",
-        "isActive": 2
-      },
+      proxyOrderCode: '',
+      userName: '',
+      mobile: 18710006370,
+      locationName: '',
+      remark: '',
+      proxyOrderStatus: 21,
+      proxyOrderStatusDesc: '',
+      totalPriceDesc: 10000,
+      payPriceDesc: '',
+      createTimeDesc: '',
+      payTimeDesc: '',
+      carProxyOrderItemRelationVoList: [],
+      customerMailingData: {},
+      businessMailingData: {},
       expressNum: '',
-      "buttons": [
-        {
-          "key": "refund",
-          "name": "申请退款"
-        },
-        {
-          "key": "submitCode",
-          "name": "确认完成"
-        },
-      ],
+      buttons: [],
       open: false
     }
+    this.pageParams = {}
+    this.timer = null
   }
 
-  componentDidMount() {
+  
+  componentWillMount() { 
+    clearTimeout(this.timer)
+  }
+  componentDidShow() {
+    this.pageParams = this.$router.params
+    this.getCarProxyDetails()
+  }
+  getCarProxyDetails() { 
+    let sendData = {
+      carProxyOrderId: this.pageParams.id,
+      businessType: 1
+    }
+    api.carProxy.getCarProxyDetails(sendData, this).then(res => {
+      let data = res
+      data.customerMailingData = res.carProxyOrderItemRelationVoList.filter(item => item.mailingType === 1)
+      data.businessMailingData = res.carProxyOrderItemRelationVoList.filter(item => item.mailingType === 2)
+      this.setState(data)
+    })
+  }
+  submitScanCode() { 
+    let {expressNum} = this.state
+    let sendData = {
+      expressNum,
+      carProxyOrderId: this.pageParams.id
+    }
+    api.carProxy.submitCarProxyExpressNum(sendData, this).then(res => {
+      Taro.showToast({
+        title: '提交成功',
+        icon: 'none'
+      })
+      this.timer = setTimeout(() => {
+        this.getCarProxyDetails()
+      }, 1800)
+    })
   }
   clickOpenBtn() { 
     this.setState({
@@ -109,6 +93,20 @@ class CarProxyDetails extends Component {
     let { value } = e.target
     this.setState({
       expressNum: value
+    })
+  }
+  btnClick(item) { 
+    console.log('item', item)
+  }
+  scanCode() { 
+    Taro.scanCode({
+      onlyFromCamera: true,
+      scanType: ['barCode', 'qrCode'],
+      success: (res) => {
+        this.setState({
+          expressNum: res.result
+        })
+      }
     })
   }
   config = {
@@ -148,7 +146,7 @@ class CarProxyDetails extends Component {
     const bottomButtonsRender = buttons && buttons.map(item => {
       const key = item.key
       return (
-        <View key={key} className={key}>{item.name}</View>
+        <View key={key} onClick={()=>this.btnClick(item)} className={key}>{item.name}</View>
       )
     })
     const iconClassName = classNames({
@@ -294,7 +292,7 @@ class CarProxyDetails extends Component {
                         value={expressNum}
                         onInput={this.onExpressNumInput}
                       ></Input>
-                      <View className='scan-code iconfont iconsaoyisao'></View>
+                      <View className='scan-code iconfont iconsaoyisao' onClick={this.scanCode}></View>
                     </View>
                   </Block>
                   :
