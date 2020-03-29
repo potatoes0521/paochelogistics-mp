@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-17 16:11:16
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-27 18:08:09
+ * @LastEditTime: 2020-03-29 22:08:46
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -41,7 +41,7 @@ class CarProxyPublish extends Component {
       allChooseBusinessList: [],
       totalPrice: 0,
       mailingLocationId: '',
-      mailingLocationName: ''
+      mailingLocationName: '',
     }
     this.pageParams = {}
     this.timer = null
@@ -229,6 +229,11 @@ class CarProxyPublish extends Component {
       duration: 2000
     })
   }
+  navigatorChooseCityAndArea() { 
+    Taro.navigateTo({
+      url: '/pages/choose_city_three_level/index?type=mailingLocation'
+    })
+  }
   config = {
     navigationBarTitleText: '车务代办' 
   }
@@ -325,10 +330,16 @@ class CarProxyPublish extends Component {
               <View className='public-item'>
                 <View className='important'>*</View>
                 <View className='public-label lang-label'>材料回寄信息</View>
-                <View className='public-content'>
+                <View className='public-content' onClick={this.navigatorChooseCityAndArea}>
                   {
                     mailingLocationName ?
-                      <Text className='public-no-check-text'>{mailingLocationName}</Text>
+                      <Text className='public-no-check-text font-color'>
+                        {
+                          mailingLocationName.length > 13 ?
+                            mailingLocationName.substr(0, 12) + '...'
+                            : mailingLocationName
+                        }
+                      </Text>
                       :
                       <Text className='public-no-check-text'>请选择省-市-区/县</Text>
                   }
