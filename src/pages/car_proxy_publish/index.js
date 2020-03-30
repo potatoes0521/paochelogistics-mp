@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-17 16:11:16
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-30 11:57:18
+ * @LastEditTime: 2020-03-30 12:17:57
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -253,7 +253,7 @@ class CarProxyPublish extends Component {
   }
   navigatorTo() {
     Taro.navigateTo({
-      url: '/pages/customer_info/index?pageType=choose'
+      url: '/pages/customer_info/index?pageType=choose&from=car_proxy'
     })
   }
   config = {
