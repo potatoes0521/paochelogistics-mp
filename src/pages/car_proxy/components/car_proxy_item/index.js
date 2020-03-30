@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-18 12:02:51
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-27 18:10:28
+ * @LastEditTime: 2020-03-30 15:24:33
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -12,10 +12,12 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Block } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
+import api from '@api/index.js'
+import { connect } from '@tarojs/redux'
 
 import './index.styl'
 
-export default class index extends Component { 
+class CarProxyItem extends Component {
 
   static options = {
     addGlobalClass: true // 允许外部样式修改组件样式
@@ -26,9 +28,95 @@ export default class index extends Component {
     this.state={}
   }
 
-  componentDidMount() {
+  btnClick(item, e) {
+    e.stopPropagation()
+    console.log('item', item)
+    switch (item) {
+      case 'payOrder':
+        this.payMoney()
+        break
+      case 'finishedOrder':
+        this.finishedOrder()
+        break
+      default:
+        return
+    }
   }
 
+  finishedOrder() {
+    let { item } = this.props
+    let {
+      username,
+      mobile,
+      locationId,
+      carProxyOrderItemRelationVoList,
+      mailingLocationId,
+      mailingAddress,
+      totalPrice,
+      remark,
+      userId
+    } = this.state
+    const carProxyItemIds = carProxyOrderItemRelationVoList.map(ite => ite.id)
+    let sendData = {
+      carProxyOrderId: item.id,
+      username,
+      mobile,
+      locationId,
+      carProxyItemIds: carProxyItemIds.toString(),
+      mailingType: 1,
+      mailingLocationId,
+      mailingAddress,
+      totalPrice,
+      remark,
+      userId,
+      carProxyOrderStatus: 30
+    }
+    api.carProxy.publishCarProxy(sendData, this).then(() => {
+      Taro.showToast({
+        title: '确认成功',
+        icon: 'none'
+      })
+      this.props.onSubmitConfirm();
+    })
+  }
+  /**
+   * 请求支付内容
+   * @return void
+   */
+  payMoney() {
+    let { item } = this.props
+    let sendData = {
+      orderCode: item.proxyOrderCode,
+      isPaytoll: 0
+    }
+    api.pay.getPayParams(sendData, this).then(res => {
+      this.weChatPay(res)
+    })
+  }
+  /**
+   * 支付
+   * @param {Object} params 后端返回的支付的参数
+   * @return void
+   */
+  weChatPay(params) {
+    let { item } = this.props
+    Taro.requestPayment({
+      timeStamp: params.timeStamp,
+      nonceStr: params.nonceStr,
+      package: params.package,
+      signType: params.signType,
+      paySign: params.paySign,
+      success: (res) => {
+        if (!res) return
+        Taro.navigateTo({
+          url: `/pages/car_proxy_pay_success/index?id=${item.id}`
+        })
+      },
+      fail: (res) => {
+        console.log(res)
+      }
+    })
+  }
   navigatorToDetails() { 
     let { item } = this.props
     Taro.navigateTo({
@@ -53,7 +141,11 @@ export default class index extends Component {
     const buttonListRender = item && item.buttons ? item.buttons.map(res => {
       const key = res.key
       return (
-        <View className='car-proxy-item-button' key={key}>{res.name}</View>
+        <View
+          className='car-proxy-item-button'
+          key={key}
+          onClick={this.btnClick.bind(this, res.key)}
+        >{res.name}</View>
       )
     }) : []
     return (
@@ -99,12 +191,20 @@ export default class index extends Component {
 
 }
 
-index.defaultProps = {
+CarProxyItem.defaultProps = {
   item: {},
-  onClick: () => {}
+  onClick: () => { },
+  onSubmitConfirm: () => {}
 }
 
-index.propTypes = {
+CarProxyItem.propTypes = {
   item: PropTypes.object.isRequired,
   onClick: PropTypes.func
 }
+
+const mapStateToProps = (state) => {
+  return {
+    userInfo: state.user_msg.userInfo
+  }
+}
+export default connect(mapStateToProps)(CarProxyItem)
