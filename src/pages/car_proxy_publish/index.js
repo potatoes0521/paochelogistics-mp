@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-17 16:11:16
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-29 22:08:46
+ * @LastEditTime: 2020-03-30 11:57:18
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -42,6 +42,8 @@ class CarProxyPublish extends Component {
       totalPrice: 0,
       mailingLocationId: '',
       mailingLocationName: '',
+      realName: '',
+      userId: ''
     }
     this.pageParams = {}
     this.timer = null
@@ -49,12 +51,14 @@ class CarProxyPublish extends Component {
 
   componentDidMount() {
     this.handleUserMsg()
-    this.getCarProxyProjectList('130100')
+    this.getCarProxyProjectList(this.state.locationId)
   }
-  componentWillUnmount() { 
+  
+  componentWillUnmount() {
     if (!this.timer) return;
     clearTimeout(this.timer)
   }
+
   handleUserMsg() { 
     let { userInfo } = this.props
     console.log('userInfo', userInfo)
@@ -172,19 +176,28 @@ class CarProxyPublish extends Component {
       mailingAddress,
       totalPrice,
       remark,
+      userId
     } = this.state
     const carProxyItemIds = allChooseBusinessList.map(item => item.id)
     let testingList = {
       username: '请填写姓名',
       mobile: '请填写手机号',
       locationId: '请选择办理城市',
-      carProxyItemIds: '至少选择一个代办项~',
+      allChooseBusinessList: '至少选择一个代办项~',
       mailingLocationId: '请选择回寄地址',
       mailingAddress: '请填写详细回寄地址',
       totalPrice: '总价有误',
+      userId: '请选择代下单的客户', //年款
     }
     let breakName = ''
+    let { userInfo } = this.props
+    if (userInfo.userType === 0 && !userId) {
+      breakName = 'userId'
+    }
     for (let i in testingList) {
+      if (i === 'userId') {
+        continue
+      }
       if (!this.state[i]) { 
         breakName = i
         break
@@ -207,12 +220,16 @@ class CarProxyPublish extends Component {
       username,
       mobile,
       locationId,
-      carProxyItemIds,
+      carProxyItemIds: carProxyItemIds.toString(),
       mailingType: 1,
       mailingLocationId,
       mailingAddress,
       totalPrice,
       remark,
+      userId
+    }
+    if (!sendData.userId) {
+      sendData.userId = this.props.userInfo.userId
     }
     console.log('sendData', sendData)
     api.carProxy.publishCarProxy(sendData, this).then(() => {
@@ -234,6 +251,11 @@ class CarProxyPublish extends Component {
       url: '/pages/choose_city_three_level/index?type=mailingLocation'
     })
   }
+  navigatorTo() {
+    Taro.navigateTo({
+      url: '/pages/customer_info/index?pageType=choose'
+    })
+  }
   config = {
     navigationBarTitleText: '车务代办' 
   }
@@ -248,8 +270,10 @@ class CarProxyPublish extends Component {
       carProxyBusinessList,
       allChooseBusinessList,
       mailingLocationName,
-      totalPrice
+      totalPrice,
+      realName
     } = this.state
+    let {userInfo} = this.props
     const carProxyBusinessListRender = carProxyBusinessList.map(item => {
       const key = item.id
       const checkboxClassName = classNames('public-checkbox', {
@@ -267,12 +291,28 @@ class CarProxyPublish extends Component {
         </View>
       )
     })
+    
     return (
       <View className='page-wrapper'>
         <View className='page-main'>
           <View className='main-wrapper'>
             <View className='public-wrapper'>
-              <View className='public-item'>
+              {
+                userInfo.userType === 0 ?
+                  <View className='publish-choose-customer' onClick={this.navigatorTo.bind(this, 'choose_customer')}>
+                    <View className='customer-info'>
+                      <View className='iconfont iconkehu customer-img'></View>
+                      <View className='customer-name'>
+                        {
+                          realName ? realName: '选择代发布客户'
+                        }
+                      </View>
+                    </View>
+                    <View className='iconfont iconxiangyouxuanzejiantoux choose-arrow'></View>
+                  </View>
+                  : null
+              }
+              <View className='public-item first-public-item'>
                 <View className='public-label'>姓名</View>
                 <View className='public-content'>
                   <Input
@@ -309,7 +349,7 @@ class CarProxyPublish extends Component {
                 </View>
               </View>
             </View>
-            <View className='public-wrapper'>
+            <View className='public-wrapper first-public-item' >
               {
                 carProxyBusinessListRender
               }
