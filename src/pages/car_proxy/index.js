@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-17 16:11:16
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-30 15:25:23
+ * @LastEditTime: 2020-03-30 16:56:29
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -67,7 +67,7 @@ class CarProxy extends Component {
     } else if(current === 2) {
       this.carProxyOrderStatus = 30
     } else if (current === 1) {
-      this.carProxyOrderStatus = 22
+      this.carProxyOrderStatus = 20
     } else if (current === 0) {
       this.carProxyOrderStatus = 10
     }
@@ -109,6 +109,8 @@ class CarProxy extends Component {
    * @return void
    */
   async onPullDownRefresh() {
+    Taro.showNavigationBarLoading()
+    Taro.hideNavigationBarLoading();
     // 显示顶部刷新图标
     this.carProxyPage = 1
     this.carProxyFlag = false

@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-29 18:47:13
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-30 12:07:53
+ * @LastEditTime: 2020-03-30 15:38:25
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -23,7 +23,7 @@ class chooseCityThreeLevel extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      provinceList: [],
+      provinceList: [{locationName: '请选择', locationId: 1}],
       cityList: [{locationName: '请选择', locationId: 1}],
       areaList: [{locationName: '请选择', locationId: 1}],
     }

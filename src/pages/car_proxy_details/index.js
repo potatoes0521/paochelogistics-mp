@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-17 16:11:16
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-30 15:22:28
+ * @LastEditTime: 2020-03-30 17:51:34
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -18,6 +18,8 @@ import {
 import classNames from 'classnames'
 import { connect } from '@tarojs/redux'
 import api from '@api/index.js'
+import { defaultResourceImgURL } from '@config/request_config.js'
+import login from '@utils/login.js'
 
 import './index.styl'
 
@@ -52,9 +54,17 @@ class CarProxyDetails extends Component {
   componentWillMount() { 
     clearTimeout(this.timer)
   }
-  componentDidShow() {
+  async componentDidShow() {
     this.pageParams = this.$router.params
-    this.getCarProxyDetails()
+    console.log('参数', this.pageParams)
+    if (this.pageParams.share_type) {
+      let { userInfo } = this.props
+      if (userInfo && !userInfo.userId) {
+        await login.getOpenId(this)
+        console.log('userInfo', userInfo)
+      } 
+      this.getCarProxyDetails()
+    }
   }
   getCarProxyDetails() { 
     let sendData = {
@@ -67,22 +77,6 @@ class CarProxyDetails extends Component {
       data.businessMailingData = res.carProxyMailingAddressList.filter(item => item.mailingType === 2)[0] || []
       console.log('data', data)
       this.setState(data)
-    })
-  }
-  submitScanCode() { 
-    let {expressNum} = this.state
-    let sendData = {
-      expressNum,
-      carProxyOrderId: this.pageParams.id
-    }
-    api.carProxy.submitCarProxyExpressNum(sendData, this).then(() => {
-      Taro.showToast({
-        title: '提交成功',
-        icon: 'none'
-      })
-      this.timer = setTimeout(() => {
-        this.getCarProxyDetails()
-      }, 1800)
     })
   }
   clickOpenBtn() { 
@@ -127,7 +121,8 @@ class CarProxyDetails extends Component {
     }
     let sendData = {
       carProxyOrderId: this.pageParams.id,
-      expressNum
+      expressNum,
+      businessType: 1
     }
     api.carProxy.submitCarProxyExpressNum(sendData, this).then(() => {
       Taro.showToast({
@@ -143,8 +138,7 @@ class CarProxyDetails extends Component {
       mobile,
       locationId,
       carProxyOrderItemRelationVoList,
-      mailingLocationId,
-      mailingAddress,
+      customerMailingData,
       totalPrice,
       remark,
       userId
@@ -157,8 +151,8 @@ class CarProxyDetails extends Component {
       locationId,
       carProxyItemIds: carProxyItemIds.toString(),
       mailingType: 1,
-      mailingLocationId,
-      mailingAddress,
+      mailingLocationId: customerMailingData.mailingLocationId,
+      mailingAddress: customerMailingData.mailingAddress,
       totalPrice,
       remark,
       userId,
@@ -236,6 +230,21 @@ class CarProxyDetails extends Component {
         console.log(res)
       }
     })
+  }
+  /**
+   * 触发了分享
+   * @param {Object} event 参数描述
+   * @return void
+   */
+  onShareAppMessage() {
+    let path = `/pages/car_proxy_details/index?id=${this.pageParams.id}&share_type=6`
+    let title = `欢迎您进入跑车物流~`
+    let imageUrl = `${defaultResourceImgURL}share_car_proxy_details.png`
+    return {
+      title,
+      path,
+      imageUrl
+    }
   }
   config = {
     navigationBarTitleText: '订单详情' 
