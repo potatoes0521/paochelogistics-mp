@@ -16,7 +16,6 @@ import {
 import classNames from 'classnames'
 import { connect } from '@tarojs/redux'
 import api from '@api/index.js'
-// import cityMsg from './city.json'
 import './index.styl'
 
 class chooseCityThreeLevel extends Component {
