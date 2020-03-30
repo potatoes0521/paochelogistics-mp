@@ -3,7 +3,7 @@
  * @description: 城市选择 // 汽车品牌选择
  * @Date: 2019-08-30 15:53:51
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-21 16:56:15
+ * @LastEditTime: 2020-03-30 11:30:49
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -52,6 +52,8 @@ class ChooseCity extends Component {
   handleLocationMsg(pageParams) { 
     if (pageParams.pageType === 'car') { 
       this.getCarBrand()
+    } else if (pageParams.type === 'car_proxy') {
+      this.getCarProxyProjectCity()
     } else {
       this.getLocationMsg()
     }
@@ -127,6 +129,19 @@ class ChooseCity extends Component {
         })
       })
   }
+  getCarProxyProjectCity() { 
+    api.carProxy.getCarProxyProjectCityList({}, this).then(res => {
+      let allData = res.normalCarProxyItemLocationList || []
+      // Storage.setStorage('city_list', res)
+      this.allDataList = allData.map(item => {
+        return item.list
+      })
+      this.allDataList = _flattenDeep(this.allDataList)
+      this.setState({
+        allData
+      })
+    })
+  }
   /**
    * 选中处理
    * @param {Object} item 处理选中  多选时为城市名字
@@ -134,7 +149,6 @@ class ChooseCity extends Component {
    * @return void
    */
   onClick(item, item2) {
-    console.log('item', item)
     let {pageParams} = this.state
     let pages = Taro.getCurrentPages() //  获取页面栈
     let prevPage = pages[pages.length - 2] // 上一个页面
@@ -150,6 +164,14 @@ class ChooseCity extends Component {
         receiveCityName: item.cityName,
         receiveCityId: item.cityId
       }, () => {
+        Taro.navigateBack()
+      })
+    } else if (pageParams.type === 'car_proxy') {
+      prevPage.$component.setState({
+        locationName: item.locationName,
+        locationId: item.locationId
+      }, () => {
+        prevPage.$component.getCarProxyProjectList(item.locationId)
         Taro.navigateBack()
       })
     } else if (pageParams.type === 'sell' && pageParams.pageType !== 'car') {
@@ -194,6 +216,8 @@ class ChooseCity extends Component {
       let filterDataList = this.allDataList.filter(item => {
         if (pageParams.pageType === 'car') {
           return (item && item.masterBrandName && item.masterBrandName.indexOf(value) !== -1) || (item && item.spell && item.spell.indexOf(value) !== -1)
+        } else if(pageParams.type === 'car_proxy') {
+          return (item && item.locationName && item.locationName.indexOf(value) !== -1) || (item && item.spell && item.spell.indexOf(value) !== -1)
         } else {
           return (item && item.cityName && item.cityName.indexOf(value) !== -1) || (item && item.spell && item.spell.indexOf(value) !== -1)
         }
@@ -292,7 +316,7 @@ class ChooseCity extends Component {
                 </View>
                 : null
             }
-            <View className='search-item-name'>{city.cityName || city.masterBrandName}</View>
+            <View className='search-item-name'>{city.cityName || city.masterBrandName || city.locationName}</View>
           </View>
           <Text className='iconfont iconxiangyouxuanzejiantoux icon-style-right'></Text>
         </View>
@@ -309,7 +333,23 @@ class ChooseCity extends Component {
       'search-indexes-wrapper': pageParams.type !== 'through',
       'checked-indexes-wrapper': pageParams.type === 'through'
     })
-
+    let fieldId = ''
+    let fieldName = ''
+    let fieldLogo = ''
+    if (pageParams.pageType === 'car') {
+      fieldId = 'masterBrandId'
+      fieldName = 'masterBrandName'
+      fieldLogo = 'masterBrandLogo'
+    } else if (pageParams.type === 'car_proxy') {
+      fieldId = 'locationId'
+      fieldName = 'locationName'
+      fieldLogo = ''
+    } else {
+      fieldId = 'cityId'
+      fieldName = 'cityName'
+      fieldLogo = ''
+    }
+    console.log('allData', allData)
     return (
       <View className={allWrapperClassName}>
         {
@@ -341,9 +381,9 @@ class ChooseCity extends Component {
                 topKey='热门'
                 isVibrate={false}
                 checkBox={pageParams.type === 'through'}
-                fieldId={pageParams.pageType !== 'car' ? 'cityId' : 'masterBrandId'}
-                fieldName={pageParams.pageType !== 'car' ? 'cityName' : 'masterBrandName'}
-                fieldLogo={pageParams.pageType !== 'car' ? '' : 'masterBrandLogo'}
+                fieldId={fieldId}
+                fieldName={fieldName}
+                fieldLogo={fieldLogo}
                 onClick={this.onClick.bind(this)}
               >
                 {
