@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-17 16:11:16
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-27 10:15:31
+ * @LastEditTime: 2020-03-30 14:42:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,7 +14,7 @@ import {
   Text
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
-// import api from '@api/index.js'
+import api from '@api/index.js'
 
 import './index.styl'
 
@@ -28,11 +28,30 @@ class CarProxyPaySuccess extends Component {
       createTimeDesc: '',
       payTimeDesc: ''
     }
+    this.pageParams = {}
   }
 
   componentDidMount() {
+    this.pageParams = this.$router.params
+    this.getCarProxyDetails()
   }
-
+  getCarProxyDetails() {
+    let sendData = {
+      carProxyOrderId: this.pageParams.id,
+      businessType: 1
+    }
+    api.carProxy.getCarProxyDetails(sendData, this).then(res => {
+      this.setState(res)
+    })
+  }
+  navigatorBack() { 
+    Taro.navigateBack()
+  }
+  navigatorToListPage() { 
+    Taro.redirectTo({
+      url: '/pages/car_proxy/index'
+    })
+  }
   config = {
     navigationBarTitleText: '支付详情'
   }
@@ -73,8 +92,8 @@ class CarProxyPaySuccess extends Component {
               </View>
             </View>
           </View>
-          <View className='btn-public btn-see'>查看订单</View>
-          <View className='btn-public btn-back'>返回列表页</View>
+          <View className='btn-public btn-see' onClick={this.navigatorBack}>查看订单</View>
+          <View className='btn-public btn-back' onClick={this.navigatorToListPage}>返回列表页</View>
         </View>
       </View>
     )
