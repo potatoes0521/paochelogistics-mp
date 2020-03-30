@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-29 18:47:13
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-29 22:02:34
+ * @LastEditTime: 2020-03-30 12:07:53
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,7 +16,7 @@ import {
 import classNames from 'classnames'
 import { connect } from '@tarojs/redux'
 import api from '@api/index.js'
-import cityMsg from './city.json'
+// import cityMsg from './city.json'
 import './index.styl'
 
 class chooseCityThreeLevel extends Component {
@@ -44,10 +44,10 @@ class chooseCityThreeLevel extends Component {
    * @return void
    */
   getAllProvinceList() {
-    // api.city.getAllProvinceList({}, this).then(res => {
-    //   this.handleAllCityMsgData(data);
-    // });
-    this.handleAllCityMsgData(cityMsg.data)
+    api.city.getAllProvinceList({}, this).then(res => {
+      this.handleAllCityMsgData(res);
+    });
+    // this.handleAllCityMsgData(cityMsg.data)
   }
   /**
    * 处理所有地理位置数据
