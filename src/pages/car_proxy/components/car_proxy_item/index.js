@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-18 12:02:51
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-30 15:24:33
+ * @LastEditTime: 2020-03-30 18:03:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -50,13 +50,14 @@ class CarProxyItem extends Component {
       mobile,
       locationId,
       carProxyOrderItemRelationVoList,
-      mailingLocationId,
-      mailingAddress,
+      carProxyMailingAddressList,
+      // mailingAddress,
       totalPrice,
       remark,
       userId
-    } = this.state
+    } = item
     const carProxyItemIds = carProxyOrderItemRelationVoList.map(ite => ite.id)
+    const customerMailingData = carProxyMailingAddressList.filter(ite => ite.mailingType === 1)[0] || []
     let sendData = {
       carProxyOrderId: item.id,
       username,
@@ -64,8 +65,8 @@ class CarProxyItem extends Component {
       locationId,
       carProxyItemIds: carProxyItemIds.toString(),
       mailingType: 1,
-      mailingLocationId,
-      mailingAddress,
+      mailingLocationId: customerMailingData.mailingLocationId,
+      mailingAddress: customerMailingData.mailingAddress,
       totalPrice,
       remark,
       userId,

@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-17 16:11:16
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-30 17:51:34
+ * @LastEditTime: 2020-03-30 17:58:51
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -18,7 +18,7 @@ import {
 import classNames from 'classnames'
 import { connect } from '@tarojs/redux'
 import api from '@api/index.js'
-import { defaultResourceImgURL } from '@config/request_config.js'
+// import { defaultResourceImgURL } from '@config/request_config.js'
 import login from '@utils/login.js'
 
 import './index.styl'
@@ -239,11 +239,11 @@ class CarProxyDetails extends Component {
   onShareAppMessage() {
     let path = `/pages/car_proxy_details/index?id=${this.pageParams.id}&share_type=6`
     let title = `欢迎您进入跑车物流~`
-    let imageUrl = `${defaultResourceImgURL}share_car_proxy_details.png`
+    // let imageUrl = `${defaultResourceImgURL}share_car_proxy_details.png`
     return {
       title,
       path,
-      imageUrl
+      // imageUrl
     }
   }
   config = {
