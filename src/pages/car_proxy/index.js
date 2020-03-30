@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-17 16:11:16
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-27 11:50:50
+ * @LastEditTime: 2020-03-30 15:25:23
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -35,6 +35,11 @@ class CarProxy extends Component {
   }
 
   componentDidShow() {
+    this.carProxyFlag = false
+    this.carProxyPage = 1
+    this.setState({
+      carProxyList: []
+    })
     this.getCarProxyList({})
   }
 
@@ -125,7 +130,14 @@ class CarProxy extends Component {
     if (this.carProxyFlag) return
     this.handleRequest()
   }
-
+  onSubmitConfirm() { 
+    this.carProxyFlag = false
+    this.carProxyPage = 1
+    this.setState({
+      carProxyList: []
+    })
+    this.getCarProxyList({})
+  }
   config = {
     navigationBarTitleText: '车务订单' 
   }
@@ -138,7 +150,7 @@ class CarProxy extends Component {
     const carProxyListRender = carProxyList.map(item => {
       const key = item.id
       return (
-        <CarProxyItem key={key} item={item} />
+        <CarProxyItem key={key} item={item} onSubmitConfirm={this.onSubmitConfirm.bind(this)} />
       )
     })
     return (
