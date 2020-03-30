@@ -3,7 +3,7 @@
  * @description: 按钮组的显示控制
  * @Date: 2019-12-13 15:09:48
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-24 11:25:24
+ * @LastEditTime: 2020-03-30 15:27:01
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -109,6 +109,10 @@ const toolButtons = [
   {
     toolKey: 'paoche_usedcar_price_eval',
     name: '二手车估值'
+  },
+  {
+    toolKey: 'paoche_car_proxy',
+    name: '车务'
   },
 ]
 
