@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-27 11:22:16
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-30 15:09:22
+ * @LastEditTime: 2020-03-31 15:09:08
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -21,7 +21,7 @@ export default {
   },
   // 提交快递单号
   submitCarProxyExpressNum(data, that) {
-    return requestHandle.post('carproxy/submitExpressNum', data, that);
+    return requestHandle.post('carproxy/submitexpressnum', data, that);
   },
   // 发布编辑车务
   publishCarProxy(data, that) {

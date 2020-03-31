@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-17 16:11:16
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-30 16:56:29
+ * @LastEditTime: 2020-03-31 15:23:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,6 +16,8 @@ import { connect } from '@tarojs/redux'
 import Tabs from '@c/tabs/index.js'
 import { carProxyTabs } from '@config/text_config.js'
 import EmptyData from '@c/empty_data/index.js'
+import { defaultResourceImgURL } from '@config/request_config.js'
+import login from '@utils/login.js'
 import CarProxyItem from './components/car_proxy_item/index.js'
 import PublishBtn from './components/publish_btn/index.js'
 import './index.styl'
@@ -34,7 +36,24 @@ class CarProxy extends Component {
     this.carProxyOrderStatus = 10
   }
 
+  
+  async componentDidMount() { 
+    let { userInfo } = this.props
+    if (userInfo && !userInfo.userId) {
+      await login.getOpenId(this)
+      this.initData()
+    }
+  }
+
   componentDidShow() {
+    let { userInfo } = this.props
+    if (userInfo && !userInfo.userId) {
+      return
+    }
+    this.initData()
+  }
+  
+  initData() { 
     this.carProxyFlag = false
     this.carProxyPage = 1
     this.setState({
@@ -42,7 +61,6 @@ class CarProxy extends Component {
     })
     this.getCarProxyList({})
   }
-
   /**
    * 处理tabs点击事件
    * @param {Number} value 参数描述
@@ -139,6 +157,21 @@ class CarProxy extends Component {
       carProxyList: []
     })
     this.getCarProxyList({})
+  }
+  /**
+   * 触发了分享
+   * @param {Object} event 参数描述
+   * @return void
+   */
+  onShareAppMessage() {
+    let path = `/pages/car_proxy/index?share_type=6`
+    let title = `流程简单，车务问题一步解决。`
+    let imageUrl = `${defaultResourceImgURL}share_car_proxy_details.png`
+    return {
+      title,
+      path,
+      imageUrl
+    }
   }
   config = {
     navigationBarTitleText: '车务订单' 

@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-17 16:11:16
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-30 17:58:51
+ * @LastEditTime: 2020-03-31 15:19:43
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -18,7 +18,7 @@ import {
 import classNames from 'classnames'
 import { connect } from '@tarojs/redux'
 import api from '@api/index.js'
-// import { defaultResourceImgURL } from '@config/request_config.js'
+import { defaultResourceImgURL } from '@config/request_config.js'
 import login from '@utils/login.js'
 
 import './index.styl'
@@ -61,8 +61,15 @@ class CarProxyDetails extends Component {
       let { userInfo } = this.props
       if (userInfo && !userInfo.userId) {
         await login.getOpenId(this)
-        console.log('userInfo', userInfo)
+        if (this.pageParams.u_id === userInfo.userId || this.pageParams.c_id === userInfo.userId) {
+          this.getCarProxyDetails()
+        } else {
+          Taro.redirectTo({
+            url: '/pages/car_proxy/index'
+          })
+        }
       } 
+    } else {
       this.getCarProxyDetails()
     }
   }
@@ -237,13 +244,15 @@ class CarProxyDetails extends Component {
    * @return void
    */
   onShareAppMessage() {
-    let path = `/pages/car_proxy_details/index?id=${this.pageParams.id}&share_type=6`
-    let title = `欢迎您进入跑车物流~`
-    // let imageUrl = `${defaultResourceImgURL}share_car_proxy_details.png`
+    let {userInfo} = this.props
+    let {createUserId} = this.state
+    let path = `/pages/car_proxy_details/index?id=${this.pageParams.id}&share_type=6&u_id=${userInfo.userId}&c_id=${createUserId}`
+    let title = `流程简单，车务问题一步解决。`
+    let imageUrl = `${defaultResourceImgURL}share_car_proxy_details.png`
     return {
       title,
       path,
-      // imageUrl
+      imageUrl
     }
   }
   config = {
@@ -339,10 +348,14 @@ class CarProxyDetails extends Component {
                       <View className='public-label font-ash'>下单时间</View>
                       <View className='public-content font-ash'>{createTimeDesc || ''}</View>
                     </View>
-                    <View className='public-item'>
-                      <View className='public-label font-ash'>付款时间</View>
-                      <View className='public-content font-ash'>{payTimeDesc || ''}</View>
-                    </View>
+                    {
+                      payTimeDesc && (
+                        <View className='public-item'>
+                          <View className='public-label font-ash'>付款时间</View>
+                          <View className='public-content font-ash'>{payTimeDesc || ''}</View>
+                        </View>
+                      )
+                    }
                     <View className='public-item'>
                       <View className='public-label font-ash'>订单总价</View>
                       <View className='public-content font-ash'>¥ {totalPriceDesc || ''}</View>
@@ -425,7 +438,7 @@ class CarProxyDetails extends Component {
                     }
                   </View>
                   {
-                    !customerMailingData.expressNum ?
+                    !customerMailingData.expressNum && proxyOrderStatus !== 40 && proxyOrderStatus !== 41 && proxyOrderStatus !== 42 && proxyOrderStatus !== 21 ?
                       <Block>
                         <View className='public-item'>
                           <View className='mast-input'>*</View>
@@ -442,7 +455,10 @@ class CarProxyDetails extends Component {
                           <View className='scan-code iconfont iconsaoyisao' onClick={this.scanCode}></View>
                         </View>
                       </Block>
-                      :
+                      : null
+                  }
+                  {
+                    customerMailingData.expressNum ?
                       <Block>
                         <View className='public-item'>
                           <View className='public-label font-weight lang-label'>材料邮寄单号</View>
@@ -455,6 +471,7 @@ class CarProxyDetails extends Component {
                           {customerMailingData.expressNum || ''}
                         </View>
                       </Block>
+                      : null
                   }
                 </View>
               )
