@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-23 13:50:52
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-23 14:01:18
+ * @LastEditTime: 2020-04-01 18:01:30
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -28,7 +28,7 @@ export default class index extends Component {
   }
   callService() { 
     Taro.makePhoneCall({
-      phoneNumber: '110'
+      phoneNumber: '400-9698-256'
     })
   }
   render() {

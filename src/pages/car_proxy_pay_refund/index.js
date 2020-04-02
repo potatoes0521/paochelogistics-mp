@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-17 16:11:16
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-27 11:23:34
+ * @LastEditTime: 2020-03-31 17:43:06
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -105,7 +105,7 @@ class CarProxy extends Component {
               <Input
                 className='public-input'
                 placeholder-class='placeholder-class'
-                placeholder='请填写姓名'
+                placeholder='请填写退款原因'
                 value={refundReason}
                 onInput={this.onReasonInput}
               ></Input>

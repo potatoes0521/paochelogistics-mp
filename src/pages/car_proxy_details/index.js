@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-17 16:11:16
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-31 15:19:43
+ * @LastEditTime: 2020-03-31 15:39:08
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,7 +13,8 @@ import {
   View,
   Text,
   Block,
-  Input
+  Input,
+  Button
 } from '@tarojs/components'
 import classNames from 'classnames'
 import { connect } from '@tarojs/redux'
@@ -142,6 +143,7 @@ class CarProxyDetails extends Component {
   finishedOrder() { 
     let {
       username,
+      userName,
       mobile,
       locationId,
       carProxyOrderItemRelationVoList,
@@ -152,8 +154,8 @@ class CarProxyDetails extends Component {
     } = this.state
     const carProxyItemIds = carProxyOrderItemRelationVoList.map(item => item.id)
     let sendData = {
-      carProxyOrderId: this.pageParams.id,
-      username,
+      id: this.pageParams.id,
+      username: username || userName,
       mobile,
       locationId,
       carProxyItemIds: carProxyItemIds.toString(),
@@ -161,7 +163,7 @@ class CarProxyDetails extends Component {
       mailingLocationId: customerMailingData.mailingLocationId,
       mailingAddress: customerMailingData.mailingAddress,
       totalPrice,
-      remark,
+      remark: remark || '',
       userId,
       carProxyOrderStatus: 30
     }
@@ -291,6 +293,13 @@ class CarProxyDetails extends Component {
     })
     const bottomButtonsRender = buttons && buttons.map(item => {
       const key = item.key
+      if (key === 'share') {
+        return (<Button
+          openType='share'
+          className={key}
+          key={key}
+        >{item.name}</Button>)
+      }
       return (
         <View key={key} onClick={()=>this.btnClick(item.key)} className={key}>{item.name}</View>
       )
@@ -505,7 +514,8 @@ class CarProxyDetails extends Component {
           proxyOrderStatus !== 21 &&
           proxyOrderStatus !== 40 &&
           proxyOrderStatus !== 41 &&
-          proxyOrderStatus !== 42 ? (
+          proxyOrderStatus !== 42 && 
+          buttons && buttons.length ? (
             <View className='bottom-btn-wrapper'>
               {
                 bottomButtonsRender

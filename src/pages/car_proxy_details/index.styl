@@ -227,7 +227,7 @@
 
 .finishedOrder,
 .payOrder
-  width 100%
+  flex 1
   height 80px
   display flex
   align-items center
@@ -237,6 +237,19 @@
   color #ffffff
   font-size 32px
 
+.share
+  width 202px
+  height 80px
+  display flex
+  align-items center
+  justify-content center
+  border-radius 8px
+  border 2px solid #D2D2D2
+  font-size 32px
+  color $font-color
+  margin-left 20px
+  box-sizing border-box
+  background-color #ffffff
 .refund
   font-size 28px
   color #999990
@@ -254,3 +267,10 @@
   margin-left 20px
   color #ffffff
   font-size 32px
+
+button 
+  margin 0px
+  padding 0px
+
+button::after
+  border none
