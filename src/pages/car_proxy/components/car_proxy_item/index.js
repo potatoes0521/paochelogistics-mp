@@ -4,7 +4,8 @@
  * @path: 引入路径
  * @Date: 2020-03-18 12:02:51
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-31 15:36:24
+
+ * @LastEditTime: 2020-04-02 11:53:12
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -71,7 +72,7 @@ class CarProxyItem extends Component {
       totalPrice,
       remark: remark || '',
       userId,
-      carProxyOrderStatus: 30
+      carProxyOrderStatus: 22
     }
     api.carProxy.publishCarProxy(sendData, this).then(() => {
       Taro.showToast({

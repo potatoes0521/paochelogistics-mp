@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-17 16:11:16
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-31 15:39:08
+ * @LastEditTime: 2020-04-02 15:55:30
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -137,7 +137,9 @@ class CarProxyDetails extends Component {
         icon: 'none',
         title: '提交成功'
       })
-      this.getCarProxyDetails()
+      this.timer = setTimeout(() => {
+        this.getCarProxyDetails();
+      }, 1800)
     })
   }
   finishedOrder() { 
@@ -172,7 +174,9 @@ class CarProxyDetails extends Component {
         title: '确认成功',
         icon: 'none'
       })
-      this.getCarProxyDetails();
+      this.timer = setTimeout(() => {
+        this.getCarProxyDetails();
+      }, 1800)
     })
   }
   /**

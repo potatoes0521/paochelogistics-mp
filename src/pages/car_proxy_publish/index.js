@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-17 16:11:16
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-30 12:17:57
+ * @LastEditTime: 2020-04-03 09:57:34
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -233,7 +233,7 @@ class CarProxyPublish extends Component {
     }
     console.log('sendData', sendData)
     api.carProxy.publishCarProxy(sendData, this).then(() => {
-      this.showToast('发布成功')
+      this.showToast('下单成功')
       this.timer = setTimeout(() => {
         Taro.navigateBack()
       }, 1800)
@@ -390,8 +390,8 @@ class CarProxyPublish extends Component {
                 {
                   mailingAddress.length < 1 && (
                     <View className='lick-placeholder-wrapper'>
-                      <View className='placeholder-class'>请输入姓名、联系方式及详细地址</View>
-                      <View className='placeholder-class'>例如：张三 18545678765 北京市海淀区定慧北里23号蓝宏中心</View>
+                      <View className='placeholder-class'>请输入详细地址</View>
+                      <View className='placeholder-class'>例如：海淀区定慧北里23号蓝宏中心</View>
                     </View>
                   )
                 }

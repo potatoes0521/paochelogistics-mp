@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-17 16:11:16
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-31 17:43:06
+ * @LastEditTime: 2020-04-08 10:59:01
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -20,7 +20,7 @@ class CarProxy extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      refundReason: '请输入退款原因',
+      refundReason: '',
       payPrice: '0',
       payPriceDesc: '0',
     }
