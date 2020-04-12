@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-09-12 11:17:44
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-18 11:07:45
+ * @LastEditTime: 2020-04-12 20:06:09
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -134,4 +134,14 @@ export const invoiceList = [
     id: 2,
     label: '增值税专用发票'
   }
- ]
+]
+ 
+export const CarConditionList = [
+  {
+    id: 0,
+    label: '能动'
+  }, {
+    id: 1,
+    label: '不能动'
+  }
+]
