@@ -3,12 +3,12 @@
  * @description: 服务器状态码错误配置
  * @Date: 2019-08-13 12:22:58
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-08 16:31:12
+ * @LastEditTime: 2020-04-12 18:42:43
  */
 
 // api地址
-export const defaultApiURL = 'http://gateway.api.paoche56.in/paoche-logistics/' // 测试环境  
-// export const defaultApiURL = 'https://gateway.api.paoche56.com/paoche-logistics/' // 正式环境  
+// export const defaultApiURL = 'http://gateway.api.paoche56.in/paoche-logistics/' // 测试环境  
+export const defaultApiURL = 'https://gateway.api.paoche56.com/paoche-logistics/' // 正式环境  
 // export const defaultApiURL = 'https://api.paoche56.com/'  
 // export const defaultApiURL = 'http://192.168.3.139:8085/'
 // 上传文件地址

@@ -90,6 +90,8 @@ class _App extends Component {
       'pages/car_proxy_pay_refund/index',
       'pages/car_proxy_pay_success/index',
       'pages/car_proxy_publish/index',
+      // 车辆救援
+      'pages/car_rescue/index'
     ],
     window: {
       backgroundTextStyle: 'light',
