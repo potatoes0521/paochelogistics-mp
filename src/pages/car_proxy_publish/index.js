@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-17 16:11:16
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-03 09:57:34
+ * @LastEditTime: 2020-04-12 18:41:22
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -23,7 +23,7 @@ import {
   realNamePatter,
   phoneNumberPatter
 } from '@utils/patter.js'
-import CallService from './components/call_service/index.js'
+import CallService from '@c/call_service/index.js'
 import './index.styl'
 
 class CarProxyPublish extends Component { 
@@ -409,7 +409,7 @@ class CarProxyPublish extends Component {
           <View className='total'>合计:¥{totalPrice / 100}</View>
           <View className='order-btn' onClick={this.submitOrder}>立即下单({allChooseBusinessList.length})</View>
         </View>
-        <CallService />
+        <CallService phoneNumberType='carProxy' />
       </View>
     )
   }

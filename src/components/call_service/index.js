@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-23 13:50:52
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-01 18:01:30
+ * @LastEditTime: 2020-04-12 18:44:11
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,10 +13,15 @@ import {
   View,
   Text
 } from '@tarojs/components'
+import PropTypes from 'prop-types'
 
 import './index.styl'
 
-export default class index extends Component { 
+const phoneNumberList = {
+  carProxy: '400-9698-256',
+  carRescue: '110'
+}
+export default class CallService extends Component { 
 
   static options = {
     addGlobalClass: true // 允许外部样式修改组件样式
@@ -26,9 +31,10 @@ export default class index extends Component {
     super(props)
     this.state={}
   }
+  
   callService() { 
     Taro.makePhoneCall({
-      phoneNumber: '400-9698-256'
+      phoneNumber: phoneNumberList[this.props.phoneNumberType]
     })
   }
   render() {
@@ -40,4 +46,12 @@ export default class index extends Component {
     )
   }
 
+}
+
+CallService.defaultProps = {
+  phoneNumberType: 'carProxy'// 车务客服电话
+}
+
+CallService.propTypes = {
+  phoneNumberType: PropTypes.string.isRequired
 }
