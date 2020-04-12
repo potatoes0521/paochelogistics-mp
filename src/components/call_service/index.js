@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-03-23 13:50:52
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-12 18:44:11
+ * @LastEditTime: 2020-04-12 18:52:44
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -41,7 +41,7 @@ export default class CallService extends Component {
     return (
       <View className='call-service-wrapper' onClick={this.callService}>
         <Text className='iconkefu iconfont call-service-icon'></Text>
-        <View className='call-service-text'>客服</View>
+        <View className='call-service-text'>{this.props.text}</View>
       </View>
     )
   }
@@ -49,9 +49,11 @@ export default class CallService extends Component {
 }
 
 CallService.defaultProps = {
-  phoneNumberType: 'carProxy'// 车务客服电话
+  phoneNumberType: 'carProxy',// 车务客服电话
+  text: '客服'
 }
 
 CallService.propTypes = {
-  phoneNumberType: PropTypes.string.isRequired
+  phoneNumberType: PropTypes.string.isRequired,
+  text: PropTypes.string
 }

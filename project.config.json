@@ -192,6 +192,12 @@
           "name": "车务退款",
           "pathName": "pages/car_proxy_pay_refund/index",
           "query": ""
+        },
+        {
+          "id": -1,
+          "name": "车辆救援",
+          "pathName": "pages/car_rescue/index",
+          "query": ""
         }
 			]
 		}
