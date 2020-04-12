@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-06 11:17:37
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-16 17:36:31
+ * @LastEditTime: 2020-04-12 20:02:17
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -25,19 +25,12 @@ import {
   getDateTime
 } from '@utils/timer_handle.js'
 import { defaultResourceImgURL } from '@config/request_config.js'
-// eslint-disable-next-line import/first
 import api from '@api/index.js'
-// eslint-disable-next-line import/first
 import NoTitleCard from '@c/no_title_card/index.js'
-// eslint-disable-next-line import/first
 import RadioGroups from '@c/radio_group/index.js'
-// eslint-disable-next-line import/first
 import CheckBoxGroup from '@c/checkbox_group/index.js'
-// eslint-disable-next-line import/first
 import InputNumber from '@c/input_number/index.js'
-// eslint-disable-next-line import/first
 import { serviceList, carNatureList } from '@config/text_config.js'
-// eslint-disable-next-line import/first
 import Actions from '@store/actions/index.js'
 
 import './index.styl'
