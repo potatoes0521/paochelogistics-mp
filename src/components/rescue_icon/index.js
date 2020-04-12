@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-04-12 20:22:09
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-12 20:34:01
+ * @LastEditTime: 2020-04-12 20:41:12
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -15,7 +15,7 @@ import PropTypes from 'prop-types'
 
 import './index.styl'
 
-export default class index extends Component { 
+export default class RescueIcon extends Component {
 
   static options = {
     addGlobalClass: true // 允许外部样式修改组件样式
@@ -52,12 +52,12 @@ export default class index extends Component {
 
 }
 
-index.defaultProps = {
+RescueIcon.defaultProps = {
   type: 'big',
   // onClick: () => {}
 }
 
-index.propTypes = {
+RescueIcon.propTypes = {
   type: PropTypes.string
   // onClick: PropTypes.func.isRequired
 }

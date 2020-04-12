@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 询价单公共组件页面
  * @Date: 2019-09-23 10:49:11
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-04 11:22:24
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-04-12 20:42:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -14,6 +14,7 @@ import {
 } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
+import RescueIcon from '@c/rescue_icon/index.js'
 import './index.styl'
 
 export default class OfferItem extends Component { 
@@ -62,6 +63,7 @@ export default class OfferItem extends Component {
             <Text>{item.receiveCityName || ''}</Text>
           </View>
           <View className='list-item'>发车时间：{item.sendTimeDesc || ''}</View>
+          <View className='list-item'>拖车时间：{item.sendTimeDesc || ''}</View>
           {
             (!item.storePickup && !item.homeDelivery) ?
               null :
@@ -78,6 +80,9 @@ export default class OfferItem extends Component {
                 }
               </View>
           }
+          <View className='rescue-icon-position-wrapper'>
+            <RescueIcon type='big' />
+          </View>
         </View>
       </View>
     )
