@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 订单item
  * @Date: 2019-09-23 14:42:25
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-04 11:22:37
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-04-12 20:57:19
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,6 +16,7 @@ import {
 } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
+import RescueIcon from '@c/rescue_icon/index.js'
 import './index.styl'
 
 export default class OrderItem extends Component {
@@ -138,6 +139,15 @@ export default class OrderItem extends Component {
                 }
                 台
               </Text>
+            </View>
+            <View className={priceClassName}>¥{ item.payPrice ? item.payPriceDesc : '' }</View>
+          </View>
+          <View className='list-item list-item-msg'>
+            <View className='order-msg rescue-order-msg'>
+              <Text className='order-car-info'>
+                发车时间：{offerMsg.carInfo || ''}
+              </Text>
+              <RescueIcon type='small' />
             </View>
             <View className={priceClassName}>¥{ item.payPrice ? item.payPriceDesc : '' }</View>
           </View>
