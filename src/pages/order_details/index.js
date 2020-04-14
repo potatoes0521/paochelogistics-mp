@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-14 13:50:09
+ * @LastEditTime: 2020-04-14 14:38:04
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -24,6 +24,7 @@ import login from '@utils/login.js'
 import { handleShareInOrderDetails } from '@utils/handle_share.js'
 import { interValCountDown } from '@utils/timer_handle.js'
 import Storage from '@utils/storage.js'
+import RescueIcon from '@c/rescue_icon/index.js'
 import {handleOrderButtons} from '../../config/button_config.js'
 import SendCityComponent from './components/send_city/index.js'
 import ReceiveCityComponent from './components/receive_city/index.js'
@@ -153,7 +154,7 @@ class OrderDetails extends Component {
     }
     const nowTimer = new Date().getTime()
     console.log('现在的时间戳' + nowTimer, '到期的时间戳' + res.discountDueTime, nowTimer - res.discountDueTime, nowTimer > res.discountDueTime)
-    if (nowTimer > res.discountDueTime) {
+    if (nowTimer > res.discountDueTime || !res.tipContent) {
       this.setState({
         fail: true,
         // showBargainBox: true
@@ -297,6 +298,10 @@ class OrderDetails extends Component {
       second,
       // canBargain
     } = this.state
+    console.log(day,
+      hour,
+      minute,
+      second, )
     // const {userInfo} = this.props
     // 1. 请求到数据没有 2. 有没有展示文案 3. 没有过期 4 订单的支付状态是 未支付 5. 不是代付
     const showTipsView = showTips && tipContent && !fail && orderDetailsInfo.payStatus === 0 && pageParams.share_type !== '3'
@@ -309,6 +314,10 @@ class OrderDetails extends Component {
       'icon-for-bottom': !open,
       'icon-for-top': open,
     })
+    const tipsWrapperClassName = classNames({
+      'pay-tips-wrapper': orderDetailsInfo.inquiryOrderVO && orderDetailsInfo.inquiryOrderVO.inquiryType === 1,
+      'car-rescue-tips-wrapper': orderDetailsInfo.inquiryOrderVO && orderDetailsInfo.inquiryOrderVO.inquiryType === 2,
+    })
     return (
       <View className='page-wrapper'>
         <View className='page-main'>
@@ -316,8 +325,11 @@ class OrderDetails extends Component {
             pageParams.share_type === '3' ?
               <HelpPayMsg orderDetailsInfo={orderDetailsInfo} />
               :
-              <View className='pay-tips-wrapper'>
-                <Text className='pay-text'>{ orderDetailsInfo.statusDesc || '' }</Text>
+              <View className={tipsWrapperClassName}>
+                <View className='pay-text-wrapper'>
+                  <Text className='pay-text'>{orderDetailsInfo.statusDesc || ''}</Text>
+                  <RescueIcon type='small' />
+                </View>
               </View>
           }
           <View className={orderMsgClassName}>

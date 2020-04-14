@@ -3,7 +3,7 @@
  * @description: 订单详情中发车城市、 收车城市的组件 usedType: 1, //车辆类型  1新车  2二手车
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-14 13:59:14
+ * @LastEditTime: 2020-04-14 14:29:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -33,7 +33,7 @@ class ServiceDetailsComponent extends Component {
           <View className='details-form-content'>{item.inquiryOrderVO && item.inquiryOrderVO.sendTimeDesc || ''}</View>
         </View>
         {
-          (item.inquiryOrderVO.storePickup || item.inquiryOrderVO.homeDelivery) && item.inquiryOrderVO.inquiryType === 1 ?
+          (item.inquiryOrderVO.storePickup || item.inquiryOrderVO.homeDelivery) && item.inquiryOrderVO && item.inquiryOrderVO.inquiryType === 1 ?
             <View className='details-form-item'>
               <View className='details-form-label'>服务:</View>
               <View className='details-form-content'>
@@ -55,7 +55,7 @@ class ServiceDetailsComponent extends Component {
           <View className='details-form-content'>{item.inquiryOrderVO && item.inquiryOrderVO.carInfo || ''}</View>
         </View>
         {
-          item.inquiryOrderVO.inquiryType === 1 && (
+          item.inquiryOrderVO && item.inquiryOrderVO.inquiryType === 1 && (
             <Block>
               <View className='details-form-item'>
                 <View className='details-form-label'>车辆类型:</View>
@@ -77,7 +77,7 @@ class ServiceDetailsComponent extends Component {
           )
         }
         {
-          item.inquiryOrderVO.inquiryType === 2 && (
+          item.inquiryOrderVO && item.inquiryOrderVO.inquiryType === 2 && (
             <Block>
               <View className='details-form-item'>
                 <View className='details-form-label'>车牌号:</View>

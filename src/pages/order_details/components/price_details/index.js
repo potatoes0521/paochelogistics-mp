@@ -3,7 +3,7 @@
  * @description: 订单详情报价、 金额、 支付方式 
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-05 12:10:53
+ * @LastEditTime: 2020-04-14 14:16:10
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -39,8 +39,6 @@ class PriceDetailsComponent extends Component {
       userInfo,
       pageParams
     } = this.props
-    console.log('item', item)
-    console.log(pageParams)
     const payTypeClassName = classNames(
       'number',
       {
