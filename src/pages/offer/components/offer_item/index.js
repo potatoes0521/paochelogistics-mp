@@ -3,7 +3,7 @@
  * @description: 询价单公共组件页面
  * @Date: 2019-09-23 10:49:11
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-12 20:42:58
+ * @LastEditTime: 2020-04-14 12:14:33
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -63,26 +63,29 @@ export default class OfferItem extends Component {
             <Text>{item.receiveCityName || ''}</Text>
           </View>
           <View className='list-item'>发车时间：{item.sendTimeDesc || ''}</View>
-          <View className='list-item'>拖车时间：{item.sendTimeDesc || ''}</View>
           {
-            (!item.storePickup && !item.homeDelivery) ?
-              null :
-              <View className='list-item'>
-                服务：
-                {
-                  item.storePickup ? '上门提车' : ''
-                }
-                {
-                  item.storePickup && item.homeDelivery ? '，' : ''
-                }
-                {
-                  item.homeDelivery ? '上门送车' : ''
-                }
-              </View>
+            ((item.storePickup || item.homeDelivery) && item.inquiryType === 1) && (
+                <View className='list-item'>
+                  服务：
+                  {
+                    item.storePickup ? '上门提车' : ''
+                  }
+                  {
+                    item.storePickup && item.homeDelivery ? '，' : ''
+                  }
+                  {
+                    item.homeDelivery ? '上门送车' : ''
+                  }
+                </View>
+              )
           }
-          <View className='rescue-icon-position-wrapper'>
-            <RescueIcon type='big' />
-          </View>
+          {
+            item.inquiryType === 2 && (
+              <View className='rescue-icon-position-wrapper'>
+                <RescueIcon type='big' />
+              </View>
+            )
+          }
         </View>
       </View>
     )
