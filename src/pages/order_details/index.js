@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-14 14:38:04
+ * @LastEditTime: 2020-04-14 15:40:54
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -328,7 +328,7 @@ class OrderDetails extends Component {
               <View className={tipsWrapperClassName}>
                 <View className='pay-text-wrapper'>
                   <Text className='pay-text'>{orderDetailsInfo.statusDesc || ''}</Text>
-                  <RescueIcon type='small' />
+                  <RescueIcon type='small' color='white' />
                 </View>
               </View>
           }
