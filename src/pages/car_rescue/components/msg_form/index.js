@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-04-12 19:22:51
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-14 11:57:58
+ * @LastEditTime: 2020-04-14 12:42:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -35,22 +35,25 @@ export default class MsgForm extends Component {
     let { value } = e.target
     this.setState({
       carNo: value
+    }, () => {
+      this.handleProps()
     })
-    this.handleProps()
   }
   onCarInfoInput(e) {
     let { value } = e.target
     this.setState({
       carInfo: value
+    }, () => {
+      this.handleProps()
     })
-    this.handleProps()
   }
   onRemarksInput(e) {
     let { value } = e.target
     this.setState({
       remark: value
+    }, () => {
+      this.handleProps()
     })
-    this.handleProps()
   }
   /**
    * 单选 选择车辆性质
@@ -58,10 +61,12 @@ export default class MsgForm extends Component {
    * @return void
    */
   chooseRadio(e) {
+    console.log('e', e)
     this.setState({
       carSituation: e.id
+    }, () => {
+      this.handleProps()
     })
-    this.handleProps()
   }
   handleProps() { 
     this.props.onFormValueChange(this.state)

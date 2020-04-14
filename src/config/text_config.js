@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-09-12 11:17:44
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-12 20:06:09
+ * @LastEditTime: 2020-04-14 12:35:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -140,7 +140,8 @@ export const CarConditionList = [
   {
     id: 0,
     label: '能动'
-  }, {
+  },
+  {
     id: 1,
     label: '不能动'
   }

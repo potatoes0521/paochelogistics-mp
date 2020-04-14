@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-04-12 18:33:56
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-14 12:07:21
+ * @LastEditTime: 2020-04-14 12:43:30
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -90,6 +90,7 @@ class CarRescue extends Component {
       sendTime: pickerDate.split(' ')[0],
     }
     sendData = Object.assign({}, sendData, this.state)
+    sendData.carSituation = this.state.carSituation === 1 ? 0 : 1
     api.offer.submitOffer(sendData, this).then(() => {
       Taro.showToast({
         icon: 'none',
