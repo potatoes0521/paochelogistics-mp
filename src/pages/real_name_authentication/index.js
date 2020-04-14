@@ -3,7 +3,7 @@
  * @description: 实名认证页面
  * @Date: 2019-11-04 10:29:09
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-26 15:26:49
+ * @LastEditTime: 2020-04-14 13:39:30
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -40,6 +40,7 @@ class RealName extends Component {
       realName: '',
       realFlag: false,
     }
+    this.timer = null
   }
 
   componentDidMount() { 
@@ -47,6 +48,9 @@ class RealName extends Component {
     if (userInfo.realNameAuthStatus) {
       this.handleAlreadyAuthorize()
     }
+  }
+  componentWillUnmount() { 
+    clearTimeout(this.timer)
   }
   /**
    * 处理已经授权的情况  // 后端接口还没有
@@ -119,15 +123,17 @@ class RealName extends Component {
         this.setState({
           realFlag: true
         })
-        let sendDataImage = {
-          virthPath: imageUrl
-        }
-        deleteImage(sendDataImage, this)
         Taro.showToast({
           title: '识别失败,请换一张试试~',
           icon: 'none',
           duration: 3000,
         })
+        let sendDataImage = {
+          virthPath: imageUrl
+        }
+        this.timer = setTimeout(() => {
+          deleteImage(sendDataImage, this)
+        }, 1800)
       }
     })
   }
