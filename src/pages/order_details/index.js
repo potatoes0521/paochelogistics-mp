@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-14 13:41:59
+ * @LastEditTime: 2020-04-14 13:50:09
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -32,6 +32,7 @@ import PriceDetailsComponent from './components/price_details/index.js'
 import FooterDetailsComponent from './components/footer_details/index.js'
 import CustomerInfoComponent from './components/customer_info/index.js'
 import HelpPayMsg from './components/help_pay/index.js'
+import TimerCountDown from './components/timer_count_down/index.js'
 import './index.styl'
 
 class OrderDetails extends Component {
@@ -284,16 +285,16 @@ class OrderDetails extends Component {
   render() {
     let {
       orderDetailsInfo,
-      day,
-      hour,
-      minute,
-      second,
       showBargainBox,
       tipContent,
       fail,
       showTips,
       pageParams,
-      open
+      open,
+      day,
+      hour,
+      minute,
+      second,
       // canBargain
     } = this.state
     // const {userInfo} = this.props
@@ -374,27 +375,13 @@ class OrderDetails extends Component {
         }
         {
           showTipsView && (
-            <View className='bargain-tips-wrapper'>
-              <View className='time-tips'>
-                <View className='tips'>优惠倒计时</View>
-                <View className='timer'>
-                  {
-                    day > 0 ?
-                      <Block>
-                        <Text className='timer-box'>{day}</Text>
-                        <Text className='tips'>天</Text>
-                      </Block>
-                      : null
-                  }
-                  <Text className='timer-box'>{hour}</Text>
-                  <Text className='tips'>:</Text>
-                  <Text className='timer-box'>{minute}</Text>
-                  <Text className='tips'>:</Text>
-                  <Text className='timer-box'>{second}</Text>
-                </View>
-              </View>
-              <View className='tips-text'>{tipContent}</View>
-            </View>
+            <TimerCountDown
+              day={day}
+              hour={hour}
+              minute={minute}
+              second={second}
+              tipContent={tipContent}
+            />
           )
         }
         {
