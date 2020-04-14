@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-13 11:43:15
+ * @LastEditTime: 2020-04-14 17:38:31
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -49,7 +49,8 @@ class Index extends Component {
       bannerList: [],
       recommendList: [],
       failLoading: false,
-      toolList: []
+      toolList: [],
+      loading: false
     }
     this.initCity = {}
     this.pageParams = {}
@@ -197,7 +198,8 @@ class Index extends Component {
     api.index.getBannerList(sendData, this)
       .then(res => {
         this.setState({
-          bannerList: res || []
+          bannerList: res || [],
+          loading: true
         })
       })
   }
@@ -319,7 +321,8 @@ class Index extends Component {
       bannerList,
       recommendList,
       failLoading,
-      toolList
+      toolList,
+      loading
     } = this.state
     let { userInfo } = this.props
     
@@ -364,7 +367,9 @@ class Index extends Component {
               </View>
           }
         </View>
-        <BottomLoginTips></BottomLoginTips>
+        {
+          loading && <BottomLoginTips></BottomLoginTips>
+        }
         <LocationModal
           onClick={this.modalCallBack.bind(this)}
           showModal={locationModal}
