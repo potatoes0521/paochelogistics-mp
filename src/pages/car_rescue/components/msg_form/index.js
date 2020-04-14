@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-04-12 19:22:51
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-12 20:07:18
+ * @LastEditTime: 2020-04-14 11:57:58
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -21,32 +21,58 @@ import './index.styl'
 
 export default class MsgForm extends Component { 
 
-  // static options = {
-    // addGlobalClass: true // 允许外部样式修改组件样式
-  // }
-
   constructor(props) {
     super(props)
     this.state = {
-      activeIndex: 0
+      carNo: '',
+      carSituation: 1,
+      carInfo: '',
+      remark: ''
     }
   }
-
-  componentDidMount() {
+ 
+  onCarNoInput(e) {
+    let { value } = e.target
+    this.setState({
+      carNo: value
+    })
+    this.handleProps()
   }
-
+  onCarInfoInput(e) {
+    let { value } = e.target
+    this.setState({
+      carInfo: value
+    })
+    this.handleProps()
+  }
+  onRemarksInput(e) {
+    let { value } = e.target
+    this.setState({
+      remark: value
+    })
+    this.handleProps()
+  }
   /**
    * 单选 选择车辆性质
    * @param {Object} e event对象
    * @return void
    */
   chooseRadio(e) {
-    console.log('e', e)
+    this.setState({
+      carSituation: e.id
+    })
+    this.handleProps()
   }
-
+  handleProps() { 
+    this.props.onFormValueChange(this.state)
+  }
   render() {
-    let { } = this.props
-    let {activeIndex} = this.state
+    let {
+      carSituation,
+      carNo,
+      carInfo,
+      remark
+    } = this.state
     return (
       <View className='msg-form-wrapper'>
         <View className='msg-form-item'>
@@ -59,6 +85,9 @@ export default class MsgForm extends Component {
               className='input-class'
               placeholderClass='placeholder-class'
               placeholder='请输入车辆信息，如大众迈腾'
+              maxLength='20'
+              onInput={this.onCarInfoInput}
+              value={carInfo}
             ></Input>
           </View>
         </View>
@@ -72,6 +101,9 @@ export default class MsgForm extends Component {
               className='input-class'
               placeholderClass='placeholder-class'
               placeholder='请输入车牌号'
+              maxLength='10'
+              onInput={this.onCarNoInput}
+              value={carNo}
             ></Input>
           </View>
         </View>
@@ -83,7 +115,7 @@ export default class MsgForm extends Component {
           <View className='msg-form-content-radio'>
             <RadioGroups
               options={CarConditionList}
-              activeIndex={activeIndex}
+              activeIndex={carSituation}
               onClick={this.chooseRadio.bind(this)}
             ></RadioGroups>
           </View>
@@ -98,6 +130,8 @@ export default class MsgForm extends Component {
               className='input-class'
               placeholderClass='placeholder-class'
               placeholder='您可在此填写备注信息描述清楚车况'
+              onInput={this.onRemarksInput}
+              value={remark}
             ></Input>
           </View>
         </View>
@@ -108,9 +142,9 @@ export default class MsgForm extends Component {
 }
 
 MsgForm.defaultProps = {
-  onClick: () => {}
+  onFormValueChange: () => {}
 }
 
 MsgForm.propTypes = {
-  onClick: PropTypes.func.isRequired
+  onFormValueChange: PropTypes.func.isRequired
 }
