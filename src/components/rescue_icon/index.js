@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-04-12 20:22:09
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-12 20:41:12
+ * @LastEditTime: 2020-04-14 15:43:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -31,16 +31,23 @@ export default class RescueIcon extends Component {
 
 
   render() {
-    let { type } = this.props
+    let {
+      type,
+      color
+    } = this.props
     const wrapperClassName = classNames('rescue-icon-wrapper', {
       'big-rescue-icon-wrapper': type === 'big',
       'small-rescue-icon-wrapper': type === 'small',
+      'white-rescue-icon-wrapper': color === 'white'
     }) 
+    const rescueIconClassName = classNames('iconfont iconjiuyuan rescue-icon', {
+      'white-rescue-icon': color === 'white'
+    })
     return (
       <View
         className={wrapperClassName}
       >
-        <View className='iconfont iconjiuyuan rescue-icon'></View>
+        <View className={rescueIconClassName}></View>
         {
           type === 'big' ?
             <View className='rescue-icon-text'>救援</View>
@@ -54,10 +61,12 @@ export default class RescueIcon extends Component {
 
 RescueIcon.defaultProps = {
   type: 'big',
+  color: 'default'
   // onClick: () => {}
 }
 
 RescueIcon.propTypes = {
-  type: PropTypes.string
+  type: PropTypes.string,
+  color: PropTypes.string
   // onClick: PropTypes.func.isRequired
 }

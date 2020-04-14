@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-04-12 18:33:56
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-14 12:43:30
+ * @LastEditTime: 2020-04-14 15:09:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -41,10 +41,6 @@ class CarRescue extends Component {
       remark: ''
     }
     this.timer = null
-  }
-
-  componentWillUnmount() {
-    clearTimeout(this.timer)
   }
 
   onChooseCity(data) { 
@@ -98,7 +94,7 @@ class CarRescue extends Component {
       })
       this.timer = setTimeout(() => {
         Taro.switchTab({
-          url: 'pages/offer/index'
+          url: '/pages/offer/index'
         })
       }, 1800)
     })
