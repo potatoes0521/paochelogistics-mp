@@ -3,7 +3,7 @@
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-12 20:49:39
+ * @LastEditTime: 2020-04-14 13:01:39
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -11,7 +11,8 @@
 import Taro, { Component } from '@tarojs/taro'
 import {
   View,
-  Text
+  Text,
+  Block
 } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import NoTitleCard from '@c/no_title_card/index.js'
@@ -46,7 +47,12 @@ class OfferDetails extends Component {
       quotedTimeDesc: '', //报价时间
       usedType: 1, //车辆类型  1新车  2二手车
       isActive: 1, //有效状态 0无效 1有效 2删除
-      buttons: [] //询价单详情页面的按钮列表
+      buttons: [], //询价单详情页面的按钮列表,
+      sendAddress: '',
+      receiveAddress: '',
+      carNo: '',
+      carSituation: 1,
+      remark: ''
     }
     this.pageParams = {}
   }
@@ -80,28 +86,8 @@ class OfferDetails extends Component {
     }
     api.offer.getOfferDetails(sendData, this)
       .then(res => {
-        this.setState({
-          inquiryId: res.inquiryId,
-          statusDesc: res.statusDesc,
-          status: res.status,
-          quotedPriceDesc: res.quotedPriceDesc,
-          assessedPriceDesc: res.assessedPriceDesc,
-          dueTimeDesc: res.dueTimeDesc,
-          sendTimeDesc: res.sendTimeDesc,
-          sendCityName: res.sendCityName,
-          receiveCityName: res.receiveCityName,
-          homeDelivery: res.homeDelivery,
-          storePickup: res.storePickup,
-          carInfo: res.carInfo,
-          carAmount: res.carAmount,
-          inquiryTimeDesc: res.inquiryTimeDesc,
-          quotedTimeDesc: res.quotedTimeDesc,
-          usedType: res.usedType,
-          isActive: res.isActive,
-          buttons: handleOfferButtons(res.buttons),
-          orderCode: res.orderCode,
-          inquiryCode: res.inquiryCode
-        })
+        res.buttons = handleOfferButtons(res.buttons)
+        this.setState(res)
         Storage.setStorage('offer_info', res)
       })
   }
@@ -244,7 +230,13 @@ class OfferDetails extends Component {
       statusDesc,
       usedType,
       buttons,
-      inquiryCode
+      inquiryCode,
+      sendAddress,
+      receiveAddress,
+      carNo,
+      carSituation,
+      remark,
+      inquiryType
     } = this.state
     let { userInfo } = this.props
     const cancelOfferClassName = classNames({
@@ -320,12 +312,28 @@ class OfferDetails extends Component {
               <View className='details-form-label'>发车城市:</View>
               <View className='details-form-content'>{sendCityName || ''}</View>
             </View>
+            {
+              sendAddress && storePickup && (
+                <View className='details-form-item'>
+                  <View className='details-form-label'>详细地址:</View>
+                  <View className='details-form-content'>{sendAddress || ''}</View>
+                </View>
+              )
+            }
             <View className='details-form-item'>
               <View className='details-form-label'>收车城市:</View>
               <View className='details-form-content'>{receiveCityName || ''}</View>
             </View>
             {
-              (homeDelivery !== 0 || storePickup !== 0) ?
+              receiveAddress && homeDelivery && (
+                <View className='details-form-item'>
+                  <View className='details-form-label'>详细地址:</View>
+                  <View className='details-form-content'>{receiveAddress || ''}</View>
+                </View>
+              )
+            }
+            {
+              (homeDelivery !== 0 || storePickup !== 0) && inquiryType === 1 ?
                 <View className='details-form-item'>
                   <View className='details-form-label'>服务:</View>
                   <View className='details-form-content'>
@@ -346,18 +354,50 @@ class OfferDetails extends Component {
               <View className='details-form-label'>车辆信息:</View>
               <View className='details-form-content'>{carInfo || ''}</View>
             </View>
-            <View className='details-form-item'>
-              <View className='details-form-label'>车辆类型:</View>
-              <View className='details-form-content'>
-                {
-                  usedType === 1 ? '新车' : '二手车'
-                }
-              </View>
-            </View>
-            <View className='details-form-item'>
-              <View className='details-form-label'>台数:</View>
-              <View className='details-form-content'>{carAmount || ''}台</View>
-            </View>
+            {
+              inquiryType === 1 && (
+                <Block>
+                  <View className='details-form-item'>
+                    <View className='details-form-label'>车辆类型:</View>
+                    <View className='details-form-content'>
+                      {
+                        usedType === 1 ? '新车' : '二手车'
+                      }
+                    </View>
+                  </View>
+                  <View className='details-form-item'>
+                    <View className='details-form-label'>台数:</View>
+                    <View className='details-form-content'>{carAmount || ''}台</View>
+                  </View>
+                </Block>
+              )
+            }
+            {
+              inquiryType === 2 && (
+                <Block>
+                  <View className='details-form-item'>
+                    <View className='details-form-label'>车牌号:</View>
+                    <View className='details-form-content'>
+                      {carNo || ''}
+                    </View>
+                  </View>
+                  <View className='details-form-item'>
+                    <View className='details-form-label'>车况:</View>
+                    <View className='details-form-content'>
+                      {
+                        carSituation === 1 ? '能动' : '不能动'
+                      }
+                    </View>
+                  </View>
+                  <View className='details-form-item remark-details'>
+                    <View className='details-form-label'>备注:</View>
+                    <View className='details-form-content'>
+                      <Text className='details-form-text'> { remark || '--' }</Text>
+                    </View>
+                  </View>
+                </Block>
+              )
+            }
             <View className='details-form-item'>
               <View className='details-form-label'>询价时间:</View>
               <View className='details-form-content'>{inquiryTimeDesc || ''}</View>
