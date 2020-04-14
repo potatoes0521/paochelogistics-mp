@@ -3,13 +3,17 @@
  * @description: 订单详情中发车城市、 收车城市的组件 usedType: 1, //车辆类型  1新车  2二手车
  * @Date: 2019-09-20 09:58:08
  * @LastEditors: liuYang
- * @LastEditTime: 2019-11-07 17:04:57
+ * @LastEditTime: 2020-04-14 13:59:14
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
 
 import Taro, { Component } from '@tarojs/taro'
-import { View } from '@tarojs/components'
+import {
+  View,
+  Block,
+  Text
+} from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import PropTypes from 'prop-types'
 import './index.styl'
@@ -29,7 +33,7 @@ class ServiceDetailsComponent extends Component {
           <View className='details-form-content'>{item.inquiryOrderVO && item.inquiryOrderVO.sendTimeDesc || ''}</View>
         </View>
         {
-          (item.inquiryOrderVO.storePickup || item.inquiryOrderVO.homeDelivery) ?
+          (item.inquiryOrderVO.storePickup || item.inquiryOrderVO.homeDelivery) && item.inquiryOrderVO.inquiryType === 1 ?
             <View className='details-form-item'>
               <View className='details-form-label'>服务:</View>
               <View className='details-form-content'>
@@ -50,22 +54,56 @@ class ServiceDetailsComponent extends Component {
           <View className='details-form-label'>车辆信息:</View>
           <View className='details-form-content'>{item.inquiryOrderVO && item.inquiryOrderVO.carInfo || ''}</View>
         </View>
-        <View className='details-form-item'>
-          <View className='details-form-label'>车辆类型:</View>
-          <View className='details-form-content'>
-            {
-              item.inquiryOrderVO && item.inquiryOrderVO.usedType === 1 ? '新车' : '二手车'
-            }
-          </View>
-        </View>
-        <View className='details-form-item'>
-          <View className='details-form-label'>台数:</View>
-          <View className='details-form-content'>{item.inquiryOrderVO && item.inquiryOrderVO.carAmount || ''}台</View>
-        </View>
-        <View className='details-form-item'>
-          <View className='details-form-label car-vins'>车架号/车牌号:</View>
-          <View className='details-form-content'>{item.vins || ''}</View>
-        </View>
+        {
+          item.inquiryOrderVO.inquiryType === 1 && (
+            <Block>
+              <View className='details-form-item'>
+                <View className='details-form-label'>车辆类型:</View>
+                <View className='details-form-content'>
+                  {
+                    item.inquiryOrderVO && item.inquiryOrderVO.usedType === 1 ? '新车' : '二手车'
+                  }
+                </View>
+              </View>
+              <View className='details-form-item'>
+                <View className='details-form-label'>台数:</View>
+                <View className='details-form-content'>{item.inquiryOrderVO && item.inquiryOrderVO.carAmount || ''}台</View>
+              </View>
+              <View className='details-form-item'>
+                <View className='details-form-label car-vins'>车架号/车牌号:</View>
+                <View className='details-form-content'>{item.vins || ''}</View>
+              </View>
+            </Block>
+          )
+        }
+        {
+          item.inquiryOrderVO.inquiryType === 2 && (
+            <Block>
+              <View className='details-form-item'>
+                <View className='details-form-label'>车牌号:</View>
+                <View className='details-form-content'>
+                  {
+                    item.inquiryOrderVO.carNo || ''
+                  }
+                </View>
+              </View>
+              <View className='details-form-item'>
+                <View className='details-form-label'>车况:</View>
+                <View className='details-form-content'>
+                  {
+                    item.inquiryOrderVO.carSituation === 1 ? '能动' : '不能动'
+                  }
+                </View>
+              </View>
+              <View className='details-form-item remark-details'>
+                <View className='details-form-label'>备注:</View>
+                <View className='details-form-content'>
+                  <Text className='details-form-text'> { item.inquiryOrderVO.remark || '--' }</Text>
+                </View>
+              </View>
+            </Block>
+          )
+        }
       </View>
     )
   }
