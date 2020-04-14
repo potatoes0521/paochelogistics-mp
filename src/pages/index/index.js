@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-16 17:56:02
+ * @LastEditTime: 2020-04-13 11:43:15
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -22,7 +22,6 @@ import {
   showModalAndRegister
 } from '@utils/common.js'
 import { defaultResourceImgURL } from '@config/request_config.js'
-// eslint-disable-next-line import/first
 import api from '@api/index.js'
 import login from '@utils/login.js'
 import loadingImage from '@img/index/loading.png'
@@ -129,11 +128,9 @@ class Index extends Component {
    */
   handleLocation() {
     getUserLocation().then((res) => {
-      if (!this.state.locationModal) {
-        this.setState({
-          locationModal: false
-        })
-      }
+      this.setState({
+        locationModal: false
+      })
       this.handleConvertingGPS(res.latitude, res.longitude)
     }).catch((err) => {
       if (err.errMsg && err.errMsg.indexOf('fail auth deny') != -1) {
