@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-20 20:55:00
+ * @LastEditTime: 2020-04-14 13:14:40
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -62,7 +62,13 @@ class PlaceOrder extends Component {
       transferUserId: '', // 接单运力id
       transferRealName: '', // 接单运力
       transferMobile: '', // 接单运力手机号
-      invoiceTypeInfo: {} //发票
+      invoiceTypeInfo: {}, //发票
+      sendAddress: '',
+      receiveAddress: '',
+      carNo: '',
+      carSituation: 1,
+      remark: '',
+      inquiryType: 1
       // disabled: true
     }
     this.pageParams = {}
@@ -96,23 +102,7 @@ class PlaceOrder extends Component {
     }
     api.offer.getOfferDetails(sendData, this)
       .then(res => {
-        this.setState({
-          inquiryId: res.inquiryId,
-          quotedPriceDesc: res.quotedPriceDesc,
-          sendTimeDesc: res.sendTimeDesc,
-          sendCityId: res.sendCityId,
-          sendCityName: res.sendCityName,
-          sendAddress: res.sendAddress,
-          receiveCityId: res.receiveCityId,
-          receiveCityName: res.receiveCityName,
-          receiveAddress: res.receiveAddress,
-          homeDelivery: res.homeDelivery,
-          storePickup: res.storePickup,
-          carInfo: res.carInfo,
-          carAmount: res.carAmount,
-          usedType: res.usedType,
-          invoiceTypeDesc: res.invoiceTypeDesc
-        })
+        this.setState(res)
       })
   }
   /**
@@ -306,7 +296,8 @@ class PlaceOrder extends Component {
       transferRealName, // 运力名称
       transferUserId, // 接单运力id
       transferMobile, // 接单运力手机号
-      invoiceTypeInfo
+      invoiceTypeInfo,
+      inquiryType
     } = this.state
     let { userInfo } = this.props
     if (userInfo.userType === 0 && JSON.stringify(invoiceTypeInfo) === `{}`) {
@@ -345,7 +336,7 @@ class PlaceOrder extends Component {
     //   this.toast('收车人身份证号输入格式有误')
     //   return
     // }
-    if (vins.length <= 0) {
+    if (inquiryType === 1 && vins.length <= 0) {
       this.toast('请输入车架号或车牌号')
       return
     }
@@ -445,7 +436,11 @@ class PlaceOrder extends Component {
       transferPrice, // 运力接单价格
       // transferUserId, // 接单运力id
       transferMobile, // 接单运力手机号
-      invoiceTypeInfo
+      invoiceTypeInfo,
+      inquiryType,
+      carNo,
+      carSituation,
+      remark,
       // disabled
     } = this.state
     let {userInfo} = this.props
@@ -591,7 +586,7 @@ class PlaceOrder extends Component {
             <View className='dividing-line'></View>
             <View className='car-info'>
               {
-                (storePickup || homeDelivery) ?
+                (storePickup || homeDelivery) && inquiryType === 1 ?
                   <View className='details-form-item'>
                     <View className='start-icon'></View>
                     <View className='details-form-label'>服务:</View>
@@ -619,31 +614,66 @@ class PlaceOrder extends Component {
                 <View className='details-form-label'>车辆信息:</View>
                 <View className='details-form-content'>{carInfo || ''}</View>
               </View>
-              <View className='details-form-item'>
-                <View className='start-icon'></View>
-                <View className='details-form-label'>车辆类型:</View>
-                <View className='details-form-content'>{usedType === 1 ? '新车' : '二手车'}</View>
-              </View>
-              <View className='details-form-item'>
-                <View className='start-icon'></View>
-                <View className='details-form-label'>台数:</View>
-                <View className='details-form-content'>{carAmount || ''}台</View>
-              </View>
-              <View className='details-form-item' onClick={this.navigatorTo}>
-                <View className='start-icon'>*</View>
-                <View className='details-form-label car-vins'>车架号/车牌号:</View>
-                <View className='details-form-content'>
-                  {
-                    vins.length ?
-                      <Text>{vins}</Text>
-                      :
-                      <Block>
-                        <Text className='placeholder-style'>请输入车架号/车牌号</Text>
-                        <Text className='iconfont iconxiangyouxuanzejiantoux icon-right-style'></Text>                        
-                      </Block>
-                  }
-                </View>
-              </View>
+              {
+                inquiryType === 1 && (
+                  <Block>
+                    <View className='details-form-item'>
+                      <View className='start-icon'></View>
+                      <View className='details-form-label'>车辆类型:</View>
+                      <View className='details-form-content'>{usedType === 1 ? '新车' : '二手车'}</View>
+                    </View>
+                    <View className='details-form-item'>
+                      <View className='start-icon'></View>
+                      <View className='details-form-label'>台数:</View>
+                      <View className='details-form-content'>{carAmount || ''}台</View>
+                    </View>
+                    <View className='details-form-item' onClick={this.navigatorTo}>
+                      <View className='start-icon'>*</View>
+                      <View className='details-form-label car-vins'>车架号/车牌号:</View>
+                      <View className='details-form-content'>
+                        {
+                          vins.length ?
+                            <Text>{vins}</Text>
+                            :
+                            <Block>
+                              <Text className='placeholder-style'>请输入车架号/车牌号</Text>
+                              <Text className='iconfont iconxiangyouxuanzejiantoux icon-right-style'></Text>                        
+                            </Block>
+                        }
+                      </View>
+                    </View>
+                  </Block>
+                )
+              }
+              {
+                inquiryType === 2 && (
+                  <Block>
+                    <View className='details-form-item'>
+                      <View className='start-icon'></View>
+                      <View className='details-form-label'>车牌号:</View>
+                      <View className='details-form-content'>
+                        {carNo || ''}
+                      </View>
+                    </View>
+                    <View className='details-form-item'>
+                      <View className='start-icon'></View>
+                      <View className='details-form-label'>车况:</View>
+                      <View className='details-form-content'>
+                        {
+                          carSituation === 1 ? '能动' : '不能动'
+                        }
+                      </View>
+                    </View>
+                    <View className='details-form-item remark-details'>
+                      <View className='start-icon'></View>
+                      <View className='details-form-label'>备注:</View>
+                      <View className='details-form-content'>
+                        <Text className='details-form-text'> { remark || '--' }</Text>
+                      </View>
+                    </View>
+                  </Block>
+                )
+              }
               <View className='dividing-line'></View>
               <View className='details-form-item'>
                 <View className='start-icon'></View>

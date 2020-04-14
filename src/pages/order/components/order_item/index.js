@@ -3,7 +3,7 @@
  * @description: 订单item
  * @Date: 2019-09-23 14:42:25
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-12 20:57:19
+ * @LastEditTime: 2020-04-14 13:34:08
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -130,27 +130,35 @@ export default class OrderItem extends Component {
               }
             </View>
           </View>
-          <View className='list-item list-item-msg'>
-            <View className='order-msg'>
-              <Text className='order-car-info'>{ offerMsg.carInfo || '' }</Text>
-              <Text>
-                {
-                  offerMsg.carAmount || 0
-                }
-                台
-              </Text>
-            </View>
-            <View className={priceClassName}>¥{ item.payPrice ? item.payPriceDesc : '' }</View>
-          </View>
-          <View className='list-item list-item-msg'>
-            <View className='order-msg rescue-order-msg'>
-              <Text className='order-car-info'>
-                发车时间：{offerMsg.carInfo || ''}
-              </Text>
-              <RescueIcon type='small' />
-            </View>
-            <View className={priceClassName}>¥{ item.payPrice ? item.payPriceDesc : '' }</View>
-          </View>
+          {
+            item.inquiryOrderVO && item.inquiryOrderVO.inquiryType === 1 && (
+              <View className='list-item list-item-msg'>
+                <View className='order-msg'>
+                  <Text className='order-car-info'>{ offerMsg.carInfo || '' }</Text>
+                  <Text>
+                    {
+                      offerMsg.carAmount || 0
+                    }
+                    台
+                  </Text>
+                </View>
+                <View className={priceClassName}>¥{ item.payPrice ? item.payPriceDesc : '' }</View>
+              </View>
+            )
+          }
+          {
+            item.inquiryOrderVO && item.inquiryOrderVO.inquiryType === 2 && (
+              <View className='list-item list-item-msg'>
+                <View className='order-msg rescue-order-msg'>
+                  <Text className='order-car-info'>
+                    发车时间：{offerMsg.carInfo || ''}
+                  </Text>
+                  <RescueIcon type='small' />
+                </View>
+                <View className={priceClassName}>¥{ item.payPrice ? item.payPriceDesc : '' }</View>
+              </View>
+            )
+          }
         </View>
         <View className='btn-group'>
           {

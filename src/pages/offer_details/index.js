@@ -3,7 +3,7 @@
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-14 13:01:39
+ * @LastEditTime: 2020-04-14 13:06:19
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -52,7 +52,8 @@ class OfferDetails extends Component {
       receiveAddress: '',
       carNo: '',
       carSituation: 1,
-      remark: ''
+      remark: '',
+      inquiryType: 1
     }
     this.pageParams = {}
   }
