@@ -3,7 +3,7 @@
  * @description: 订单详情
  * @Date: 2019-09-20 10:16:14
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-24 17:53:32
+ * @LastEditTime: 2020-04-14 13:41:59
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -18,6 +18,13 @@ import { connect } from '@tarojs/redux'
 import { defaultResourceImgURL } from '@config/request_config.js'
 import classNames from 'classnames'
 import NoTitleCard from '@c/no_title_card/index.js'
+import BargainBox from '@c/bargain/index.js' // 砍价过期 弹框 
+import api from '@api/index.js'
+import login from '@utils/login.js'
+import { handleShareInOrderDetails } from '@utils/handle_share.js'
+import { interValCountDown } from '@utils/timer_handle.js'
+import Storage from '@utils/storage.js'
+import {handleOrderButtons} from '../../config/button_config.js'
 import SendCityComponent from './components/send_city/index.js'
 import ReceiveCityComponent from './components/receive_city/index.js'
 import ServiceDetailsComponent from './components/service_details/index.js'
@@ -25,20 +32,6 @@ import PriceDetailsComponent from './components/price_details/index.js'
 import FooterDetailsComponent from './components/footer_details/index.js'
 import CustomerInfoComponent from './components/customer_info/index.js'
 import HelpPayMsg from './components/help_pay/index.js'
-// eslint-disable-next-line import/first
-import BargainBox from '@c/bargain/index.js' // 砍价过期 弹框 
-// eslint-disable-next-line import/first
-import api from '@api/index.js'
-// eslint-disable-next-line import/first
-import login from '@utils/login.js'
-// eslint-disable-next-line import/first
-import { handleShareInOrderDetails } from '@utils/handle_share.js'
-import {handleOrderButtons} from '../../config/button_config.js'
-// eslint-disable-next-line import/first
-import { interValCountDown } from '@utils/timer_handle.js'
-// import OrderTransport from './components/order_transport/index.js'
-// eslint-disable-next-line import/first
-import Storage from '@utils/storage.js'
 import './index.styl'
 
 class OrderDetails extends Component {
