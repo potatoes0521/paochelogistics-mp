@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-04-12 18:33:56
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-14 15:09:00
+ * @LastEditTime: 2020-04-15 11:06:27
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -90,7 +90,7 @@ class CarRescue extends Component {
     api.offer.submitOffer(sendData, this).then(() => {
       Taro.showToast({
         icon: 'none',
-        title: '发布成功'
+        title: '询价成功'
       })
       this.timer = setTimeout(() => {
         Taro.switchTab({
