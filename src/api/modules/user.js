@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 用户中心
  * @Date: 2019-09-26 11:23:16
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-14 13:41:28
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-04-16 11:10:16
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -59,4 +59,8 @@ export default {
   getUserAuthorizeMsg(data, that) {
     return requestHandle.get('user/idcard', data, that);
   },
+  // 获取客服电话
+  getServicePhoneNumber(data, that) {
+    return requestHandle.get('info/telephone', data, that);
+  }
 }

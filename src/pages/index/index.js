@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-14 17:38:31
+ * @LastEditTime: 2020-04-16 11:14:22
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -34,6 +34,8 @@ import LocationModal from './components/location_modal/index.js'
 import Tool from './components/tool/index'
 import Banner from './components/banner/index'
 import { handleToolButtons } from '../../config/button_config.js'
+import CallService from '@c/call_service/index.js'
+
 import './index.styl'
 
 class Index extends Component {
@@ -379,6 +381,7 @@ class Index extends Component {
             null :
             <View className='showRegister' onClick={this.navigateToRegister}></View>
         }
+        <CallService phoneNumberType='index' />
       </View>
     )
   }
