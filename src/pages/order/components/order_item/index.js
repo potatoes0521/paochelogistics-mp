@@ -3,7 +3,7 @@
  * @description: 订单item
  * @Date: 2019-09-23 14:42:25
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-14 13:34:08
+ * @LastEditTime: 2020-04-15 11:19:54
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -151,7 +151,7 @@ export default class OrderItem extends Component {
               <View className='list-item list-item-msg'>
                 <View className='order-msg rescue-order-msg'>
                   <Text className='order-car-info'>
-                    发车时间：{offerMsg.carInfo || ''}
+                    发车时间：{offerMsg.sendTimeDesc || ''}
                   </Text>
                   <RescueIcon type='small' />
                 </View>
