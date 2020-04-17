@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-04-12 20:22:09
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-14 15:43:16
+ * @LastEditTime: 2020-04-17 12:44:52
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -40,7 +40,7 @@ export default class RescueIcon extends Component {
       'small-rescue-icon-wrapper': type === 'small',
       'white-rescue-icon-wrapper': color === 'white'
     }) 
-    const rescueIconClassName = classNames('iconfont iconjiuyuan rescue-icon', {
+    const rescueIconClassName = classNames('iconfont iconjiuyuan1 rescue-icon', {
       'white-rescue-icon': color === 'white'
     })
     return (
