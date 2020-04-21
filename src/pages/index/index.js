@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-16 11:14:22
+ * @LastEditTime: 2020-04-20 15:56:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -29,12 +29,12 @@ import { handleShare } from '@utils/handle_share.js'
 import { getUserInfo } from '@utils/get_user_info.js'
 import Actions from '@store/actions/index.js'
 import BottomLoginTips from '@c/bottom_login_tips/index.js'
+import CallService from '@c/call_service/index.js'
 import OfferForm from './components/offer_city/index.js'
 import LocationModal from './components/location_modal/index.js'
 import Tool from './components/tool/index'
 import Banner from './components/banner/index'
 import { handleToolButtons } from '../../config/button_config.js'
-import CallService from '@c/call_service/index.js'
 
 import './index.styl'
 

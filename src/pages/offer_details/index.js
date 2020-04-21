@@ -3,7 +3,7 @@
  * @description: 询价单详情
  * @Date: 2019-09-23 14:33:39
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-14 13:06:19
+ * @LastEditTime: 2020-04-17 18:44:37
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -418,9 +418,13 @@ class OfferDetails extends Component {
             buttonsList
           }
         </View>
-        <View className='rescue-icon-position-wrapper'>
-          <RescueIcon type='big' />
-        </View>
+        {
+          inquiryType === 2 && (
+            <View className='rescue-icon-position-wrapper'>
+              <RescueIcon type='big' />
+            </View>
+          )
+        }
       </View>
     )
   }
