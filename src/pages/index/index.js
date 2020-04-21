@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-20 15:56:00
+ * @LastEditTime: 2020-04-21 13:48:00
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -163,6 +163,7 @@ class Index extends Component {
       locationName: cityName
     }
     api.city.cityNameChangeCityID(sendData, this).then(res => {
+      if (!res) { return }
       this.initCity.cityName = cityName
       this.initCity.cityId = res.cityId
       this.setState({

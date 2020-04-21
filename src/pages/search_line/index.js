@@ -80,6 +80,7 @@ class SearchLine extends Component {
       locationName: cityName
     }
     api.city.cityNameChangeCityID(sendData, this).then(res => {
+      if (!res) { return }
       this.setState({
         sendCityName: cityName,
         sendCityId: res.cityId

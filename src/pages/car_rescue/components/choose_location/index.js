@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-04-12 19:18:29
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-14 11:29:32
+ * @LastEditTime: 2020-04-21 13:47:50
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -143,6 +143,7 @@ class ChooseLocation extends Component {
       locationName: cityName
     }
     api.city.cityNameChangeCityID(sendData, this).then(res => {
+      if (!res) { return }
       let { address } = this.state
       if (type === 'sendCity') {
         address.sendCityId = res.cityId
