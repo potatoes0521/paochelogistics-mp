@@ -4,7 +4,7 @@
  * 
  * @Date: 2019-09-17 11:53:57
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-21 13:48:00
+ * @LastEditTime: 2020-04-21 13:54:20
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -149,6 +149,7 @@ class Index extends Component {
    */
   handleConvertingGPS(latitude, longitude) {
     convertingGPS(latitude, longitude, 'ad_info').then(res => {
+      if (!res.city) { return }
       this.cityNameChangeCityID(res.city)
       // 然后去处理一下id
     })

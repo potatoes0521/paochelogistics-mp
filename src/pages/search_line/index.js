@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-28 13:43:50
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-02 13:34:14
+ * @LastEditTime: 2020-04-21 13:48:53
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -66,6 +66,7 @@ class SearchLine extends Component {
   */
   handleConvertingGPS(latitude, longitude) {
     convertingGPS(latitude, longitude, 'ad_info').then(res => {
+      if (!res.city) { return }
       this.cityNameChangeCityID(res.city)
       // 然后去处理一下id
     })

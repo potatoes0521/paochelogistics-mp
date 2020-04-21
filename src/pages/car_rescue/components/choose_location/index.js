@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-04-12 19:18:29
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-21 13:47:50
+ * @LastEditTime: 2020-04-21 13:55:01
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -129,6 +129,7 @@ class ChooseLocation extends Component {
         address.receiveAddressText = chooseAddress || addressText
       }
       this.setState(address)
+      if (!res.city) { return }
       this.cityNameChangeCityID(res.city, type)
       // 然后去处理一下id
     })
