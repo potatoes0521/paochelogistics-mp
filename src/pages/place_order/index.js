@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-22 14:08:39
+ * @LastEditTime: 2020-04-22 14:10:49
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -371,7 +371,6 @@ class PlaceOrder extends Component {
       transferMobile, // 接单运力手机号
       invoiceType: invoiceTypeInfo.id
     }
-    return
     api.order.placeOrder(sendData, this)
       .then((res) => {
         Taro.showToast({
