@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-14 13:14:40
+ * @LastEditTime: 2020-04-22 14:07:08
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -102,6 +102,7 @@ class PlaceOrder extends Component {
     }
     api.offer.getOfferDetails(sendData, this)
       .then(res => {
+        delete res['userId']
         this.setState(res)
       })
   }
@@ -304,6 +305,7 @@ class PlaceOrder extends Component {
       this.toast('请选择发票类型')
       return
     }
+    console.log('userId', userId)
     if (userInfo.userType === 0 && !userId) {
       this.toast('请选择代下单的客户')
       return
@@ -370,6 +372,7 @@ class PlaceOrder extends Component {
       transferMobile, // 接单运力手机号
       invoiceType: invoiceTypeInfo.id
     }
+    return
     api.order.placeOrder(sendData, this)
       .then((res) => {
         Taro.showToast({
