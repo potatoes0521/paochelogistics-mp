@@ -3,7 +3,7 @@
  * @description: 下单
  * @Date: 2019-09-27 10:59:47
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-22 14:10:49
+ * @LastEditTime: 2020-04-22 14:11:14
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -304,7 +304,6 @@ class PlaceOrder extends Component {
       this.toast('请选择发票类型')
       return
     }
-    console.log('userId', userId)
     if (userInfo.userType === 0 && !userId) {
       this.toast('请选择代下单的客户')
       return
