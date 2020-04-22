@@ -3,8 +3,8 @@
  * @description: 检测界面
  * @path: 引入路径
  * @Date: 2020-02-13 12:28:23
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-14 21:31:45
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-04-22 13:43:47
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -16,7 +16,7 @@ import api from '@api/index.js'
 import Certification from '@c/certification_modal/index.js'
 import {navigatorToChannel} from '@utils/navigator_to_channel.js'
 
-class index extends Component { 
+class Testing extends Component { 
 
   constructor(props) {
     super(props)
@@ -65,4 +65,4 @@ const mapStateToProps = (state) => {
     userInfo: state.user_msg.userInfo
   }
 }
-export default connect(mapStateToProps)(index)
+export default connect(mapStateToProps)(Testing)

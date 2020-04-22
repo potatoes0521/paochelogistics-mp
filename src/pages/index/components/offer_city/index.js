@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-03 15:11:48
  * @LastEditors: liuYang
- * @LastEditTime: 2020-03-16 17:36:15
+ * @LastEditTime: 2020-04-22 13:43:31
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -19,7 +19,7 @@ import PropTypes from 'prop-types'
 import Actions from '@store/actions/index.js'
 import './index.styl'
 
-export default class index extends Component { 
+export default class OfferCity extends Component { 
 
   static options = {
     addGlobalClass: true // 允许外部样式修改组件样式
@@ -180,7 +180,7 @@ export default class index extends Component {
 
 }
 
-index.defaultProps = {
+OfferCity.defaultProps = {
   receiveCityId: 0, // 收车城市ID
   receiveCityName: '',
   sendCityId: 0, // 发车地址ID
@@ -190,7 +190,7 @@ index.defaultProps = {
   onChooseNewCity: () => {},
 }
 
-index.propTypes = {
+OfferCity.propTypes = {
   receiveCityName: PropTypes.string,
   sendCityName: PropTypes.string,
   onSubmit: PropTypes.func,

@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-04-14 13:44:12
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-14 15:18:21
+ * @LastEditTime: 2020-04-22 13:44:26
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -15,7 +15,7 @@ import PropTypes from 'prop-types'
 
 import './index.styl'
 
-export default class index extends Component { 
+export default class TimerCountDown extends Component { 
 
   // static options = {
     // addGlobalClass: true // 允许外部样式修改组件样式
@@ -65,7 +65,7 @@ export default class index extends Component {
 
 }
 
-index.defaultProps = {
+TimerCountDown.defaultProps = {
   day: 0,
   hour: 0,
   minute: 0,
@@ -74,6 +74,6 @@ index.defaultProps = {
   onClick: () => {}
 }
 
-index.propTypes = {
+TimerCountDown.propTypes = {
   onClick: PropTypes.func.isRequired
 }

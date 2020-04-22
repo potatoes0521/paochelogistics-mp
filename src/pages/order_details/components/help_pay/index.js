@@ -3,7 +3,7 @@
  * @description: 请填写描述信息
  * @Date: 2019-12-11 13:59:53
  * @LastEditors: liuYang
- * @LastEditTime: 2019-12-13 16:40:50
+ * @LastEditTime: 2020-04-22 13:44:57
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -18,7 +18,7 @@ import PropTypes from 'prop-types'
 
 import './index.styl'
 
-export default class index extends Component { 
+export default class HelpPay extends Component { 
 
   constructor(props) {
     super(props)
@@ -56,12 +56,12 @@ export default class index extends Component {
 
 }
 
-index.defaultProps = {
+HelpPay.defaultProps = {
   orderDetailsInfo: {},
   onClick: () => {}
 }
 
-index.propTypes = {
+HelpPay.propTypes = {
   orderDetailsInfo: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired
 }

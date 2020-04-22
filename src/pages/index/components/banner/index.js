@@ -3,8 +3,8 @@
  * @description: 请填写描述信息
  * @path: 引入路径
  * @Date: 2020-02-03 14:17:04
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-04 16:38:04
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-04-22 13:45:09
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -20,7 +20,7 @@ import PropTypes from 'prop-types'
 import {navigatorToChannel} from '@utils/navigator_to_channel.js'
 import './index.styl'
 
-export default class index extends Component { 
+export default class Banner extends Component { 
 
   static options = {
     addGlobalClass: true // 允许外部样式修改组件样式
@@ -83,10 +83,10 @@ export default class index extends Component {
 
 }
 
-index.defaultProps = {
+Banner.defaultProps = {
   bannerList: []
 }
 
-index.propTypes = {
+Banner.propTypes = {
   bannerList: PropTypes.array
 }

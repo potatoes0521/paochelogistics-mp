@@ -2,8 +2,8 @@
  * @Author: liuYang
  * @description: 请填写描述信息
  * @Date: 2019-12-05 14:12:35
- * @LastEditors  : liuYang
- * @LastEditTime : 2020-02-14 17:10:06
+ * @LastEditors: liuYang
+ * @LastEditTime: 2020-04-22 13:44:05
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -13,7 +13,7 @@ import { WebView } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 // import api from '@api/index.js'
 
-class index extends Component { 
+class WebViewPage extends Component { 
 
   constructor(props) {
     super(props)
@@ -54,4 +54,4 @@ const mapStateToProps = (state) => {
     userInfo: state.user_msg.userInfo
   }
 }
-export default connect(mapStateToProps)(index)
+export default connect(mapStateToProps)(WebViewPage)
