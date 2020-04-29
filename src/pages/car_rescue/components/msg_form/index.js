@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-04-12 19:22:51
  * @LastEditors: liuYang
- * @LastEditTime: 2020-04-14 12:42:40
+ * @LastEditTime: 2020-04-22 15:00:55
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -134,7 +134,7 @@ export default class MsgForm extends Component {
             <Input 
               className='input-class'
               placeholderClass='placeholder-class'
-              placeholder='您可在此填写备注信息描述清楚车况'
+              placeholder='您可在此备注信息描述清楚车况'
               onInput={this.onRemarksInput}
               value={remark}
             ></Input>

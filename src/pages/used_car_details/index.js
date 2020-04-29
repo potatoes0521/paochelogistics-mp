@@ -4,7 +4,7 @@
  * @path: 引入路径
  * @Date: 2020-02-18 10:52:25
  * @LastEditors: liuYang
- * @LastEditTime: 2020-02-27 10:13:11
+ * @LastEditTime: 2020-04-23 10:39:05
  * @mustParam: 必传参数
  * @optionalParam: 选传参数
  */
@@ -97,7 +97,7 @@ class UsedCarDetails extends Component {
     let { usedCarDetailsInfo } = this.state
     if (!usedCarDetailsInfo.mobile) return
     let sendData = {
-      infoType: 2, //类型    1 新车   2 二手车
+      infoType: this.state.usedCarDetailsInfo.usedType || 2, //类型    1 新车   2 二手车
       objectId: usedCarDetailsInfo.carSourceId,
       behaviourSource: 3 //行为来源  1 精选推荐   2 列表   3 详情
     };
